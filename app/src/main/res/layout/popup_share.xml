@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent70"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_50"
+                android:gravity="center"
+                android:text="分享到"
+                android:textColor="@color/color_6"
+                android:textSize="@dimen/text_size_15" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_0.5"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:background="@color/col_e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp">
+
+
+                <TextView
+                    android:id="@+id/tv_wechat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:drawableTop="@mipmap/wechat_icon"
+                    android:gravity="center_horizontal"
+                    android:text="微信好友"
+                    android:textColor="@color/color_5"
+                    android:textSize="@dimen/text_size_14" />
+
+
+                <TextView
+                    android:id="@+id/tv_moment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:drawableTop="@mipmap/circle_icon"
+                    android:gravity="center_horizontal"
+                    android:text="微信朋友圈"
+                    android:textColor="@color/color_5"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:drawableTop="@mipmap/ic_share_message"
+                    android:gravity="center_horizontal"
+                    android:text="短信"
+                    android:textColor="@color/color_5"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/tv_qq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:drawableTop="@mipmap/qq_icon"
+                    android:gravity="center_horizontal"
+                    android:text="qq空间"
+                    android:textColor="@color/color_5"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_sina"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:drawableTop="@mipmap/sina_icon"
+                    android:gravity="center_horizontal"
+                    android:text="微博"
+                    android:textColor="@color/color_5"
+                    android:textSize="@dimen/text_size_14" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/img_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="36dp"
+                android:background="@color/color_f5"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="取  消"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.CourserCoverActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:text="瑞思学科英语"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_18" />
+
+    <TextView
+        android:id="@+id/tv_course_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_course_name"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:drawableLeft="@mipmap/ic_course_time"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="7月19日  11:00-12:00"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_main_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_course_time"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:drawableLeft="@mipmap/ic_teacher"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="刘晓峰"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_assis_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_main_teacher"
+        android:layout_marginLeft="@dimen/margin_size_35"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="助教：张晓旭"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_student_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_assis_teacher"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_9"
+        android:drawableLeft="@mipmap/ic_stu_count"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="学员 薛成..等3人 签到 2 请假 1"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_org_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_student_count"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:drawableLeft="@mipmap/ic_org_icon"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="美吉姆国际儿童教育中心"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_opening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_org_name"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:drawableLeft="@mipmap/ic_seat"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="空位：1 个"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_equi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_opening"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:drawableLeft="@mipmap/ic_equi"
+        android:drawablePadding="@dimen/margin_size_7"
+        android:text="等位学员：12 个"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_equi"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:background="@color/color_f6"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_allot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="人工分配"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+        <Button
+            android:id="@+id/btn_stu_take"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="学员抢位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+    </LinearLayout>
+
+</RelativeLayout>

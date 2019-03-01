@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_size_45"
+    android:layout_marginLeft="@dimen/margin_size_10"
+    android:layout_marginRight="@dimen/margin_size_10"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/iv_course_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        app:cardBackgroundColor="@color/red"
+        app:cardCornerRadius="@dimen/margin_size_9"
+        app:cardElevation="0dp" />
+
+    <TextView
+        android:id="@+id/tv_courseType"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_45"
+        android:layout_toEndOf="@+id/iv_course_icon"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="无分类"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15" />
+
+</RelativeLayout>

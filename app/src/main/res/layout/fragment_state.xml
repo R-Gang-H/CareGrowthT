@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f7fa">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ToolbarTheme"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="enterAlways|snap|scroll"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ll_emtity"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_20"
+                    android:background="@color/blueLight" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_back_button"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/ll_emtity"
+                    android:padding="@dimen/margin_size_6">
+
+                    <cn.carbs.android.avatarimageview.library.AvatarImageView
+                        android:id="@+id/iv_title_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_teacher_default" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_next_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/ll_emtity"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_title_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_title_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/ll_emtity"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="标题"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18" />
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent">
+
+            <LinearLayout
+                android:id="@+id/ll_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_size_35"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:background="@drawable/shape_state_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_title_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_size_18"
+                    android:layout_marginStart="@dimen/margin_size_19"
+                    android:text="查看全部"
+                    android:textColor="#69ace5"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_size_19"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_right_arrow"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/ll_all"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_10" />
+
+        </RelativeLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

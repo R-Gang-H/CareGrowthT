@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rl_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.android.library.view.CircleImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:src="@mipmap/ic_logo_default" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_name_bg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/b5b5b5"
+            app:cardCornerRadius="@dimen/margin_size_30"
+            app:cardElevation="0dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_org_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_17"
+        android:text="机构名称"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toRightOf="@id/rl_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_org_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:text="待审核"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:background="#f5f6fa"
+        android:gravity="center"
+        android:padding="@dimen/margin_size_2"
+        android:text="标签"
+        android:textColor="#5e5e5e"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toRightOf="@id/rl_avatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_org_name" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:drawableLeft="@mipmap/ic_location"
+        android:drawablePadding="@dimen/margin_size_5"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxEms="13"
+        android:maxLines="1"
+        android:text="地址地址地址"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_13"
+        app:layout_constraintLeft_toRightOf="@id/rl_avatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_tag" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:background="@color/col_e8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_address" />
+
+    <ImageView
+        android:id="@+id/btn_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_size_25"
+        android:layout_marginTop="36dp"
+        android:scaleType="center"
+        android:src="@mipmap/ic_phone_call"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_org_status" />
+
+    <ImageView
+        android:layout_width="@dimen/margin_size_1"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_25"
+        android:layout_marginTop="70dp"
+        android:background="@color/col_e8"
+        app:layout_constraintRight_toLeftOf="@id/btn_call" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

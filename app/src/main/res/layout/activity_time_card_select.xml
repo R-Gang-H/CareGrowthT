@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.caregrowtht.app.activity.TimeCardSelectActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/x_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_submit"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/margin_size_5"
+        tools:listitem="@layout/recycle_stu_card_item" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="267dp"
+        android:layout_height="88dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+
+</RelativeLayout>

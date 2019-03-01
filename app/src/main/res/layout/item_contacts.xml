@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_28"
+        android:background="#F3F3F5"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="A"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
+
+        <CheckBox
+            android:id="@+id/tv_select_stu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:button="@drawable/selector_all_check"
+            android:clickable="false"
+            android:padding="@dimen/margin_size_6"
+            android:textColor="@color/color_3" />
+
+        <cn.carbs.android.avatarimageview.library.AvatarImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/text_size_10"
+            android:layout_toEndOf="@id/tv_select_stu"
+            android:scaleType="centerCrop"
+            app:aiv_BoarderWidth="2dp"
+            app:aiv_ShowBoarder="false"
+            app:aiv_TextSizeRatio="0.4" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/iv_avatar"
+            android:text="南尘"
+            android:textColor="@color/color_3"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_marginLeft="48dp"
+        android:background="@color/col_e1" />
+
+</LinearLayout>

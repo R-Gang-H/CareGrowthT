@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_course_resource"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_libName"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:gravity="center"
+        android:text="一年级英语 - 上"
+        android:textColor="@drawable/selector_color_black_blue"
+        android:textSize="@dimen/text_size_15" />
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:layout_below="@id/tv_libName"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:background="@color/blueLight"
+        android:visibility="gone" />
+
+</RelativeLayout>

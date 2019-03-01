@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ToolbarTheme"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
+
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_45"
+            android:background="?attr/colorPrimary"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/rl_back_button"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:scaleType="center"
+                android:src="@mipmap/ic_back" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/margin_size_15"
+                android:layout_toEndOf="@id/rl_back_button"
+                android:background="@drawable/add_circle_corner_transparent_bg"
+                android:drawableStart="@mipmap/ic_search"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center|left"
+                android:hint="请输入学员姓名、家长手机号"
+                android:paddingStart="@dimen/margin_size_10"
+                android:singleLine="true"
+                android:textColor="@color/col_tb"
+                android:textColorHint="@color/color_B"
+                android:textSize="@dimen/text_size_14" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/my_toolbar"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <com.caregrowtht.app.view.ReboundScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_audit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_size_35"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_state_bg"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="待审核"
+                    android:textColor="@color/blueLight"
+                    android:visibility="gone"
+                    tools:listitem="@layout/xrecy_formal_item" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_audit">
+
+                    <TextView
+                        android:id="@+id/tv_ongoing"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:text="标星学员"
+                        android:textColor="@color/gray2"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_complete"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_complete"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:text="活跃学员"
+                        android:textColor="@color/gray2"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_no_active"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/tv_ongoing" />
+
+                    <TextView
+                        android:id="@+id/tv_no_active"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:text="非活跃学员"
+                        android:textColor="@color/gray2"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/tv_complete" />
+
+                    <TextView
+                        android:id="@+id/tv_ongoing_line"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/white"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_complete_line"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ongoing" />
+
+                    <TextView
+                        android:id="@+id/tv_complete_line"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/blueLight"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintLeft_toRightOf="@+id/tv_ongoing_line"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_no_active_line"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_complete" />
+
+                    <TextView
+                        android:id="@+id/tv_no_active_line"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/tv_complete_line"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_complete" />
+
+                    <TextView
+                        android:id="@+id/tv_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_e6"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ongoing_line" />
+
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_size_10"
+                        android:layout_marginTop="@dimen/margin_size_10"
+                        android:textColor="@color/color_6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_line"
+                        tools:text="当前活跃学员总数: 10人" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/xrv_student"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/cl_title"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_student"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/cl_title"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:visibility="gone" />
+
+                <com.caregrowtht.app.view.LoadingFrameView
+                    android:id="@+id/load_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/cl_title" />
+
+            </RelativeLayout>
+        </com.caregrowtht.app.view.ReboundScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:src="@mipmap/ic_add_more" />
+
+</RelativeLayout>

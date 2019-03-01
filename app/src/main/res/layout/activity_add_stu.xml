@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.AddFormalStuActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_cancel"
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:id="@+id/tv_online_priview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_40"
+                android:background="@color/color_f6"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_size_15"
+                android:text="学员基本信息"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_stu_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tv_online_priview">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="学员姓名*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_stu_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:paddingRight="@dimen/margin_size_30"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_common_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_stu_name">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="学员常用名"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_common_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="常用名可以是小名或是英文"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_stu_sex"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_common_name">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="学员性别*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <Button
+                    android:id="@+id/btn_women"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/btn_man"
+                    android:background="@drawable/selector_women"
+                    android:text="      女"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <Button
+                    android:id="@+id/btn_man"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/selector_man"
+                    android:text="      男"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/margin_size_15"
+                android:gravity="center_vertical"
+                android:text="生日"
+                android:textColor="@color/col_a"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_stu_sex" />
+
+            <TextView
+                android:id="@+id/tv_birthday_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:drawableRight="@mipmap/ic_right_arrow"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:gravity="center|right"
+                android:hint="请选择"
+                android:minHeight="48dp"
+                android:paddingRight="@dimen/margin_size_15"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_stu_sex" />
+
+            <ImageView
+                android:id="@+id/iv_line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_0.5"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:background="@color/color_f6"
+                app:layout_constraintTop_toBottomOf="@id/tv_birthday" />
+
+            <TextView
+                android:id="@+id/tv_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_40"
+                android:background="@color/color_f6"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_size_15"
+                android:text="联系人"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+            <RelativeLayout
+                android:id="@+id/rl_phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tv_contacts">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="手机号*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingRight="@dimen/margin_size_30"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_again_phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_phone_num">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="再次输入手机号*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_again_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingRight="@dimen/margin_size_30"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_stu_relat"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/margin_size_15"
+                android:gravity="center_vertical"
+                android:text="手机号持有人与学员的关系"
+                android:textColor="@color/col_a"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_again_phone_num" />
+
+            <TextView
+                android:id="@+id/tv_stu_relation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:drawableRight="@mipmap/ic_right_arrow"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:gravity="center|right"
+                android:hint="妈妈"
+                android:minHeight="48dp"
+                android:paddingRight="@dimen/margin_size_15"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_again_phone_num" />
+
+            <ImageView
+                android:id="@+id/iv_line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_0.5"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:background="@color/color_f6"
+                app:layout_constraintTop_toBottomOf="@id/tv_stu_relat" />
+
+            <TextView
+                android:id="@+id/tv_add_time_card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_40"
+                android:background="@color/color_f6"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_size_15"
+                android:text="为学员添加课时卡"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintTop_toBottomOf="@id/iv_line2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stu_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_6"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_time_card"
+                tools:listitem="@layout/recycle_stu_card_item" />
+
+            <Button
+                android:id="@+id/btn_add_card"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="@dimen/margin_size_10"
+                android:background="@drawable/add_circle_corner_green_bg"
+                android:drawableTop="@mipmap/ic_add_card"
+                android:gravity="center"
+                android:paddingTop="26dp"
+                android:text="添加课时卡"
+                android:textColor="@color/color_57a1"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/rv_stu_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/selector_small_btn_click"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/selector_small_btn_click"
+        android:gravity="center"
+        android:text="确认添加"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+</RelativeLayout>

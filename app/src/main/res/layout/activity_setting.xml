@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f4">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mine_title_bg"
+        android:theme="@style/ToolbarTheme">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ll_emtity"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_20" />
+
+                <ImageView
+                    android:id="@+id/iv_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_size_14"
+                    android:src="@mipmap/ic_back"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_emtity" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_size_10"
+                    android:singleLine="true"
+                    android:text="标题"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_emtity" />
+
+                <ImageView
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_size_19"
+                    android:padding="@dimen/dp_10"
+                    android:src="@mipmap/ic_edit_setting"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_emtity" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_bar"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <cn.carbs.android.avatarimageview.library.AvatarImageView
+                    android:id="@+id/iv_head_icon"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_teacher_default" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_user_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center_horizontal"
+                android:text="123123"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_0.5"
+                android:layout_marginTop="@dimen/margin_size_28"
+                android:background="@color/col_e1" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ListView
+        android:id="@+id/lv_setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:background="@color/color_f4"
+        android:divider="@drawable/listview_divider"
+        android:dividerHeight="0.6dp"
+        android:gravity="left|center_vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

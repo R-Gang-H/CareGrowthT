@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true">
+
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/iv_head_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:aiv_BoarderWidth="2dp"
+        app:aiv_ShowBoarder="false"
+        app:aiv_TextSizeRatio="0.4" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="姓名"
+        android:textColor="@color/gray2"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="7dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="已回执"
+        android:textColor="@color/color_9"
+        android:textSize="13sp" />
+
+
+    <ImageView
+        android:id="@id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_below="@id/iv_head_icon"
+        android:background="#ffe6e6e6" />
+
+</RelativeLayout>

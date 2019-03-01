@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    tools:context="com.caregrowtht.app.activity.TeacherMsgActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_title_audit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_35"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:background="@drawable/shape_state_bg"
+        android:gravity="center"
+        android:paddingLeft="@dimen/margin_size_15"
+        android:paddingRight="@dimen/margin_size_15"
+        android:text="教师待审核"
+        android:textColor="#69ace5"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_title_audit"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
+
+        <com.caregrowtht.app.view.ReboundScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    tools:listitem="@layout/item_teacher" />
+
+                <ImageView
+                    android:id="@+id/iv_emtity"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_80"
+                    android:background="@color/white" />
+            </LinearLayout>
+        </com.caregrowtht.app.view.ReboundScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:src="@mipmap/ic_add_more" />
+
+</RelativeLayout>

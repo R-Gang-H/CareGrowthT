@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_card_front"
+    android:layout_width="330dp"
+    android:layout_height="386dp"
+    android:layout_gravity="center"
+    android:background="@drawable/add_circle_corner_transparent_bg"
+    android:fitsSystemWindows="true"
+    android:transitionName="@string/transition_name"
+    tools:context="com.caregrowtht.app.activity.SchoolWorkLeagueActivity"
+    tools:targetApi="lollipop">
+
+    <TextView
+        android:id="@+id/tv_confirm_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:text="确认发送通知对象"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="28dp"
+        android:text="外语课"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_confirm_send" />
+
+    <TextView
+        android:id="@+id/tv_course_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/ic_course_time"
+        android:drawablePadding="@dimen/margin_size_11"
+        android:text="08月02日 11:00-14:00"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_course_name" />
+
+    <TextView
+        android:id="@+id/tv_mainTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@mipmap/ic_main_teacher"
+        android:drawablePadding="@dimen/margin_size_13"
+        android:text="教师8人"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_course_time" />
+
+    <TextView
+        android:id="@+id/tv_assistant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="@dimen/margin_size_6"
+        android:text="张晓旭 王瑞欣 教师A 教师B 教师C 教师D 教师E 教师F 教师I 教师J "
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_mainTeacher" />
+
+    <TextView
+        android:id="@+id/tv_studentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@mipmap/ic_stu_count"
+        android:drawablePadding="@dimen/margin_size_10"
+        android:text="学员12人"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_assistant" />
+
+    <TextView
+        android:id="@+id/tv_sign_leave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="@dimen/margin_size_11"
+        android:lineSpacingExtra="@dimen/margin_size_6"
+        android:text="学员A 学员B 学员C 学员D 学员E 学员F 学员H 学员I 学员J 学员K 学员A 学员B 学员C 学员D 学员E 学员F"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_studentCount" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:background="#CCCCCC"
+        app:layout_constraintBottom_toTopOf="@id/ll_PupoBom" />
+
+    <LinearLayout
+        android:id="@+id/ll_PupoBom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_18" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_eb" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_69ac"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

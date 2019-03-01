@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.StuOrderActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_course_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:background="#E1EEFA"
+        android:lineSpacingExtra="@dimen/margin_size_5"
+        android:paddingBottom="@dimen/margin_size_10"
+        android:paddingLeft="@dimen/margin_size_11"
+        android:paddingRight="@dimen/margin_size_11"
+        android:paddingTop="@dimen/margin_size_10"
+        android:text="2018年12月18日 星期二\n英语课A班\n上课学员11名"
+        android:textColor="@color/c282828"
+        android:textSize="@dimen/text_size_16" />
+
+    <TextView
+        android:id="@+id/tv_students"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_course_task"
+        android:layout_margin="@dimen/margin_size_15"
+        android:textColor="@color/c282828"
+        android:textSize="@dimen/text_size_15" />
+
+</RelativeLayout>

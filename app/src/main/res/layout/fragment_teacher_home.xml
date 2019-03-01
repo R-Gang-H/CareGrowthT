@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
+
+        <com.caregrowtht.app.view.ReboundScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:focusableInTouchMode="true"
+            android:scrollbars="none">
+            <!--android:background="@mipmap/ic_homepage_bg"-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:background="@color/blueHome">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_avatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.android.library.view.CircleImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="@dimen/margin_size_60"
+                            android:layout_height="@dimen/margin_size_60"
+                            android:layout_marginLeft="@dimen/margin_size_16"
+                            android:layout_marginTop="@dimen/margin_size_35"
+                            android:src="@mipmap/ic_logo_default"
+                            app:civ_border_color="#83bff3"
+                            app:civ_border_width="2dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_name_bg"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="@dimen/margin_size_16"
+                            android:layout_marginTop="@dimen/margin_size_35"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="@color/b5b5b5"
+                            app:cardCornerRadius="@dimen/margin_size_30"
+                            app:cardElevation="0dp">
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_org_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_size_17"
+                        android:layout_marginTop="@dimen/margin_size_35"
+                        android:layout_toRightOf="@id/rl_avatar"
+                        android:ellipsize="end"
+                        android:maxEms="12"
+                        android:maxLines="1"
+                        android:text="机构名称"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_18" />
+
+                    <TextView
+                        android:id="@+id/tv_auditing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_org_name"
+                        android:layout_marginLeft="@dimen/margin_size_17"
+                        android:layout_marginTop="@dimen/margin_size_10"
+                        android:layout_toRightOf="@id/rl_avatar"
+                        android:background="@mipmap/ic_cours_fb"
+                        android:drawablePadding="@dimen/margin_size_6"
+                        android:drawableStart="@mipmap/icon_role"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="@dimen/margin_size_6"
+                        android:paddingStart="@dimen/margin_size_6"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_size_0.5"
+                        android:layout_below="@id/tv_auditing"
+                        android:layout_marginTop="@dimen/margin_size_15"
+                        android:background="#64adfd" />
+
+                </RelativeLayout>
+
+                <!--审核中/未通过-->
+                <RelativeLayout
+                    android:id="@+id/rl_no_org"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_inst"
+                        android:layout_width="117dp"
+                        android:layout_height="117dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="120dp"
+                        android:src="@mipmap/ic_add_inst" />
+
+                    <TextView
+                        android:id="@+id/tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_inst"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_size_40"
+                        android:text="等待机构审核通过"
+                        android:textColor="@color/color_6"
+                        android:textSize="@dimen/text_size_16" />
+
+                </RelativeLayout>
+
+                <!--审核通过-->
+                <include
+                    android:id="@+id/ll_yes_org"
+                    layout="@layout/activity_teacher_org"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </com.caregrowtht.app.view.ReboundScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_marginEnd="@dimen/margin_size_20"
+        android:src="@mipmap/ic_add_more"
+        android:visibility="gone" />
+
+</RelativeLayout>

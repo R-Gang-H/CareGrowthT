@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/margin_size_15"
+    android:layout_marginLeft="@dimen/margin_size_10"
+    android:layout_marginRight="@dimen/margin_size_10"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_circle_corner_transparent_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_org_sign"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="机构代签到"
+            android:textColor="@color/color_3"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#b2b2b2" />
+
+        <TextView
+            android:id="@+id/tv_stu_sign"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="学员缺席,消课签到"
+            android:textColor="@color/color_3"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:background="@drawable/add_circle_corner_transparent_bg"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="取消"
+        android:textColor="@color/color_3"
+        android:textSize="18sp" />
+
+</LinearLayout>

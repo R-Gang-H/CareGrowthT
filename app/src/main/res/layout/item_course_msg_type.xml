@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_course_type"
+        android:layout_width="120dp"
+        android:layout_height="@dimen/margin_size_60">
+
+        <RelativeLayout
+            android:id="@+id/rl_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iv_course_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_below="@id/tv_all_select"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/blue"
+            app:cardCornerRadius="@dimen/margin_size_9"
+            app:cardElevation="0dp" />
+
+        <TextView
+            android:id="@+id/tv_course_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_9"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_toEndOf="@+id/iv_course_icon"
+            android:gravity="center_vertical"
+            android:text="无课程分类"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_course_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_course_type"
+            android:layout_marginStart="@dimen/margin_size_9"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:layout_toEndOf="@+id/iv_course_icon"
+            android:gravity="center_vertical"
+            android:text="排课 32个"
+            android:textColor="@color/color_8"
+            android:textSize="@dimen/text_size_13" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_add_course"
+        android:layout_width="105dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/shape_round_corner_notify_obj"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableTop="@mipmap/ic_add_card"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:text="添加课程分类"
+            android:textColor="@color/color_57a1"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

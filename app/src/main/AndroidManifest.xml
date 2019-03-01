@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.caregrowtht.app">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!-- Weibo分享 -->
+        <activity
+            android:name="com.umeng.socialize.media.WBShareCallBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <!-- 微信分享 -->
+        <activity
+            android:name="com.wsyd.aczjsd.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait" /> <!-- 使用播放器功能 android:configChanges="orientation|screenSize|keyboardHidden" -->
+        <activity
+            android:name=".activity.UserTermActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FileDisplayActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AppFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SetInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SpaceImageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.RegActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.QRCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddOrgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourserActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.AdvertInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActionInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeaveActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.VideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ScreenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PotentStuInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyFollowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StudyCourseInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators" />
+        <activity
+            android:name=".activity.ReportActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.CarouseInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.JoinInfoActionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.MarkActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.AddStudentActivity"
+            android:screenOrientation="portrait" />
+        <!--
+        解决 8.0 适配android:screenOrientation="" 和
+        <item name="android:windowIsTranslucent">true</item>不能同时出现
+        -->
+        <activity
+            android:name=".activity.CourserTableActivity"
+            android:theme="@style/courserTab" />
+        <activity
+            android:name=".activity.StudentSituatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PendingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourserReleaseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".activity.StudentDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourserFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReportPupoWindow"
+            android:theme="@style/ssionDialog" />
+        <activity
+            android:name=".activity.OrgNotifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotifyObjActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewNotifyActivity"
+            android:theme="@style/ssionDialog" />
+        <activity
+            android:name=".activity.CustomActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ContactsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".activity.SchoolWorkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SchoolWorkLeagueActivity"
+            android:theme="@style/courserTab" />
+        <activity
+            android:name=".activity.FormalActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.OrgSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FormalSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddStuCardActivity"
+            android:theme="@style/ssionDialog" />
+        <activity
+            android:name=".activity.NewCardBuyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TimeCardBuyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.TimeCardNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateOrgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WorkClassActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.NewWorkActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.TeacherSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TimeCardSelectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.FastenStudentActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.OptionClassActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.MadifyCourseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.AddCourseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.AddStuActivity"
+            android:theme="@style/ssionDialog" />
+        <activity
+            android:name=".activity.InviteStuRegActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddFormalStuActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.AuditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.JoinOrgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FamilyShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrgInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TeacherMsgActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.TeacherPermisActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.AddTeacherActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.CourserMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateCourseTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.CourserCardMsgActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ClassMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddClassRoomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseVsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.CourserCoverActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AllotActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotifityInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InitDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StuOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseVsEditActivity"
+            android:theme="@style/courserTab"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.NoClassStuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WorkClassEditActivity"
+            android:theme="@style/courserTab"
+            android:windowSoftInputMode="adjustPan" />
+        <!--版本更新所需-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+        <meta-data
+            android:name="UPDATE_APP_KEY"
+            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f" />
+    </application>
+
+</manifest>

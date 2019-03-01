@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    tools:context="com.caregrowtht.app.activity.PendingActivity">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_below="@id/toolbar"
+        android:background="@color/color_f4"
+        android:drawablePadding="5dp"
+        android:drawableStart="@mipmap/ic_prompt"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_size_15"
+        android:text="不明确出勤情况的学员可以先不做处理"
+        android:textColor="@color/col_a"
+        android:textSize="@dimen/text_size_14" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_submit"
+        android:layout_below="@id/tv_prompt" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/margin_size_10"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+
+</RelativeLayout>

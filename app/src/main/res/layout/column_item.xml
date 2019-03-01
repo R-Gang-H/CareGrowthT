@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginEnd="@dimen/margin_size_5"
+    android:layout_marginStart="@dimen/margin_size_5"
+    android:layout_marginTop="@dimen/margin_size_1"
+    android:duplicateParentState="true"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="英语课的1257语法班"
+            android:textColor="@color/color_3"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="57dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="#E5EAEE"
+            android:gravity="center"
+            android:text="已结束"
+            android:textColor="@color/color_9"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

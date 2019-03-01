@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f7fa">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent">
+
+            <!--有数据-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:paddingBottom="@dimen/margin_size_15"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--无数据-->
+            <RelativeLayout
+                android:id="@+id/rl_yes_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_f4"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/iv_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="8dp"
+                    android:drawableTop="@mipmap/ic_empty"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/iv_empty"
+                    android:layout_marginRight="@dimen/margin_size_60"
+                    android:src="@mipmap/ic_line" />
+
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_size_25"
+        android:layout_marginEnd="@dimen/margin_size_20"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_add_more" />
+
+</RelativeLayout>

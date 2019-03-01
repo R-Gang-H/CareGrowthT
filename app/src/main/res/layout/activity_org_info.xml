@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.OrgInfoActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <ImageView
+        android:id="@+id/img_org_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_org_info_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <com.android.library.view.CircleImageView
+            android:id="@+id/img_org"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_72"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginTop="44dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_logo_default" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_name_bg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginTop="44dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/b5b5b5"
+            app:cardCornerRadius="@dimen/margin_size_30"
+            app:cardElevation="0dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_org_short_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_org_bg"
+        android:layout_marginBottom="@dimen/margin_size_10"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_toRightOf="@id/rl_avatar"
+        android:text="金色雨林"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+
+    <TextView
+        android:id="@+id/tv_org_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_org_bg"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_12"
+        android:layout_toRightOf="@id/rl_avatar"
+        android:text="北京金色雨林清河校区"
+        android:textColor="@color/color_57a1"
+        android:textSize="@dimen/text_size_18" />
+
+    <TextView
+        android:id="@+id/tv_org_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_org_name"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_28"
+        android:layout_toRightOf="@id/rl_avatar"
+        android:drawableLeft="@mipmap/ic_phone_blue"
+        android:drawablePadding="@dimen/margin_size_6"
+        android:text="010-88888888"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_org_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_org_phone"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_16"
+        android:layout_toRightOf="@id/rl_avatar"
+        android:drawableLeft="@mipmap/ic_mobile_blue"
+        android:drawablePadding="@dimen/margin_size_6"
+        android:text="139000000001"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_org_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_org_mobile"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_16"
+        android:layout_toRightOf="@id/rl_avatar"
+        android:drawableLeft="@mipmap/ic_address_blue"
+        android:drawablePadding="@dimen/margin_size_6"
+        android:text="北京清河*******底商"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+</RelativeLayout>

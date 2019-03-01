@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/margin_size_6">
+
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/iv_stu_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:src="@mipmap/ic_per_avatar_default"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_stu_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_size_7"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="薛城"
+        app:layout_constraintLeft_toRightOf="@id/iv_stu_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_6"
+        android:background="@null"
+        android:drawableEnd="@drawable/selector_switch"
+        android:drawablePadding="@dimen/margin_size_6"
+        android:gravity="center"
+        android:textOff="签到"
+        android:textOn="签到"
+        app:layout_constraintLeft_toRightOf="@id/iv_stu_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/tv_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_size_15"
+        android:layout_marginStart="@dimen/margin_size_20"
+        android:layout_marginTop="@dimen/margin_size_6"
+        android:background="@null"
+        android:drawableEnd="@drawable/selector_switch"
+        android:drawablePadding="@dimen/margin_size_6"
+        android:gravity="center"
+        android:textOff="请假"
+        android:textOn="请假"
+        app:layout_constraintLeft_toRightOf="@id/tv_sign"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_org_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="机构带签到"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/tv_sign"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign" />
+
+    <TextView
+        android:id="@+id/tv_org_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="机构带请假"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/tv_leave"
+        app:layout_constraintTop_toBottomOf="@id/tv_leave" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

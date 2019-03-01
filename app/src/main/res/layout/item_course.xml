@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <!--课程卡布局-->
+    <RelativeLayout
+        android:id="@+id/rl_card_front"
+        android:layout_width="52dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="@dimen/margin_size_2"
+        android:background="@color/e3f3ce"
+        android:transitionName="@string/transition_name"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/check_course"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_2"
+            android:layout_alignParentRight="true"
+            android:background="@color/greenLight"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_2"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_9"
+            tools:text="10:00" />
+
+        <TextView
+            android:id="@+id/tv_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_start_time"
+            android:layout_marginLeft="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_2"
+            android:maxLines="1"
+            android:text="课程名称"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_10" />
+
+        <TextView
+            android:id="@+id/tv_org_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_course_name"
+            android:layout_marginLeft="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_2"
+            android:maxLines="1"
+            android:text="瑞思学科英语"
+            android:textColor="@color/color_8"
+            android:textSize="@dimen/text_size_10" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_org_name"
+            android:layout_marginRight="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_2"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_9"
+            tools:text="19:00" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

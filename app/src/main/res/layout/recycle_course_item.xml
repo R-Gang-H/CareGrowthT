@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="14dp"
+        android:text="2018"
+        android:textColor="@color/color_3333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        android:text="2018"
+        android:textColor="@color/color_3333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_do_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_course_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        android:text="2018"
+        android:textColor="@color/color_9"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_money_or_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_course_name"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:text="200"
+        android:textColor="@color/color_69ac"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tv_time"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:background="@mipmap/ic_sign"
+        android:gravity="center"
+        android:text="老师签到"
+        android:textColor="@color/color_3333"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_below="@id/tv_do_time"
+        android:background="@color/col_e1"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/margin_size_10" />
+
+</RelativeLayout>

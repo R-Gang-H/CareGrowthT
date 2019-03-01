@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/iv_head_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="19dp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@+id/iv_head_icon"
+                android:text="姓名"
+                android:textColor="@color/gray2"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/iv_head_icon"
+                android:text="5岁"
+                android:textColor="@color/color_9"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_small_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/tv_age"
+                android:text="明明"
+                android:textColor="@color/color_9"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_head_icon"
+                android:layout_alignRight="@+id/iv_head_icon"
+                android:src="@mipmap/ic_sex_man" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/ic_star_bg">
+
+                <ImageView
+                    android:id="@+id/iv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/ic_start_false" />
+
+                <TextView
+                    android:id="@+id/tv_star_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@+id/iv_star"
+                    android:text="未标星"
+                    android:textColor="@color/color_0002" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_the_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/rl_star"
+                android:layout_marginRight="@dimen/margin_size_13"
+                android:layout_marginTop="10dp"
+                android:text="非活跃学员"
+                android:textColor="@color/blueLight"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_course_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_head_icon"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:background="#E1EEFA"
+                android:lineSpacingExtra="@dimen/margin_size_5"
+                android:paddingBottom="@dimen/margin_size_10"
+                android:paddingLeft="@dimen/margin_size_15"
+                android:paddingRight="@dimen/margin_size_15"
+                android:paddingTop="@dimen/margin_size_10"
+                android:text="@string/text_prompt_conflict"
+                android:textColor="@color/color_3333"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/v_line"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/tv_course_task"
+                android:background="@color/color_f4"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_course_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/v_line"
+                android:drawableLeft="@mipmap/ic_course_text"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="固定课"
+                android:textColor="@color/color_9"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/v_line1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/tv_course_text"
+                android:background="@color/col_e8"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_course"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/v_line1"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/margin_size_45"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_3333"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/v_line2"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/tv_course"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:background="@color/color_f4" />
+
+            <TextView
+                android:id="@+id/tv_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/v_line2"
+                android:drawableLeft="@mipmap/ic_mobile"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="联系方式"
+                android:textColor="@color/color_9"
+                android:textSize="15sp" />
+
+            <View
+                android:id="@+id/v_line4"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/tv_mobile"
+                android:background="@color/col_e8" />
+
+            <com.android.library.view.ExpandListView
+                android:id="@+id/lv_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_mobile"
+                android:layout_marginTop="1dp"
+                tools:listitem="@layout/item_relative" />
+
+            <View
+                android:id="@+id/v_line3"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/lv_relative"
+                android:background="@color/color_f4" />
+
+            <TextView
+                android:id="@+id/tv_card"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/v_line3"
+                android:drawableLeft="@mipmap/ic_card"
+                android:drawablePadding="5dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="课时卡"
+                android:textColor="@color/color_9"
+                android:textSize="15sp" />
+
+            <View
+                android:id="@+id/v_line5"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/tv_card"
+                android:background="@color/col_e8" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_card"
+                android:layout_marginTop="5dp"
+                tools:listitem="@layout/recycle_stu_card_item" />
+        </RelativeLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:src="@mipmap/ic_add_more" />
+
+</RelativeLayout>

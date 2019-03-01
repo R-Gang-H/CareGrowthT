@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:text="微信"
+            android:textSize="12sp"
+            android:textColor="@color/color_6"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:drawableTop="@mipmap/wechat_icon"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_circle"
+            android:text="朋友圈"
+            android:textColor="@color/color_6"
+            android:textSize="12sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:drawableTop="@mipmap/circle_icon"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_qq"
+            android:text="QQ"
+            android:textSize="12sp"
+            android:textColor="@color/color_6"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:drawableTop="@mipmap/qq_icon"
+            android:drawablePadding="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_sina"
+            android:text="微博"
+            android:textColor="@color/color_6"
+            android:textSize="12sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:drawableTop="@mipmap/sina_icon"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_cancel"
+        android:src="@mipmap/ic_close"
+        android:background="@color/color_f6"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:scaleType="centerInside"
+        android:layout_height="40dp" />
+
+</LinearLayout>

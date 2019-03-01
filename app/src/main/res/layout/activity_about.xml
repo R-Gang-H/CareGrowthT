@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/base_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_size_17"
+                    android:background="@mipmap/ic_aboutus" />
+
+                <TextView
+                    android:id="@+id/tv_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_size_12"
+                    android:layout_marginTop="@dimen/margin_size_16"
+                    android:text="（V1.0）"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_40"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:lineSpacingExtra="@dimen/margin_size_10"
+                    android:text="        爱成长是一款为教育培训行业研发的SaaS+系统，包含培训机构端（PC）、教师端（APP）和学员端（小程序+公众号），该系统简单易用，功能强大，注重用户体验，借助互联网优势，使得培训机构、教师和家长之间高效配合，促进大家共同成长。"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_13" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:lineSpacingExtra="@dimen/margin_size_10"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_13" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_size_25"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_7"
+            android:text="北京玩索有得信息科技有限公司"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copyright © Beijing WanSuoYouDe Technolog Co.,Ltd"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_12" />
+    </LinearLayout>
+
+</RelativeLayout>

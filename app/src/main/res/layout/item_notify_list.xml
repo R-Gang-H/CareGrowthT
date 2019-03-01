@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_size_10"
+    android:layout_marginRight="@dimen/margin_size_10"
+    android:layout_marginTop="@dimen/margin_size_10"
+    android:background="@drawable/shape_shadow_bg"
+    android:paddingBottom="@dimen/margin_size_8">
+
+    <ImageView
+        android:id="@+id/iv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_12"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:scaleType="center"
+        android:src="@mipmap/ic_type_noti"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_notify_count"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_35"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_6"
+        android:gravity="center_vertical"
+        android:text="教师4人 学员300人"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintLeft_toRightOf="@id/iv_type"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:lineSpacingExtra="9dp"
+        android:paddingLeft="@dimen/margin_size_12"
+        android:paddingRight="@dimen/margin_size_12"
+        android:text="喜报:我机构**学员在希望杯英语大赛中荣获一等奖,恭喜!"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@id/iv_type" />
+
+    <TextView
+        android:id="@+id/tv_handlerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_12"
+        android:layout_marginRight="@dimen/margin_size_12"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:background="@drawable/shape_state_handler_bg"
+        android:gravity="left"
+        android:padding="@dimen/margin_size_10"
+        android:text="郝瑞刚  2018-7-4 18:19  发送"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_11"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_isReceipt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_13"
+        app:layout_constraintTop_toBottomOf="@id/tv_handlerName">
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:background="@color/col_e1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/iv_Receipt_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_14"
+            android:drawableLeft="@mipmap/ic_receipt_true"
+            android:drawablePadding="4dp"
+            android:text="已回执 4人"
+            android:textSize="@dimen/text_size_11"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_line" />
+
+        <TextView
+            android:id="@+id/iv_Receipt_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_14"
+            android:drawableLeft="@mipmap/ic_receipt_false"
+            android:drawablePadding="4dp"
+            android:text="未回执 2人"
+            android:textSize="@dimen/text_size_11"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/iv_Receipt_true"
+            app:layout_constraintTop_toTopOf="@id/iv_line" />
+
+        <TextView
+            android:id="@+id/tv_send_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_4"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_4"
+            android:background="@mipmap/ic_btn_green_bg"
+            android:gravity="center"
+            android:text="再次发送"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

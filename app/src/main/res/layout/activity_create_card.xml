@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.TimeCardBuyActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_submit"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_card_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:layout_marginRight="@dimen/margin_size_10"
+                android:background="@mipmap/ic_card_num_bg">
+
+                <LinearLayout
+                    android:id="@+id/ll_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_card_num_head"
+                    android:gravity="center">
+
+                    <com.android.library.view.CircleImageView
+                        android:id="@+id/iv_head_icon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@mipmap/ic_logo_default"
+                        app:civ_border_color="#E0E0E0"
+                        app:civ_border_width="2dp" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/shape_state_bg"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_card_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/ic_card_num_type"
+                    android:gravity="center"
+                    android:text="年卡"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_card_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_toRightOf="@+id/ll_head"
+                    android:text="课时卡名称"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_card_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/ll_head"
+                    android:text="售卡金额"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_card_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_money"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/ll_head"
+                    android:text="售卡金额"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_card_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:text="次数"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_reality_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_num"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="实得金额"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_card_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_head"
+                    android:background="@mipmap/ic_card_num_time">
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="2018"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_price_param"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_card_bg"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:layout_marginRight="@dimen/margin_size_10">
+
+                <ImageView
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_card_time_name"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="@dimen/margin_size_5"
+                    android:gravity="center_vertical"
+                    android:text="课时卡名称"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="1.5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/et_card_name"
+                    app:layout_constraintTop_toBottomOf="@id/line" />
+
+                <EditText
+                    android:id="@+id/et_card_name"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:hint="例如 某某课100次卡"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true"
+                    android:textColor="@color/color_3"
+                    android:textColorHint="@color/col_a"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintLeft_toRightOf="@id/tv_card_time_name"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line" />
+
+                <ImageView
+                    android:id="@+id/iv_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toBottomOf="@id/tv_card_time_name" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="@dimen/margin_size_5"
+                    android:gravity="center_vertical"
+                    android:text="售卡金额"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="1.5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/et_price"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+                <EditText
+                    android:id="@+id/et_price"
+                    android:layout_width="0dp"
+                    android:layout_height="47dp"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:imeOptions="actionGo"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintLeft_toRightOf="@id/tv_price"
+                    app:layout_constraintRight_toLeftOf="@id/tv_price_unit"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+                <TextView
+                    android:id="@+id/tv_price_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="@dimen/margin_size_5"
+                    android:gravity="center_vertical"
+                    android:text="元"
+                    android:textColor="@color/gray2"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintLeft_toRightOf="@id/et_price"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+                <ImageView
+                    android:id="@+id/iv_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price" />
+
+                <TextView
+                    android:id="@+id/tv_reality"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="@dimen/margin_size_5"
+                    android:gravity="center_vertical"
+                    android:text="次数"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="1.5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/et_reality"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+                <EditText
+                    android:id="@+id/et_reality"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:imeOptions="actionGo"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintLeft_toRightOf="@id/tv_reality"
+                    app:layout_constraintRight_toLeftOf="@id/tv_reality_unit"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+                <TextView
+                    android:id="@+id/tv_reality_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="@dimen/margin_size_5"
+                    android:gravity="center_vertical"
+                    android:text="次"
+                    android:textColor="@color/gray2"
+                    android:textSize="@dimen/text_size_15"
+                    app:layout_constraintLeft_toRightOf="@id/et_reality"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+                <ImageView
+                    android:id="@+id/iv_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reality" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_card_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    app:layout_constraintTop_toBottomOf="@id/iv_line2">
+
+                    <TextView
+                        android:id="@+id/tv_surplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="@dimen/margin_size_5"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="单价：售卡金额/次数"
+                        android:textColor="@color/gray2"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_surplus"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="@dimen/margin_size_5"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="0元"
+                        android:textColor="@color/gray2"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@id/tv_total"
+                        android:layout_marginTop="@dimen/margin_size_10"
+                        android:background="@color/col_e8" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_validity"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/rl_card_count">
+
+                    <TextView
+                        android:id="@+id/tv_validity_term"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="有效期限"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/rb_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_all_check"
+                            android:drawablePadding="@dimen/margin_size_10" />
+
+                        <EditText
+                            android:id="@+id/tv_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:hint="请输入"
+                            android:inputType="number"
+                            android:minEms="2"
+                            android:singleLine="true"
+                            android:textColor="@color/color_3"
+                            android:textSize="@dimen/text_size_15" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="个月"
+                            android:textColor="@color/gray2" />
+
+                        <CheckBox
+                            android:id="@+id/rb_valid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/margin_size_15"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_all_check"
+                            android:drawablePadding="@dimen/margin_size_10"
+                            android:singleLine="true"
+                            android:text="长期有效"
+                            android:textColor="@color/gray2"
+                            android:textSize="@dimen/text_size_15" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toBottomOf="@id/ll_validity" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/v_line"
+                android:layout_width="375dp"
+                android:layout_height="10dp"
+                android:layout_below="@id/cl_price_param"
+                android:background="#F6F6F6" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_work_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10">
+
+                <RelativeLayout
+                    android:id="@+id/rl_work_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="@dimen/margin_size_5">
+
+                    <TextView
+                        android:id="@+id/tv_work_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="@dimen/margin_size_30"
+                        android:text="使用此卡的排课/班级"
+                        android:textColor="@color/col_a"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <ImageView
+                        android:id="@+id/tv_setting_arrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_right_arrow" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_5"
+                    app:layout_constraintTop_toBottomOf="@id/rl_work_class"
+                    tools:listitem="@layout/recycle_work_class_item" />
+
+                <ImageView
+                    android:id="@+id/v_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/margin_size_5"
+                    android:background="@color/col_e8"
+                    app:layout_constraintTop_toBottomOf="@id/rv_work" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </RelativeLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+</RelativeLayout>

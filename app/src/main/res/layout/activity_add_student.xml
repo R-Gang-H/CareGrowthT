@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.AddStudentActivity">
+
+    <include
+        android:id="@+id/my_toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:text="可以请用户用爱成长APP或者微信扫描一下二维码，并指导Ta填写内容"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <ImageView
+        android:id="@+id/img_org_qrcode"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="@dimen/margin_size_30"
+        android:text="二维码"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_prompt" />
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_30"
+        android:background="@color/col_ec"
+        app:layout_constraintTop_toBottomOf="@id/img_org_qrcode" />
+
+    <TextView
+        android:id="@+id/tv_add_audit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:text="或请您帮Ta添加试听信息"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+    <EditText
+        android:id="@+id/et_stu_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:background="@drawable/add_circle_corner_transparent_bg"
+        android:hint="请输入学员姓名"
+        android:maxLength="11"
+        android:paddingLeft="@dimen/margin_size_12"
+        android:singleLine="true"
+        android:textColor="@color/color_3"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_audit" />
+
+    <EditText
+        android:id="@+id/et_stu_phone"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:background="@drawable/add_circle_corner_transparent_bg"
+        android:hint="请输入学员联系方式"
+        android:maxLength="11"
+        android:paddingLeft="@dimen/margin_size_12"
+        android:singleLine="true"
+        android:textColor="@color/color_3"
+        android:textColorHint="@color/gray"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@id/et_stu_name" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_30"
+        android:layout_marginRight="@dimen/margin_size_30"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

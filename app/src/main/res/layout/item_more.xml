@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_size_8"
+    android:layout_marginLeft="@dimen/margin_size_15"
+    android:drawableLeft="@mipmap/ic_notity_res"
+    android:drawablePadding="@dimen/margin_size_10"
+    android:text="课表具备更多视图和功能"
+    android:textColor="@color/color_57a1"
+    android:textSize="@dimen/text_size_15" />

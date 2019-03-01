@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_birth"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/tv_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:gravity="center"
+            android:padding="@dimen/margin_size_10"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_close_2"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_18" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_birth"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_f7"
+        android:orientation="vertical">
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/simple_wheelview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

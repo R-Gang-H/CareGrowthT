@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.caregrowtht.app.view.ReboundScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context="com.caregrowtht.app.activity.TeacherPermisActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/base_title_bar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_basic_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_basic_info"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_40"
+                android:background="@color/color_f6"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/margin_size_15"
+                android:text="基本信息"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_tea_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tv_basic_info">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="教师姓名*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_tea_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_tea_name">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="昵称"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="默认*老师"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_nickname">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="手机号*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:inputType="number"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_again_phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_phone_num">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="再次输入手机号*"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_again_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入"
+                    android:inputType="number"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_theacher_permis"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_40"
+            android:layout_below="@id/cl_basic_info"
+            android:background="@color/color_f6"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/margin_size_10"
+            android:text="为教师分配权限"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_13" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_theacher_permis"
+            android:layout_marginTop="@dimen/margin_size_10"
+            tools:listitem="@layout/item_screen_son" />
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_view"
+            android:layout_margin="@dimen/margin_size_15"
+            android:lineSpacingExtra="@dimen/margin_size_5"
+            android:text="@string/text_teacher_permission"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_more"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:background="@color/color_f6"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_small_btn_click"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_small_btn_click"
+                android:gravity="center"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</com.caregrowtht.app.view.ReboundScrollView>

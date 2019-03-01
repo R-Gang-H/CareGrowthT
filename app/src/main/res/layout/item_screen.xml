@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.ScreenActivity">
+
+    <TextView
+        android:id="@+id/tv_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_5"
+        android:layout_marginTop="@dimen/margin_size_30"
+        android:text="来源"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/margin_size_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.android.library.view.MyGridView
+        android:id="@+id/gv_tch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_size_10"
+        android:layout_marginLeft="@dimen/margin_size_5"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:gravity="left"
+        android:horizontalSpacing="@dimen/margin_size_10"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/margin_size_10"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_name" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:background="@color/color_f4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gv_tch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

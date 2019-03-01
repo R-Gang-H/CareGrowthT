@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/base_title_bar" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar">
+
+        <com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView
+            android:id="@+id/nested_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/refresh_layout">
+
+                <TextView
+                    android:id="@+id/tv_course_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:text="瑞思学科英语"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tv_course_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_course_name"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_13"
+                    android:drawableLeft="@mipmap/ic_course_time"
+                    android:drawablePadding="@dimen/margin_size_7"
+                    android:text="7月19日  11:00-12:00"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_student_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_course_time"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_9"
+                    android:drawableLeft="@mipmap/ic_stu_count"
+                    android:drawablePadding="@dimen/margin_size_7"
+                    android:text="班级人数 6 签到 4 请假 1"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_pending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_course_time"
+                    android:layout_marginLeft="@dimen/margin_size_7"
+                    android:layout_marginTop="@dimen/margin_size_9"
+                    android:layout_toRightOf="@id/tv_student_count"
+                    android:text="待处理 1"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_15" />
+
+                <ImageView
+                    android:id="@+id/iv_pending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_course_time"
+                    android:layout_marginLeft="@dimen/margin_size_6"
+                    android:layout_marginTop="@dimen/margin_size_9"
+                    android:layout_toRightOf="@id/tv_pending"
+                    android:padding="@dimen/margin_size_4"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_edit"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_up_table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_student_count"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_13"
+                    android:background="@mipmap/ic_up_sign_table" />
+
+                <TextView
+                    android:id="@+id/tv_upload_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_student_count"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_8"
+                    android:layout_toRightOf="@id/iv_up_table"
+                    android:background="@mipmap/ic_up_table"
+                    android:drawablePadding="@dimen/margin_size_7"
+                    android:gravity="center"
+                    android:text="上传签到表"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_13" />
+
+                <TextView
+                    android:id="@+id/tv_teach_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_upload_sign"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_8"
+                    android:drawableLeft="@mipmap/ic_teach_style"
+                    android:drawablePadding="@dimen/margin_size_7"
+                    android:text="教学主题:  少儿英语第一课"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_15" />
+
+
+                <TextView
+                    android:id="@+id/tv_course_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_teach_lib"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:background="#e1eefa"
+                    android:lineSpacingExtra="@dimen/margin_size_5"
+                    android:paddingBottom="@dimen/margin_size_10"
+                    android:paddingLeft="@dimen/margin_size_15"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:paddingTop="@dimen/margin_size_10"
+                    android:text="熟悉上课环境， 和全英文对话环境。熟悉A， B，C的发音和身体操。"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_13"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_course_task"
+                    android:orientation="vertical">
+                    <!--有数据 集体-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_mutil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                    <!--有数据 个人 -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_single"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_emtity"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_size_80"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <!--无数据-->
+                <RelativeLayout
+                    android:id="@+id/rl_yes_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_course_task"
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:background="@color/color_f4"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/iv_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_size_100"
+                        android:drawablePadding="8dp"
+                        android:drawableTop="@mipmap/ic_empty"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/iv_empty"
+                        android:layout_marginEnd="@dimen/margin_size_60"
+                        android:layout_marginTop="@dimen/margin_size_8"
+                        android:src="@mipmap/ic_line" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_marginRight="@dimen/margin_size_20"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_add_more" />
+
+</RelativeLayout>

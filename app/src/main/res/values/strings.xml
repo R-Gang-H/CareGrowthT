@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">爱成长教师端</string>
+    <string name="app_feedback_hint">对我们的软件有什么建议和意见，请提交给我们，我们会做的更好。</string>
+    <string name="app_feedback">请输入你的宝贵建议和意见~</string>
+    <string name="submit">提交</string>
+    <string name="login_warn">点击登录表示您已经阅读并且同意</string>
+    <string name="user_protocol">《爱成长用户协议》</string>
+    <string name="rationale_camera">这个应用程序需要访问你的相机，这样你就可以拍照了。</string>
+    <string name="rationale_file">这个应用程序需要访问你读取权限，这样你就可以查看文件了。</string>
+    <string name="set_personal_profile">设置个人信息</string>
+
+    <string name="attendance">出勤人数:\t12</string>
+    <string name="course_count">消课总数:\t24节</string>
+    <string name="rationale_call_phone">这个应用程序需要访问你的电话，这样你就可以发短信了。</string>
+    <string name="network_load_error">网络不太顺畅</string>
+    <string name="refresh_try">重新加载</string>
+    <string name="no_content">暂无内容</string>
+    <string name="loading">正在加载中…</string>
+
+    <!-- Transitions android:transitionName="square_transition" -->
+    <string name="transition_name" translatable="false">shareNames</string>
+
+    <string name="appbar_spring_behavior">android.support.design.widget.AppBarLayoutSpringBehavior</string>
+    <string name="appbar_fling_fix_behavior">android.support.design.widget.AppBarFlingFixBehavior</string>
+    <string name="search_contacts">搜索姓名</string>
+    <string name="course_time_tips">创建一张新卡</string>
+    <string name="text_dialog_prompt_org">1、如果机构已经在电脑或IPAD爱成长机构端被创建成功过,请不要重复创建机构,只需加入即可\n2、创建新机构后,您将成为机构创建者,系统默认您的权限为机构超级管理员;我们建议使用<font color='#539FE0'>机构所有者的手机号登陆并创建机构</font>,担任超级管理员角色,方便以后的管理工作</string>
+    <string name="text_dialog_prompt_unbind">执行该操作， 这张课时卡的剩余次数（金额或时间）将清0， 且不能复原， 是否执行该操作？</string>
+    <string name="text_prompt_conflict">通过以下方式可以激活学员：\n<font color='#69ACE5'>①</font>为学员购买新卡，\t<font color='#69ACE5'>②</font>选定某张课时卡延长有效期\n<font color='#69ACE5'>③</font>选定某张课时卡延长有效期</string>
+    <string name="ilovegrowth_cn">爱成长机构端拥有更多丰富功能，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作：</string>
+    <string name="text_teacher_permission">如您需要新增或者修改权限，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作。</string>
+    <!--您没有此操作的权限-->
+    <string name="text_role">您没有此操作的权限</string>
+</resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.CreateCourseTypeActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_course_type_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/toolbar"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintTop_toBottomOf="@id/tv_basic_info">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:text="课程分类名称"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_15" />
+
+        <EditText
+            android:id="@+id/et_course_type_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="120dp"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入"
+            android:paddingRight="@dimen/margin_size_15"
+            android:textColor="@color/gray2"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/col_e8" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_check_color"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/rl_course_type_name"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_size_15"
+        android:text="选择颜色"
+        android:textColor="@color/col_a"
+        android:textSize="@dimen/text_size_13" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_check_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/recycler_view"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:background="@color/color_f6"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+    </LinearLayout>
+
+</RelativeLayout>

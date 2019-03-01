@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.ContactsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ToolbarTheme"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/rl_back_button"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/iv_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_back" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_next_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:visibility="visible">
+
+                    <CheckBox
+                        android:id="@+id/tv_teacher_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:button="@null"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <CheckBox
+                        android:id="@+id/tv_student_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:button="@null"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="标题"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18" />
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
+                android:id="@+id/horizonMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:scrollbars="none"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/teacherMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#ffffff"
+                        android:orientation="horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/studentMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#ffffff"
+                        android:orientation="horizontal" />
+
+                    <ImageView
+                        android:id="@+id/iv_search"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_search" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!--搜索框-->
+            <com.nanchen.wavesidebar.SearchEditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawablePadding="5dp"
+                android:drawableStart="@color/white"
+                android:hint="@string/search_contacts"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minWidth="@dimen/margin_size_30"
+                android:singleLine="true"
+                android:textColorHint="@color/col_tb"
+                android:textSize="15sp"
+                app:drawableDel="@mipmap/ic_close" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:background="@color/col_e1"
+            app:layout_constraintTop_toBottomOf="@id/ll_search" />
+
+        <LinearLayout
+            android:id="@+id/ll_tob"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_size_30"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:background="@drawable/shape_round_corner_notify_obj"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_line">
+
+            <TextView
+                android:id="@+id/tv_thecher"
+                android:layout_width="@dimen/margin_size_100"
+                android:layout_height="match_parent"
+                android:background="@drawable/notify_obj_round_left"
+                android:gravity="center"
+                android:text="教师"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/tv_student"
+                android:layout_width="@dimen/margin_size_100"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="学员"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_14" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_10"
+            app:layout_constraintTop_toBottomOf="@id/ll_tob">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="169dp" />
+
+            <com.caregrowtht.app.view.wavesidebar.WaveSideBarView
+                android:id="@+id/side_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="169dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_size_25"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_small_btn_click"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_small_btn_click"
+                android:gravity="center"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+        </LinearLayout>
+
+        <com.caregrowtht.app.view.LoadingFrameView
+            android:id="@+id/load_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/add_circle_corner_transparent_bg"
+    tools:context="com.caregrowtht.app.activity.CourserReleaseActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_course_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="写点什么吧。\n学员的表现， 作业，或者有用的知识点."
+                android:lineSpacingExtra="3dp"
+                android:maxLines="6"
+                android:minLines="3"
+                android:paddingLeft="@dimen/margin_size_15"
+                android:paddingTop="@dimen/margin_size_20"
+                android:paddingRight="@dimen/margin_size_15"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/margin_size_16" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_16"
+                app:layout_constraintTop_toBottomOf="@id/et_course_intro" />
+
+            <ImageView
+                android:id="@+id/iv_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_0.5"
+                android:layout_marginTop="@dimen/margin_size_16"
+                android:background="@color/color_e6"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+            <LinearLayout
+                android:id="@+id/ll_atter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_55"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/iv_line">
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_image" />
+
+                <ImageView
+                    android:id="@+id/iv_file"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_file" />
+
+                <ImageView
+                    android:id="@+id/iv_video"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_video" />
+
+                <ImageView
+                    android:id="@+id/iv_camera"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_camer" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_3"
+                android:background="@color/color_f4"
+                app:layout_constraintTop_toBottomOf="@id/ll_atter" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/iv_line1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_size_45"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:drawableLeft="@mipmap/ic_send_stu"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="选择要发送的学员"
+                    android:textColor="@color/color_3" />
+
+                <CheckBox
+                    android:id="@+id/tv_select_stu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_size_45"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_size_15"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_all_check"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="全选"
+                    android:textColor="@color/color_3" />
+
+                <com.android.library.view.MyGridView
+                    android:id="@+id/gv_tch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_select_stu"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_20"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:layout_marginBottom="@dimen/margin_size_17"
+                    android:gravity="left"
+                    android:horizontalSpacing="@dimen/margin_size_10"
+                    android:numColumns="5"
+                    android:verticalSpacing="@dimen/margin_size_10" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18" />
+
+    <com.white.progressview.CircleProgressView
+        android:id="@+id/circle_progress_fill_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:progress="10"
+        android:visibility="gone"
+        app:innerPadding="3dp"
+        app:outerSize="3dp"
+        app:progressReachColor="@android:color/darker_gray"
+        app:progressStyle="FillInnerArc"
+        app:radius="30dp" />
+
+
+</RelativeLayout>

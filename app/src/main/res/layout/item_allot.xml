@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/iv_head_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="姓名"
+        android:textColor="@color/gray2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/tv_name"
+        android:text="大橙子"
+        android:textColor="@color/gray2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_contact_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="妈妈：18511088997"
+        android:textColor="@color/color_9"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/iv_call_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/margin_size_6"
+        android:layout_toRightOf="@+id/tv_contact_details"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_phone" />
+
+    <View
+        android:id="@+id/h_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:layout_below="@id/iv_head_icon"
+        android:background="@color/color_D" />
+
+    <CheckBox
+        android:id="@+id/cb_stu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_28"
+        android:button="@drawable/selector_all_check"
+        android:clickable="false" />
+
+</RelativeLayout>

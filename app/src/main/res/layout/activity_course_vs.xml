@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f6"
+    tools:context="com.caregrowtht.app.activity.CourseVsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.gallery.SpeedRecyclerView
+        android:id="@+id/rv_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_course_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_gallery"
+        android:background="@color/white"
+        android:descendantFocusability="beforeDescendants"
+        android:fastScrollEnabled="false"
+        tools:listitem="@layout/item_course_vs" />
+
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

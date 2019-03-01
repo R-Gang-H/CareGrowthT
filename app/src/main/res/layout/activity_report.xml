@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.caregrowtht.app.activity.ReportActivity">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_classify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_9"
+                android:layout_marginLeft="@dimen/margin_size_15"
+                android:layout_marginTop="@dimen/margin_size_17"
+                android:text="请选择举报原因"
+                android:textColor="@color/col_a"
+                android:textSize="@dimen/margin_size_15" />
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/x_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_classify" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/x_recycler_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_30"
+                android:background="@drawable/selector_long_btn_click"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+        </RelativeLayout>
+
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+</LinearLayout>
+

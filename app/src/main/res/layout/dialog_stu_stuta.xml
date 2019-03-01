@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_size_10">
+
+        <cn.carbs.android.avatarimageview.library.AvatarImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/margin_size_45"
+            android:layout_height="@dimen/margin_size_45"
+            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_size_35"
+            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:gravity="center_vertical"
+            android:text="蒙奇"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15" />
+
+        <ImageButton
+            android:id="@+id/ib_colse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:padding="@dimen/margin_size_10"
+            android:src="@mipmap/ic_close_2" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_avatar"
+            android:lineSpacingExtra="9dp"
+            android:padding="@dimen/margin_size_12"
+            android:text="当前状态  已签到"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_handler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_status"
+            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginRight="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_handler_bg"
+            android:gravity="left"
+            android:padding="@dimen/margin_size_8"
+            android:text="2018-04-24 12:24  爸爸薛岩  事假"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_11"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_course_canel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_handler"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/ic_right_arrow"
+            android:paddingRight="@dimen/margin_size_15"
+            android:paddingTop="@dimen/margin_size_10"
+            android:text="消课失败，请手动消课"
+            android:textColor="@color/blueLight"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

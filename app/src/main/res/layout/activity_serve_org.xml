@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/my_toolbar"
+        layout="@layout/base_title_bar"/>
+
+    <ImageView
+        android:id="@+id/iv_avatar_add"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_below="@id/my_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_add_inst" />
+
+    <Button
+        android:id="@+id/btn_add_org"
+        android:layout_width="127dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/iv_avatar_add"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/ic_enrolment_num"
+        android:gravity="center"
+        android:text="加入机构"
+        android:textColor="#A3D65C"
+        android:textSize="@dimen/text_size_18" />
+
+    <ImageView
+        android:id="@+id/iv_avatar_create"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_below="@id/btn_add_org"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_create_inst" />
+
+    <Button
+        android:id="@+id/btn_create_org"
+        android:layout_width="127dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/iv_avatar_create"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/all_bg_unselect"
+        android:gravity="center"
+        android:text="创建机构"
+        android:textColor="#52A0E2"
+        android:textSize="@dimen/text_size_18" />
+
+</RelativeLayout>

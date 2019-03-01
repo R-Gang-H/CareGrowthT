@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_size_5"
+    app:cardCornerRadius="@dimen/margin_size_20"
+    app:elevation="0dp">
+
+    <TextView
+        android:id="@+id/tv_card_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_size_10"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:singleLine="true"
+        android:text="英语课的A班  -2次"
+        android:textColor="@color/b5b5b5"
+        android:textSize="15sp" />
+
+</androidx.cardview.widget.CardView>

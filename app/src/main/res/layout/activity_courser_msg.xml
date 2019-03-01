@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.CourserMsgActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/margin_size_9"
+        android:background="@color/col_f0"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_course_msg_type" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_edit_course"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_marginLeft="@dimen/margin_size_15"
+                android:scaleType="center"
+                android:src="@mipmap/ic_edit_notify" />
+
+            <ImageView
+                android:id="@+id/iv_del_course"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_toRightOf="@id/iv_edit_course"
+                android:scaleType="center"
+                android:src="@mipmap/ic_del_course" />
+
+            <TextView
+                android:id="@+id/tv_hint_drag"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_35"
+                android:layout_below="@id/iv_edit_course"
+                android:layout_marginLeft="@dimen/margin_size_15"
+                android:background="@color/color_f5"
+                android:drawableLeft="@mipmap/ic_more_tips"
+                android:drawablePadding="@dimen/margin_size_5"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_size_10"
+                android:text="可拖拽到左侧的其他分类" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_board_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_hint_drag"
+                tools:listitem="@layout/column_item" />
+
+            <TextView
+                android:id="@+id/tv_no_course"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_hint_drag"
+                android:drawablePadding="@dimen/margin_size_20"
+                android:drawableTop="@mipmap/icon_file"
+                android:gravity="center_horizontal"
+                android:paddingVertical="160dp"
+                android:text="此分类下没有排课"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

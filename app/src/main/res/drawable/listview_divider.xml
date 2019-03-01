@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:left="10dp"
+        android:right="10dp">
+        <shape android:shape="rectangle" >
+            <solid android:color="#F4F4F4" />
+        </shape>
+    </item>
+
+    <!--这里我们让分割线距离左边界10，距离右边距10，并为它设置颜色f4。-->
+</layer-list>

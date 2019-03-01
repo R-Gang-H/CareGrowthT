@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_size_10"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardBackgroundColor="#f3f3f5"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_35">
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/iv_Avatar"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:src="@mipmap/ic_collect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_relative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:text="集体"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_Avatar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_stu_info"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_40"
+        android:background="@drawable/states_stu_right"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_size_30"
+        android:paddingRight="@dimen/margin_size_30"
+        android:text="2019/02/13 大提琴课周六10:00班"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_left"
+            android:layout_width="47dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_5"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/iv_child_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:src="@mipmap/ic_per_avatar_default" />
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:layout_marginRight="@dimen/margin_size_15">
+
+            <TextView
+                android:id="@+id/tv_child_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:text="郝瀚瀚"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_16"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="4"
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip"
+                android:text="今天练琴练的还不错。持续了15分钟。"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintTop_toBottomOf="@id/tv_child_name" />
+
+            <LinearLayout
+                android:id="@+id/ll_atter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+            <com.caregrowtht.app.view.ninegrid.NineGridTestLayout
+                android:id="@+id/layout_nine_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/ll_atter"
+                app:sapcing="4dp" />
+
+            <RelativeLayout
+                android:id="@+id/ll_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layout_nine_grid">
+
+                <cn.carbs.android.avatarimageview.library.AvatarImageView
+                    android:id="@+id/iv_author_avatar"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:src="@mipmap/ic_per_avatar_default"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_toRightOf="@id/iv_author_avatar"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_author_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="老师  刘老师"
+                        android:textColor="@color/gray2"
+                        android:textSize="@dimen/text_size_14"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_author_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:text="18-07-11 11:54"
+                        android:textColor="@color/color_9"
+                        android:textSize="@dimen/text_size_12" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_milestone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/margin_size_10"
+                    android:src="@mipmap/ic_coment" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/detail"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/ll_author">
+
+                <LinearLayout
+                    android:id="@+id/ll_like"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/praise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/likeicon"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp" />
+
+                    <TextView
+                        android:id="@+id/commentary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="@dimen/margin_size_6"
+                        android:paddingLeft="7dp"
+                        android:paddingBottom="7dp"
+                        android:text="多多，阳阳，新惠子，王小树，李恒，小小鱼，方青，宇涵，杨咪"
+                        android:textColor="@color/blueLight"
+                        android:textSize="@dimen/text_size_15" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/reply_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_e4"
+                    android:textSize="15sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_marginLeft="@dimen/margin_size_60"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@color/color_e4"
+        app:layout_constraintTop_toBottomOf="@id/cl_child" />
+
+</LinearLayout>

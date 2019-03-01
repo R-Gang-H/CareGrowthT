@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_exist"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_size_15"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#fff3f3f5"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_size_13"
+        android:text="老师3人 已回执1人  未回执2人"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_14" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title" />
+
+</RelativeLayout>

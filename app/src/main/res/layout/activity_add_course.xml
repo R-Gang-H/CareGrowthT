@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.AddCourseActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <TextView
+        android:id="@+id/tv_online_priview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_45"
+        android:background="@color/color_f6"
+        android:button="@null"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_size_15"
+        android:text="所属排课：英语课的A班"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_class_time"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:gravity="center_vertical"
+        android:text="上课时段"
+        android:textColor="@color/col_a"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_online_priview" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_class_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:minHeight="48dp"
+        app:layout_constraintRight_toLeftOf="@id/iv_class_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_online_priview"
+        tools:listitem="@layout/item_class_time" />
+
+    <ImageView
+        android:id="@+id/iv_class_time"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:paddingLeft="@dimen/margin_size_15"
+        android:paddingRight="@dimen/margin_size_15"
+        android:scaleType="center"
+        android:src="@mipmap/ic_add_class_time"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_online_priview" />
+
+    <ImageView
+        android:id="@+id/iv_line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:background="@color/color_f6"
+        app:layout_constraintTop_toBottomOf="@id/rv_class_times" />
+
+    <TextView
+        android:id="@+id/tv_repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/margin_size_15"
+        android:gravity="center_vertical"
+        android:text="重复"
+        android:textColor="@color/col_a"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <TextView
+        android:id="@+id/tv_weekly"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_size_6"
+        android:background="@null"
+        android:drawableEnd="@mipmap/ic_down_1"
+        android:drawablePadding="@dimen/margin_size_5"
+        android:gravity="center_vertical"
+        android:text="每周"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintRight_toLeftOf="@id/et_end"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <TextView
+        android:id="@+id/et_end"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="结束"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintRight_toLeftOf="@id/tv_of"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <TextView
+        android:id="@+id/tv_of"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_size_6"
+        android:background="@null"
+        android:drawableEnd="@mipmap/ic_down_1"
+        android:drawablePadding="@dimen/margin_size_5"
+        android:gravity="center_vertical"
+        android:text="于"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintRight_toLeftOf="@id/et_after"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <EditText
+        android:id="@+id/et_after"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="请输入"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintRight_toLeftOf="@id/tv_after_end"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <TextView
+        android:id="@+id/tv_after_end"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin_size_15"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:text="次后结束"
+        android:textColor="@color/gray2"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+
+    <Button
+        android:id="@+id/btn_check_conflict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_small_btn_click"
+        android:gravity="center"
+        android:text="检查排课冲突"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_repeat" />
+
+    <Button
+        android:id="@+id/btn_dereact_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_small_btn_click"
+        android:gravity="center"
+        android:text="直接排入课表"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_repeat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

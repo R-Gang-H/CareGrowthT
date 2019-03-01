@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.InviteStuRegActivity">
+
+    <include layout="@layout/base_title_bar" />
+
+    <ImageView
+        android:id="@+id/iv_qrcode"
+        android:layout_width="212dp"
+        android:layout_height="212dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_public_num" />
+
+    <TextView
+        android:id="@+id/tv_theacher_invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_qrcode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_size_30"
+        android:text="王老师邀请您关注爱成长公众号"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+    <com.android.library.view.CircleImageView
+        android:id="@+id/iv_org_img"
+        android:layout_width="@dimen/margin_size_35"
+        android:layout_height="@dimen/margin_size_35"
+        android:layout_above="@id/tv_theacher_invite"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:layout_toLeftOf="@id/tv_org_name"
+        android:src="@mipmap/ic_avatar_default" />
+
+    <TextView
+        android:id="@+id/tv_org_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_theacher_invite"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:text="金色雨林清河店"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_15" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/rl_shard"
+        android:layout_margin="@dimen/margin_size_15">
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/col_e8"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_size_10"
+            android:paddingRight="@dimen/margin_size_10"
+            android:text="发送方式"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_13" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_shard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_size_30">
+
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size_45"
+            android:drawablePadding="@dimen/margin_size_10"
+            android:drawableTop="@mipmap/wechat1_icon"
+            android:text="微信发给学员"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/tv_wechat"
+            android:drawablePadding="@dimen/margin_size_10"
+            android:drawableTop="@mipmap/message_icon"
+            android:text="短信发给学员"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_12" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

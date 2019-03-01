@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EDEEEE"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_size_3">
+
+    <TextView
+        android:id="@+id/tv_comm_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lineSpacingExtra="@dimen/margin_size_6"
+        android:text="老师王瑞欣:  音色比较清楚， 基本没有错音， 节奏到后半程稍稍有点儿赶，练习的时候加上节拍器吧。"
+        android:textColor="@color/gray2"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lineSpacingExtra="@dimen/margin_size_6"
+        android:text="家长李慧 回复 王瑞欣：好的， 谢谢老师。"
+        android:textColor="@color/gray2"
+        android:textSize="15sp" />
+
+</LinearLayout>

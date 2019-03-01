@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/iv_head_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:src="@mipmap/ic_avatar_default" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="姓名"
+        android:textColor="@color/gray2"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/iv_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_formal_mobile_false" />
+
+    <ImageView
+        android:id="@+id/iv_wechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_8"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@id/iv_mobile"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_formal_wechat_false"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:text="18511088997"
+        android:textColor="@color/color_9"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_edit_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_size_15"
+        android:layout_marginTop="18dp"
+        android:drawablePadding="@dimen/margin_size_5"
+        android:drawableRight="@mipmap/ic_edit_notify"
+        android:text="超级管理员"
+        android:textColor="@color/blueLight"
+        android:textSize="15sp" />
+
+    <View
+        android:id="@+id/h_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:layout_below="@id/iv_head_icon"
+        android:background="@color/color_D" />
+
+</RelativeLayout>

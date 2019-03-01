@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.caregrowtht.app.activity.OptionClassActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_atter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="@dimen/margin_size_10"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:id="@+id/tv_class_num"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:gravity="center_vertical"
+            android:text="班级人数"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_class_least"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_4"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="班级最少"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toLeftOf="@id/et_class_num" />
+
+        <EditText
+            android:id="@+id/et_class_num"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_4"
+            android:gravity="center"
+            android:hint="请输入"
+            android:inputType="number"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toLeftOf="@id/tv_open_class" />
+
+        <TextView
+            android:id="@+id/tv_open_class"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginRight="@dimen/margin_size_15"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="名学员开课"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_4"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="最多容纳"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toLeftOf="@id/et_student_num"
+            app:layout_constraintTop_toBottomOf="@id/et_class_num" />
+
+        <EditText
+            android:id="@+id/et_student_num"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_4"
+            android:gravity="center"
+            android:hint="请输入"
+            android:inputType="number"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toLeftOf="@id/tv_student"
+            app:layout_constraintTop_toBottomOf="@id/et_class_num" />
+
+        <TextView
+            android:id="@+id/tv_student"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="名学员"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_class_num" />
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_margin="@dimen/margin_size_10"
+            android:background="@color/col_e1"
+            app:layout_constraintTop_toBottomOf="@id/et_student_num" />
+
+        <TextView
+            android:id="@+id/tv_audition_price"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:gravity="center_vertical"
+            android:text="试听价格"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+        <EditText
+            android:id="@+id/et_audition_price"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_4"
+            android:gravity="center"
+            android:hint="请输入"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone"
+            app:layout_constraintRight_toLeftOf="@id/tv_yuan"
+            app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+        <TextView
+            android:id="@+id/tv_yuan"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="元"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_line" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_40"
+        android:background="@drawable/selector_long_btn_click"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_atter" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

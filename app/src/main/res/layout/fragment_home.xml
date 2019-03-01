@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!--待审核-->
+    <RelativeLayout
+        android:id="@+id/rl_exist_org"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_80"
+            android:paddingLeft="@dimen/margin_size_10" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_no_org"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:src="@mipmap/ic_inst" />
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_avatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_size_40"
+            android:text="您需要添加一个您供职的机构"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_16" />
+
+        <Button
+            android:id="@+id/btn_add_org"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tag"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="添加机构"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

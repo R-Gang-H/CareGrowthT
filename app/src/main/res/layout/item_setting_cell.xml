@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:background="@color/white">
+
+    <!-- 按钮下灰色空白 -->
+    <RelativeLayout
+        android:id="@+id/lv_seperate_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/color_f4" />
+
+    <RelativeLayout
+        android:id="@+id/rl_setting"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/lv_seperate_line">
+
+        <com.caregrowtht.app.view.DrawableCenterTextView
+            android:id="@+id/tv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/ic_about_my"
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/margin_size_30"
+            android:text="机构名称"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+        <ImageView
+            android:id="@+id/tv_setting_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_size_15"
+            android:src="@mipmap/ic_right_arrow" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
