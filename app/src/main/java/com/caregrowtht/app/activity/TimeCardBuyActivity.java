@@ -360,6 +360,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                     } else {
                         tvCardType.setText("折扣卡");
                     }
+                    tvCardType.setText(TextUtils.equals(validMonth, "0") ? "年卡" : tvCardType.getText());
                     if (TextUtils.equals(addType, "1")) {// 1：充值缴费
                         tvTitle.setText("月/学期/年卡充值续费");
                         realityPrice = String.format("%s", TextUtils.equals(validMonth, "0") ?
