@@ -69,18 +69,23 @@ public class OfficialAdapter extends XrecyclerAdapter {
         tvPhone.setText(auditEntity.getMobile());
         tvEditTeacher.setText(auditEntity.getPower());
         tvEditTeacher.setOnClickListener(v -> {
-            if (auditEntity.getAppLogin().equals("1") || auditEntity.getWechat().equals("1")) {
-                if (!UserManager.getInstance().isTrueRole("js_1")) {
-                    U.showToast(mContext.getString(R.string.text_role));
+            String powerId = auditEntity.getPowerId();
+            if (!TextUtils.isEmpty(powerId) && powerId.equals("99999")) {// 超级管理员
+                U.showToast("超级管理员，不允许修改权限。");
+            } else {
+                if (auditEntity.getAppLogin().equals("1") || auditEntity.getWechat().equals("1")) {
+                    if (!UserManager.getInstance().isTrueRole("js_1")) {
+                        U.showToast(mContext.getString(R.string.text_role));
+                    } else {
+                        mContext.startActivity(new Intent(mContext, TeacherPermisActivity.class)
+                                .putExtra("auditEntity", auditEntity));
+                    }
                 } else {
-                    mContext.startActivity(new Intent(mContext, TeacherPermisActivity.class)
+                    mContext.startActivity(new Intent(mContext, AddTeacherActivity.class)
                             .putExtra("auditEntity", auditEntity));
                 }
-            } else {
-                mContext.startActivity(new Intent(mContext, AddTeacherActivity.class)
-                        .putExtra("auditEntity", auditEntity));
+                ((TeacherMsgActivity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
             }
-            ((TeacherMsgActivity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
         });
     }
 

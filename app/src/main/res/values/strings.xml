@@ -29,6 +29,7 @@
     <string name="text_prompt_conflict">通过以下方式可以激活学员：\n<font color='#69ACE5'>①</font>为学员购买新卡，\t<font color='#69ACE5'>②</font>选定某张课时卡延长有效期\n<font color='#69ACE5'>③</font>选定某张课时卡延长有效期</string>
     <string name="ilovegrowth_cn">爱成长机构端拥有更多丰富功能，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作：</string>
     <string name="text_teacher_permission">如您需要新增或者修改权限，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作。</string>
+    <string name="text_update_work_time">您修改了排课的时间，系统会将这节课之后所有的课删除，再重新添加。请您谨慎操作!</string>
     <!--您没有此操作的权限-->
     <string name="text_role">您没有此操作的权限</string>
 </resources>

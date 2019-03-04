@@ -104,15 +104,7 @@ public abstract class HttpCallBack<T> extends AbsCallback implements IHttpCallBa
                     onSuccess(o1);
                 }
             } else {
-                // @TODO---排课冲突强加改 start---
-                if (statusCode == 1057 || statusCode == 1055) {//检查排课冲突
-                    T o1 = new Gson().fromJson(o.toString(), gsonType);
-                    onSuccess(o1);
-                } else {
-                    onFail(statusCode, errorMsg);
-                }
-                // @TODO---排课冲突强加改 end---
-                // onFail(statusCode, errorMsg);
+                onFail(statusCode, errorMsg);
             }
         } catch (Exception e) {
             LogUtils.e("Exception", e.getMessage());

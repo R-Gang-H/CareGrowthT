@@ -48,6 +48,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -147,6 +148,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     private String isOrder = "2";//是否允许约课 1：允许 2：不允许
     private String repeat = "1";//表示重复周期 1：无 2：每天 3：每周 4：每月
     private String repeatEver = "2";//1：永远重复 2：不是永远重复
+    private String repeatCount = "1";// 重复次数默认 1
     private String classroomId;
     private String classifyId = "0";
     private String courseName;
@@ -706,12 +708,41 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             case R.id.btn_dereact_course:
                 btnDereactCourse.setEnabled(false);
                 if (updateAll) {
-                    editALes("2");
+                    if (classTimeAdapter.isTimeEdit.equals("1")) {// 修改了排课的时间， 要严重提示一下
+                        showWorkTimeDialog();
+                    } else {
+                        // 修改今后所有排课
+                        editALes("2");
+                    }
                 } else {
                     addCoursePlan("2");
                 }
                 break;
         }
+    }
+
+    /**
+     * 重要提示
+     */
+    private void showWorkTimeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(this, R.layout.dialog_prompt_org, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(R.string.text_update_work_time);
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
+        tv_ok.setOnClickListener(v -> {
+            // 修改今后所有排课
+            editALes("2");
+            dialog.dismiss();
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
     }
 
     /**
@@ -734,8 +765,9 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         String classroomId = checkValadata.getClassroomId();
         String classNum = checkValadata.getClassNum();
         String stuNum = checkValadata.getStuNum();
+        String repeatCount = checkValadata.getRepeatCount();
         HttpManager.getInstance().doAddCoursePlan("NewWorkActivity", check, orgId, isOrder,
-                courseName, courseTime.toString(), repeat, etAfter.getText().toString().trim(), isShowOfTime,
+                courseName, courseTime.toString(), repeat, repeatCount, isShowOfTime,
                 repeatEver, mainTeacher, subTeachers.toString(), students.toString(), classroomId,
                 classNum, stuNum, tryPrice, cards, classifyId, courseId,
                 new HttpCallBack<BaseDataModel<CourseEntity>>(this) {
@@ -792,8 +824,9 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         String classroomId = checkValadata.getClassroomId();
         String classNum = checkValadata.getClassNum();
         String stuNum = checkValadata.getStuNum();
+        String repeatCount = checkValadata.getRepeatCount();
         HttpManager.getInstance().doEditALesV2("NewWorkActivity", check, orgId, isOrder,
-                courseName, courseTime.toString(), repeat, etAfter.getText().toString().trim(), isShowOfTime,
+                courseName, courseTime.toString(), repeat, repeatCount, isShowOfTime,
                 repeatEver, mainTeacher, subTeachers.toString(), students.toString(), classroomId,
                 classNum, stuNum, tryPrice, cards, classifyId, classTimeAdapter.isTimeEdit, planId, courseId,
                 new HttpCallBack<BaseDataModel<CourseEntity>>(this) {
@@ -972,23 +1005,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                     U.showToast("开始时间不能小于结束时间");
                     return;
                 }
-
-                TimeEntity timeEntity = new TimeEntity();
-                timeEntity.setStartTime(String.valueOf(startTime.getTime() / 1000));
-                timeEntity.setEndTime(String.valueOf(endTime.getTime() / 1000));
-                if (position >= 0) {
-                    classTimeAdapter.isTimeEdit = "1";// 编辑了课程
-                    classTimeAdapter.timeList.remove(position);
-                    classTimeAdapter.timeList.add(position, timeEntity);
-
-                    classTimeAdapter.classTimes.remove(position);
-                    classTimeAdapter.classTimes.add(position, String.format("%s~%s", selectStartDate1, selectEndTime));
-                } else {
-                    classTimeAdapter.timeList.add(timeEntity);
-
-                    classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
-                }
-                classTimeAdapter.notifyDataSetChanged();
+                addCourseTime(position, startTime, selectStartDate1, endTime, selectEndTime);
             }).setType(new boolean[]{false, false, false, true, true, false})
                     .setRangDate(startDate, startDate)
                     .setTitleText("选择结束时间")
@@ -999,6 +1016,37 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                 .setRangDate(startDate, null)
                 .setLabel("年", "月", "日", "时", "分", "")
                 .build().show();
+    }
+
+    /**
+     * 添加上课时间段
+     *
+     * @param position
+     * @param startTime
+     * @param selectStartDate1
+     * @param endTime
+     * @param selectEndTime
+     */
+    private void addCourseTime(int position, Date startTime, String selectStartDate1, Date endTime, String selectEndTime) {
+        TimeEntity timeEntity = new TimeEntity();
+        timeEntity.setStartTime(String.valueOf(startTime.getTime() / 1000));
+        timeEntity.setEndTime(String.valueOf(endTime.getTime() / 1000));
+        if (position >= 0) {
+            classTimeAdapter.isTimeEdit = "1";// 编辑了课程
+            classTimeAdapter.timeList.remove(position);
+            classTimeAdapter.timeList.add(position, timeEntity);
+
+            classTimeAdapter.classTimes.remove(position);
+            classTimeAdapter.classTimes.add(position, String.format("%s~%s", selectStartDate1, selectEndTime));
+        } else {
+            if (updateAll) {// 修改今后所有排课
+                classTimeAdapter.isTimeEdit = "1";// 编辑了课程
+            }
+            classTimeAdapter.timeList.add(timeEntity);
+
+            classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
+        }
+        classTimeAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -1213,7 +1261,12 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         tv_ok.setOnClickListener(v -> {
             dialog.dismiss();
             if (updateAll) {
-                editALes("2");
+                if (classTimeAdapter.isTimeEdit.equals("1")) {// 修改了排课的时间， 要严重提示一下
+                    showWorkTimeDialog();
+                } else {
+                    // 修改今后所有排课
+                    editALes("2");
+                }
             } else {
                 addCoursePlan("2");
             }
@@ -1266,6 +1319,14 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
 
         StringBuilder getCourseTime() {
             return courseTime;
+        }
+
+        public String getRepeatCount() {
+            String rpCount = etAfter.getText().toString().trim();
+            if (TextUtils.isEmpty(rpCount)) {
+                return repeatCount;
+            }
+            return rpCount;
         }
 
         String getMainTeacher() {

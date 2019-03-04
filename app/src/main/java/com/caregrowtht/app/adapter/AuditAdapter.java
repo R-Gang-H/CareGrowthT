@@ -236,10 +236,10 @@ public class AuditAdapter extends XrecyclerAdapter {
                             U.showToast("教师已成功加入该机构,请分配权限");
                             mContext.startActivity(new Intent(mContext, TeacherPermisActivity.class)
                                     .putExtra("auditEntity", auditEntity));
-                            ((Activity) mContext).finish();
                         } else {
                             U.showToast("教师不属于该机构");
                         }
+                        ((Activity) mContext).finish();
                     }
 
                     @Override

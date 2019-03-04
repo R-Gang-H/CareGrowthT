@@ -1,8 +1,5 @@
 package com.caregrowtht.app.activity;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,6 +28,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -177,6 +176,8 @@ public class AddTeacherActivity extends BaseActivity {
                             HttpManager.getInstance().dologout(AddTeacherActivity.this);
                         } else if (statusCode == 1054) {
                             U.showToast("手机号码已经存在");
+                        } else if (statusCode == 1061) {
+                            U.showToast("用户已存在");
                         } else {
                             U.showToast(errorMsg);
                         }
@@ -184,6 +185,7 @@ public class AddTeacherActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable throwable) {
+                        LogUtils.d("AddTeacherActivity throwable", throwable.getMessage());
                     }
                 });
     }

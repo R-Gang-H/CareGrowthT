@@ -344,7 +344,7 @@ public class AddFormalStuActivity extends BaseActivity {
                         } else if (statusCode == 1062) {
                             U.showToast("用户已存在!");
                         } else if (statusCode == 1070) {// 超出机构允许的最大学员限制!
-                            U.showToast("机构学员人数已到达上限!");
+                            U.showToast("机构学员人数已到达上限,请登录机构端https://admin.ilovegrowth.cn升级!");
                         } else {
                             U.showToast(errorMsg);
                         }

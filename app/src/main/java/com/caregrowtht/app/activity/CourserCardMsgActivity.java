@@ -1,13 +1,7 @@
 package com.caregrowtht.app.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -34,10 +28,10 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.caregrowtht.app.uitil.ResourcesUtils.getString;
 
 /**
  * haoruigang on 2018-10-26 14:41:36

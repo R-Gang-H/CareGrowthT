@@ -40,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -339,6 +340,10 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
                 break;
             case R.id.iv_student:
+                if (TextUtils.isEmpty(courseData.getOrgCardIds())) {
+                    showNoCardDialog("“此排课没有设置课时卡”,请在“修改这节课以后的排课”中设置排课所需的课时卡。");
+                    return;
+                }
                 startActivityForResult(new Intent(this, FastenStudentActivity.class)
                         .putExtra("orgCardIds", courseData.getOrgCardIds())
                         .putExtra("studentList", (Serializable) studentLists), 3293);
@@ -351,9 +356,26 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 modifyCourseLesson("1");
                 break;
             case R.id.btn_dereact_course:
-                modifyCourseLesson("2");
+                // 严重提示一下
+                showWorkTimeDialog();
                 break;
         }
+    }
+
+    /**
+     * 无课时卡提示
+     */
+    private void showNoCardDialog(String desc) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(this, R.layout.dialog_teach_lib, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(Html.fromHtml(desc));
+        TextView tvOk = view.findViewById(R.id.tv_ok);
+        tvOk.setOnClickListener(v -> dialog.dismiss());
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
     }
 
     /**
@@ -434,24 +456,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                     U.showToast("开始时间不能小于结束时间");
                     return;
                 }
-
-                TimeEntity timeEntity = new TimeEntity();
-                timeEntity.setStartTime(String.valueOf(startTime.getTime() / 1000));
-                timeEntity.setEndTime(String.valueOf(endTime.getTime() / 1000));
-                if (position >= 0) {
-                    classTimeAdapter.timeList.remove(position);
-                    classTimeAdapter.timeList.add(position, timeEntity);
-                } else {
-                    classTimeAdapter.timeList.add(timeEntity);
-                }
-
-                if (position >= 0) {
-                    classTimeAdapter.classTimes.remove(position);
-                    classTimeAdapter.classTimes.add(position, String.format("%s~%s", selectStartDate1, selectEndTime));
-                } else {
-                    classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
-                }
-                classTimeAdapter.notifyDataSetChanged();
+                addCourseTime(position, startTime, selectStartDate1, endTime, selectEndTime);
             }).setType(new boolean[]{false, false, false, true, true, false})
                     .setRangDate(startDate, startDate)
                     .setTitleText("选择结束时间")
@@ -462,6 +467,59 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 .setRangDate(startDate, null)
                 .setLabel("年", "月", "日", "时", "分", "")
                 .build().show();
+    }
+
+    /**
+     * 重要提示
+     */
+    private void showWorkTimeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(this, R.layout.dialog_prompt_org, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(R.string.text_update_work_time);
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
+        tv_ok.setOnClickListener(v -> {
+            // 修改这一节课
+            modifyCourseLesson("2");
+            dialog.dismiss();
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    /**
+     * 添加上课时间段
+     *
+     * @param position
+     * @param startTime
+     * @param selectStartDate1
+     * @param endTime
+     * @param selectEndTime
+     */
+    private void addCourseTime(int position, Date startTime, String selectStartDate1, Date endTime, String selectEndTime) {
+
+        TimeEntity timeEntity = new TimeEntity();
+        timeEntity.setStartTime(String.valueOf(startTime.getTime() / 1000));
+        timeEntity.setEndTime(String.valueOf(endTime.getTime() / 1000));
+
+        if (position >= 0) {
+            classTimeAdapter.timeList.remove(position);
+            classTimeAdapter.timeList.add(position, timeEntity);
+
+            classTimeAdapter.classTimes.remove(position);
+            classTimeAdapter.classTimes.add(position, String.format("%s~%s", selectStartDate1, selectEndTime));
+        } else {
+            classTimeAdapter.timeList.add(timeEntity);
+
+            classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
+        }
+        classTimeAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -594,8 +652,9 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
             tv_ok.setText("排入课表");
         }
         tv_ok.setOnClickListener(v -> {
+            // 严重提示一下
+            showWorkTimeDialog();
             dialog.dismiss();
-            modifyCourseLesson("2");
         });
         tv_cancel.setOnClickListener(v -> dialog.dismiss());
         dialog.setCancelable(false);

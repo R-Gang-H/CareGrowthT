@@ -1,9 +1,6 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +15,7 @@ import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
@@ -25,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -199,6 +198,14 @@ public class InitDataActivity extends BaseActivity implements ViewOnItemClick {
                 startActivity(new Intent(this, FormalActivity.class)
                         .putExtra("msgEntity", msgEntity));
                 break;
+        }
+    }
+
+    @Override
+    public void onEvent(ToUIEvent event) {
+        super.onEvent(event);
+        if (event.getWhat() == ToUIEvent.REFERSH_NEWCARD || event.getWhat() == ToUIEvent.REFERSH_ACTIVE_STU) {
+            getOrgTeachers("1");// 48.获取机构的教师
         }
     }
 }

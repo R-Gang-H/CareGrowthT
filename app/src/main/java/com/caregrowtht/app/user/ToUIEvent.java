@@ -25,7 +25,7 @@ public class ToUIEvent {
     public static final int REFERSH_COURSE_TYPE = 16;//刷新课程类型列表
     public static final int REFERSH_TEACHER = 17;//刷新教师用户信息
     public static final int REFERSH_ALLOT = 18;//刷新课程补位详细信息
-    public static final int REFERSH_ACTIVE_TEACH = 19;//刷新教室列表及审核数
+    public static final int REFERSH_ACTIVE_TEACH = 19;//刷新教师列表及审核数
     public static final int REFERSH_STU_CARDS = 20;//为学员添加课时卡
     public static final int REFERSH_COURSE_WORK = 21;//刷新课时卡下的排课
     public static final int REFERSH_SIGN_TABLE = 22;//刷新签到表删除
