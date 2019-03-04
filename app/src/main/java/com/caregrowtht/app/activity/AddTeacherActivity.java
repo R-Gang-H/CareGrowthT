@@ -176,6 +176,8 @@ public class AddTeacherActivity extends BaseActivity {
                             HttpManager.getInstance().dologout(AddTeacherActivity.this);
                         } else if (statusCode == 1054) {
                             U.showToast("手机号码已经存在");
+                        } else if (statusCode == 1060) {
+                            U.showToast("电话号码和名字不匹配");
                         } else if (statusCode == 1061) {
                             U.showToast("用户已存在");
                         } else {

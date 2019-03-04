@@ -177,11 +177,11 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                                 tvAuditing.setText("待审核");
                                 tag.setText("等待机构审核通过");
                                 refreshLayout.setEnableRefresh(false);
-//                    } else {
-//                        rlNoOrg.setVisibility(View.VISIBLE);
-//                        tvAuditing.setText("审核不通过");
-//                        tag.setText("审核不通过");
-//                        refreshLayout.setEnableRefresh(false);
+                            } else {
+                                rlNoOrg.setVisibility(View.VISIBLE);
+                                tvAuditing.setText("审核不通过");
+                                tag.setText("审核不通过");
+                                refreshLayout.setEnableRefresh(false);
                             }
                         }
                         refreshLayout.finishLoadmore();
