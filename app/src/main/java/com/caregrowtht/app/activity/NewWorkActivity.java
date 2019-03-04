@@ -146,7 +146,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     private String stuNum = "0";
     private String audiPrice;
     private String isOrder = "2";//是否允许约课 1：允许 2：不允许
-    private String repeat = "1";//表示重复周期 1：无 2：每天 3：每周 4：每月
+    private String repeat = "1";//表示重复周期 1：无 2：每天 3：每周
     private String repeatEver = "2";//1：永远重复 2：不是永远重复
     private String repeatCount = "1";// 重复次数默认 1
     private String classroomId;
@@ -317,7 +317,8 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                     !TextUtils.equals(repeatEndTime, "0")) {
                 position = 1;// "于日前"
                 etAfter.setText(repeatEndTime);
-            } else if (!TextUtils.isEmpty(repeatCount)) {
+            } else if (!TextUtils.isEmpty(repeatCount) &&
+                    !TextUtils.equals(repeatCount, "0")) {
                 position = 0;// "于"
                 etAfter.setText(repeatCount);
             }
@@ -1321,7 +1322,10 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             return courseTime;
         }
 
-        public String getRepeatCount() {
+        String getRepeatCount() {
+            if (repeatEver.equals("1")) {// 永不结束
+                return "0";
+            }
             String rpCount = etAfter.getText().toString().trim();
             if (TextUtils.isEmpty(rpCount)) {
                 return repeatCount;
