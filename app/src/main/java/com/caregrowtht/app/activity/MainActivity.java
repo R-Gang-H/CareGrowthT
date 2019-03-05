@@ -17,12 +17,13 @@ import com.caregrowtht.app.R;
 import com.caregrowtht.app.fragment.HomeFragment;
 import com.caregrowtht.app.fragment.MomentFragment;
 import com.caregrowtht.app.fragment.StateFragment;
-import com.caregrowtht.app.okhttp.version.UpdateAppHttpUtil;
 import com.caregrowtht.app.uitil.GradientUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
+import com.caregrowtht.app.view.version.UpdateAppHttpUtil;
+import com.caregrowtht.app.view.version.UpdateCallback;
 import com.vector.update_app.UpdateAppManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -80,7 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 //实现httpManager接口的对象
                                 .setHttpManager(new UpdateAppHttpUtil())
                                 .build()
-                                .update();
+                                .checkNewApp(new UpdateCallback(MainActivity.this));
                     }
 
                     @Override
