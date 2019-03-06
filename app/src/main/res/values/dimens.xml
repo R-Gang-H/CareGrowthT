@@ -1,8 +1,5 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="dgv_overlap_if_switch_straight_line">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+
     <!--文字大小-->
     <dimen name="text_size_9">9sp</dimen>
     <dimen name="text_size_10">10sp</dimen>
@@ -18,9 +15,7 @@
     <dimen name="text_size_24">24sp</dimen>
     <dimen name="text_size_32">32sp</dimen>
     <!--距离大小-->
-    <dimen name="margin_size_0.5">0.5dp</dimen>
     <dimen name="margin_size_1">1dp</dimen>
-    <dimen name="margin_size_1.5">1.5dp</dimen>
     <dimen name="margin_size_2">2dp</dimen>
     <dimen name="margin_size_3">3dp</dimen>
     <dimen name="margin_size_4">4dp</dimen>

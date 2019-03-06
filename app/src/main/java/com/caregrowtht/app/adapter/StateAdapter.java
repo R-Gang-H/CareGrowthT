@@ -196,13 +196,14 @@ public class StateAdapter extends XrecyclerAdapter {
         } else {
             orgContent = String.format("%s\n%s", msgEntity.getOrgName(), msgEntity.getContent());
         }
-        tvTitleContent.setText(orgContent);
+        tvTitleContent.setText(TextUtils.isEmpty(orgContent) ? "" : orgContent.replace("\\n", "\n"));
         tvTitleEnd.setVisibility(View.VISIBLE);
         tvTitleEnd.setText(sentNotice);
 
+        String circleContent = msgEntity.getCircleContent();
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
-        tvContent.setVisibility(TextUtils.isEmpty(msgEntity.getCircleContent()) ? View.GONE : View.VISIBLE);
-        tvContent.setText(msgEntity.getCircleContent());
+        tvContent.setVisibility(TextUtils.isEmpty(circleContent) ? View.GONE : View.VISIBLE);
+        tvContent.setText(TextUtils.isEmpty(circleContent) ? "" : circleContent.replace("\\n", "\n"));
         String[] circlePicture = {};
         if (!TextUtils.isEmpty(msgEntity.getCirclePictures())) {
             circlePicture = msgEntity.getCirclePictures().split("#");

@@ -28,6 +28,7 @@ public class RelativeEntity implements Serializable {
     private String headImage;
     private String nickname;
     private String mobile;
+    private String is_first;
     private String status;
 
     public String getRelativeId() {
@@ -68,6 +69,14 @@ public class RelativeEntity implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getIs_first() {
+        return is_first;
+    }
+
+    public void setIs_first(String is_first) {
+        this.is_first = is_first;
     }
 
     public String getStatus() {

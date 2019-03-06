@@ -159,6 +159,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String usePrice;
     private String userBackPrice;
     private String name;
+    private String content;
 
     private String addType;
 
@@ -216,6 +217,14 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getLessonName() {

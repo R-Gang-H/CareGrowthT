@@ -260,7 +260,7 @@ public class MomentAdapter extends RecyclerView.Adapter {
                     }
 
                     ivLine.setVisibility((listModel.size() - 1) == position ? View.GONE : View.VISIBLE);//最后一个横线隐藏
-                    tvContent.setText(pData.getContent());
+                    tvContent.setText(TextUtils.isEmpty(pData.getContent()) ? "" : pData.getContent().replace("\\n", "\n"));
                     final LinearLayout llAtter = holder.itemView.findViewById(R.id.ll_atter);
                     llAtter.setVisibility(TextUtils.isEmpty(pData.getAccessory()) ? View.GONE : View.VISIBLE);
                     if (llAtter.getVisibility() == View.VISIBLE) {

@@ -4,13 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Vibrator;
-
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.BaseDataModel;
@@ -32,6 +28,10 @@ import com.caregrowtht.app.user.UserManager;
 
 import org.greenrobot.eventbus.EventBus;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -199,10 +199,13 @@ public class CourserTableActivity extends BaseActivity {
     private boolean getCourseEnd() {
         long endTime = Long.parseLong(userModel.getEndAt());
         long nowTime = System.currentTimeMillis() / 1000;
-        if (nowTime > endTime) {
-            //Course end.
-            U.showToast("该课程已结束不能执行该操作");
-            return true;
+        boolean isToday = TimeUtils.IsToday(DateUtil.getDate(endTime, "yyyy-MM-dd"));// 是否为今天
+        if (!isToday) {
+            if (nowTime > endTime) {
+                //Course end.
+                U.showToast("该课程已结束不能执行该操作");
+                return true;
+            }
         }
         return false;
     }

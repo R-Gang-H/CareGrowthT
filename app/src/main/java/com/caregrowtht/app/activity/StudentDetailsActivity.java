@@ -205,8 +205,17 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
                 GlideUtils.setGlideImg(StudentDetailsActivity.this, item.getHeadImage(), 0, ivHeadIcon);
 
                 if (!UserManager.getInstance().isTrueRole("xy_2")) {
-                    String secretPhone = item.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
-                    viewHolder.setText(R.id.tv_phone, secretPhone);
+                    if (tvTheActive.getVisibility() == View.VISIBLE) {// 是非活跃学员
+                        viewHolder.setText(R.id.tv_phone, item.getMobile());
+                    } else {
+                        if (item.getIs_first().equals("1")) {// 是否是第一家长is_first 1:是 2:不是
+                            viewHolder.setText(R.id.tv_phone, item.getMobile());
+                        } else {
+                            String secretPhone = item.getMobile().replaceAll(
+                                    "(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+                            viewHolder.setText(R.id.tv_phone, secretPhone);
+                        }
+                    }
                 } else {// 查看学员的联系方式 权限
                     viewHolder.setText(R.id.tv_phone, item.getMobile());
                 }

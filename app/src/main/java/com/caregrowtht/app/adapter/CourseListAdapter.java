@@ -46,15 +46,16 @@ public class CourseListAdapter extends XrecyclerAdapter {
         final CourseEntity entity = messageAllList.get(position);
         if (!TextUtils.isEmpty(entity.getOperateType())) {
             tvTime.setText(String.format("%s-%s",
-                    DateUtil.getDate(Long.valueOf(entity.getStart_at()), "MM月dd日 HH-mm"),
+                    DateUtil.getDate(Long.valueOf(entity.getStart_at()), "yyyy-MM-dd HH:mm"),
                     DateUtil.getDate(Long.valueOf(entity.getEnd_at()), "HH-mm")));
             tvCourseName.setVisibility(View.VISIBLE);
             tvCourseName.setText(entity.getLessonName());
             tvSign.setVisibility(View.VISIBLE);
+            tvSign.setText(entity.getOperateType().equals("1") ? "学员签到" : "机构代签到");
         } else {
             tvSign.setVisibility(View.GONE);
             tvCourseName.setVisibility(View.GONE);
-            tvTime.setText(entity.getCreate_at());
+            tvTime.setText(TextUtils.isEmpty(entity.getContent()) ? entity.getCreate_at() : entity.getContent());
         }
         if (TextUtils.isEmpty(entity.getUseNum()) && TextUtils.isEmpty(entity.getUsePrice())) {
             tvMoneyOrNum.setVisibility(View.GONE);
@@ -67,7 +68,7 @@ public class CourseListAdapter extends XrecyclerAdapter {
             tvMoneyOrNum.setText(String.format("%s\t-%s元", entity.getName(),
                     String.valueOf(Integer.valueOf(entity.getUserBackPrice()) / 100)));
         } else {
-            tvMoneyOrNum.setText("-0");
+            tvMoneyOrNum.setText(entity.getName());
         }
         tvDoTime.setText(String.format("%s\t%s", entity.getOperateName(),
                 DateUtil.getDate(Long.valueOf(entity.getCreate_at()), "yyyy-MM-dd HH:mm")));
