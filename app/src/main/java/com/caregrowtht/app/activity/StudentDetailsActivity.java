@@ -204,20 +204,20 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
                 ivHeadIcon.setTextAndColor(relationName, mContext.getResources().getColor(R.color.b0b2b6));
                 GlideUtils.setGlideImg(StudentDetailsActivity.this, item.getHeadImage(), 0, ivHeadIcon);
 
+                String secretPhone = item.getMobile().replaceAll(
+                        "(\\d{3})\\d{4}(\\d{4})", "$1****$2");
                 if (!UserManager.getInstance().isTrueRole("xy_2")) {
-                    if (tvTheActive.getVisibility() == View.VISIBLE) {// 是非活跃学员
+                    viewHolder.setText(R.id.tv_phone, secretPhone);
+                } else {// 查看学员的联系方式 权限
+                    if (TextUtils.isEmpty(formalEntity.getWechatIn())) {// 未激活学员
                         viewHolder.setText(R.id.tv_phone, item.getMobile());
                     } else {
-                        if (item.getIs_first().equals("1")) {// 是否是第一家长is_first 1:是 2:不是
+                        if (!TextUtils.isEmpty(item.getIs_first()) && item.getIs_first().equals("1")) {// 是否是第一家长is_first 1:是 2:不是
                             viewHolder.setText(R.id.tv_phone, item.getMobile());
                         } else {
-                            String secretPhone = item.getMobile().replaceAll(
-                                    "(\\d{3})\\d{4}(\\d{4})", "$1****$2");
                             viewHolder.setText(R.id.tv_phone, secretPhone);
                         }
                     }
-                } else {// 查看学员的联系方式 权限
-                    viewHolder.setText(R.id.tv_phone, item.getMobile());
                 }
             }
         };

@@ -356,8 +356,8 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 modifyCourseLesson("1");
                 break;
             case R.id.btn_dereact_course:
-                // 严重提示一下
-                showWorkTimeDialog();
+                // 修改这一节课
+                modifyCourseLesson("2");
                 break;
         }
     }
@@ -467,30 +467,6 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 .setRangDate(startDate, null)
                 .setLabel("年", "月", "日", "时", "分", "")
                 .build().show();
-    }
-
-    /**
-     * 重要提示
-     */
-    private void showWorkTimeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
-        final AlertDialog dialog = builder.create();
-        View view = View.inflate(this, R.layout.dialog_prompt_org, null);
-        TextView tvDesc = view.findViewById(R.id.tv_desc);
-        tvDesc.setText(R.string.text_update_work_time);
-        TextView tv_ok = view.findViewById(R.id.tv_ok);
-        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
-        tv_ok.setOnClickListener(v -> {
-            // 修改这一节课
-            modifyCourseLesson("2");
-            dialog.dismiss();
-        });
-        tv_cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-        dialog.setCancelable(false);
-        dialog.setView(view);
-        dialog.show();
     }
 
     /**
@@ -652,8 +628,8 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
             tv_ok.setText("排入课表");
         }
         tv_ok.setOnClickListener(v -> {
-            // 严重提示一下
-            showWorkTimeDialog();
+            // 修改这一节课
+            modifyCourseLesson("2");
             dialog.dismiss();
         });
         tv_cancel.setOnClickListener(v -> dialog.dismiss());

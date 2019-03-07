@@ -203,7 +203,7 @@ public class CourserTableActivity extends BaseActivity {
         if (!isToday) {
             if (nowTime > endTime) {
                 //Course end.
-                U.showToast("该课程已结束不能执行该操作");
+                U.showToast("抱歉,这节课早已结束,您不能再改了");
                 return true;
             }
         }
