@@ -43,8 +43,9 @@ public class Constant {
             : "https://trialadmin.ilovegrowth.cn/index.php?s=/Home/User/mindex/orgId/";
     // 用户协议
     public static final String USER_AGREEMENT = "https://trialadmin.ilovegrowth.cn/index.php?s=/Home/user/agreement";
+    public static final String BASE_VERSION = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/";
     // 版本更新 Apk 地址
-    public static final String VERSION_PATH = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/version_update.txt";
+    public static final String VERSION_PATH = BASE_VERSION + (isTest ? "version_test_update.txt" : "version_update.txt");
 
 
     // 1.获取验证码
