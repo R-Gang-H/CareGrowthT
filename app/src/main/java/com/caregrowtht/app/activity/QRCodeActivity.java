@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,8 +107,7 @@ public class QRCodeActivity extends BaseActivity {
             retentStr = String.valueOf(BitmapUtils.decode(strs[1]));
             type = "1";
         } else if (result.contains("&")) {// org=00CC&lesson=2265
-            String lessonId = result.substring(result.lastIndexOf("=") + 1);
-            retentStr = lessonId;
+            retentStr = result.substring(result.lastIndexOf("=") + 1);
             type = "2";
         } else {// 微信不能扫的
             //解密二维码
