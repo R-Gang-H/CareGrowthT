@@ -197,7 +197,8 @@ public class CourserReleaseActivity extends BaseActivity {
                 break;
             case R.id.btn_submit:
                 if (!UserManager.getInstance().isTrueRole("zy_4")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     btnSubmit.setEnabled(false);

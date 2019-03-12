@@ -166,7 +166,8 @@ public class CourserTableActivity extends BaseActivity {
                 break;
             case R.id.btn_update:
                 if (!UserManager.getInstance().isTrueRole("zy_2")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     if (getCourseEnd()) break;
@@ -176,7 +177,8 @@ public class CourserTableActivity extends BaseActivity {
                 break;
             case R.id.btn_add_course:
                 if (!UserManager.getInstance().isTrueRole("zy_2")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     startActivity(new Intent(this, AddCourseActivity.class)
@@ -186,7 +188,8 @@ public class CourserTableActivity extends BaseActivity {
                 break;
             case R.id.btn_delete:
                 if (!UserManager.getInstance().isTrueRole("zy_2")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     if (getCourseEnd()) break;

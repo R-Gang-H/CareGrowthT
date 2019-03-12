@@ -89,8 +89,8 @@ public class FormalAdapter extends XrecyclerAdapter {
                                 ((FormalActivity) mContext).getOrgChildNum();//刷新学员总数
                                 //移除
                                 messageAllList.remove(position);
-                                notifyItemRemoved(position + 1);
-                                notifyItemRangeChanged(position + 1, messageAllList.size() - position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, messageAllList.size());
                             } else {
                                 entity.setIsStar("2");
                                 notifyDataSetChanged();

@@ -150,14 +150,16 @@ public class CourserMsgActivity extends BaseActivity implements ViewOnItemClick,
                     return;
                 }
                 if (!UserManager.getInstance().isTrueRole("pk_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                 } else {
                     showDelDialog();
                 }
                 break;
             case R.id.iv_edit_course:
                 if (!UserManager.getInstance().isTrueRole("pk_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     //编辑课程分类
@@ -215,7 +217,8 @@ public class CourserMsgActivity extends BaseActivity implements ViewOnItemClick,
     public void setOnItemClickListener(View view, int position) {
         if (courseTypeList.size() - 1 == position) {
             if (!UserManager.getInstance().isTrueRole("pk_1")) {
-                U.showToast(getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog(this
+                        , getString(R.string.text_role));
             } else {
                 //添加课程分类
                 startActivity(new Intent(this, CreateCourseTypeActivity.class));
@@ -347,7 +350,8 @@ public class CourserMsgActivity extends BaseActivity implements ViewOnItemClick,
                             String courseIds = courseList.get(postion).getCourseId();
 
                             if (!UserManager.getInstance().isTrueRole("pk_1")) {
-                                U.showToast(getString(R.string.text_role));
+                                UserManager.getInstance().showSuccessDialog(CourserMsgActivity.this
+                                        , getString(R.string.text_role));
                             } else {
                                 deitLessonType(classifyId, courseIds);
                             }

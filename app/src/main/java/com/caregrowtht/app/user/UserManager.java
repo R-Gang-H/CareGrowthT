@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -44,7 +45,6 @@ import com.caregrowtht.app.okhttp.progress.MyProgressDialog;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
-import com.caregrowtht.app.view.LoadingFrameView;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
@@ -66,8 +66,8 @@ public class UserManager {
 
     public UserEntity userData = new UserEntity();
     private List<CourseEntity> cardStuList = new ArrayList<>();
-    public List<RoleEntity> roleEntityList = new ArrayList<>();
-    public List<OrgEntity> orgEntityList = new ArrayList<>();
+    private List<RoleEntity> roleEntityList = new ArrayList<>();
+    private List<OrgEntity> orgEntityList = new ArrayList<>();
 
     private ArrayList<MomentMessageEntity> mMyCollectCircles;
     private ArrayList<MomentMessageEntity> mMyStarCircles;
@@ -119,6 +119,22 @@ public class UserManager {
     }
 
     /**
+     * 提示语
+     */
+    public void showSuccessDialog(final Activity mContext, String desc) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(mContext, R.layout.dialog_teach_lib, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(desc);
+        TextView tvOk = view.findViewById(R.id.tv_ok);
+        tvOk.setOnClickListener(v -> dialog.dismiss());
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    /**
      * 自动登录
      * haoruigang on 2018-4-2 17:30:17
      *
@@ -159,10 +175,6 @@ public class UserManager {
         }
     }
 
-
-    public ArrayList<MomentMessageEntity> getmMyCollectCircles() {
-        return mMyCollectCircles;
-    }
 
     public ArrayList<MomentMessageEntity> getmMyStarCircles() {
         return mMyStarCircles;

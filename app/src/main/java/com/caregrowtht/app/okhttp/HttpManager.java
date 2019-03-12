@@ -1955,6 +1955,19 @@ public class HttpManager {
         map.put("orgId", orgId);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETORGSETTING, map, httpCallBack);
     }
+
+    /**
+     * 检查学员是否已达上限
+     *
+     * @param tag
+     * @param orgId
+     * @param httpCallBack
+     */
+    public void doCheckStudentNum(String tag, String orgId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.CHECKSTUDENTNUM, map, httpCallBack);
+    }
 }
 
 

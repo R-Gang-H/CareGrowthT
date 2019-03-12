@@ -2,7 +2,9 @@ package com.caregrowtht.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -110,7 +112,8 @@ public class OrgNotifyAdapter extends XrecyclerAdapter {
         tvHandlerName.setText(sendNotifyTime);
         tvSendNotice.setOnClickListener(v -> {
             if (!UserManager.getInstance().isTrueRole("tz_1")) {
-                U.showToast(mContext.getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog((Activity) mContext
+                        , mContext.getString(R.string.text_role));
             } else {
                 HttpManager.getInstance().doSendNoticeAgain("OrgNotifyAdapter", notifyEntity.getNotifiId(),
                         new HttpCallBack<BaseDataModel<OrgNotifyEntity>>((Activity) mContext, true) {

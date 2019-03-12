@@ -18,6 +18,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.FormalAdapter;
 import com.caregrowtht.app.adapter.FormalTheActiveAdapter;
+import com.caregrowtht.app.model.BaseBeanModel;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -325,15 +326,11 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
                 break;
             case R.id.iv_add:
                 if (!UserManager.getInstance().isTrueRole("xy_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
-                    //@TODO 暂时隐藏弹出
-//                startActivity(new Intent(this, AddStuActivity.class)
-//                        .putExtra("type", "1"));//type 1: 添加学员 2: 添加教师
-//                overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
-                    UserManager.getInstance().getCardStuList().clear();// 清空上次数据
-                    startActivity(new Intent(this, AddFormalStuActivity.class));
+                    checkStudentNum();
                 }
                 break;
             case R.id.tv_audit:
@@ -381,6 +378,36 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
                 getStudent(true, status);//10.获取机构的正式学员
                 break;
         }
+    }
+
+    /**
+     * 检查学员是否已达上限
+     */
+    private void checkStudentNum() {
+        HttpManager.getInstance().doCheckStudentNum("FormalActivity", OrgId, new HttpCallBack<BaseBeanModel>() {
+            @Override
+            public void onSuccess(BaseBeanModel data) {
+                //@TODO 暂时隐藏弹出
+//                startActivity(new Intent(this, AddStuActivity.class)
+//                        .putExtra("type", "1"));//type 1: 添加学员 2: 添加教师
+//                overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
+                UserManager.getInstance().getCardStuList().clear();// 清空上次数据
+                startActivity(new Intent(FormalActivity.this, AddFormalStuActivity.class));
+            }
+
+            @Override
+            public void onFail(int statusCode, String errorMsg) {
+                if (statusCode == 1070) {
+                    UserManager.getInstance().showSuccessDialog(FormalActivity.this
+                            , getString(R.string.version_limit));
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
     }
 
     @Override

@@ -121,6 +121,12 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
         formalEntity = (StudentEntity) getIntent().getSerializableExtra("StudentEntity");
         stuId = formalEntity.getStuId();
         orgId = UserManager.getInstance().getOrgId();
+        getStudentDetails();
+    }
+
+    private void setStuStatus() {
+        tvTheActive.setVisibility(View.GONE);
+        tvCourseTask.setVisibility(View.GONE);
         if (TextUtils.isEmpty(formalEntity.getStatus())) {
             formalEntity.setStatus("1");// 默认活跃学员
         }
@@ -137,7 +143,6 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
             default:
                 break;
         }
-        getStudentDetails();
     }
 
     private void getStudentDetails() {
@@ -170,6 +175,9 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
     }
 
     private void setData(StudentEntity data) {
+        formalEntity.setStatus(data.getActiveStatus());
+        setStuStatus();
+
         tvName.setText(data.getStuName());
         String nickName = data.getStuNickname();
         tvSmallName.setVisibility(TextUtils.isEmpty(nickName) ? View.GONE : View.VISIBLE);
@@ -336,7 +344,8 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
         tvEditCard.setOnClickListener(v -> {
             dialog.dismiss();
             if (!UserManager.getInstance().isTrueRole("xy_4")) {
-                U.showToast(getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog(this
+                        , getString(R.string.text_role));
             } else {
                 //编辑课时卡
                 startActivity(new Intent(this, TimeCardBuyActivity.class)
@@ -349,7 +358,8 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
         final TextView tvUnbind = view.findViewById(R.id.tv_unbind);
         tvUnbind.setOnClickListener(v -> {
             if (!UserManager.getInstance().isTrueRole("xy_4")) {
-                U.showToast(getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog(this
+                        , getString(R.string.text_role));
             } else {
                 showUnBindDialog(mListCard.get(position));
             }

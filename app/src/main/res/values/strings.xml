@@ -18,7 +18,7 @@
     <string name="loading">正在加载中…</string>
 
     <!-- Transitions android:transitionName="square_transition" -->
-    <string name="transition_name" translatable="false">shareNames</string>
+    <string name="transition_name">shareNames</string>
 
     <string name="appbar_spring_behavior">android.support.design.widget.AppBarLayoutSpringBehavior</string>
     <string name="appbar_fling_fix_behavior">android.support.design.widget.AppBarFlingFixBehavior</string>
@@ -31,5 +31,7 @@
     <string name="text_teacher_permission">如您需要新增或者修改权限，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作。</string>
     <string name="text_update_work_time">您修改了排课的时间，系统会将这节课之后所有的课删除，再重新添加。请您谨慎操作!</string>
     <!--您没有此操作的权限-->
-    <string name="text_role">您没有此操作的权限</string>
+    <string name="text_role">您没有此操作的权限\n如需重新分配权限&#8212;>请机构管理员在“教师管理”里进行设置\n如需修改权限范围&#8212;>请机构管理员登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>的"设置"&#8212;>“权限管理”进行处理\n权限重置后,需要您退出并重新登陆</string>
+    <string name="function_limit">该功能请您登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>进行处理</string>
+    <string name="version_limit">免费试用版最多支持20名学员\n如需管理更多学员，请登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>的“我的爱成长”进行升级操作</string>
 </resources>

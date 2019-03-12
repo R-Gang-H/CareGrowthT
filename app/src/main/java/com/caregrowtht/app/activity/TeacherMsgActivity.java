@@ -1,7 +1,9 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -140,7 +142,8 @@ public class TeacherMsgActivity extends BaseActivity {
                 break;
             case R.id.iv_add:
                 if (!UserManager.getInstance().isTrueRole("js_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     //@TODO 暂时隐藏弹出

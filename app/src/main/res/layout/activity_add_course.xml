@@ -76,35 +76,35 @@
         android:textColor="@color/col_a"
         android:textSize="@dimen/text_size_15"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <TextView
         android:id="@+id/tv_weekly"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/margin_size_6"
+        android:layout_marginRight="@dimen/margin_size_6"
         android:background="@null"
-        android:drawableEnd="@mipmap/ic_down_1"
+        android:drawableRight="@mipmap/ic_down_1"
         android:drawablePadding="@dimen/margin_size_5"
         android:gravity="center_vertical"
-        android:text="每周"
+        android:text="无"
         android:textColor="@color/gray2"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintRight_toLeftOf="@id/et_end"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        app:layout_constraintRight_toLeftOf="@+id/et_end"
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <TextView
         android:id="@+id/et_end"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/margin_size_10"
         android:background="@null"
         android:gravity="center"
         android:hint="结束"
         android:textColor="@color/gray2"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintRight_toLeftOf="@id/tv_of"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/tv_of"
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <TextView
         android:id="@+id/tv_of"
@@ -118,21 +118,23 @@
         android:text="于"
         android:textColor="@color/gray2"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintRight_toLeftOf="@id/et_after"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/et_after"
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <EditText
         android:id="@+id/et_after"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/margin_size_10"
         android:background="@null"
         android:gravity="center"
         android:hint="请输入"
+        android:imeOptions="actionNext"
         android:textColor="@color/gray2"
         android:textSize="@dimen/text_size_15"
-        app:layout_constraintRight_toLeftOf="@id/tv_after_end"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@+id/tv_after_end"
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <TextView
         android:id="@+id/tv_after_end"
@@ -141,11 +143,12 @@
         android:layout_marginEnd="@dimen/margin_size_15"
         android:background="@null"
         android:gravity="center_vertical"
-        android:text="次后结束"
+        android:text="次后"
         android:textColor="@color/gray2"
         android:textSize="@dimen/text_size_15"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_line1" />
 
     <Button
         android:id="@+id/btn_check_conflict"

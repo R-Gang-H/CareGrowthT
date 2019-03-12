@@ -1,7 +1,9 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,7 +71,8 @@ public class ClassMsgActivity extends BaseActivity {
                 break;
             case R.id.iv_add:
                 if (!UserManager.getInstance().isTrueRole("pk_2")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     //添加教室

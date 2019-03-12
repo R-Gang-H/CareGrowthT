@@ -75,6 +75,8 @@ public class NewCardsAdapter extends XrecyclerAdapter {
     TextView tvTime;
     @BindView(R.id.iv_edit_card)
     ImageView ivEditCard;
+    @BindView(R.id.iv_del_card)
+    ImageView ivDelCard;
     @BindView(R.id.tv_no_active_card)
     TextView tvNoActiveCard;
     @BindView(R.id.rl_card_time)
@@ -164,6 +166,10 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                     ivEditCard.setVisibility(View.GONE);
                     tvNoActiveCard.setVisibility(View.VISIBLE);
                 }
+            }
+            // 5:为学员添加课时卡
+            if (TextUtils.equals(cardType, "5")) {
+                ivDelCard.setVisibility(View.VISIBLE);
             }
 
             String validMonth = entity.getValidMonth();
@@ -475,6 +481,14 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                 // 4:课时卡管理
                 showEditDialog(entity);
             });
+            ivDelCard.setOnClickListener(v -> {
+                // 5:为学员添加课时卡  移除
+                cardsList.remove(position);
+                UserManager.getInstance().getCardStuList().remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,
+                        UserManager.getInstance().getCardStuList().size());
+            });
         }
 
     }
@@ -527,7 +541,8 @@ public class NewCardsAdapter extends XrecyclerAdapter {
         tvEditCard.setText("编辑");
         tvEditCard.setOnClickListener(v -> {
             if (!UserManager.getInstance().isTrueRole("ksk_1")) {
-                U.showToast(mContext.getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog((Activity) mContext
+                        , mContext.getString(R.string.text_role));
             } else {
                 //编辑课时卡
                 mContext.startActivity(new Intent(mContext, CreateCardActivity.class)

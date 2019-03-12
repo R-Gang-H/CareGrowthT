@@ -277,6 +277,8 @@ public class Constant {
     public static String DELLESSIGNSHEET = BASE_API + "delLesSignSheet";
     // 获取机构设置
     public static String GETORGSETTING = BASE_API + "getOrgSetting";
+    // 检查学员是否已达上限
+    public static String CHECKSTUDENTNUM = BASE_API + "checkStudentNum";
 
     // origin array
     public static String[] originArray = {"老学员推荐", "课程顾问招生", "爱成长引流", "进店咨询", "地推传单", "资源互换", "有偿获取", "其他"};

@@ -139,7 +139,8 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
         //学员添加新卡的类型
         if (postion < 2) {//1：充值缴费 2：购买新卡
             if (!UserManager.getInstance().isTrueRole("xy_4")) {
-                U.showToast(getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog(this
+                        , getString(R.string.text_role));
             } else {
                 startActivity(new Intent(this, NewCardBuyActivity.class)
                         .putExtra("stuDetails", stuDetails)

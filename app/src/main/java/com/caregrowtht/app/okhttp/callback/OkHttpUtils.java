@@ -64,6 +64,7 @@ public class OkHttpUtils {
                 encodeMap.put("uid", UserManager.getInstance().userData.getUid());
                 encodeMap.put("token", token);
             }
+            encodeMap.put("version", "2");
             encodeMap.put("deviceId", Build.SERIAL);
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));

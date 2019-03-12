@@ -1,6 +1,7 @@
 package com.caregrowtht.app.activity;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -151,7 +152,8 @@ public class NotifyObjActivity extends BaseActivity {
                 break;
             case R.id.btn_send:
                 if (!UserManager.getInstance().isTrueRole("tz_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                 } else {
                     sendNoticeAgain();
                 }

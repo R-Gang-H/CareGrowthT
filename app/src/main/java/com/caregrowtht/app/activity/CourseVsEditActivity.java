@@ -1,13 +1,7 @@
 package com.caregrowtht.app.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +24,10 @@ import com.caregrowtht.app.user.UserManager;
 
 import org.greenrobot.eventbus.EventBus;
 
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.caregrowtht.app.uitil.ResourcesUtils.getString;
 
 /**
  * 编辑课时卡下的排课
@@ -137,7 +131,8 @@ public class CourseVsEditActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.ll_course_vs:
                 if (!UserManager.getInstance().isTrueRole("ksk_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                 } else {
                     String number = etNumber.getText().toString().trim();
                     if (TextUtils.equals(courseCardEntity.getCardType(), "3")) {

@@ -23,6 +23,7 @@ public class StudentEntity implements Serializable {
     private String stuId;
     private String stuName;
     private String isStar;
+    private String activeStatus;
     private String nickname;
     private String stuNickname;
     private String stuAvatar;
@@ -79,8 +80,6 @@ public class StudentEntity implements Serializable {
     private String ifCostError;
     private List<LogsList> logs;
 
-    private String identity;
-
     public String getStuId() {
         return stuId;
     }
@@ -103,6 +102,14 @@ public class StudentEntity implements Serializable {
 
     public void setIsStar(String isStar) {
         this.isStar = isStar;
+    }
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus;
     }
 
     public String getStuNickname() {

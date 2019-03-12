@@ -288,7 +288,8 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                 break;
             case R.id.iv_add://新建排课
                 if (!UserManager.getInstance().isTrueRole("zy_1")) {
-                    U.showToast(mContext.getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(mActivity
+                            , mContext.getString(R.string.text_role));
                     break;
                 } else {
                     startActivity(new Intent(getActivity(), NewWorkActivity.class));

@@ -163,6 +163,16 @@
                 android:src="@mipmap/ic_edit_card"
                 android:visibility="gone" />
 
+            <ImageView
+                android:id="@+id/iv_del_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@mipmap/ic_del_time"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/tv_no_active_card"
                 android:layout_width="wrap_content"

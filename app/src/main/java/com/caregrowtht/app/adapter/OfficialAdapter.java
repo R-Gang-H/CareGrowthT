@@ -1,5 +1,6 @@
 package com.caregrowtht.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -75,7 +76,8 @@ public class OfficialAdapter extends XrecyclerAdapter {
             } else {
                 if (auditEntity.getAppLogin().equals("1") || auditEntity.getWechat().equals("1")) {
                     if (!UserManager.getInstance().isTrueRole("js_1")) {
-                        U.showToast(mContext.getString(R.string.text_role));
+                        UserManager.getInstance().showSuccessDialog((Activity) mContext
+                                , mContext.getString(R.string.text_role));
                     } else {
                         mContext.startActivity(new Intent(mContext, TeacherPermisActivity.class)
                                 .putExtra("auditEntity", auditEntity));

@@ -2,7 +2,9 @@ package com.caregrowtht.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
@@ -99,7 +101,8 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
                 break;
             case R.id.iv_add:
                 if (!UserManager.getInstance().isTrueRole("tz_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                 } else {
                     startActivity(new Intent(this, NewNotifyActivity.class)
                             .putExtra("OrgId", OrgId));

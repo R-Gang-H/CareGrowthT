@@ -63,6 +63,7 @@ public class AuditAdapter extends XrecyclerAdapter {
     private ArrayList<StudentEntity> auditData = new ArrayList<>();
     private String hintYes;
     private String hintNo;
+    private int strNum = 0;
 
     private ArrayList<StudentEntity> identityEntity = new ArrayList<>();
 
@@ -116,6 +117,7 @@ public class AuditAdapter extends XrecyclerAdapter {
                         .setMessage(String.format("您确定%s%s", name, hintYes))
                         .setPositiveButton("确定", (d, which) -> {
                             if (TextUtils.equals(type, "1")) {//type 1: 添加学员 2: 添加教师
+                                getCardByPhone(auditEntity.getPhoneNumber());// 获取共用学员数量
                                 auditsStudent(auditEntity, "1");
                             } else if (TextUtils.equals(type, "2")) {
                                 auditedTeacher(auditEntity, "1");
@@ -270,7 +272,7 @@ public class AuditAdapter extends XrecyclerAdapter {
         final TextView tvUnbind = view.findViewById(R.id.tv_unbind);
         tvUnbind.setVisibility(View.GONE);
         final TextView tvFamiliar = view.findViewById(R.id.tv_familiar);
-        tvFamiliar.setVisibility((getCardByPhone(auditEntity.getPhoneNumber()) > 0) ? View.VISIBLE : View.GONE);
+        tvFamiliar.setVisibility(strNum > 0 ? View.VISIBLE : View.GONE);
         tvFamiliar.setText("与家人共用课时卡");
         tvFamiliar.setOnClickListener(v -> {
             //与家人共用课时卡
@@ -339,28 +341,30 @@ public class AuditAdapter extends XrecyclerAdapter {
     public boolean isYesRole() {
         if (TextUtils.equals(type, "1")) {//type 1: 添加学员 2: 添加教师
             if (!UserManager.getInstance().isTrueRole("xy_1")) {
-                U.showToast(mContext.getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog((Activity) mContext
+                        , mContext.getString(R.string.text_role));
                 return true;
             }
 
         } else if (TextUtils.equals(type, "2")) {
             if (!UserManager.getInstance().isTrueRole("js_1")) {
-                U.showToast(mContext.getString(R.string.text_role));
+                UserManager.getInstance().showSuccessDialog((Activity) mContext
+                        , mContext.getString(R.string.text_role));
                 return true;
             }
         }
         return false;
     }
 
+
     // 共用学员课时卡
-    private int getCardByPhone(String phoneNum) {
-        final int[] courseStuSize = {0};
+    private void getCardByPhone(String phoneNum) {
         HttpManager.getInstance().doGetCardByPhone("FamilyShareActivity",
                 UserManager.getInstance().getOrgId(), "", phoneNum,
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
-                        courseStuSize[0] = data.getData().size();
+                        strNum = data.getData().size();
                     }
 
                     @Override
@@ -370,7 +374,7 @@ public class AuditAdapter extends XrecyclerAdapter {
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout((Activity) mContext);
                         } else if (statusCode == 1004) {// 用户不存在
-                            courseStuSize[0] = 0;
+                            strNum = 0;
                         }
                     }
 
@@ -379,6 +383,5 @@ public class AuditAdapter extends XrecyclerAdapter {
                         LogUtils.d("WorkClassActivity onError", throwable.getMessage());
                     }
                 });
-        return courseStuSize[0];
     }
 }

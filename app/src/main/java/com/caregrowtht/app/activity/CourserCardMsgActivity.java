@@ -139,7 +139,8 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
                 break;
             case R.id.iv_add:
                 if (!UserManager.getInstance().isTrueRole("ksk_1")) {
-                    U.showToast(getString(R.string.text_role));
+                    UserManager.getInstance().showSuccessDialog(this
+                            , getString(R.string.text_role));
                     break;
                 } else {
                     //新建课时卡

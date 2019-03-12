@@ -442,7 +442,8 @@ public class CourserActivity extends BaseActivity {
                         }
                         // zy_5给所有的课发布课程反馈
                         if (!UserManager.getInstance().isTrueRole(isRol)) {
-                            U.showToast(getString(R.string.text_role));
+                            UserManager.getInstance().showSuccessDialog(this
+                                    , getString(R.string.text_role));
                             break;
                         } else {
                             startActivity(new Intent(this, CourserReleaseActivity.class)

@@ -1,7 +1,6 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -345,7 +344,8 @@ public class AddFormalStuActivity extends BaseActivity {
                         } else if (statusCode == 1062) {
                             U.showToast("用户已存在!");
                         } else if (statusCode == 1070) {// 超出机构允许的最大学员限制!
-                            showUpperLimitDialog("机构学员人数已到达上限,请登录机构端https://admin.ilovegrowth.cn升级!");
+                            UserManager.getInstance().showSuccessDialog(AddFormalStuActivity.this
+                                    , getString(R.string.version_limit));
                         } else {
                             U.showToast(errorMsg);
                         }
@@ -357,22 +357,6 @@ public class AddFormalStuActivity extends BaseActivity {
                         LogUtils.d("AddFormalStuActivity onFail", throwable.getMessage());
                     }
                 });
-    }
-
-    /**
-     * 机构学员人数已到达上限提示
-     */
-    private void showUpperLimitDialog(String desc) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
-        final AlertDialog dialog = builder.create();
-        View view = View.inflate(this, R.layout.dialog_teach_lib, null);
-        TextView tvDesc = view.findViewById(R.id.tv_desc);
-        tvDesc.setText(Html.fromHtml(desc));
-        TextView tvOk = view.findViewById(R.id.tv_ok);
-        tvOk.setOnClickListener(v -> dialog.dismiss());
-        dialog.setCancelable(false);
-        dialog.setView(view);
-        dialog.show();
     }
 
     // 共用学员课时卡

@@ -74,7 +74,7 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
 
     private CourseEntity courseData;
     private String repeat = "1";//表示重复周期 1：无 2：每天 3：每周 4：每月
-    private String repeatEver = "1";//1：永远重复 2：不是永远重复
+    private String repeatEver = "2";//1：永远重复 2：不是永远重复
     private String courseId;
     private String courseName;
     private ClassTimeAdapter classTimeAdapter;
@@ -219,11 +219,10 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
                     break;
                 case 1:
                 case 2:
-                case 3:
                     etEnd.setVisibility(View.VISIBLE);
                     tvOf.setVisibility(View.VISIBLE);
                     if (isShowAfter) {//首次默认是于几次
-                        repeatEver = "1";
+                        repeatEver = "2";
                         etAfter.setVisibility(View.VISIBLE);
                         tvAfterEnd.setVisibility(View.VISIBLE);
                         break;
@@ -250,7 +249,7 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
             switch (position) {
                 case 0:
                     isShowOfTime = false;
-                    repeatEver = "1";
+                    repeatEver = "2";
                     etAfter.setVisibility(View.VISIBLE);
                     etAfter.setFocusable(true);
                     etAfter.setText("1");
@@ -262,7 +261,7 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
                     etAfter.setFocusable(false);
                     etAfter.setText(DateUtil.getSysTimeType("yyyy/MM/dd"));
                     tvAfterEnd.setVisibility(View.GONE);
-                    repeatEver = "1";
+                    repeatEver = "2";
                     break;
             }
             tvOf.setText(argValue);
@@ -305,7 +304,7 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
             return;
         }
         HttpManager.getInstance().doAddLessonV2("AddCourseActivity", check, orgId, courseTime.toString(),
-                repeat, etAfter.getText().toString().trim(), false,
+                repeat, etAfter.getText().toString().trim(), isShowOfTime,
                 repeatEver, courseId, new HttpCallBack<BaseDataModel<CourseEntity>>(this) {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
