@@ -24,6 +24,7 @@
     <color name="black">#000000</color>
     <color name="QRCodeBG">#B3000000</color>
     <color name="gray">#aaaaaa</color>
+    <color name="col_ea">#EAEAEA</color>
     <color name="gray2">#222222</color>
     <color name="gray4">#444444</color>
     <color name="hint">#909090</color>

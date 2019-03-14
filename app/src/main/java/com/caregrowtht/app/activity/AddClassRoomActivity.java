@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 /**
  * haoruigang on 2018-10-29 15:14:16
- * 添加教师
+ * 添加教室
  */
 public class AddClassRoomActivity extends BaseActivity {
 

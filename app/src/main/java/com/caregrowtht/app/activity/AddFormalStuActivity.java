@@ -331,6 +331,7 @@ public class AddFormalStuActivity extends BaseActivity {
                         btnConfirm.setFocusable(true);
                         U.showToast("添加学员成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ACTIVE_STU));
+                        startActivity(new Intent(AddFormalStuActivity.this, InviteStudentActivity.class));
                         finish();
                     }
 

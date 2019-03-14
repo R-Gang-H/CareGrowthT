@@ -1,5 +1,6 @@
 package com.caregrowtht.app.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -165,6 +166,7 @@ public class AddTeacherActivity extends BaseActivity {
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         U.showToast("成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ACTIVE_TEACH));
+                        startActivity(new Intent(AddTeacherActivity.this, InviteTeacherActivity.class));
                         finish();
                     }
 

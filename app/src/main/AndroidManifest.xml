@@ -378,6 +378,12 @@
             android:name=".activity.WorkClassEditActivity"
             android:theme="@style/courserTab"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.InviteStudentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InviteTeacherActivity"
+            android:screenOrientation="portrait" />
         <!--版本更新所需-->
         <meta-data
             android:name="android.max_aspect"
