@@ -29,7 +29,6 @@ import com.caregrowtht.app.activity.NotifityInfoActivity;
 import com.caregrowtht.app.activity.NotifyObjActivity;
 import com.caregrowtht.app.activity.StuOrderActivity;
 import com.caregrowtht.app.model.BaseDataModel;
-import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgNotifyEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -44,11 +43,8 @@ import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.ninegrid.RatioImageView;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -338,6 +334,9 @@ public class StateAdapter extends XrecyclerAdapter {
                         case "50":
                             startActivity(msgEntity, CourserActivity.class);
                             break;
+                        default:
+                            startActivity(msgEntity, NotifityInfoActivity.class);
+                            break;
                     }
                 } else if (TextUtils.equals(msgEntity.getType(), "2")) {
                     // tpye2 23：课程反馈
@@ -349,6 +348,9 @@ public class StateAdapter extends XrecyclerAdapter {
                             mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
                                     .putExtra("imputType", "2")
                                     .putExtra("circleId", msgEntity.getTargetId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+                            break;
+                        default:
+                            startActivity(msgEntity, NotifityInfoActivity.class);
                             break;
                     }
                 } else if (TextUtils.equals(msgEntity.getType(), "3")) {
@@ -379,6 +381,9 @@ public class StateAdapter extends XrecyclerAdapter {
                         case "72":// 72：课程详情
                             startActivity(msgEntity, CourserActivity.class);
                             break;
+                        default:
+                            startActivity(msgEntity, NotifityInfoActivity.class);
+                            break;
                     }
                 } else if (TextUtils.equals(msgEntity.getType(), "4")) {
                     switch (msgEntity.getType2()) {
@@ -389,6 +394,9 @@ public class StateAdapter extends XrecyclerAdapter {
                             mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
                                     .putExtra("notifyEntity", notifyEntity));
                             ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                            break;
+                        default:
+                            startActivity(msgEntity, NotifityInfoActivity.class);
                             break;
                     }
                 } else if (TextUtils.equals(msgEntity.getType(), "5")) {
@@ -417,9 +425,10 @@ public class StateAdapter extends XrecyclerAdapter {
                             mContext.startActivity(new Intent(mContext, FormalActivity.class)
                                     .putExtra("status", "3"));// 3：非活跃待确认
                             break;
+                        default:
+                            startActivity(msgEntity, NotifityInfoActivity.class);
+                            break;
                     }
-                } else {
-                    startActivity(msgEntity, NotifityInfoActivity.class);
                 }
             });
         }

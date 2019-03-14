@@ -1,7 +1,9 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -100,7 +102,7 @@ public class NewCardBuyActivity extends BaseActivity implements ViewOnItemClick 
     private void getOrgExistCard() {
 
         HttpManager.getInstance().doGetOrgCard("NewCardBuyActivity",
-                UserManager.getInstance().getOrgId(), null,
+                UserManager.getInstance().getOrgId(), "1",
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
