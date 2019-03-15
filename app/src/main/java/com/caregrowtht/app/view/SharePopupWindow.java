@@ -119,10 +119,12 @@ public class SharePopupWindow extends PopupWindow {
                                 contentValues.put(MediaStore.Images.Media.DATA,
                                         file.getAbsolutePath());
                                 uri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                                mActivity.grantUriPermission(mActivity.getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                                cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                if (uri != null) {
+                                    mActivity.grantUriPermission(mActivity.getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                                    cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                }
                             }
                         }
                         cameraIntent.putExtra("body", "内容");
