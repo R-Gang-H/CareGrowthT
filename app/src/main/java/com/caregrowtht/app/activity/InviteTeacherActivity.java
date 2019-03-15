@@ -1,5 +1,6 @@
 package com.caregrowtht.app.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -20,6 +21,7 @@ import com.umeng.socialize.media.UMImage;
 
 import java.io.File;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +38,7 @@ public class InviteTeacherActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.cl_teacher)
-    ConstraintLayout clTeacher;
+    CardView clTeacher;
     @BindView(R.id.tv_theacher_invite)
     TextView tvTheacherInvite;
     @BindView(R.id.iv_org_img)
@@ -64,9 +66,11 @@ public class InviteTeacherActivity extends BaseActivity {
         OrgEntity orgEntity = instance.getOrgEntity();
         String orgName;
         if (msgEntity != null) {
-            orgName = msgEntity.getOrgName();
+            orgName = String.format("%s", TextUtils.isEmpty(msgEntity.getOrgChainName()) ?
+                    msgEntity.getOrgName() : msgEntity.getOrgName() + msgEntity.getOrgChainName());
         } else {
-            orgName = orgEntity.getOrgName();
+            orgName = String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
+                    orgEntity.getOrgName() : orgEntity.getOrgName() + orgEntity.getOrgChainName());
         }
         GlideUtils.setGlideImg(this, orgEntity.getOrgImage(),
                 R.mipmap.ic_avatar_default, ivOrgImg);
@@ -97,13 +101,13 @@ public class InviteTeacherActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rl_back_button:
                 if (isRetent) {
-                    ImgLabelUtils.delFile(retentImg);//结束删除第一帧
                     finish();
                 }
                 break;
             case R.id.tv_wechat:
                 if (isRetent) {
                     UMImage pImg = new UMImage(this, new File(retentImg));
+                    pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, view1 -> {
                         ImgLabelUtils.delFile(retentImg);//删除
                     }).share(SHARE_MEDIA.WEIXIN);
@@ -115,6 +119,7 @@ public class InviteTeacherActivity extends BaseActivity {
                 if (isRetent) {
                     // 将bitmap转换成drawable
                     UMImage pImg = new UMImage(this, new File(retentImg));
+                    pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, new File(retentImg), view1 -> {
                         ImgLabelUtils.delFile(retentImg);//删除
                     }).shareMessage();

@@ -2,9 +2,13 @@ package com.caregrowtht.app.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import java.io.File;
+
 
 /**
  * Created by ZMM on 2017/12/6.
@@ -92,20 +97,38 @@ public class SharePopupWindow extends PopupWindow {
     public void ShareMessage() {
         mActivity.requestPermission(
                 Constant.RC_SEND,
-                new String[]{Manifest.permission.SEND_SMS},
+                new String[]{Manifest.permission.SEND_SMS
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 mActivity.getString(R.string.rationale_call_phone),
                 new PermissionCallBackM() {
                     @SuppressLint("MissingPermission")
                     @Override
                     public void onPermissionGrantedM(int requestCode, String... perms) {
-                        LogUtils.e(mActivity, "TODO: SEND_SMS Granted", Toast.LENGTH_SHORT);
-
-                        Intent sendIntent = new Intent(Intent.ACTION_VIEW);// 启动分享发送的属性
-//                        sendIntent.putExtra("address", number);// 电话号码，这行去掉的话，默认就没有电话
-//                        sendIntent.putExtra("sms_body", "");//短信内容
-                        sendIntent.setType("vnd.android-dir/mms-sms");// 分享发送的数据类型 image/*
-                        sendIntent.putExtra(Intent.EXTRA_STREAM, file);// 分享的内容
-                        mActivity.startActivity(Intent.createChooser(sendIntent, "分享"));
+                        LogUtils.e(mActivity, "TODO: SEND_SMS Granted" + file.getPath(), Toast.LENGTH_SHORT);
+//                        //由文件得到uri
+                        Uri uri = null;
+                        Intent cameraIntent = new Intent(Intent.ACTION_SEND);
+                        if (cameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
+                            if (Build.VERSION.SDK_INT < 24) {
+                                uri = Uri.parse(file.getAbsolutePath());//Uri.fromFile(file)
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT
+                                        , uri);
+                            } else {
+                                //适配安卓7.0
+                                ContentValues contentValues = new ContentValues(1);
+                                contentValues.put(MediaStore.Images.Media.DATA,
+                                        file.getAbsolutePath());
+                                uri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                                mActivity.grantUriPermission(mActivity.getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                                cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                            }
+                        }
+                        cameraIntent.putExtra("body", "内容");
+                        cameraIntent.putExtra(Intent.EXTRA_STREAM, uri);// 分享的内容
+                        cameraIntent.setType("image/png");// 分享发送的数据类型 image/*
+                        mActivity.startActivity(Intent.createChooser(cameraIntent, "分享"));// 目标应用选择对话框的标题
                     }
 
                     @Override

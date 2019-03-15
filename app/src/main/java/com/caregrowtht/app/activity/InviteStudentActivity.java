@@ -1,5 +1,6 @@
 package com.caregrowtht.app.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -63,9 +64,11 @@ public class InviteStudentActivity extends BaseActivity {
         MessageEntity msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         String orgName;
         if (msgEntity != null) {
-            orgName = msgEntity.getOrgName();
+            orgName = String.format("%s", TextUtils.isEmpty(msgEntity.getOrgChainName()) ?
+                    msgEntity.getOrgName() : msgEntity.getOrgName() + msgEntity.getOrgChainName());
         } else {
-            orgName = orgEntity.getOrgName();
+            orgName = String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
+                    orgEntity.getOrgName() : orgEntity.getOrgName() + orgEntity.getOrgChainName());
         }
         tvStudentInvite.setText(String.format("亲爱的学员%s", stuName));
         tvOrgName.setText(String.format("%s正式启用爱成长机构管理系统,您将通过“爱成长Ilovegowth”公众号进行学员管理。"
@@ -95,13 +98,13 @@ public class InviteStudentActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rl_back_button:
                 if (isRetent) {
-                    ImgLabelUtils.delFile(retentImg);//结束删除第一帧
                     finish();
                 }
                 break;
             case R.id.tv_wechat:
                 if (isRetent) {
                     UMImage pImg = new UMImage(this, new File(retentImg));
+                    pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, view1 -> {//type:1邀请孩子分享二维码
                         ImgLabelUtils.delFile(retentImg);//删除
                     }).share(SHARE_MEDIA.WEIXIN);
@@ -113,6 +116,7 @@ public class InviteStudentActivity extends BaseActivity {
                 if (isRetent) {
                     // 将bitmap转换成drawable
                     UMImage pImg = new UMImage(this, new File(retentImg));
+                    pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, new File(retentImg), view1 -> {
                         ImgLabelUtils.delFile(retentImg);//删除
                     }).shareMessage();

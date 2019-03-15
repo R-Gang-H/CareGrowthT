@@ -41,7 +41,7 @@
             android:layout_marginTop="@dimen/margin_size_15"
             android:text="亲爱的学员%s"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_17"
             app:layout_constraintStart_toStartOf="@id/iv_bg"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,11 +50,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_student_invite"
-            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_18"
             android:maxEms="18"
             android:text="%s（机构名称）正式启用爱成长机构管理系统,您将通过“爱成长Ilovegowth”公众号进行学员管理。"
             android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_14"
+            android:textSize="@dimen/text_size_13"
             app:layout_constraintEnd_toEndOf="@id/iv_bg"
             app:layout_constraintStart_toStartOf="@id/iv_bg"
             app:layout_constraintTop_toBottomOf="@id/tv_student_invite" />

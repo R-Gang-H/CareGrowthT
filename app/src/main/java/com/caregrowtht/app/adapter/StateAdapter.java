@@ -158,6 +158,7 @@ public class StateAdapter extends XrecyclerAdapter {
         ivStatus.setVisibility(View.GONE);
         llWorkDaily.setVisibility(View.GONE);
         tvHandlerName.setVisibility(View.GONE);
+        tvTitle.setVisibility(View.GONE);
         tvTitleEnd.setVisibility(View.GONE);
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);

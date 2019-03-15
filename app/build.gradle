@@ -227,6 +227,7 @@ dependencies {
     implementation 'com.lzy.net:okgo:3.0.4'
     // x5 tbs
     implementation files('libs/tbs_sdk_x5_thirdapp_v3.6.0.jar')
+    implementation 'com.klinkerapps:android-smsmms:5.1.0'
 }
 repositories {
     mavenCentral()

@@ -34,6 +34,7 @@ public class MessageEntity implements Serializable {
     private String circleCourseName;
 
     private String count;
+    private String orgChainName;
 
     public String getEventId() {
         return eventId;
@@ -209,6 +210,14 @@ public class MessageEntity implements Serializable {
 
     public void setCount(String count) {
         this.count = count;
+    }
+
+    public String getOrgChainName() {
+        return orgChainName;
+    }
+
+    public void setOrgChainName(String orgChainName) {
+        this.orgChainName = orgChainName;
     }
 
     public String getCircleCourseBeginTime() {
