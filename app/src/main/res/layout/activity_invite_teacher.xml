@@ -95,7 +95,8 @@
             android:paddingTop="@dimen/margin_size_19"
             android:text="短信发给教师"
             android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 

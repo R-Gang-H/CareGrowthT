@@ -111,22 +111,20 @@ public class SharePopupWindow extends PopupWindow {
                         if (cameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
                             if (Build.VERSION.SDK_INT < 24) {
                                 uri = Uri.parse(file.getAbsolutePath());//Uri.fromFile(file)
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT
-                                        , uri);
                             } else {
                                 //适配安卓7.0
                                 ContentValues contentValues = new ContentValues(1);
-                                contentValues.put(MediaStore.Images.Media.DATA,
-                                        file.getAbsolutePath());
+                                contentValues.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
                                 uri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                                 if (uri != null) {
                                     mActivity.grantUriPermission(mActivity.getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                                     cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                     cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
                                 }
                             }
                         }
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                         cameraIntent.putExtra("body", "内容");
                         cameraIntent.putExtra(Intent.EXTRA_STREAM, uri);// 分享的内容
                         cameraIntent.setType("image/png");// 分享发送的数据类型 image/*

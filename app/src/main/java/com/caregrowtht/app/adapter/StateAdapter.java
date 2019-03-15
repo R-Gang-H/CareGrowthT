@@ -67,6 +67,8 @@ public class StateAdapter extends XrecyclerAdapter {
 
     public List<MessageEntity> messageAllList = new ArrayList<>();
 
+    @BindView(R.id.cl_item)
+    ConstraintLayout clItem;
     @BindView(R.id.iv_type)
     ImageView ivType;
     @BindView(R.id.tv_title)
@@ -164,6 +166,7 @@ public class StateAdapter extends XrecyclerAdapter {
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
+            clItem.setClickable(false);
             tvTitle.setVisibility(View.VISIBLE);
             llWorkDaily.setVisibility(View.VISIBLE);
             String data = DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "yyyy年MM月dd日");
@@ -318,8 +321,8 @@ public class StateAdapter extends XrecyclerAdapter {
             String circleAccessory = msgEntity.getCircleAccessory();
             tvAtter.setVisibility(TextUtils.isEmpty(circleAccessory) ? View.GONE : View.VISIBLE);
 //        tvAtter.setText(circleAccessory);
-
-            holder.getView(R.id.cl_item).setOnClickListener(v -> {
+            clItem.setClickable(true);
+            clItem.setOnClickListener(v -> {
                 UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
                 if (!CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
                     U.showToast("已离职");
