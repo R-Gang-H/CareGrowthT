@@ -107,12 +107,16 @@ public class StateAdapter extends XrecyclerAdapter {
     TextView tvTodayAddIncome;
     @BindView(R.id.tv_today_add_stu)
     TextView tvTodayAddStu;
+    @BindView(R.id.tv_today_refund)
+    TextView tvTodayRefund;
     @BindView(R.id.tv_month_course_income)
     TextView tvMonthCourseIncome;
     @BindView(R.id.tv_month_add_income)
     TextView tvMonthAddIncome;
     @BindView(R.id.tv_month_add_stu)
     TextView tvMonthAddStu;
+    @BindView(R.id.tv_month_refund)
+    TextView tvMonthRefund;
     @BindView(R.id.ll_teacher_work)
     LinearLayout llTeacherWork;
     @BindView(R.id.tv_stu_work)
@@ -168,20 +172,24 @@ public class StateAdapter extends XrecyclerAdapter {
             try {
                 JSONObject jsonObject = new JSONObject(msgEntity.getContent());
                 String courseCount = getJsonString(jsonObject, "dpTodayCourseCount");
-                String courseHour = getJsonString(jsonObject, "dpTodayCourseHour");
-                tvCourseCountHour.setText(Html.fromHtml(String.format("机构排课情况:\t<font color='#333333'>%s节/%s小时</font>", courseCount, courseHour)));
+                String courseHour = getJsonString(jsonObject, "dpTodayCourseHourMinutes");
+                tvCourseCountHour.setText(Html.fromHtml(String.format("机构排课情况:\t<font color='#333333'>%s节/%s</font>", courseCount, courseHour)));
                 String todayIncome = getJsonString(jsonObject, "dpTodayCourseIncome");
                 tvTodayCourseIncome.setText(Html.fromHtml(String.format("今日消课收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayIncome) / 100))));
                 String todayCardIncome = getJsonString(jsonObject, "dpTodayCourseCardIncome");
                 tvTodayAddIncome.setText(Html.fromHtml(String.format("今日新增收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayCardIncome) / 100))));
                 String todayNewStu = getJsonString(jsonObject, "dpTodayNewStudent");
                 tvTodayAddStu.setText(Html.fromHtml(String.format("今日新增学员:\t<font color='#333333'>%s人</font>", todayNewStu)));
+                String todayRefund = getJsonString(jsonObject, "dpTodayRefund");
+                tvTodayRefund.setText(Html.fromHtml(String.format("今日退费:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayRefund) / 100))));
                 String monthIncome = getJsonString(jsonObject, "dpMonthCourseIncome");
                 tvMonthCourseIncome.setText(Html.fromHtml(String.format("本月消课收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthIncome) / 100))));
                 String monthCardIncome = getJsonString(jsonObject, "dpMonthCourseCardIncome");
                 tvMonthAddIncome.setText(Html.fromHtml(String.format("本月新增收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthCardIncome) / 100))));
                 String monthNewStu = getJsonString(jsonObject, "dpMonthNewStudent");
                 tvMonthAddStu.setText(Html.fromHtml(String.format("本月新增学员:\t<font color='#333333'>%s人</font>", monthNewStu)));
+                String monthRefund = getJsonString(jsonObject, "dpMonthRefund");
+                tvMonthRefund.setText(Html.fromHtml(String.format("本月退费:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthRefund) / 100))));
                 String yinChuQin = getJsonString(jsonObject, "dpYingChuQin");
                 String shiJiChuQin = getJsonString(jsonObject, "dpShiJiChuQin");
                 String qingJia = getJsonString(jsonObject, "dpQingjia");
@@ -356,10 +364,10 @@ public class StateAdapter extends XrecyclerAdapter {
                 } else if (TextUtils.equals(msgEntity.getType(), "3")) {
                     switch (msgEntity.getType2()) {
                         case "4": // 4：教师审核
-                            getOrgTeachers();
+                            getOrgTeachers(msgEntity.getOrgId());
                             break;
                         case "6": // 6：学员审核
-                            getAudit();
+                            getAudit(msgEntity.getOrgId());
                             break;
                         case "7": // 7：完善机构信息
                             UserManager.getInstance().showSuccessDialog((Activity) mContext
@@ -480,9 +488,8 @@ public class StateAdapter extends XrecyclerAdapter {
      */
     private ArrayList<StudentEntity> auditData = new ArrayList<>();
 
-    private void getOrgTeachers() {
-        HttpManager.getInstance().doGetOrgTeachers("TeacherMsgActivity",
-                UserManager.getInstance().getOrgId(), "2", "1",
+    private void getOrgTeachers(String orgId) {
+        HttpManager.getInstance().doGetOrgTeachers("TeacherMsgActivity", orgId, "2", "1",
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
@@ -513,10 +520,9 @@ public class StateAdapter extends XrecyclerAdapter {
                 });
     }
 
-    private void getAudit() {
+    private void getAudit(String orgId) {
         //21.获取机构的待审核学员
-        HttpManager.getInstance().doGetVerifyChild("StateAdapter",
-                UserManager.getInstance().getOrgId(),
+        HttpManager.getInstance().doGetVerifyChild("StateAdapter", orgId,
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {

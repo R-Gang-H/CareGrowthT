@@ -1,15 +1,23 @@
 package com.caregrowtht.app.uitil;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.caregrowtht.app.MyApplication;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -186,6 +194,110 @@ public class ImgLabelUtils {
         // 存储
         canvas.restore();
         return newb;
+    }
+
+    //----------------------------------------屏幕截图并分享----------------------------------------
+
+    /**
+     * 把ViewGroup转化为一个bitmap
+     */
+    public static Bitmap convertViewToBitmap(View view, int IMAGE_WIDTH, int IMAGE_HEIGHT) {
+        //由于直接new出来的view是不会走测量、布局、绘制的方法的，所以需要我们手动去调这些方法，不然生成的图片就是黑色的。
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(IMAGE_WIDTH, View.MeasureSpec.EXACTLY);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(IMAGE_HEIGHT, View.MeasureSpec.EXACTLY);
+
+        view.measure(widthMeasureSpec, heightMeasureSpec);
+        view.layout(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        Bitmap bitmap = Bitmap.createBitmap(IMAGE_WIDTH, IMAGE_HEIGHT, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+
+    /**
+     * 进行截取屏幕
+     *
+     * @param pActivity
+     * @return bitmap
+     */
+
+    public static Bitmap takeScreenShot(Activity pActivity) {
+        Bitmap bitmap = null;
+        View view = pActivity.getWindow().getDecorView();
+        // 设置是否可以进行绘图缓存
+        view.setDrawingCacheEnabled(true);
+        // 如果绘图缓存无法，强制构建绘图缓存
+        view.buildDrawingCache();
+        // 返回这个缓存视图
+        bitmap = view.getDrawingCache();
+        // 获取状态栏高度
+        Rect frame = new Rect();
+        // 测量屏幕宽和高
+        view.getWindowVisibleDisplayFrame(frame);
+        int stautsHeight = frame.top;
+        Log.d("jiangqq", "状态栏的高度为:" + stautsHeight);
+        int width = pActivity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = pActivity.getWindowManager().getDefaultDisplay().getHeight();
+        // 根据坐标点和需要的宽和高创建bitmap
+        bitmap = Bitmap.createBitmap(bitmap, 0, stautsHeight, width, height - stautsHeight);
+        view.setDrawingCacheEnabled(false);
+        view.destroyDrawingCache();
+        return bitmap;
+    }
+
+
+    /**
+     * 保存图片到sdcard中
+     *
+     * @param pBitmap
+     */
+    private static boolean savePic(Bitmap pBitmap, String fileName) {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(fileName);
+            if (null != fos) {
+                pBitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+                return true;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param filePath
+     */
+    public static void delFile(String filePath) {
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            File root = new File(filePath);
+            final File[] files = root.listFiles();
+            files[0].delete();
+        }
+    }
+
+    /**
+     * 截图
+     *
+     * @param pActivity
+     * @return 截图并且保存sdcard成功返回true，否则返回false
+     */
+
+    public static boolean shotActivity(Activity pActivity, String strName) {
+        return savePic(takeScreenShot(pActivity), strName);
+    }
+
+    public static boolean shotBitmap(View view, int IMAGE_WIDTH, int IMAGE_HEIGHT, String fileName) {
+        return savePic(convertViewToBitmap(view, IMAGE_WIDTH, IMAGE_HEIGHT), fileName);
     }
 
 

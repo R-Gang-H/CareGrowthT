@@ -151,6 +151,7 @@ public class TeacherMsgActivity extends BaseActivity {
 //                        .putExtra("type", "2"));//type 1: 添加学员 2: 添加教师
 //                overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
                     startActivity(new Intent(this, AddTeacherActivity.class)
+                            .putExtra("msgEntity", msgEntity)
                             .putExtra("type", "2"));
                 }
                 break;

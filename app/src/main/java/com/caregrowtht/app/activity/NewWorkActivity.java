@@ -1211,18 +1211,25 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
      * 教室操作弹框
      */
     private void showSchoolDialog() {
-        String[] classRooms = new String[classRoomList.size()];
-        for (int i = 0; i < classRoomList.size(); i++) {
-            classRooms[i] = classRoomList.get(i).getClassroomName();
+        if (classRoomList.size() > 0) {
+            String[] classRooms = new String[classRoomList.size()];
+            for (int i = 0; i < classRoomList.size(); i++) {
+                classRooms[i] = classRoomList.get(i).getClassroomName();
+            }
+            WheelPopup pop = new WheelPopup(this, classRooms);
+            pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
+                    .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            pop.setSelectListener((argValue, position) -> {
+                if (!TextUtils.isEmpty(argValue) && !TextUtils.isEmpty(classRoomList.get(position).getClassroomId())) {
+                    classroomId = classRoomList.get(position).getClassroomId();
+                    tvClassRoom.setText(argValue);
+                }
+                return null;
+            });
+        } else {
+            U.showToast("该机构暂无教室");
+            return;
         }
-        WheelPopup pop = new WheelPopup(this, classRooms);
-        pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
-                .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        pop.setSelectListener((argValue, position) -> {
-            classroomId = classRoomList.get(position).getClassroomId();
-            tvClassRoom.setText(argValue);
-            return null;
-        });
     }
 
     /**

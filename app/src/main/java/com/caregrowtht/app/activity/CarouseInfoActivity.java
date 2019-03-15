@@ -12,6 +12,7 @@ import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.CarouselEntity;
 import com.caregrowtht.app.uitil.ImgLabelUtils;
 import com.caregrowtht.app.view.RecoDialog;
+import com.caregrowtht.app.view.SharePopupWindow;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 

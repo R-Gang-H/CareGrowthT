@@ -59,7 +59,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/WXTheme"
+            tools:replace="theme" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">

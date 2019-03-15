@@ -21,6 +21,7 @@ import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.WorkClassAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.NewCardEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
@@ -152,7 +153,12 @@ public class CreateCardActivity extends BaseActivity {
         stuDetails = (StudentEntity) getIntent().getSerializableExtra("StudentEntity");
         addType = getIntent().getStringExtra("addType");// 学员添加新卡的类型 4:新建课时卡 5:编辑课时卡管理
         cardOperaType = getIntent().getStringExtra("cardOperaType");//cardOperaType 1:选择购买新卡 2:选择课时卡 3:新建课时卡管理
-        orgId = UserManager.getInstance().getOrgId();
+        MessageEntity msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+        } else {
+            orgId = UserManager.getInstance().getOrgId();
+        }
 
         String validMonth = cardsEntity.getValidMonth();
         if (TextUtils.equals(addType, "4")) {// 4：新建课时卡

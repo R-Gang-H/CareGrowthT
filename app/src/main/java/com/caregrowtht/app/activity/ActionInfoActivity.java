@@ -21,6 +21,7 @@ import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.ImgLabelUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.view.RecoDialog;
+import com.caregrowtht.app.view.SharePopupWindow;
 import com.google.zxing.WriterException;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;

@@ -26,6 +26,8 @@ import com.umeng.socialize.media.BaseMediaObject;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
+import java.io.File;
+
 /**
  * Created by ZMM on 2017/12/6.
  */
@@ -42,18 +44,21 @@ public class SharePopupWindow extends PopupWindow {
     private TextView ll_qq;
     private RelativeLayout tv_cancel;
 
-    public SharePopupWindow(BaseActivity mActivity, BaseMediaObject web) {
+    private final File file;
+
+    public SharePopupWindow(BaseActivity mActivity, BaseMediaObject web, File file) {
         this.mActivity = mActivity;
         this.web = web;
+        this.file = file;
         initView();
     }
 
     private void initView() {
         LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.popup_share, null);
-        tv_cancel =  view.findViewById(R.id.img_cancel);
+        tv_cancel = view.findViewById(R.id.img_cancel);
 
-        ll_weibo  = view.findViewById(R.id.tv_sina);
+        ll_weibo = view.findViewById(R.id.tv_sina);
         ll_wechat = view.findViewById(R.id.tv_wechat);
         ll_moment = view.findViewById(R.id.tv_moment);
         ll_message = view.findViewById(R.id.tv_message);
@@ -63,26 +68,7 @@ public class SharePopupWindow extends PopupWindow {
         ll_moment.setOnClickListener(v -> share(SHARE_MEDIA.WEIXIN_CIRCLE));
         ll_weibo.setOnClickListener(v -> share(SHARE_MEDIA.SINA));
         ll_qq.setOnClickListener(v -> share(SHARE_MEDIA.QZONE));
-        ll_message.setOnClickListener(view -> mActivity.requestPermission(
-                Constant.RC_SEND,
-                new String[]{Manifest.permission.SEND_SMS},
-                mActivity.getString(R.string.rationale_call_phone),
-                new PermissionCallBackM() {
-                    @SuppressLint("MissingPermission")
-                    @Override
-                    public void onPermissionGrantedM(int requestCode, String... perms) {
-                        LogUtils.e(mActivity, "TODO: SEND_SMS Granted", Toast.LENGTH_SHORT);
-                        Intent textIntent = new Intent(Intent.ACTION_SEND);
-                        textIntent.setType("text/plain");
-                        textIntent.putExtra(Intent.EXTRA_TEXT, "这是一段分享的文字");
-                        mActivity.startActivity(Intent.createChooser(textIntent, "分享"));
-                    }
-
-                    @Override
-                    public void onPermissionDeniedM(int requestCode, String... perms) {
-                        LogUtils.e(mActivity, "TODO: SEND_SMS Denied", Toast.LENGTH_SHORT);
-                    }
-                }));
+        ll_message.setOnClickListener(view -> ShareMessage());
 
         // 设置SelectPicPopupWindow的View
         this.setContentView(view);
@@ -100,28 +86,52 @@ public class SharePopupWindow extends PopupWindow {
         // 设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(dw);
 
-        // 设置透明度，改变popupWindow上边视图
-        setParams(0.5f);
         setListener();
     }
 
+    public void ShareMessage() {
+        mActivity.requestPermission(
+                Constant.RC_SEND,
+                new String[]{Manifest.permission.SEND_SMS},
+                mActivity.getString(R.string.rationale_call_phone),
+                new PermissionCallBackM() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onPermissionGrantedM(int requestCode, String... perms) {
+                        LogUtils.e(mActivity, "TODO: SEND_SMS Granted", Toast.LENGTH_SHORT);
+
+                        Intent sendIntent = new Intent(Intent.ACTION_VIEW);// 启动分享发送的属性
+//                        sendIntent.putExtra("address", number);// 电话号码，这行去掉的话，默认就没有电话
+//                        sendIntent.putExtra("sms_body", "");//短信内容
+                        sendIntent.setType("vnd.android-dir/mms-sms");// 分享发送的数据类型 image/*
+                        sendIntent.putExtra(Intent.EXTRA_STREAM, file);// 分享的内容
+                        mActivity.startActivity(Intent.createChooser(sendIntent, "分享"));
+                    }
+
+                    @Override
+                    public void onPermissionDeniedM(int requestCode, String... perms) {
+                        LogUtils.e(mActivity, "TODO: SEND_SMS Denied", Toast.LENGTH_SHORT);
+                    }
+                });
+    }
+
     // 分享
-    private void share(SHARE_MEDIA platform) {
-        if (web instanceof UMWeb){
+    public void share(SHARE_MEDIA platform) {
+        if (web instanceof UMWeb) {
 
             new ShareAction(mActivity)
                     .setPlatform(platform)
                     .setCallback(shareListener)
-                    .withMedia((UMWeb)web)
+                    .withMedia((UMWeb) web)
                     .share();
         }
 
-        if (web instanceof UMImage){
+        if (web instanceof UMImage) {
 
             new ShareAction(mActivity)
                     .setPlatform(platform)
                     .setCallback(shareListener)
-                    .withMedia((UMImage)web)
+                    .withMedia((UMImage) web)
                     .share();
         }
     }

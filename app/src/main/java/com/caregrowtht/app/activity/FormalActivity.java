@@ -392,7 +392,8 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
 //                        .putExtra("type", "1"));//type 1: 添加学员 2: 添加教师
 //                overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
                 UserManager.getInstance().getCardStuList().clear();// 清空上次数据
-                startActivity(new Intent(FormalActivity.this, AddFormalStuActivity.class));
+                startActivity(new Intent(FormalActivity.this, AddFormalStuActivity.class)
+                        .putExtra("msgEntity", msgEntity));
             }
 
             @Override

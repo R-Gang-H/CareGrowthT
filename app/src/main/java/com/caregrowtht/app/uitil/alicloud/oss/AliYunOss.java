@@ -151,11 +151,9 @@ public class AliYunOss {
             if (!f.exists()) {
                 return false;
             }
-
         } catch (Exception e) {
             return false;
         }
-
         return true;
     }
 

@@ -20,6 +20,7 @@ import com.caregrowtht.app.adapter.NewCardsAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CardBindEntity;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
@@ -46,6 +47,7 @@ import butterknife.OnClick;
  * 添加正式学员
  */
 public class AddFormalStuActivity extends BaseActivity {
+
     @BindView(R.id.rl_back_button)
     RelativeLayout rlBackButton;
     @BindView(R.id.tv_title)
@@ -82,6 +84,8 @@ public class AddFormalStuActivity extends BaseActivity {
 
     private NewCardsAdapter mCardsAdapter;
     private int courseStuSize = 0;
+    private String OrgId;
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -91,6 +95,14 @@ public class AddFormalStuActivity extends BaseActivity {
     @Override
     public void initView() {
         tvTitle.setText("添加学员");
+
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            OrgId = msgEntity.getOrgId();
+        } else {
+            OrgId = UserManager.getInstance().getOrgId();
+        }
+
         btnWomen.setSelected(true);
         initRecyclerView(rvStuCard, true);
         mCardsAdapter = new NewCardsAdapter(UserManager.getInstance().getCardStuList(), this,
@@ -224,7 +236,6 @@ public class AddFormalStuActivity extends BaseActivity {
 
     private void addStudent() {
         // 62.添加学员
-        String orgId = UserManager.getInstance().getOrgId();
         String stuName = etStuName.getText().toString().trim();
         if (TextUtils.isEmpty(stuName)) {
             U.showToast("请输入学员姓名");
@@ -323,7 +334,7 @@ public class AddFormalStuActivity extends BaseActivity {
         String courseCard = TextUtils.isEmpty(courseCards) ? "" :
                 courseCards.toString().substring(0, courseCards.toString().lastIndexOf(","));
         String cards = cardBindList.size() > 0 ? new Gson().toJson(cardBindList) : "";
-        HttpManager.getInstance().doAddStudent("AddFormalStuActivity", orgId, stuName, stuNickName,
+        HttpManager.getInstance().doAddStudent("AddFormalStuActivity", OrgId, stuName, stuNickName,
                 sex, birthday, phoneNumber, relativeId, relativeName, courseCard, cards,
                 new HttpCallBack<BaseDataModel<StudentEntity>>(this, true) {
                     @Override
@@ -331,7 +342,9 @@ public class AddFormalStuActivity extends BaseActivity {
                         btnConfirm.setFocusable(true);
                         U.showToast("添加学员成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ACTIVE_STU));
-                        startActivity(new Intent(AddFormalStuActivity.this, InviteStudentActivity.class));
+                        startActivity(new Intent(AddFormalStuActivity.this, InviteStudentActivity.class)
+                                .putExtra("msgEntity", msgEntity)
+                                .putExtra("stuName", stuName));
                         finish();
                     }
 

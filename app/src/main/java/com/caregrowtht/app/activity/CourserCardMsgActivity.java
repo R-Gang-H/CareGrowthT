@@ -145,6 +145,7 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
                 } else {
                     //新建课时卡
                     startActivity(new Intent(this, TimeCardNewActivity.class)
+                            .putExtra("msgEntity", msgEntity)
                             .putExtra("cardOperaType", "3"));//cardOperaType 1:选择购买新卡 2:选择课时卡 3:新建课时卡管理
                 }
                 break;

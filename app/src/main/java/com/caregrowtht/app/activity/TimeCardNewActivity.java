@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.NewCardsAdapter;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
@@ -37,6 +38,7 @@ public class TimeCardNewActivity extends BaseActivity implements ViewOnItemClick
 
     private StudentEntity stuDetails;
     private String cardOperaType;
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -56,6 +58,7 @@ public class TimeCardNewActivity extends BaseActivity implements ViewOnItemClick
     public void initData() {
         stuDetails = (StudentEntity) getIntent().getSerializableExtra("StudentEntity");
         cardOperaType = getIntent().getStringExtra("cardOperaType");//cardOperaType 1:选择购买新卡 2:选择课时卡 3:新建课时卡管理
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         getOrgExistCard();//31.获取机构现有的课时卡
     }
 
@@ -150,6 +153,7 @@ public class TimeCardNewActivity extends BaseActivity implements ViewOnItemClick
         //新建课时卡
         startActivity(new Intent(this, CreateCardActivity.class)
                 .putExtra("addType", "4")// 学员添加新卡的类型 4：新建课时卡
+                .putExtra("msgEntity", msgEntity)
                 .putExtra("StudentEntity", stuDetails)// 学员信息
                 .putExtra("CourseCardsEntity", mListCard.get(postion))
                 .putExtra("cardOperaType", cardOperaType));//cardOperaType 1:选择购买新卡 2:选择课时卡 3:新建课时卡管理

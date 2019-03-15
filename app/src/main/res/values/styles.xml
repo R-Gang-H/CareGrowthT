@@ -23,6 +23,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--
+        解决 8.0 适配android:screenOrientation="" 和
+        <item name="android:windowIsTranslucent">true</item>不能同时出现
+        -->
+    <style name="WXTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <style name="CustomDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及透明程度-->
         <item name="android:windowBackground">@android:color/transparent</item>

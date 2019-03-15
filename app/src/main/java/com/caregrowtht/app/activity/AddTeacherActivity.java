@@ -17,6 +17,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.TeacherPermisAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
@@ -68,6 +69,7 @@ public class AddTeacherActivity extends BaseActivity {
     private TeacherPermisAdapter permisAdapter;
     private String orgId;
     private String teacherId;
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -118,7 +120,12 @@ public class AddTeacherActivity extends BaseActivity {
                 Log.d("afterTextChanged", s.toString());
             }
         });
-        orgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+        } else {
+            orgId = UserManager.getInstance().getOrgId();
+        }
         getIdentity();
     }
 
@@ -166,7 +173,8 @@ public class AddTeacherActivity extends BaseActivity {
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         U.showToast("成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ACTIVE_TEACH));
-                        startActivity(new Intent(AddTeacherActivity.this, InviteTeacherActivity.class));
+                        startActivity(new Intent(AddTeacherActivity.this, InviteTeacherActivity.class)
+                                .putExtra("msgEntity", msgEntity));
                         finish();
                     }
 

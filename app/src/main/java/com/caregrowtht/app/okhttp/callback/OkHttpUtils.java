@@ -69,6 +69,7 @@ public class OkHttpUtils {
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
             encodeMap.put("registerType", "2");    // registerType 是账号类型 1：家长端  2：教师端
+//            encodeMap.put("deviceType", "2");    // deviceType 1 ios  2 安卓
             LogUtils.d(tag, "参数----" + U.transMap2String(encodeMap));
             // RSA
             try {
@@ -116,6 +117,7 @@ public class OkHttpUtils {
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
             encodeMap.put("registerType", "2");   // registerType 是账号类型 1：家长端  2：教师端
+//            encodeMap.put("deviceType", "2");    // deviceType 1 ios  2 安卓
             Logger.d("参数----" + U.transMap2String(encodeMap));
             // RSA
             try {

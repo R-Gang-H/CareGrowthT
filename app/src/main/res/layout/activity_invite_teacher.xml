@@ -1,59 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/col_ea"
+    android:background="@color/transparent"
     tools:context="com.caregrowtht.app.activity.InviteStuRegActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/base_title_bar" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_teacher"
+        android:layout_width="328dp"
+        android:layout_height="399dp"
         android:layout_above="@id/rl_shard"
         android:layout_below="@id/toolbar"
-        android:layout_marginLeft="@dimen/margin_size_30"
-        android:layout_marginTop="@dimen/margin_size_55"
-        android:layout_marginRight="@dimen/margin_size_30"
-        android:layout_marginBottom="@dimen/margin_size_55"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_size_35"
+        android:layout_marginBottom="@dimen/margin_size_35"
         android:background="@drawable/shape_shadow_bg">
-
-        <ImageView
-            android:id="@+id/iv_qrcode"
-            android:layout_width="212dp"
-            android:layout_height="212dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_size_80"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/icon_teacher_code" />
-
-        <TextView
-            android:id="@+id/tv_theacher_invite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/iv_qrcode"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/margin_size_55"
-            android:layout_marginEnd="@dimen/margin_size_55"
-            android:layout_marginBottom="@dimen/margin_size_24"
-            android:text="王老师邀请您下载最方便快捷的教务管理工具爱成长教师端"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_15" />
 
         <com.android.library.view.CircleImageView
             android:id="@+id/iv_org_img"
             android:layout_width="@dimen/margin_size_43"
             android:layout_height="@dimen/margin_size_43"
             android:layout_above="@id/tv_theacher_invite"
-            android:layout_marginStart="@dimen/margin_size_35"
+            android:layout_marginStart="@dimen/margin_size_25"
             android:layout_marginTop="@dimen/margin_size_25"
             android:layout_marginEnd="@dimen/margin_size_10"
-            android:layout_marginBottom="@dimen/margin_size_25"
-            android:src="@mipmap/ic_logo_default" />
+            android:src="@mipmap/ic_logo_default"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_org_name"
@@ -61,13 +40,39 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_theacher_invite"
             android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginBottom="@dimen/margin_size_35"
-            android:layout_toEndOf="@id/iv_org_img"
+            android:layout_marginTop="@dimen/margin_size_35"
             android:text="北京金色雨林教育中心清河店"
             android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_17" />
+            android:textSize="@dimen/text_size_17"
+            app:layout_constraintStart_toEndOf="@id/iv_org_img"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_theacher_invite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:paddingStart="@dimen/margin_size_40"
+            android:paddingEnd="@dimen/margin_size_40"
+            android:text="王老师邀请您下载最方便快捷的教务管理工具爱成长教师端"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_org_img" />
+
+        <ImageView
+            android:id="@+id/iv_qrcode"
+            android:layout_width="212dp"
+            android:layout_height="212dp"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_teacher_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_theacher_invite" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/rl_shard"

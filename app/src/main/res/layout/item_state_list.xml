@@ -255,6 +255,14 @@
             android:textSize="@dimen/text_size_16" />
 
         <TextView
+            android:id="@+id/tv_today_refund"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_5"
+            android:text="今日退费:0元"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
             android:id="@+id/tv_month_course_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -276,6 +284,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_size_5"
             android:text="本月新增学员:2人"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_month_refund"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_5"
+            android:text="本月退费:0元"
             android:textSize="@dimen/text_size_16" />
 
         <LinearLayout

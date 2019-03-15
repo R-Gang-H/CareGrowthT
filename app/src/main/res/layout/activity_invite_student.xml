@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,52 +11,58 @@
         android:id="@+id/toolbar"
         layout="@layout/base_title_bar" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@id/rl_shard"
         android:layout_below="@id/toolbar"
-        android:layout_marginLeft="@dimen/margin_size_18"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_size_25"
-        android:layout_marginRight="@dimen/margin_size_18"
-        android:layout_marginBottom="@dimen/margin_size_25">
+        android:layout_marginBottom="@dimen/margin_size_25"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_qrcode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/iv_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@mipmap/icon_invite_stu" />
+            android:src="@mipmap/icon_invite_stu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_theacher_invite"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@id/iv_qrcode"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginStart="@dimen/margin_size_55"-->
-        <!--android:layout_marginEnd="@dimen/margin_size_55"-->
-        <!--android:layout_marginBottom="@dimen/margin_size_24"-->
-        <!--android:text="王老师邀请您下载最方便快捷的教务管理工具爱成长教师端"-->
-        <!--android:textColor="@color/black"-->
-        <!--android:textSize="@dimen/text_size_15" />-->
+        <TextView
+            android:id="@+id/tv_student_invite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:text="亲爱的学员%s"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18"
+            app:layout_constraintStart_toStartOf="@id/iv_bg"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_org_name"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@id/tv_theacher_invite"-->
-        <!--android:layout_marginStart="@dimen/margin_size_10"-->
-        <!--android:layout_marginBottom="@dimen/margin_size_35"-->
-        <!--android:layout_toEndOf="@id/iv_org_img"-->
-        <!--android:text="北京金色雨林教育中心清河店"-->
-        <!--android:textColor="@color/color_3"-->
-        <!--android:textSize="@dimen/text_size_17" />-->
+        <TextView
+            android:id="@+id/tv_org_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_student_invite"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:maxEms="18"
+            android:text="%s（机构名称）正式启用爱成长机构管理系统,您将通过“爱成长Ilovegowth”公众号进行学员管理。"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintEnd_toEndOf="@id/iv_bg"
+            app:layout_constraintStart_toStartOf="@id/iv_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_student_invite" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/rl_shard"
+        android:id="@+id/ll_shard"
         android:layout_width="match_parent"
         android:layout_height="108dp"
         android:layout_alignParentBottom="true"
