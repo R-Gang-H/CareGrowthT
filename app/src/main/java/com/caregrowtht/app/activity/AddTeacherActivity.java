@@ -155,6 +155,10 @@ public class AddTeacherActivity extends BaseActivity {
             U.showToast("请输入手机号");
             return;
         }
+        if (phoneNumber.length() != 11) {
+            U.showToast("请输入正确的手机号");
+            return;
+        }
         String againPhoneNumber = etAgainPhoneNum.getText().toString().trim();
         if (!TextUtils.equals(phoneNumber, againPhoneNumber)) {
             U.showToast("两次输入的手机号不相同");

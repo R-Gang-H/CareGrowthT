@@ -873,6 +873,8 @@ public class TimeCardBuyActivity extends BaseActivity {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(TimeCardBuyActivity.this);
+                        } else if (statusCode == 1001) {
+                            U.showToast("请填入大于0的数!");
                         } else {
                             U.showToast(errorMsg);
                         }

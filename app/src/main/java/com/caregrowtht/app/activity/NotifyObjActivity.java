@@ -95,14 +95,13 @@ public class NotifyObjActivity extends BaseActivity {
     }
 
     private void getNotifyObj(String type) {
-
         HttpManager.getInstance().doGetNoticePeople("NotifyObjActivity",
                 notifyEntity.getNotifiId(), type, new HttpCallBack<BaseDataModel<OrgNotifyEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<OrgNotifyEntity> data) {
                         orgNotifyList.clear();
                         orgNotifyList.addAll(data.getData());
-                        notifyObjAdapter.setData(data.getData(), type, true);
+                        notifyObjAdapter.setData(data.getData(), type);
                     }
 
                     @Override
@@ -118,7 +117,7 @@ public class NotifyObjActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable throwable) {
-
+                        LogUtils.d("NotifyObjActivity onError", throwable.getMessage());
                     }
                 });
         refreshLayout.finishLoadmore();

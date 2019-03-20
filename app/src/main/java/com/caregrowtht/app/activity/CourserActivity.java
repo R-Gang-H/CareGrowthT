@@ -150,6 +150,7 @@ public class CourserActivity extends BaseActivity {
     private String headImage;
     private boolean isUploadTable = true;//上传签到表
     private boolean isRefesh = true;
+    private int stuNum = 0;// 学员人数
 
     @Override
     public int getLayoutId() {
@@ -300,6 +301,7 @@ public class CourserActivity extends BaseActivity {
                 courseId, new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
+                        stuNum = data.getData().size();
                         studentList.clear();
                         for (StudentEntity stu : data.getData()) {
                             //学员状态 1：既没有请假也没有签到 2：已签到 3：已请假 /过滤只显示没有请假签到的
@@ -446,8 +448,12 @@ public class CourserActivity extends BaseActivity {
                                     , getString(R.string.text_role));
                             break;
                         } else {
-                            startActivity(new Intent(this, CourserReleaseActivity.class)
-                                    .putExtra("courseData", courseData));
+                            if (stuNum > 0) {// 学生人数大于0可以发布课程反馈
+                                startActivity(new Intent(this, CourserReleaseActivity.class)
+                                        .putExtra("courseData", courseData));
+                            } else {
+                                U.showToast("该课程没有学员,不能发布课程反馈");
+                            }
                         }
                     }
                 }

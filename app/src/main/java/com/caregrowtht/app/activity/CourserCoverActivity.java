@@ -117,11 +117,13 @@ public class CourserCoverActivity extends BaseActivity {
         //助教
         List<UserEntity> assistant = courseData.getAssistant();
         StringBuffer assisb = new StringBuffer();
-        for (int i = 0; i < assistant.size(); i++) {
-            if (i > 0) {
-                assisb.append(",");
+        if (assistant != null && assistant.size() > 0) {
+            for (int i = 0; i < assistant.size(); i++) {
+                if (i > 0) {
+                    assisb.append(",");
+                }
+                assisb.append(assistant.get(i).getUserName());
             }
-            assisb.append(assistant.get(i).getUserName());
         }
         tvAssisTeacher.setText(String.format("助教:%s", assisb));
         tvStudentCount.setText(Html.fromHtml(String.format("学员\t%s...等%s人\t<font color='#999999'>签到%s人\t请假\t%s人</font>",

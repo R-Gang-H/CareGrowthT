@@ -165,8 +165,8 @@ public class StateAdapter extends XrecyclerAdapter {
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
+        clItem.setClickable(false);// 每日工作日报 动态 禁止点击
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
-            clItem.setClickable(false);
             tvTitle.setVisibility(View.VISIBLE);
             llWorkDaily.setVisibility(View.VISIBLE);
             String data = DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "yyyy年MM月dd日");
@@ -293,6 +293,11 @@ public class StateAdapter extends XrecyclerAdapter {
                         sentNotice = "请点击查看通知的回执状态";
                         break;
                 }
+                if (msgEntity.getType2().equals("20")) {
+                    newNotice = "已发送通知:";
+                } else if (msgEntity.getType2().equals("24")) {
+                    newNotice = "新通知:";
+                }
                 orgContent = String.format("%s\n%s%s", msgEntity.getOrgName(), newNotice, msgEntity.getContent());
             } else {
                 orgContent = String.format("%s\n%s", msgEntity.getOrgName(), msgEntity.getContent());
@@ -400,12 +405,17 @@ public class StateAdapter extends XrecyclerAdapter {
                 } else if (TextUtils.equals(msgEntity.getType(), "4")) {
                     switch (msgEntity.getType2()) {
                         case "20":// 20：查看通知回执的状态
-                            OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
-                            notifyEntity.setIsReceipt(msgEntity.getReceipt());
-                            notifyEntity.setNotifiId(msgEntity.getTargetId());
-                            mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
-                                    .putExtra("notifyEntity", notifyEntity));
-                            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                        case "24":
+                            if (msgEntity.getReceipt().equals("1")) {// 不需要回执
+                                startActivity(msgEntity, NotifityInfoActivity.class);
+                            } else {
+                                OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
+                                notifyEntity.setIsReceipt(msgEntity.getReceipt());
+                                notifyEntity.setNotifiId(msgEntity.getTargetId());
+                                mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
+                                        .putExtra("notifyEntity", notifyEntity));
+                                ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                            }
                             break;
                         default:
                             startActivity(msgEntity, NotifityInfoActivity.class);

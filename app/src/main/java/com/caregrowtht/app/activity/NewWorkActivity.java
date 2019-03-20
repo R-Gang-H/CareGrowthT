@@ -35,6 +35,7 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.ColorWheelPopup;
@@ -987,31 +988,39 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     private void selectStartEndTime(int position) {
         Calendar startDate = Calendar.getInstance();
         new TimePickerBuilder(this, (startTime, v) -> {
-            String selectStartDate1 = DateUtil.getDate(startTime.getTime() / 1000, "yyyy年MM月dd日 HH:mm");
-            String selectStartDate = DateUtil.getDate(startTime.getTime() / 1000, "yyyy-MM-dd-HH-mm");
-            String[] split = selectStartDate.split("-");
-            startDate.set(Integer.parseInt(split[0]), Integer.parseInt(split[1]) - 1, Integer.parseInt(split[2]),//month从0开始
-                    Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-            new TimePickerBuilder(this, (endTime, view) -> {
-                String selectEndTime = DateUtil.getDate(endTime.getTime() / 1000, "HH:mm");
-                Logger.d(selectStartDate + " ~ " + selectEndTime);
+            if (startTime.getTime() < TimeUtils.getCurTimeLong()) {
+                U.showToast("开始时间不能小于当前时间");
+            } else {
+                String selectStartDate1 = DateUtil.getDate(startTime.getTime() / 1000, "yyyy年MM月dd日 HH:mm");
+                String selectStartDate = DateUtil.getDate(startTime.getTime() / 1000, "yyyy-MM-dd-HH-mm");
+                String[] split = selectStartDate.split("-");
+                startDate.set(Integer.parseInt(split[0]), Integer.parseInt(split[1]) - 1, Integer.parseInt(split[2]),//month从0开始
+                        Integer.parseInt(split[3]), Integer.parseInt(split[4]));
+                new TimePickerBuilder(this, (endTime, view) -> {
+                    if (endTime.getTime() < startTime.getTime()) {
+                        U.showToast("结束时间不能小于当前时间");
+                    } else {
+                        String selectEndTime = DateUtil.getDate(endTime.getTime() / 1000, "HH:mm");
+                        Logger.d(selectStartDate + " ~ " + selectEndTime);
 
-                // Traversal the timeList to find the duplicate element and delete it.
-                String[] endArr = selectEndTime.split(":");
-                int startHour = Integer.parseInt(split[3]);
-                int startMinute = Integer.parseInt(split[4]);
-                int endHour = Integer.parseInt(endArr[0]);
-                int endMinute = Integer.parseInt(endArr[1]);
-                if (startHour > endHour || (startHour == endHour && startMinute >= endMinute)) {
-                    U.showToast("开始时间不能小于结束时间");
-                    return;
-                }
-                addCourseTime(position, startTime, selectStartDate1, endTime, selectEndTime);
-            }).setType(new boolean[]{false, false, false, true, true, false})
-                    .setRangDate(startDate, startDate)
-                    .setTitleText("选择结束时间")
-                    .setLabel("", "", "", "时", "分", "")
-                    .build().show();
+                        // Traversal the timeList to find the duplicate element and delete it.
+                        String[] endArr = selectEndTime.split(":");
+                        int startHour = Integer.parseInt(split[3]);
+                        int startMinute = Integer.parseInt(split[4]);
+                        int endHour = Integer.parseInt(endArr[0]);
+                        int endMinute = Integer.parseInt(endArr[1]);
+                        if (startHour > endHour || (startHour == endHour && startMinute >= endMinute)) {
+                            U.showToast("开始时间不能小于结束时间");
+                            return;
+                        }
+                        addCourseTime(position, startTime, selectStartDate1, endTime, selectEndTime);
+                    }
+                }).setType(new boolean[]{false, false, false, true, true, false})
+                        .setRangDate(startDate, startDate)
+                        .setTitleText("选择结束时间")
+                        .setLabel("", "", "", "时", "分", "")
+                        .build().show();
+            }
         }).setType(new boolean[]{true, true, true, true, true, false})
                 .setTitleText("选择开始时间")
                 .setRangDate(startDate, null)
@@ -1150,11 +1159,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
      * 结束于时间
      */
     private void selectOfTime() {
+        Calendar startDate = Calendar.getInstance();
         new TimePickerBuilder(this, (startTime, v) -> {
             String selectStartDate = DateUtil.getDate(startTime.getTime() / 1000, "yyyy/MM/dd");
             etAfter.setText(selectStartDate);
         }).setType(new boolean[]{true, true, true, false, false, false})
                 .setTitleText("选择时间")
+                .setRangDate(startDate, null)
                 .setLabel("年", "月", "日", "", "", "")
                 .build().show();
     }

@@ -50,15 +50,15 @@ public class HttpManager {
      * @param tag
      * @param phone
      * @param pwd
-     * @param deviceType
      * @param callBack
      */
-    public void doLoginRequest(String tag, String phone, String pwd, String deviceType, HttpCallBack callBack) {
+    public void doLoginRequest(String tag, String phone, String pwd, HttpCallBack callBack) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("versionId ", "1.1");//新版本传1.1
         map.put("mobile", phone);
         map.put("pwd", pwd);
-        map.put("deviceType", deviceType);
+        map.put("deviceType", "2");// 1:iOS 2:Android
+        map.put("clientVersion ", "1.1.9");// 版本号
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.LOGINPWD, map, callBack);
     }
 
@@ -75,6 +75,8 @@ public class HttpManager {
         HashMap<String, String> map = new HashMap<>();
         map.put("uid", uid);
         map.put("token", token);
+        map.put("deviceType", "2");// 1:iOS 2:Android
+        map.put("clientVersion ", "1.1.9");// 版本号
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.AUTO_LOGIN, map, callBack);
     }
 

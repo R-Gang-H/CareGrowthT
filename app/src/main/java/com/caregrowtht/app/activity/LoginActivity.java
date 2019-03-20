@@ -74,8 +74,7 @@ public class LoginActivity extends BaseActivity {
         /**
          * haoruigang 2018-3-30 10:20:01 登录接口
          */
-        HttpManager.getInstance().doLoginRequest("LoginActivity",
-                phoneNum, pwd, "2",
+        HttpManager.getInstance().doLoginRequest("LoginActivity", phoneNum, pwd,
                 new HttpCallBack<BaseDataModel<UserEntity>>(LoginActivity.this) {
 
                     @Override

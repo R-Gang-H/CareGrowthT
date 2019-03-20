@@ -72,10 +72,12 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
         iniXrecyclerView(xRecyclerView);
         allotAdapter = new AllotAdapter(stuData, this, this);
         xRecyclerView.setAdapter(allotAdapter);
+        xRecyclerView.setLoadingMoreEnabled(true);
+        xRecyclerView.setPullRefreshEnabled(true);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                pageIndex = 0;
+                pageIndex = 1;
                 lesWaitingStuV2(true);
             }
 
@@ -95,7 +97,7 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
     // 69. 获取某节课的等位学员
     private void lesWaitingStuV2(boolean isClear) {
         HttpManager.getInstance().doLesWaitingStuV2("AllotActivity",
-                courseId, String.valueOf(pageIndex), pageSize,
+                courseId, pageIndex + "", pageSize,
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
@@ -104,12 +106,12 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
                         }
                         stuData.addAll(data.getData());
                         allotAdapter.update(stuData, isClear);
-                        xRecyclerView.loadMoreComplete();
-                        xRecyclerView.refreshComplete();
+                        refresh();
                     }
 
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
+                        refresh();
                         LogUtils.d("AllotActivity onFail", statusCode + ":" + errorMsg);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
@@ -124,6 +126,11 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
                         LogUtils.d("AllotActivity onError", throwable.getMessage());
                     }
                 });
+    }
+
+    private void refresh() {
+        xRecyclerView.loadMoreComplete();
+        xRecyclerView.refreshComplete();
     }
 
     @OnClick({R.id.rl_back_button, R.id.btn_submit})
@@ -146,10 +153,13 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
     private String valadate() {
         StringBuilder stuIds = new StringBuilder();
         for (int i = 0; i < allotAdapter.getStu().size(); i++) {
-            if (i > 0) {
-                stuIds.append(",");
+            String stu = allotAdapter.getStu().get(i);
+            if (stu != null) {
+                if (i > 0) {
+                    stuIds.append(",");
+                }
+                stuIds.append(stu);
             }
-            stuIds.append(allotAdapter.getStu().get(i));
         }
         return stuIds.toString();
     }

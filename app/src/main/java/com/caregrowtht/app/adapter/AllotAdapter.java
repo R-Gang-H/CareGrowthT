@@ -35,8 +35,10 @@ public class AllotAdapter extends XrecyclerAdapter {
     private List<StudentEntity> stuData = new ArrayList<>();
     // 用来控制CheckBox的选中状况
     private HashMap<Integer, Boolean> isSelected = new HashMap<>();
-    //选中的学员
+    //选中的学员id
     private HashMap<Integer, String> mStu = new HashMap<>();
+    //选中的学员名称
+    private HashMap<Integer, String> mStuName = new HashMap<>();
 
 
     public AllotAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
@@ -60,9 +62,7 @@ public class AllotAdapter extends XrecyclerAdapter {
     }
 
     public void update(List<StudentEntity> stuData, boolean isClear) {
-        if (isClear) {
-            this.stuData.clear();
-        }
+        this.stuData.clear();
         this.stuData.addAll(stuData);
         // 初始化数据
         initDate();
@@ -75,6 +75,7 @@ public class AllotAdapter extends XrecyclerAdapter {
             for (int i = 0; i < stuData.size(); i++) {
                 getIsSelected().put(i, false);
                 getStu().put(i, null);
+                getStuName().put(i, null);
             }
         }
     }
@@ -89,19 +90,22 @@ public class AllotAdapter extends XrecyclerAdapter {
         if (stuData.size() > 0) {
             getIsSelected().put(position, tvSelectCard.isSelected());// 同时修改map的值保存状态
             getStu().put(position, tvSelectCard.isSelected() ? stuData.get(position).getStuId() : null);
+            getStuName().put(position, tvSelectCard.isSelected() ? stuData.get(position).getStuName() : null);
+
+            // 显示选择补位的学员
             StringBuffer stuSb = new StringBuffer();
-            String stu = "";
-            if (!TextUtils.isEmpty(getStu().get(position))) {
-                for (int i = 0; i < getStu().size(); i++) {
-                    if (i > 0) {
-                        stuSb.append(",");
-                    }
-                    stuSb.append(stuData.get(position).getStuName());
+            boolean isAdd = false;
+            for (int i = 0; i < getStuName().size(); i++) {
+                if (isAdd) {
+                    stuSb.append(",");
                 }
-                if (getStu().size() > 0) {
-                    stu = String.format("选择\t%s\t补位", stuSb);
+                String stu = getStuName().get(i);
+                if (stu != null) {
+                    isAdd = true;
+                    stuSb.append(stu);
                 }
             }
+            String stu = String.format("选择\t%s\t补位", stuSb);
             tvSelectStu.setText(stu);
         }
     }
@@ -112,5 +116,9 @@ public class AllotAdapter extends XrecyclerAdapter {
 
     public HashMap<Integer, String> getStu() {
         return mStu;
+    }
+
+    public HashMap<Integer, String> getStuName() {
+        return mStuName;
     }
 }

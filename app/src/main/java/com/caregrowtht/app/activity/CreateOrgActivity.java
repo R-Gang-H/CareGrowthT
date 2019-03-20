@@ -226,6 +226,10 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
         }
         String telephone = etTelephone.getText().toString().trim();
         String orgPhone = etOrgMobile.getText().toString().trim();
+        if (orgPhone.length() > 0 && orgPhone.length() != 11) {
+            U.showToast("请输入正确的手机号");
+            return;
+        }
         if (mImageName != null && !mImageName.equals("")) {
             headImage = Constant.OSS_URL + mImageName;
         }

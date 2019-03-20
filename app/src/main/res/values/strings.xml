@@ -3,7 +3,7 @@
     <string name="app_feedback_hint">对我们的软件有什么建议和意见，请提交给我们，我们会做的更好。</string>
     <string name="app_feedback">请输入你的宝贵建议和意见~</string>
     <string name="submit">提交</string>
-    <string name="login_warn">点击登录表示您已经阅读并且同意</string>
+    <string name="login_warn">点击注册表示您已经阅读并且同意</string>
     <string name="user_protocol">《爱成长用户协议》</string>
     <string name="rationale_camera">这个应用程序需要访问你的相机，这样你就可以拍照了。</string>
     <string name="rationale_file">这个应用程序需要访问你读取权限，这样你就可以查看文件了。</string>

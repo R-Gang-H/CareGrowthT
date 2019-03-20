@@ -1,20 +1,21 @@
 package com.caregrowtht.app.adapter;
 
 import android.app.Activity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.user.MultipleItem;
 import com.caregrowtht.app.model.OrgNotifyEntity;
+import com.caregrowtht.app.user.MultipleItem;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by haoruigang on 2018-7-27 18:28:17
@@ -40,11 +41,8 @@ public class NotifyObjAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, MultipleItem item) {
-        if (orgNotifyList.size() == 0) {
-            return;
-        }
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        manager.setOrientation(RecyclerView.VERTICAL);
         TextView tvTitle;
         switch (helper.getItemViewType()) {
             case MultipleItem.TYPE_RECEIPT_NO:
@@ -76,7 +74,6 @@ public class NotifyObjAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
                     RecyclerView recyclerView = helper.getView(R.id.recycler_view);
                     recyclerView.setLayoutManager(manager);
                     recyclerView.setAdapter(new NotifySignAdapter(teacherEntitie, activity));
-
                 }
                 break;
             case MultipleItem.TYPE_RECEIPT_ALL:
@@ -112,11 +109,9 @@ public class NotifyObjAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
         }
     }
 
-    public void setData(ArrayList<OrgNotifyEntity> mArrDatas, String type, Boolean isClear) {
-        if (isClear) {
-            this.orgNotifyList.clear();
-        }
+    public void setData(ArrayList<OrgNotifyEntity> mArrDatas, String type) {
         this.type = type;
+        this.orgNotifyList.clear();
         this.orgNotifyList.addAll(mArrDatas);
         notifyDataSetChanged();
     }
