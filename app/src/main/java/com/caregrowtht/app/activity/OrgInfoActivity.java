@@ -2,9 +2,6 @@ package com.caregrowtht.app.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-
-import androidx.cardview.widget.CardView;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -23,6 +20,7 @@ import com.caregrowtht.app.user.UserManager;
 
 import java.util.ArrayList;
 
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -91,10 +89,15 @@ public class OrgInfoActivity extends BaseActivity {
                 break;
             case R.id.img_org:
             case R.id.cv_name_bg:
-                Intent intent = new Intent(this, UserTermActivity.class);
-                intent.setData(Uri.parse(BASE_ORG_URL + UserManager.getInstance().getOrgId()));
-                intent.putExtra("openType", "3");// 用户协议
-                startActivity(intent);
+                if (TextUtils.isEmpty(orgEntity.getIntro())) {
+                    startActivity(new Intent(this, OrgNoSettingActivity.class)
+                            .putExtra("orgEntity", orgEntity));
+                } else {
+                    Intent intent = new Intent(this, UserTermActivity.class);
+                    intent.setData(Uri.parse(BASE_ORG_URL + UserManager.getInstance().getOrgId()));
+                    intent.putExtra("openType", "3");// 用户协议
+                    startActivity(intent);
+                }
                 break;
         }
     }

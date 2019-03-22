@@ -108,8 +108,9 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         if (msgEntity != null) {
             orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
         } else {
-            orgId = UserManager.getInstance().getOrgId();
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
         }
         getOrgExistCard(status);//31.获取机构现有的课时卡
 

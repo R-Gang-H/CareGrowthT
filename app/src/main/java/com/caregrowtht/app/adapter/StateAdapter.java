@@ -165,7 +165,6 @@ public class StateAdapter extends XrecyclerAdapter {
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
-        clItem.setClickable(false);// 每日工作日报 动态 禁止点击
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
             tvTitle.setVisibility(View.VISIBLE);
             llWorkDaily.setVisibility(View.VISIBLE);
@@ -326,134 +325,144 @@ public class StateAdapter extends XrecyclerAdapter {
             String circleAccessory = msgEntity.getCircleAccessory();
             tvAtter.setVisibility(TextUtils.isEmpty(circleAccessory) ? View.GONE : View.VISIBLE);
 //        tvAtter.setText(circleAccessory);
-            clItem.setClickable(true);
-            clItem.setOnClickListener(v -> {
-                UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
-                if (!CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
-                    U.showToast("已离职");
-                    return;
-                }
-                if (TextUtils.equals(msgEntity.getType(), "1")) {
-                    // tpye2 1：请假签到 3：空位出现  4：教师审核 19：有学员预约了课程
-                    switch (msgEntity.getType2()) {
-                        case "1": // 1：请假签到
-                            startActivity(msgEntity, CourserActivity.class);
-                            break;
-                        case "3": // 3：空位出现
-                            startActivity(msgEntity, CourserCoverActivity.class);
-                            break;
-                        case "21":// 21,27,28消课失败,手动消课
-                        case "27":
-                        case "28":
-                            UserManager.getInstance().showSuccessDialog((Activity) mContext
-                                    , mContext.getString(R.string.function_limit));
-                            break;
-                        case "50":
-                            startActivity(msgEntity, CourserActivity.class);
-                            break;
-                        default:
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                    }
-                } else if (TextUtils.equals(msgEntity.getType(), "2")) {
-                    // tpye2 23：课程反馈
-                    switch (msgEntity.getType2()) {
-                        case "22": // 22：课程反馈
-                            startActivity(msgEntity, CourserActivity.class);
-                            break;
-                        case "23": // 23：课程反馈记录
-                            mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
-                                    .putExtra("imputType", "2")
-                                    .putExtra("circleId", msgEntity.getTargetId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
-                            break;
-                        default:
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                    }
-                } else if (TextUtils.equals(msgEntity.getType(), "3")) {
-                    switch (msgEntity.getType2()) {
-                        case "4": // 4：教师审核
-                            getOrgTeachers(msgEntity.getOrgId());
-                            break;
-                        case "6": // 6：学员审核
-                            getAudit(msgEntity.getOrgId());
-                            break;
-                        case "7": // 7：完善机构信息
-                            UserManager.getInstance().showSuccessDialog((Activity) mContext
-                                    , mContext.getString(R.string.function_limit));
-                            break;
-                        case "8":// 8：导入课时卡信息
-                            startActivity(msgEntity, CourserCardMsgActivity.class);
-                            break;
-                        case "9": // 9：活跃学员
-                            mContext.startActivity(new Intent(mContext, FormalActivity.class));
-                            break;
-                        case "10":// 10：新建排课
-                            mContext.startActivity(new Intent(mContext, NewWorkActivity.class));
-                            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
-                            break;
-                        case "25":// 25：机构初始化工作
-                            startActivity(msgEntity, InitDataActivity.class);
-                            break;
-                        case "72":// 72：课程详情
-                            startActivity(msgEntity, CourserActivity.class);
-                            break;
-                        default:
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                    }
-                } else if (TextUtils.equals(msgEntity.getType(), "4")) {
-                    switch (msgEntity.getType2()) {
-                        case "20":// 20：查看通知回执的状态
-                        case "24":
-                            if (msgEntity.getReceipt().equals("1")) {// 不需要回执
-                                startActivity(msgEntity, NotifityInfoActivity.class);
-                            } else {
-                                OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
-                                notifyEntity.setIsReceipt(msgEntity.getReceipt());
-                                notifyEntity.setNotifiId(msgEntity.getTargetId());
-                                mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
-                                        .putExtra("notifyEntity", notifyEntity));
-                                ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
-                            }
-                            break;
-                        default:
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                    }
-                } else if (TextUtils.equals(msgEntity.getType(), "5")) {
-                    switch (msgEntity.getType2()) {
-                        case "5": // 5,12,14：查看消息详情
-                        case "12":
-                        case "14":
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                        case "11":// 11:有学员近一个月没有来上课请您查看
-                            mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                                    .putExtra("key", "6"));
-                            break;
-                        case "16":// 16：有学员课时卡需要续费
-                            mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                                    .putExtra("key", "4"));
-                            break;
-                        case "17":// 17,18：排课修改了教师点击查看教师课表
-                        case "18":
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 1));
-                            break;
-                        case "19":// 19：有学员预约了课程
-                            startActivity(msgEntity, StuOrderActivity.class);
-                            break;
-                        case "29":// 29：有学员被系统置为非活跃
-                            mContext.startActivity(new Intent(mContext, FormalActivity.class)
-                                    .putExtra("status", "3"));// 3：非活跃待确认
-                            break;
-                        default:
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                            break;
-                    }
-                }
-            });
         }
+        clItem.setOnClickListener(v -> {
+            if (msgEntity.getType().equals("6")) {
+                return;
+            }
+            UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
+            if (!CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
+                U.showToast("已离职");
+                return;
+            }
+            if (TextUtils.equals(msgEntity.getType(), "1")) {
+                // tpye2 1：请假签到 3：空位出现  4：教师审核 19：有学员预约了课程
+                switch (msgEntity.getType2()) {
+                    case "1": // 1：请假签到
+                        startActivity(msgEntity, CourserActivity.class);
+                        break;
+                    case "3": // 3：空位出现
+                        startActivity(msgEntity, CourserCoverActivity.class);
+                        break;
+                    case "21":// 21,27,28消课失败,手动消课
+                    case "27":
+                    case "28":
+                        UserManager.getInstance().showSuccessDialog((Activity) mContext
+                                , mContext.getString(R.string.function_limit));
+                        break;
+                    case "50":
+                        startActivity(msgEntity, CourserActivity.class);
+                        break;
+                    default:
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                }
+            } else if (TextUtils.equals(msgEntity.getType(), "2")) {
+                // tpye2 23：课程反馈
+                switch (msgEntity.getType2()) {
+                    case "22": // 22：课程反馈
+                        startActivity(msgEntity, CourserActivity.class);
+                        break;
+                    case "23": // 23：课程反馈记录
+                        mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
+                                .putExtra("imputType", "2")
+                                .putExtra("msgEntity", msgEntity)
+                                .putExtra("circleId", msgEntity.getTargetId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+                        break;
+                    default:
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                }
+            } else if (TextUtils.equals(msgEntity.getType(), "3")) {
+                switch (msgEntity.getType2()) {
+                    case "4": // 4：教师审核
+                        getOrgTeachers(msgEntity.getOrgId());
+                        break;
+                    case "6": // 6：学员审核
+                        getAudit(msgEntity.getOrgId());
+                        break;
+                    case "7": // 7：完善机构信息
+                        UserManager.getInstance().showSuccessDialog((Activity) mContext
+                                , mContext.getString(R.string.function_limit));
+                        break;
+                    case "8":// 8：导入课时卡信息
+                        startActivity(msgEntity, CourserCardMsgActivity.class);
+                        break;
+                    case "9": // 9：活跃学员
+                        mContext.startActivity(new Intent(mContext, FormalActivity.class)
+                                .putExtra("msgEntity", msgEntity));
+                        break;
+                    case "10":// 10：新建排课
+                        mContext.startActivity(new Intent(mContext, NewWorkActivity.class)
+                                .putExtra("msgEntity", msgEntity));
+                        ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                        break;
+                    case "25":// 25：机构初始化工作
+                        startActivity(msgEntity, InitDataActivity.class);
+                        break;
+                    case "72":// 72：课程详情
+                        startActivity(msgEntity, CourserActivity.class);
+                        break;
+                    default:
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                }
+            } else if (TextUtils.equals(msgEntity.getType(), "4")) {
+                switch (msgEntity.getType2()) {
+                    case "20":// 20：查看通知回执的状态
+                    case "24":
+                        if (msgEntity.getReceipt().equals("1") || msgEntity.getReceipt().equals("2")) {// 不需要回执/ 待回执
+                            startActivity(msgEntity, NotifityInfoActivity.class);
+                        } else {
+                            OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
+                            notifyEntity.setIsReceipt(msgEntity.getReceipt());
+                            notifyEntity.setNotifiId(msgEntity.getTargetId());
+                            mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
+                                    .putExtra("msgEntity", msgEntity)
+                                    .putExtra("notifyEntity", notifyEntity));
+                            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                        }
+                        break;
+                    default:
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                }
+            } else if (TextUtils.equals(msgEntity.getType(), "5")) {
+                switch (msgEntity.getType2()) {
+                    case "5": // 5,12,14：查看消息详情
+                    case "12":
+                    case "14":
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                    case "11":// 11:有学员近一个月没有来上课请您查看
+                        mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                .putExtra("msgEntity", msgEntity)
+                                .putExtra("key", "6"));
+                        break;
+                    case "16":// 16：有学员课时卡需要续费
+                        mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                .putExtra("msgEntity", msgEntity)
+                                .putExtra("key", "4"));
+                        break;
+                    case "17":// 17,18：排课修改了教师点击查看教师课表
+                    case "18":
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 1));
+                        break;
+                    case "19":// 19：有学员预约了课程
+                        startActivity(msgEntity, StuOrderActivity.class);
+                        break;
+                    case "29":// 29：有学员被系统置为非活跃
+                        mContext.startActivity(new Intent(mContext, FormalActivity.class)
+                                .putExtra("msgEntity", msgEntity)
+                                .putExtra("status", "3"));// 3：非活跃待确认
+                        break;
+                    default:
+                        startActivity(msgEntity, NotifityInfoActivity.class);
+                        break;
+                }
+            }
+        });
+
     }
 
     private String getJsonString(JSONObject jsonObject, String object) throws JSONException {

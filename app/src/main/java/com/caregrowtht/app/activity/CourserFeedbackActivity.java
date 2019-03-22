@@ -18,6 +18,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.MomentAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.MomentCommentEntity;
 import com.caregrowtht.app.model.MomentMessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -68,6 +69,7 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
     private String stuId;
     private String orgId;
     private String type = "1";
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -88,7 +90,13 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
             type = "2";
         }
 
-        orgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        } else {
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        }
 
         mArrDatas = new ArrayList<>();
         //列表

@@ -26,6 +26,7 @@ import com.caregrowtht.app.adapter.ClassTimeAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.BaseModel;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgEntity;
 import com.caregrowtht.app.model.TimeEntity;
 import com.caregrowtht.app.model.UserEntity;
@@ -165,6 +166,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     StringBuffer sbCourse;
     private boolean isEtCourseSel = false;// 是否编辑过课程名称
     private String planView = "1";// 排课条件 1：教师 2：教室
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -175,7 +177,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     public void initView() {
         ivLeft.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_close_1));
         updateAll = getIntent().getBooleanExtra("updateAll", false);
-        orgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        } else {
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        }
         if (updateAll) {
             CourseEntity editCourseData = (CourseEntity) getIntent().getSerializableExtra("courseData");
             courseId = editCourseData.getCourseId();

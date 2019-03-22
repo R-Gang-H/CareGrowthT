@@ -9,6 +9,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.FormalAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
@@ -46,6 +47,7 @@ public class NoClassStuActivity extends BaseActivity implements ViewOnItemClick 
     List<StudentEntity> mFormalList = new ArrayList<>();
     private String OrgId, status = "2";// 2：活跃学员
     private String key = "6";//  4:需要续费的学员 6:未出勤超过1个月(最近30天都没出勤) 的学员
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -83,7 +85,13 @@ public class NoClassStuActivity extends BaseActivity implements ViewOnItemClick 
 
     @Override
     public void initData() {
-        OrgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            OrgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(OrgId);
+        } else {
+            OrgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        }
         key = getIntent().getStringExtra("key");
         getStudent(isClear, status);//10.获取机构的正式学员
     }

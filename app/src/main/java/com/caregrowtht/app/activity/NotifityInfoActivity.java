@@ -45,6 +45,7 @@ public class NotifityInfoActivity extends BaseActivity {
 
 
     private MessageEntity msgEntity;
+    private String orgId;
 
     @Override
     public int getLayoutId() {
@@ -54,6 +55,12 @@ public class NotifityInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        } else {
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        }
         String titleName = "";
         switch (msgEntity.getType()) {
             case "2"://2：课后反馈（我的学员发布的课后反馈）
@@ -104,7 +111,7 @@ public class NotifityInfoActivity extends BaseActivity {
     private void setReceipt() {
         // 回执动态
         HttpManager.getInstance().doSetReceipt("NotifityInfoActivity", msgEntity.getTargetId(),
-                UserManager.getInstance().getOrgId(), new HttpCallBack<BaseDataModel>() {
+                orgId, new HttpCallBack<BaseDataModel>() {
                     @Override
                     public void onSuccess(BaseDataModel data) {
                         U.showToast("成功");

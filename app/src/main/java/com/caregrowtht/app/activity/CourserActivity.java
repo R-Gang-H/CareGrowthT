@@ -34,6 +34,7 @@ import com.caregrowtht.app.adapter.RootListViewAdapter;
 import com.caregrowtht.app.adapter.SubListViewAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.MomentCommentEntity;
 import com.caregrowtht.app.model.MomentMessageEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -151,6 +152,7 @@ public class CourserActivity extends BaseActivity {
     private boolean isUploadTable = true;//上传签到表
     private boolean isRefesh = true;
     private int stuNum = 0;// 学员人数
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -168,7 +170,13 @@ public class CourserActivity extends BaseActivity {
         mOssClient = new AliYunOss(this);
 
         courseId = getIntent().getStringExtra("courseId");
-        orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        } else {
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+        }
 
         String str = "<font color='#333333'>没有记录，看不到成长</font>";
         ivEmpty.setText(Html.fromHtml(str));

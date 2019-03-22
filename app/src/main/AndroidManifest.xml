@@ -18,9 +18,9 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.WRITE_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_MMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -39,6 +39,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.OrgNoSettingActivity"></activity>
         <!-- Weibo分享 -->
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
@@ -391,8 +392,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.InviteTeacherActivity"
-            android:screenOrientation="portrait" />
-        <!--版本更新所需-->
+            android:screenOrientation="portrait" /> <!-- 版本更新所需 -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />

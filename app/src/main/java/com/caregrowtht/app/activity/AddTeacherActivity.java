@@ -177,8 +177,10 @@ public class AddTeacherActivity extends BaseActivity {
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         U.showToast("成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ACTIVE_TEACH));
-                        startActivity(new Intent(AddTeacherActivity.this, InviteTeacherActivity.class)
-                                .putExtra("msgEntity", msgEntity));
+                        if (auditEntity == null) {// 新增教师时弹出
+                            startActivity(new Intent(AddTeacherActivity.this, InviteTeacherActivity.class)
+                                    .putExtra("msgEntity", msgEntity));
+                        }
                         finish();
                     }
 

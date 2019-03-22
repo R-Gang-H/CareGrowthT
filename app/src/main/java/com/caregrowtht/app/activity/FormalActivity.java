@@ -126,8 +126,9 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         if (msgEntity != null) {
             OrgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(OrgId);
         } else {
-            OrgId = UserManager.getInstance().getOrgId();
+            OrgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
         }
         initRecyclerView(rvStudent, true);
         mFormalsAdapter = new FormalTheActiveAdapter(mFormalList1, this);

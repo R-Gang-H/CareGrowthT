@@ -67,8 +67,9 @@ public class InitDataActivity extends BaseActivity implements ViewOnItemClick {
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         if (msgEntity != null) {
             orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
         } else {
-            orgId = UserManager.getInstance().getOrgId();
+            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
         }
         getOrgTeachers("1");// 48.获取机构的教师
     }
