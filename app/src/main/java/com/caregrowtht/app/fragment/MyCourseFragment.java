@@ -80,7 +80,7 @@ public class MyCourseFragment extends BaseFragment {
         for (int i = 0; i < 7; i++) {
             strings.add(i + "");
         }
-        mAdapter = new CourseAdapter(getActivity(), R.layout.item_course_list, strings, today, orgId, cardType);
+        mAdapter = new CourseAdapter(getActivity(), R.layout.item_course_list, strings, today, cardType);
         rvCourse.setAdapter(mAdapter);
         scroll2Today();
     }
@@ -233,6 +233,10 @@ public class MyCourseFragment extends BaseFragment {
                 getWeekCourseTable();
                 break;
             case ToUIEvent.TEACHER_REFERSH:
+                if ((Boolean) event.getObj()) {
+                    UserManager.getInstance().setOrgId(
+                            String.valueOf(U.getPreferences("orgId", "")));
+                }
                 getWeekCourseTable();
                 break;
         }

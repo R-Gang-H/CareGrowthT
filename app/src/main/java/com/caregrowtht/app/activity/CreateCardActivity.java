@@ -707,8 +707,8 @@ public class CreateCardActivity extends BaseActivity {
                         //课时卡
                         //---遍历传递的参数数据--start--
                         ArrayList<NewCardEntity> newCardList = new ArrayList<>();
-                        CourseEntity countData = new CourseEntity();
                         for (int i = 0; i < mCourseModels.size(); i++) {
+                            CourseEntity countData = new CourseEntity();
                             String courseCount = "";
                             boolean isAddCour = false;
                             NewCardEntity newCardEntity = new NewCardEntity();

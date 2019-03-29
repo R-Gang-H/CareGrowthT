@@ -2,7 +2,6 @@ package com.caregrowtht.app.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.appcompat.app.AlertDialog;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
 /**
@@ -49,7 +49,7 @@ public class StudentCardAdapter extends CommonAdapter {
     //选中孩子的Id
     private HashMap<Integer, String> studentIds = new HashMap<>();
     private CheckBox cb;
-    public Boolean isAll = true;
+    public Boolean isAll = false;
     private String orgId;
     private String lessonId;
 
@@ -79,10 +79,8 @@ public class StudentCardAdapter extends CommonAdapter {
         }
     }
 
-    public void setData(ArrayList<StudentEntity> mArrDatas, final CheckBox tvSelectStu) {
-        this.mArrDatas.clear();
+    public void setData(final CheckBox tvSelectStu) {
         this.tvSelectStu = tvSelectStu;
-        this.mArrDatas.addAll(mArrDatas);
         if (TextUtils.isEmpty(lessonId) || TextUtils.isEmpty(orgId)) {//选择要发送的学员
             // 初始化数据
             initDate();
@@ -230,15 +228,20 @@ public class StudentCardAdapter extends CommonAdapter {
         getStudentIds().put(position, cb.isSelected() &&
                 !CheckIsSelecte(mArrDatas.get(position).getStuId()) ?
                 mArrDatas.get(position).getStuId() : "");
+        checkAll();
+    }
+
+    public void checkAll() {
         //遍历是否全选
         boolean isSelect = true;
         for (int i = 0; i < mArrDatas.size(); i++) {
-            if (!getIsSelected().get(i)) {//有为选中的需要
+            if (!getIsSelected().get(i)) {//有未选中的学员
                 isSelect = false;
                 break;
             }
         }
         if (tvSelectStu != null) {
+            tvSelectStu.setChecked(isSelect);
             tvSelectStu.setSelected(isSelect);
         }
     }

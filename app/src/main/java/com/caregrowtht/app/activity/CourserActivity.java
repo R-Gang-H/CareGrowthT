@@ -202,8 +202,85 @@ public class CourserActivity extends BaseActivity {
         singleAdapter.setCommentListener((view, adapterPosition, position1, position2) -> {
             showInputDialog(view, adapterPosition, position1, position2, 1);//单个
         });
+        mutileAdapter.setMomentListener((pData, position) -> {
+            checkDelDialog(pData.getCircleId(), position, 2);//集体
+        });
+        singleAdapter.setMomentListener((pData, position) -> {
+            checkDelDialog(pData.getCircleId(), position, 1);//单个
+        });
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(this::handleWindowChange);
+    }
 
+    /**
+     * 确定删除
+     *
+     * @param circleId
+     * @param position
+     * @param type
+     */
+    private void checkDelDialog(String circleId, int position, int type) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(this, R.layout.dialog_prompt_org, null);
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        tvTitle.setText("确定删除吗?");
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setVisibility(View.GONE);
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
+        tv_ok.setOnClickListener(v -> {
+            delCircle(circleId, position, type);
+            dialog.dismiss();
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    /**
+     * 删除课程反馈
+     *
+     * @param circleId
+     * @param position
+     * @param type
+     */
+    private void delCircle(String circleId, int position, int type) {
+        HttpManager.getInstance().doDelCircle("CourserActivity", circleId,
+                new HttpCallBack<BaseDataModel>() {
+                    @Override
+                    public void onSuccess(BaseDataModel data) {
+                        if (type == 2) {//集体
+                            removeMoment(mutileData, mutileAdapter, position);
+                        } else if (type == 1) {//单个
+                            removeMoment(singleData, singleAdapter, position);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        LogUtils.d("MomentAdapter onFail", statusCode + ":" + errorMsg);
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout(CourserActivity.this);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        LogUtils.d("MomentAdapter onError", throwable.getMessage());
+                    }
+                });
+    }
+
+    private void removeMoment(ArrayList<MomentMessageEntity> datas, MomentAdapter adapter, int position) {
+        //移除
+        datas.remove(position);
+        adapter.listModel.remove(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, datas.size());
     }
 
     private void teacherLessonDetail() {

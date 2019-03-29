@@ -102,6 +102,8 @@ public class AddOrgActivity extends BaseActivity {
         } else if (status.equals("1")) {
             tvExcut.setText("已加入该机构");
             return true;
+        } else {
+            tvExcut.setText("审核不通过");
         }
         return false;
     }

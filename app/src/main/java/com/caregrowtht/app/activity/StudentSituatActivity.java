@@ -1,6 +1,5 @@
 package com.caregrowtht.app.activity;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -61,7 +61,7 @@ public class StudentSituatActivity extends BaseActivity {
         initRecyclerView(recyclerView, true);
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setOnRefreshListener(refreshlayout -> getLessonDetail3());
-        studentSitAdapter = new StudentSituatAdapter(studentEntities, this, courseData);
+        studentSitAdapter = new StudentSituatAdapter(studentEntities, this, courseData, null);
         recyclerView.setAdapter(studentSitAdapter);
     }
 

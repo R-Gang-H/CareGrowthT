@@ -1,10 +1,6 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -220,10 +218,10 @@ public class FastenStudentActivity extends BaseActivity implements ContactsAdapt
                 break;
             case R.id.btn_submit:
                 Intent intent = new Intent();
-                if (addStudentList.size() == 0) {
-                    U.showToast("请选择学员");
-                    break;
-                }
+//                if (addStudentList.size() == 0) {
+//                    U.showToast("请选择学员");
+//                    break;
+//                }
                 intent.putExtra("UserEntity", (Serializable) addStudentList);
                 setResult(RESULT_OK, intent);
                 finish();

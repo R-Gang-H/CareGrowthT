@@ -20,11 +20,11 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.android.library.utils.SystemUtils;
 import com.android.library.utils.U;
-import com.android.library.view.MyGridView;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.CourserReleaseAdapter;
 import com.caregrowtht.app.adapter.StudentCardAdapter;
+import com.caregrowtht.app.adapter.StudentSituatAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -53,6 +53,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -90,16 +92,16 @@ public class CourserReleaseActivity extends BaseActivity {
     LinearLayout llAtter;
     @BindView(R.id.tv_select_stu)
     CheckBox tvSelectStu;
-    @BindView(R.id.gv_tch)
-    MyGridView gvTch;
+    @BindView(R.id.rv_stu_situat)
+    RecyclerView rvStuSituat;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     @BindView(R.id.circle_progress_fill_in)
     CircleProgressView mCircleProgress;
 
     private String courseId;
-    private StudentCardAdapter couStuAdapter;
-    List<StudentEntity> studentList = new ArrayList<>();
+    private StudentSituatAdapter studentSitAdapter;
+    private ArrayList<StudentEntity> studentList = new ArrayList<>();
 
     private int themeId;
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -108,7 +110,8 @@ public class CourserReleaseActivity extends BaseActivity {
 
     AliYunOss mOssClient;
     private StringBuffer studentIds = new StringBuffer();
-
+    private List<StudentCardAdapter> stuCardAdapter = new ArrayList<>();
+    private List<CheckBox> tvSelectCourse = new ArrayList<>();
     String destPath;
 
     @Override
@@ -123,12 +126,15 @@ public class CourserReleaseActivity extends BaseActivity {
         initRecyclerView(recyclerView, false);
 
         themeId = R.style.picture_white_style;
-        tvSelectStu.setSelected(true);
         tvSelectStu.setOnCheckedChangeListener((buttonView, isChecked) -> {
             tvSelectStu.setSelected(isChecked);
-            couStuAdapter.isAll = isChecked;
-            couStuAdapter.initDate();
-            couStuAdapter.notifyDataSetChanged();
+            studentSitAdapter.isExt = false;// 不执行默认选中已签到学员
+            for (int i = 0; i < stuCardAdapter.size(); i++) {
+                StudentCardAdapter adapter = stuCardAdapter.get(i);
+                adapter.isAll = isChecked;
+                adapter.setData(tvSelectCourse.get(i));
+                adapter.checkAll();
+            }
         });
     }
 
@@ -140,11 +146,26 @@ public class CourserReleaseActivity extends BaseActivity {
         courReleAdapter = new CourserReleaseAdapter(new ArrayList(), this);
         recyclerView.setAdapter(courReleAdapter);
 
-        couStuAdapter = new StudentCardAdapter(this, R.layout.item_stu_situat, studentList, null);
-        gvTch.setAdapter(couStuAdapter);
+        initRecyclerView(rvStuSituat, true);
+        studentSitAdapter = new StudentSituatAdapter(studentList, this, null, onStuCardClick);
+        rvStuSituat.setAdapter(studentSitAdapter);
+
         mOssClient = AliYunOss.getInstance(this);
         lessonChild();
     }
+
+    public StudentSituatAdapter.OnStuCardClick onStuCardClick = (stuCardAdapter, tvSelectCourse) -> {
+        this.stuCardAdapter.add(stuCardAdapter);
+        this.tvSelectCourse.add(tvSelectCourse);
+        stuCardAdapter.setData(tvSelectCourse);
+        tvSelectCourse.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;// 判断是否是按下
+            studentSitAdapter.isExt = false;// 不执行默认选中已签到学员
+            tvSelectCourse.setSelected(isChecked);
+            stuCardAdapter.isAll = isChecked;
+            stuCardAdapter.setData(tvSelectCourse);
+        });
+    };
 
     private void lessonChild() {
         //5. 获取参与课程的学员
@@ -154,7 +175,15 @@ public class CourserReleaseActivity extends BaseActivity {
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         studentList.clear();
                         studentList.addAll(data.getData());
-                        couStuAdapter.setData(data.getData(), tvSelectStu);
+                        ArrayList<StudentEntity> stuStatus = removeDuplicateOrder(studentList);//筛选有几种学员
+                        if (stuStatus.size() > 1 && stuStatus.get(0).getStatus().equals("1")
+                                && stuStatus.get(1).getStatus().equals("2")) {
+                            // 排序(位置1和2交换)
+                            StudentEntity stu = stuStatus.get(0);
+                            stuStatus.set(0, stuStatus.get(1));
+                            stuStatus.set(1, stu);
+                        }
+                        studentSitAdapter.setData(stuStatus, studentList);
                     }
 
                     @Override
@@ -162,7 +191,7 @@ public class CourserReleaseActivity extends BaseActivity {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(CourserReleaseActivity.this);
-                        }  //  U.showToast(errorMsg);//不能打开
+                        }
                     }
 
                     @Override
@@ -172,6 +201,23 @@ public class CourserReleaseActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 根据status去重
+     *
+     * @param orderList
+     * @return
+     * @author haoruigang
+     */
+    private static ArrayList<StudentEntity> removeDuplicateOrder
+    (List<StudentEntity> orderList) {
+        Set<StudentEntity> set = new TreeSet<>((a, b) -> {
+            // 字符串则按照asicc码升序排列
+            return a.getStatus().compareTo(b.getStatus());
+        });
+        set.addAll(orderList);
+        return new ArrayList<>(set);
+    }
+
     @OnClick({R.id.rl_back_button, R.id.iv_image, R.id.iv_file, R.id.iv_video, R.id.iv_camera, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -179,6 +225,10 @@ public class CourserReleaseActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_image:
+                if (img == 9 || img > 9) {
+                    U.showToast("图片最多可以添加9张");
+                    return;
+                }
                 openImageOr(PictureMimeType.ofImage());//选择图片
                 break;
             case R.id.iv_file:
@@ -192,6 +242,10 @@ public class CourserReleaseActivity extends BaseActivity {
                     ActivityCompat.requestPermissions(CourserReleaseActivity.this,
                             new String[]{Manifest.permission.CAMERA}, 120);
                 } else {
+                    if (img == 9 || img > 9) {
+                        U.showToast("图片最多可以添加9张");
+                        return;
+                    }
                     openCamera();//拍照
                 }
                 break;
@@ -203,13 +257,15 @@ public class CourserReleaseActivity extends BaseActivity {
                 } else {
                     btnSubmit.setEnabled(false);
                     int index = 0;
-                    for (int i = 0; i < couStuAdapter.getStudentIds().size(); i++) {
-                        if (!TextUtils.isEmpty(couStuAdapter.getStudentIds().get(i))) {
-                            if (index > 0) {
-                                studentIds.append(",");
+                    for (StudentCardAdapter adapter : stuCardAdapter) {
+                        for (int i = 0; i < adapter.getStudentIds().size(); i++) {
+                            if (!TextUtils.isEmpty(adapter.getStudentIds().get(i))) {
+                                if (index > 0) {
+                                    studentIds.append(",");
+                                }
+                                studentIds.append(adapter.getStudentIds().get(i));
+                                index++;
                             }
-                            studentIds.append(couStuAdapter.getStudentIds().get(i));
-                            index++;
                         }
                     }
                     if (validation()) {
@@ -361,7 +417,7 @@ public class CourserReleaseActivity extends BaseActivity {
 
     private void openImageOr(int type) {
         // 进入相册
-        int maxSelectNum = 9;
+        int maxSelectNum = 9 - img;
         getPicture()
                 .openGallery(type)// 图片.ofImage()、视频.ofVideo()、音频
                 .theme(themeId)// 主题样式设置
@@ -402,7 +458,7 @@ public class CourserReleaseActivity extends BaseActivity {
         SystemUtils.imageCapture(this, destPath, PictureConfig.CAMERA);
     }
 
-    int i = 0;
+    int img = 0;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -470,6 +526,9 @@ public class CourserReleaseActivity extends BaseActivity {
 
     //准备上传参数
     private void readyUpload(String path, String pictureType, String mImageName) {
+        if (pictureType.contains("jpg") || pictureType.contains("png") || pictureType.contains("jpeg")) {
+            img++;
+        }
         courReleAdapter.pngOravis.add(Constant.OSS_URL + mImageName);
         UploadModule uploadModule = new UploadModule();
         uploadModule.setPicPath(path);

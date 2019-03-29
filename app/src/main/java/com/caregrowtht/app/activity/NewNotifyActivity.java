@@ -3,8 +3,6 @@ package com.caregrowtht.app.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,14 +12,22 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
 
+import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.NotifyCardAdapter;
+import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.NotifyCardEntity;
+import com.caregrowtht.app.model.UserEntity;
+import com.caregrowtht.app.okhttp.HttpManager;
+import com.caregrowtht.app.okhttp.callback.HttpCallBack;
+import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.view.xrecyclerview.GridRecyclerView;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -84,11 +90,63 @@ public class NewNotifyActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void setOnItemClickListener(View view, int postion) {
+        if (postion == 1) {// 检查是否有标星学员
+            getStudent("1", postion);
+        } else if (postion == 4) {// 检查是否有学员
+            getStudent("2", postion);
+        } else {
+            startActivity(notifyType[postion]);
+        }
+    }
+
+    private void startActivity(String value) {
         //通知的类型 // 1：自定义 // 2：放假通知 3：班级通知 4：教师通知 5：学员通知 6：全体通知
         startActivity(new Intent(this, CustomActivity.class)
                 .putExtra("orgId", OrgId)
-                .putExtra("notifyType", notifyType[postion]));
+                .putExtra("notifyType", value));
         finish();
+    }
+
+
+    /**
+     * @param status  //1:标星学员 2：活跃学员 3：非活跃待确认 4：非活跃历史 5待审核;
+     * @param postion
+     */
+    private void getStudent(final String status, int postion) {
+        //10.获取机构的正式学员 haoruigang on 2018-8-7 15:50:55
+        HttpManager.getInstance().doGetOrgChild("CustomActivity",
+                OrgId, status, pageIndex + "", "",
+                new HttpCallBack<BaseDataModel<UserEntity>>() {
+                    @Override
+                    public void onSuccess(BaseDataModel<UserEntity> data) {
+                        int sizeData = data.getData().size();
+                        if (sizeData > 0) {
+                            startActivity(notifyType[postion]);
+                        } else {
+                            if (postion == 1) {// 检查是否有标星学员
+                                U.showToast("您没有标星学员");
+                            } else if (postion == 4) {// 检查是否有学员
+                                U.showToast("您没有学员");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        LogUtils.d("CustomActivity onFail", statusCode + ":" + errorMsg);
+                        if (statusCode == 1002) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout(NewNotifyActivity.this);
+                        } else {
+                            U.showToast(errorMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        LogUtils.tag("CustomActivity onError " + throwable);
+                    }
+                });
     }
 
     class ItemOffsetDecoration extends RecyclerView.ItemDecoration {

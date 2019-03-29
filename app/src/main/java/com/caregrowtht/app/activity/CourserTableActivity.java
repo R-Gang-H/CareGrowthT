@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -98,12 +97,12 @@ public class CourserTableActivity extends BaseActivity {
         ivStatus.setBackgroundColor(statusBg);
         tvOrgName.setTextColor(statusBg);
         cvBg.setCardBackgroundColor(statusBg);
-        btnUpdate.setBackgroundColor(opertBg);
-        btnUpdate.setTextColor(statusBg);
-        btnAddCourse.setBackgroundColor(opertBg);
-        btnAddCourse.setTextColor(statusBg);
-        btnDelete.setBackgroundColor(opertBg);
-        btnDelete.setTextColor(statusBg);
+        btnUpdate.setBackgroundColor(statusBg);
+//        btnUpdate.setTextColor(opertBg);
+        btnAddCourse.setBackgroundColor(statusBg);
+//        btnAddCourse.setTextColor(opertBg);
+        btnDelete.setBackgroundColor(statusBg);
+//        btnDelete.setTextColor(opertBg);
 
         teacherLessonDetail();
 
@@ -281,13 +280,14 @@ public class CourserTableActivity extends BaseActivity {
     }
 
     private void deleteCourseLesson(String type) {//1:删除一节课 2：删除今后所有同名字的排课
+        String orgId = UserManager.getInstance().getOrgId();
         //45.删除排课
         HttpManager.getInstance().doDeleteCourseLesson("CourserTableActivity", type,
-                courseData.getCourseId(), UserManager.getInstance().getOrgId(),
+                courseData.getCourseId(), orgId,
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
-                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH));
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
                         U.showToast("已删除");
                         finish();
                     }

@@ -7,8 +7,8 @@ android {
         applicationId "com.wsyd.aczjsd"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 16
-        versionName "1.1.6"
+        versionCode 17
+        versionName "1.1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -83,6 +83,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "CareGrowtht_${variant.versionCode}_${variant.versionName}_${releaseTime()}.apk"
+        }
+    }
+
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {

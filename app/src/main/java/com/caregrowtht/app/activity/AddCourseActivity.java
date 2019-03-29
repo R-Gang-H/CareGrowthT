@@ -318,7 +318,7 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
                         } else {
                             btnDereactCourse.setEnabled(true);
                             U.showToast("加课成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH));
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
                             finish();
                         }
                     }

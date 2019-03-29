@@ -168,8 +168,9 @@ public class CourseVsEditActivity extends BaseActivity {
         }
         String finalCount = count;
         String finalPrice = price;
+        String cardType = courseCardEntity.getCardType();
         HttpManager.getInstance().doEditCardLesson("CourserVsAdapter",
-                orgCardId, orgId, courseId, count, price, type,
+                orgCardId, orgId, courseId, count, price, type, cardType,
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {

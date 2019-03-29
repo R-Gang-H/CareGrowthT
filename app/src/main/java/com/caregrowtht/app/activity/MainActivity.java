@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private MomentFragment momentFragment;
 
+    private String OrgId = "";// 保存上次离开工作页时停留在那个机构
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -140,17 +142,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         UserManager.apply(radioButtons, TABSPEC, radioButtons.get(index));
         switch (index) {
             case 0:
-                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                 //动态
                 if (null == stateFragment) {
                     stateFragment = new StateFragment();
                     ft.add(R.id.ll_content, stateFragment);
                 } else {
+                    EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                     ft.show(stateFragment);
                 }
                 break;
             case 1:
-                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER_HOME));
                 //首页
                 if (null == homeFragment) {
                     homeFragment = new HomeFragment();

@@ -279,6 +279,8 @@ public class Constant {
     public static String GETORGSETTING = BASE_API + "getOrgSetting";
     // 检查学员是否已达上限
     public static String CHECKSTUDENTNUM = BASE_API + "checkStudentNum";
+    // 删除课程反馈
+    public static String DELCIRCLE = BASE_API + "delCircle";
 
     // origin array
     public static String[] originArray = {"老学员推荐", "课程顾问招生", "爱成长引流", "进店咨询", "地推传单", "资源互换", "有偿获取", "其他"};

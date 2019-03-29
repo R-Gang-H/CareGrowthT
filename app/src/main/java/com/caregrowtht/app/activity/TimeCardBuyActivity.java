@@ -181,9 +181,11 @@ public class TimeCardBuyActivity extends BaseActivity {
             if (TextUtils.equals(validMonth, "0")) {
                 validTime();
                 etMonth.setText(validMonth);
+                etValidityTerm.setFocusable(false);
             } else {
                 etMonth.setText(validMonth);
                 validMoth();
+                etValidityTerm.setFocusable(true);
             }
             etMonth.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -692,6 +694,9 @@ public class TimeCardBuyActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s)) {
+                    if (s.toString().trim().equals("0")) {
+                        U.showToast("请输入大于0的有效期");
+                    }
                     String valid = "有效期:" + s.toString().trim();
                     if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4")
                             || TextUtils.equals(addType, "5")) {// 2：购买新卡 4,5
@@ -943,6 +948,10 @@ public class TimeCardBuyActivity extends BaseActivity {
     private void buyNewCard() {
         String price = String.valueOf((Integer.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
         String validMonth = etValidityTerm.getText().toString().trim();//单位月 有效期1年传12 长期有效传0
+        if (validMonth.equals("0")) {// 新卡有效期必须大于0
+            U.showToast("有效期不可以为0");
+            return;
+        }
         String realityCount = etReality.getText().toString().trim();
 
         HashMap<String, String> map = new HashMap<>();
@@ -982,6 +991,8 @@ public class TimeCardBuyActivity extends BaseActivity {
                 if (statusCode == 1002 || statusCode == 1011) {//异地登录
                     U.showToast("该账户在异地登录!");
                     HttpManager.getInstance().dologout(TimeCardBuyActivity.this);
+                } else if (statusCode == 1001) {
+                    U.showToast("请填入大于0的参数!");
                 } else if (statusCode == 1055) {
                     U.showToast("课时卡名字重复!");
                 } else {

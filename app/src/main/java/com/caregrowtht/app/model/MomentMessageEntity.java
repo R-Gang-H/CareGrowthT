@@ -15,6 +15,7 @@ public class MomentMessageEntity implements Serializable {
     String authorAvatar;
     String authorNickname;
     String authorRelative;
+    String authorId;
     String time;            //兴趣圈发布时间（时间戳）
     String title;            //活动或广告的标题
     String content;         //普通兴趣圈的内容或活动通知的标题
@@ -247,6 +248,14 @@ public class MomentMessageEntity implements Serializable {
 
     public void setAuthorRelative(String authorRelative) {
         this.authorRelative = authorRelative;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getTitle() {

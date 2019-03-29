@@ -173,30 +173,31 @@ public class StateAdapter extends XrecyclerAdapter {
             tvTime.setText(String.format("%s\t%s", data, week));
             tvTitleContent.setText(msgEntity.getOrgName());
             try {
+                UserManager instance = UserManager.getInstance();
                 JSONObject jsonObject = new JSONObject(msgEntity.getContent());
-                String courseCount = getJsonString(jsonObject, "dpTodayCourseCount");
-                String courseHour = getJsonString(jsonObject, "dpTodayCourseHourMinutes");
+                String courseCount = instance.getJsonString(jsonObject, "dpTodayCourseCount");
+                String courseHour = instance.getJsonString(jsonObject, "dpTodayCourseHourMinutes");
                 tvCourseCountHour.setText(Html.fromHtml(String.format("机构排课情况:\t<font color='#333333'>%s节/%s</font>", courseCount, courseHour)));
-                String todayIncome = getJsonString(jsonObject, "dpTodayCourseIncome");
+                String todayIncome = instance.getJsonString(jsonObject, "dpTodayCourseIncome");
                 tvTodayCourseIncome.setText(Html.fromHtml(String.format("今日消课收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayIncome) / 100))));
-                String todayCardIncome = getJsonString(jsonObject, "dpTodayCourseCardIncome");
+                String todayCardIncome = instance.getJsonString(jsonObject, "dpTodayCourseCardIncome");
                 tvTodayAddIncome.setText(Html.fromHtml(String.format("今日新增收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayCardIncome) / 100))));
-                String todayNewStu = getJsonString(jsonObject, "dpTodayNewStudent");
+                String todayNewStu = instance.getJsonString(jsonObject, "dpTodayNewStudent");
                 tvTodayAddStu.setText(Html.fromHtml(String.format("今日新增学员:\t<font color='#333333'>%s人</font>", todayNewStu)));
-                String todayRefund = getJsonString(jsonObject, "dpTodayRefund");
+                String todayRefund = instance.getJsonString(jsonObject, "dpTodayRefund");
                 tvTodayRefund.setText(Html.fromHtml(String.format("今日退费:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(todayRefund) / 100))));
-                String monthIncome = getJsonString(jsonObject, "dpMonthCourseIncome");
+                String monthIncome = instance.getJsonString(jsonObject, "dpMonthCourseIncome");
                 tvMonthCourseIncome.setText(Html.fromHtml(String.format("本月消课收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthIncome) / 100))));
-                String monthCardIncome = getJsonString(jsonObject, "dpMonthCourseCardIncome");
+                String monthCardIncome = instance.getJsonString(jsonObject, "dpMonthCourseCardIncome");
                 tvMonthAddIncome.setText(Html.fromHtml(String.format("本月新增收入:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthCardIncome) / 100))));
-                String monthNewStu = getJsonString(jsonObject, "dpMonthNewStudent");
+                String monthNewStu = instance.getJsonString(jsonObject, "dpMonthNewStudent");
                 tvMonthAddStu.setText(Html.fromHtml(String.format("本月新增学员:\t<font color='#333333'>%s人</font>", monthNewStu)));
-                String monthRefund = getJsonString(jsonObject, "dpMonthRefund");
+                String monthRefund = instance.getJsonString(jsonObject, "dpMonthRefund");
                 tvMonthRefund.setText(Html.fromHtml(String.format("本月退费:\t<font color='#333333'>%s元</font>", String.valueOf(Float.parseFloat(monthRefund) / 100))));
-                String yinChuQin = getJsonString(jsonObject, "dpYingChuQin");
-                String shiJiChuQin = getJsonString(jsonObject, "dpShiJiChuQin");
-                String qingJia = getJsonString(jsonObject, "dpQingjia");
-                String weiChuli = getJsonString(jsonObject, "dpWeiChuLi");
+                String yinChuQin = instance.getJsonString(jsonObject, "dpYingChuQin");
+                String shiJiChuQin = instance.getJsonString(jsonObject, "dpShiJiChuQin");
+                String qingJia = instance.getJsonString(jsonObject, "dpQingjia");
+                String weiChuli = instance.getJsonString(jsonObject, "dpWeiChuLi");
                 tvStuWork.setText(Html.fromHtml(String.format("学员出勤情况:\t<font color='#333333'>预计出勤学员%s人、实际签到%s人、请假%s人、未处理%s人</font>"
                         , yinChuQin, shiJiChuQin, qingJia, weiChuli)));
                 JSONArray teachers = jsonObject.getJSONArray("teacher");
@@ -207,11 +208,11 @@ public class StateAdapter extends XrecyclerAdapter {
                 llTeacherWork.addView(workTv);
                 for (int i = 0; i < teachers.length(); i++) {
                     JSONObject teacher = teachers.getJSONObject(i);
-                    getJsonString(teacher, "teacherId");
-                    String teacherName = getJsonString(teacher, "teacherName");
-                    String courseCouont = getJsonString(teacher, "courseCount");
-                    String endCount = getJsonString(teacher, "courseEndCount");
-                    String feedCount = getJsonString(teacher, "courseFeedbackCount");
+                    instance.getJsonString(teacher, "teacherId");
+                    String teacherName = instance.getJsonString(teacher, "teacherName");
+                    String courseCouont = instance.getJsonString(teacher, "courseCount");
+                    String endCount = instance.getJsonString(teacher, "courseEndCount");
+                    String feedCount = instance.getJsonString(teacher, "courseFeedbackCount");
                     String tvT = "";
                     if (teacherName.length() > 2) {
                         tvT = "\t\t";// 2
@@ -463,10 +464,6 @@ public class StateAdapter extends XrecyclerAdapter {
             }
         });
 
-    }
-
-    private String getJsonString(JSONObject jsonObject, String object) throws JSONException {
-        return jsonObject.getString(object);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

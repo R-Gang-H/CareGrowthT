@@ -1,5 +1,6 @@
 package com.caregrowtht.app.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.Html;
@@ -182,7 +183,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             orgId = msgEntity.getOrgId();
             UserManager.getInstance().setOrgId(orgId);
         } else {
-            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+            orgId = UserManager.getInstance().getOrgId();
         }
         if (updateAll) {
             CourseEntity editCourseData = (CourseEntity) getIntent().getSerializableExtra("courseData");
@@ -216,6 +217,9 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         };
         etCourse.setOnFocusChangeListener(l);
         etClass.setOnFocusChangeListener(l);
+        etAfter.setOnFocusChangeListener((v, hasFocus) -> {
+            classTimeAdapter.isTimeEdit = "1";
+        });
     }
 
     private void getOrgSetting() {
@@ -765,7 +769,6 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             btnDereactCourse.setEnabled(true);
             return;
         }
-        String orgId = checkValadata.getOrgId();
         StringBuilder courseTime = checkValadata.getCourseTime();
         String mainTeacher = checkValadata.getMainTeacher();
         StringBuilder subTeachers = checkValadata.getSubTeachers();
@@ -793,7 +796,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         } else {
                             btnDereactCourse.setEnabled(true);
                             U.showToast("新建排课成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH));
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, true));
                             finish();
                         }
                     }
@@ -824,7 +827,6 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             btnCheckConflict.setEnabled(true);
             return;
         }
-        String orgId = checkValadata.getOrgId();
         StringBuilder courseTime = checkValadata.getCourseTime();
         String mainTeacher = checkValadata.getMainTeacher();
         StringBuilder subTeachers = checkValadata.getSubTeachers();
@@ -852,7 +854,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         } else {
                             btnDereactCourse.setEnabled(true);
                             U.showToast("修改成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH));
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
                             finish();
                         }
                     }
@@ -1324,7 +1326,6 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     private class CheckValadata {
         private boolean myResult;
         private String check;
-        private String orgId;
         private StringBuilder courseTime;
         private String mainTeacher;
         private StringBuilder subTeachers;
@@ -1340,16 +1341,12 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             return myResult;
         }
 
-        public String getOrgId() {
-            return orgId;
-        }
-
         StringBuilder getCourseTime() {
             return courseTime;
         }
 
         String getRepeatCount() {
-            if (repeatEver.equals("1")) {// 永不结束
+            if (repeatEver.equals("1")) {// 永不结束 classTimeAdapter.isTimeEdit
                 return "0";
             }
             String rpCount = etAfter.getText().toString().trim();
@@ -1393,7 +1390,6 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         }
 
         CheckValadata invoke() {
-            orgId = UserManager.getInstance().getOrgId();
             if (TextUtils.isEmpty(check) || TextUtils.isEmpty(orgId) || TextUtils.isEmpty(isOrder)) {
                 LogUtils.d("NewWorkActivity", "check、orgId、isOrder");
                 myResult = true;
@@ -1417,9 +1413,17 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             courseTime = new StringBuilder();
             for (int i = 0; i < classTimeAdapter.timeList.size(); i++) {
                 TimeEntity timeEntity = classTimeAdapter.timeList.get(i);
-                courseTime.append(String.format("%s,%s", timeEntity.getStartTime(), timeEntity.getEndTime()));
-                if (i < classTimeAdapter.timeList.size() - 1) {
-                    courseTime.append("#");
+                if (classTimeAdapter.isTimeEdit.equals("1") &&
+                        Long.parseLong(timeEntity.getStartTime()) * 1000 < TimeUtils.getCurTimeLong()) {
+                    showSuccessDialog(NewWorkActivity.this,
+                            getResources().getString(R.string.text_update_time_rule));
+                    myResult = true;
+                    return this;
+                } else {
+                    courseTime.append(String.format("%s,%s", timeEntity.getStartTime(), timeEntity.getEndTime()));
+                    if (i < classTimeAdapter.timeList.size() - 1) {
+                        courseTime.append("#");
+                    }
                 }
             }
             if (TextUtils.isEmpty(courseTime)) {
@@ -1484,5 +1488,21 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             myResult = false;
             return this;
         }
+    }
+
+    /**
+     * 提示语
+     */
+    public void showSuccessDialog(final Activity mContext, String desc) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(mContext, R.layout.dialog_teach_lib, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(desc);
+        TextView tvOk = view.findViewById(R.id.tv_ok);
+        tvOk.setOnClickListener(v -> dialog.dismiss());
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
     }
 }

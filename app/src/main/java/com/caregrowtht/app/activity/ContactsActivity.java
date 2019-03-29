@@ -371,6 +371,8 @@ public class ContactsActivity extends BaseActivity implements ContactsAdapter.On
             }
             loadView.delayShowContainer(true);
         } else {
+            mContactModels.clear();
+            mAdapter.update(mContactModels, isType, null, totalStu, notifyType);//刷新数据
             loadView.setNoShown(true);
         }
     }

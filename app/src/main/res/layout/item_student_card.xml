@@ -3,30 +3,60 @@
     android:id="@+id/rl_exist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_size_15">
+    android:layout_marginBottom="@dimen/margin_size_10">
 
-    <TextView
-        android:id="@+id/tv_title"
+    <FrameLayout
+        android:id="@+id/fl_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:background="@mipmap/ic_submit_ssion"
-        android:gravity="center"
-        android:text="标签"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_14" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:background="@mipmap/ic_submit_ssion"
+            android:gravity="center"
+            android:text="标签"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+        <CheckBox
+            android:id="@+id/tv_select_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/selector_all_check"
+            android:drawablePadding="@dimen/margin_size_6"
+            android:padding="@dimen/margin_size_10"
+            android:text="已签到"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <com.android.library.view.MyGridView
         android:id="@+id/gv_tch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_title"
+        android:layout_below="@id/fl_title"
         android:layout_marginLeft="@dimen/margin_size_15"
         android:layout_marginRight="@dimen/margin_size_15"
-        android:layout_marginTop="@dimen/margin_size_10"
         android:gravity="left"
         android:horizontalSpacing="@dimen/margin_size_17"
         android:numColumns="5"
         android:verticalSpacing="@dimen/margin_size_9" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_1"
+        android:layout_below="@id/gv_tch"
+        android:layout_marginStart="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@color/color_e6"
+        android:visibility="gone" />
 
 </RelativeLayout>

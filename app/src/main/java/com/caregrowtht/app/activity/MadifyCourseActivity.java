@@ -404,7 +404,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                         } else {
                             btnDereactCourse.setEnabled(true);
                             U.showToast("修改排课成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH));
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
                             finish();
                         }
                     }

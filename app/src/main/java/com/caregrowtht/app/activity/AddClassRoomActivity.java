@@ -87,6 +87,8 @@ public class AddClassRoomActivity extends BaseActivity {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(AddClassRoomActivity.this);
+                        } else if (statusCode == 1055) {
+                            U.showToast("教室已存在");
                         } else {
                             U.showToast(errorMsg);
                         }

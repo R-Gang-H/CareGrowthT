@@ -2,13 +2,11 @@ package com.caregrowtht.app.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.viewpager.widget.ViewPager;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.JoinOrgActivity;
 import com.caregrowtht.app.adapter.OrgFragmentAdapter;
@@ -22,6 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -96,6 +95,7 @@ public class HomeFragment extends BaseFragment {
                     String[] teacherOrgs = instance.userData.getOrgIds().split(",");//分隔教师机构id
                     String orgId = teacherOrgs[position];
                     UserManager.getInstance().setOrgId(orgId);
+                    U.savePreferences("orgId", orgId);
                     // 教务老师和管理者，进去教师端默认是机构课表，教学老师默认是我的课表 setOrgid 必须在前面
                     if (instance.getOrgEntity() != null) {
                         String identity = instance.getOrgEntity().getIdentity();

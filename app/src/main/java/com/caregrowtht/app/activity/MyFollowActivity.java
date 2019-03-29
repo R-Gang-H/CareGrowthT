@@ -73,7 +73,6 @@ public class MyFollowActivity extends BaseActivity implements ViewOnItemClick {
 
             @Override
             public void onLoadMore() {
-
                 pageIndex++;
                 getBindOrg(false);
             }

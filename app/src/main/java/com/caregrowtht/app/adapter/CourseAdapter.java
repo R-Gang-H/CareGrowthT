@@ -28,16 +28,14 @@ public class CourseAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     private String selectDay;
     private ArrayList<CourseEntity> listData = new ArrayList<>();
     private String today;
-    private String orgId;
     private int cardType = 1;//判断课程卡点击跳转 1:点击课表放大 2:选择排课班级里的成员
     private int type = 1;//1：我的课表 2：机构课表 3：跨机构课表
 
-    public CourseAdapter(Activity mActivity, int layoutResId, ArrayList<String> data, String today, String orgId, int cardType) {
+    public CourseAdapter(Activity mActivity, int layoutResId, ArrayList<String> data, String today, int cardType) {
         super(layoutResId, data);
         this.mActivity = mActivity;
         this.selectDay = today;
         this.today = today;
-        this.orgId = orgId;
         this.cardType = cardType;
     }
 

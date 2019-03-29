@@ -91,6 +91,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String maxCount;
     private String tryPrice;
     private String signSheet;
+    private ArrayList<Handle> handle;
     private String classifyColor;
     private ArrayList<UserEntity> tempStudents;
 
@@ -103,7 +104,9 @@ public class CourseEntity<M, A, S> implements Serializable {
     private ArrayList<UserEntity> childChildCard;
 
     private String vacancy;
+    private String kongwei;
     private String etc;
+    private String wait;
 
     /**
      * isFinish : 2
@@ -162,6 +165,8 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String content;
 
     private String addType;
+    private String card_file;
+    private String is_remark;
 
     public boolean isFront() {
         return isFront;
@@ -841,6 +846,14 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.signSheet = signSheet;
     }
 
+    public ArrayList<Handle> getHandle() {
+        return handle;
+    }
+
+    public void setHandle(ArrayList<Handle> handle) {
+        this.handle = handle;
+    }
+
     public String getClassifyColor() {
         return classifyColor;
     }
@@ -919,6 +932,22 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public void setVacancy(String vacancy) {
         this.vacancy = vacancy;
+    }
+
+    public String getKongwei() {
+        return kongwei;
+    }
+
+    public void setKongwei(String kongwei) {
+        this.kongwei = kongwei;
+    }
+
+    public String getWait() {
+        return wait;
+    }
+
+    public void setWait(String wait) {
+        this.wait = wait;
     }
 
     public String getEtc() {
@@ -1207,5 +1236,51 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public void setAddType(String addType) {
         this.addType = addType;
+    }
+
+    public String getCard_file() {
+        return card_file;
+    }
+
+    public void setCard_file(String card_file) {
+        this.card_file = card_file;
+    }
+
+    public String getIs_remark() {
+        return is_remark;
+    }
+
+    public void setIs_remark(String is_remark) {
+        this.is_remark = is_remark;
+    }
+
+    public class Handle {
+        private String handleName;
+        private String handleType;
+        private String handleTime;
+
+        public String getHandleName() {
+            return handleName;
+        }
+
+        public void setHandleName(String handleName) {
+            this.handleName = handleName;
+        }
+
+        public String getHandleType() {
+            return handleType;
+        }
+
+        public void setHandleType(String handleType) {
+            this.handleType = handleType;
+        }
+
+        public String getHandleTime() {
+            return handleTime;
+        }
+
+        public void setHandleTime(String handleTime) {
+            this.handleTime = handleTime;
+        }
     }
 }

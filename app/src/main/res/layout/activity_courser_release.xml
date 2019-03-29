@@ -14,6 +14,7 @@
     <com.caregrowtht.app.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/btn_submit"
         android:layout_below="@id/toolbar"
         android:fillViewport="true">
 
@@ -35,7 +36,7 @@
                 android:paddingTop="@dimen/margin_size_20"
                 android:paddingRight="@dimen/margin_size_15"
                 android:textColor="@color/color_3"
-                android:textSize="@dimen/margin_size_16" />
+                android:textSize="@dimen/textSize_16" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -130,19 +131,23 @@
                     android:text="全选"
                     android:textColor="@color/color_3" />
 
-                <com.android.library.view.MyGridView
-                    android:id="@+id/gv_tch"
+                <View
+                    android:id="@+id/v_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_1"
+                    android:layout_below="@id/tv_select_stu"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_5"
+                    android:background="@color/color_e6" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_stu_situat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_select_stu"
+                    android:layout_below="@id/v_line"
                     android:layout_marginLeft="@dimen/margin_size_10"
-                    android:layout_marginTop="@dimen/margin_size_20"
-                    android:layout_marginRight="@dimen/margin_size_10"
-                    android:layout_marginBottom="@dimen/margin_size_17"
-                    android:gravity="left"
-                    android:horizontalSpacing="@dimen/margin_size_10"
-                    android:numColumns="5"
-                    android:verticalSpacing="@dimen/margin_size_10" />
+                    android:layout_marginTop="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10" />
 
             </RelativeLayout>
 

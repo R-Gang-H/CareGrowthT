@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * haoruigang on 2018-12-5 17:43:57 通知详情
+ * haoruigang on 2018-12-5 17:43:57 动态详情
  */
 public class NotifityInfoActivity extends BaseActivity {
 
@@ -61,24 +61,7 @@ public class NotifityInfoActivity extends BaseActivity {
         } else {
             orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
         }
-        String titleName = "";
-        switch (msgEntity.getType()) {
-            case "2"://2：课后反馈（我的学员发布的课后反馈）
-            case "7"://7：课后反馈（我发布的课后反馈收到了评论或者点赞）
-                titleName = "课后反馈";
-                break;
-            case "3"://3：个人类型
-                titleName = "个人类型";
-                break;
-            case "4"://4：机构信息
-            case "5"://5：机构发出的通知
-                titleName = "机构信息";
-                break;
-            case "6"://6：系统发出的通知
-                titleName = "系统信息";
-                break;
-        }
-        tvTitle.setText(String.format("%s动态通知", titleName));
+        tvTitle.setText("动态详情");
         //4,5：机构和系统发出的通知/是否需要回执 1：不需要回执 2：待回执 3：已经回执
         boolean isReceipt = TextUtils.equals(msgEntity.getReceipt(), "2");
         boolean isShowOrg = msgEntity.getType().equals("4") && isReceipt;

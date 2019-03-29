@@ -2,25 +2,26 @@ package com.caregrowtht.app.activity;
 
 import android.content.Intent;
 import android.text.Html;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.BaseDataModel;
-import com.caregrowtht.app.model.BaseModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.MessageEntity;
-import com.caregrowtht.app.model.UserEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,6 +51,8 @@ public class CourserCoverActivity extends BaseActivity {
     TextView tvOpening;
     @BindView(R.id.tv_equi)
     TextView tvEqui;
+    @BindView(R.id.ll_handle)
+    LinearLayout llHandle;
     @BindView(R.id.btn_allot)
     Button btnAllot;
     @BindView(R.id.btn_stu_take)
@@ -77,12 +80,12 @@ public class CourserCoverActivity extends BaseActivity {
 
     private void teacherLessonDetail() {
         // 46. 获取课程的详细信息
-        HttpManager.getInstance().doCourseLessonDetails("CourserCoverActivity", courseId,
-                new HttpCallBack<BaseModel<CourseEntity<List<UserEntity>, List<UserEntity>, List<UserEntity>>>>() {
+        HttpManager.getInstance().doTeacherLessonDetail("CourserCoverActivity", courseId,
+                new HttpCallBack<BaseDataModel<CourseEntity<String, String, String>>>() {
 
                     @Override
-                    public void onSuccess(BaseModel<CourseEntity<List<UserEntity>, List<UserEntity>, List<UserEntity>>> data) {
-                        courInfoData = data.getData();
+                    public void onSuccess(BaseDataModel<CourseEntity<String, String, String>> data) {
+                        courInfoData = data.getData().get(0);
                         getCourseData();
                     }
 
@@ -105,32 +108,44 @@ public class CourserCoverActivity extends BaseActivity {
     }
 
     private void getCourseData() {
-        CourseEntity<List<UserEntity>,
-                List<UserEntity>,
-                List<UserEntity>> courseData = courInfoData;
+        CourseEntity<String, String, String> courseData = courInfoData;
         tvCourseName.setText(courseData.getCourseName());
         long startTime = Long.parseLong(courseData.getStartAt());
         long endTime = Long.parseLong(courseData.getEndAt());
         tvCourseTime.setText(String.format("%s-%s", TimeUtils.getDateToString(startTime, "MM月dd HH:mm"),
                 TimeUtils.getDateToString(endTime, "HH:mm")));
-        tvMainTeacher.setText(courseData.getMainTeacher().get(0).getUserName());
+        tvMainTeacher.setText(courseData.getMainTeacher());
         //助教
-        List<UserEntity> assistant = courseData.getAssistant();
-        StringBuffer assisb = new StringBuffer();
-        if (assistant != null && assistant.size() > 0) {
-            for (int i = 0; i < assistant.size(); i++) {
-                if (i > 0) {
-                    assisb.append(",");
-                }
-                assisb.append(assistant.get(i).getUserName());
-            }
-        }
-        tvAssisTeacher.setText(String.format("助教:%s", assisb));
-        tvStudentCount.setText(Html.fromHtml(String.format("学员\t%s...等%s人\t<font color='#999999'>签到%s人\t请假\t%s人</font>",
-                courseData.getStudents().get(0).getUserName(), courseData.getStudents().size(), courseData.getSign(), courseData.getLeave())));
+        String assistant = courseData.getAssistant();
+        tvAssisTeacher.setText(String.format("助教:%s", TextUtils.isEmpty(assistant) ? "无" : assistant));
+        tvStudentCount.setText(Html.fromHtml(String.format("学员\t%s...等%s人\t<font color='#999999'>签到%s人\t请假\t%s人</font>"
+                , courseData.getStuName(), courseData.getStudentCount(), courseData.getSign(), courseData.getLeave())));
         tvOrgName.setText(courseData.getOrgName());
-        tvOpening.setText(Html.fromHtml(String.format("空位:\t<font color='#69ace5'>%s</font>\t个", courseData.getVacancy())));
-        tvEqui.setText(Html.fromHtml(String.format("等位学员:\t<font color='#69ace5'>%s</font>\t个", courseData.getEtc())));
+        tvOpening.setText(Html.fromHtml(String.format("空位:\t<font color='#69ace5'>%s</font>\t个", courseData.getKongwei())));
+        tvEqui.setText(Html.fromHtml(String.format("等位学员:\t<font color='#69ace5'>%s</font>\t个", courseData.getWait())));
+        ArrayList<CourseEntity<String, String, String>.Handle> handle = courseData.getHandle();
+        if (handle.size() > 0) {// 有操作记录
+            setHandle(handle);
+        }
+    }
+
+    private void setHandle(ArrayList<CourseEntity<String, String, String>.Handle> handle) {
+        llHandle.removeAllViews();
+        llHandle.setOrientation(LinearLayout.VERTICAL);
+        llHandle.setGravity(Gravity.CENTER_HORIZONTAL);
+        for (int i = 0; i < handle.size(); i++) {
+            String handleName = handle.get(i).getHandleName();
+            String handleType = handle.get(i).getHandleType();
+            String handleTime = handle.get(i).getHandleTime();
+            TextView textView = new TextView(this);
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+            textView.setTextSize(15);
+            textView.setTextColor(getResources().getColor(R.color.color_9));
+            textView.setText(String.format("%s\t\t\t%s\t\t\t%s", handleName,
+                    TimeUtils.getDateToString(Long.parseLong(handleTime), "MM-dd HH:mm")
+                    , handleType));
+            llHandle.addView(textView);
+        }
     }
 
     @OnClick({R.id.rl_back_button, R.id.btn_allot, R.id.btn_stu_take})

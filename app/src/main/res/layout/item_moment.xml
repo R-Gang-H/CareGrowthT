@@ -157,14 +157,31 @@
                         android:textSize="@dimen/text_size_14"
                         android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tv_author_date"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="18-07-11 11:54"
-                        android:textColor="@color/color_9"
-                        android:textSize="@dimen/text_size_12" />
+                        android:layout_marginTop="1dp">
+
+                        <TextView
+                            android:id="@+id/tv_author_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="18-07-11 11:54"
+                            android:textColor="@color/color_9"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/tv_del_moment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_size_15"
+                            android:layout_toEndOf="@id/tv_author_date"
+                            android:text="删除"
+                            android:textColor="@color/blueLight"
+                            android:textSize="@dimen/text_size_12"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <ImageView

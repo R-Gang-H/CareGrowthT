@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -49,6 +48,9 @@ import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,7 @@ public class UserManager {
     private ArrayList<MomentMessageEntity> mMyCollectCircles;
     private ArrayList<MomentMessageEntity> mMyStarCircles;
 
-    public String OrgId;
+    private String OrgId;
 
     private View courVsview;
 
@@ -304,6 +306,7 @@ public class UserManager {
         userData = null;
         U.savePreferences("uid", "");
         U.savePreferences("token", "");
+        U.savePreferences("orgId", "");
         Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         MyApplication.getAppContext().startActivity(intent);
@@ -629,6 +632,10 @@ public class UserManager {
 
     public void setCourVsview(View courVsview) {
         this.courVsview = courVsview;
+    }
+
+    public String getJsonString(JSONObject jsonObject, String object) throws JSONException {
+        return jsonObject.getString(object);
     }
 
     public OrgEntity getOrgEntity() {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import com.android.library.utils.DateUtil;
-import com.caregrowtht.app.AppManager;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.okhttp.callback.OkHttpUtils;
@@ -1783,7 +1782,7 @@ public class HttpManager {
      * @param httpCallBack
      */
     public void doEditCardLesson(String tag, String orgCardId, String orgId, String courseId,
-                                 String count, String price, String type, HttpCallBack httpCallBack) {
+                                 String count, String price, String type, String cardType, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("orgCardId", orgCardId);
         map.put("orgId", orgId);
@@ -1791,6 +1790,7 @@ public class HttpManager {
         map.put("count", count);
         map.put("price", price);
         map.put("type", type);
+        map.put("cardType", cardType);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.EDITCARDLESSON, map, httpCallBack);
     }
 
@@ -1969,6 +1969,19 @@ public class HttpManager {
         HashMap<String, String> map = new HashMap<>();
         map.put("orgId", orgId);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.CHECKSTUDENTNUM, map, httpCallBack);
+    }
+
+    /**
+     * 删除课程反馈
+     *
+     * @param tag
+     * @param circleId
+     * @param httpCallBack
+     */
+    public void doDelCircle(String tag, String circleId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("circleId", circleId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.DELCIRCLE, map, httpCallBack);
     }
 }
 

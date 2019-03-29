@@ -4,13 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,6 +46,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -96,6 +94,8 @@ public class MomentAdapter extends RecyclerView.Adapter {
     TextView tvAuthorName;
     @BindView(R.id.tv_author_date)
     TextView tvAuthorDate;
+    @BindView(R.id.tv_del_moment)
+    TextView tvDelMoment;
     @BindView(R.id.iv_milestone)
     ImageView ivMilestone;
     @BindView(R.id.commentary)
@@ -123,9 +123,12 @@ public class MomentAdapter extends RecyclerView.Adapter {
     // 用来控制CheckBox的选中状况
     private HashMap<Integer, Boolean> isSelected = new HashMap<>();
 
-    private OnCommentListener mCommentListener;
     private ViewOnItemClick onItemClick;
     private ViewOnItemLongClick longClick;
+
+    private OnCommentListener mCommentListener;
+    private MomentListener momentListener;
+
     public int bottomHeight;
     private CommentPopup mCommentPopup;
 
@@ -142,11 +145,18 @@ public class MomentAdapter extends RecyclerView.Adapter {
 
     public interface OnCommentListener {
         void onComment(View view, int adapterPosition, int position1, int position2);
-
     }
 
     public void setCommentListener(OnCommentListener l) {
         this.mCommentListener = l;
+    }
+
+    public interface MomentListener {
+        void delMoment(MomentMessageEntity pData, int position);
+    }
+
+    public void setMomentListener(MomentListener l) {
+        this.momentListener = l;
     }
 
     public MomentAdapter(List datas, BaseActivity context, ViewOnItemClick onItemClick1, ViewOnItemLongClick onItemLongClick, String type, String imputType) {
@@ -275,7 +285,7 @@ public class MomentAdapter extends RecyclerView.Adapter {
                             @SuppressLint("InflateParams") final View view = LayoutInflater.from(context).inflate(R.layout.item_atter_text, null);
                             final TextView tvAtter = view.findViewById(R.id.tv_atter);
                             tvAtter.setGravity(Gravity.START);
-                            tvAtter.setText(filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length()));
+                            tvAtter.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
                             tvAtter.setOnClickListener(v -> {
                                 //动态权限申请
                                 mActivity.requestPermission(Constant.REQUEST_CODE_WRITE,
@@ -287,10 +297,6 @@ public class MomentAdapter extends RecyclerView.Adapter {
                                             public void onPermissionGrantedM(int requestCode, String... perms) {
                                                 String fileName = filePath.toString().substring(filePath.lastIndexOf("/") + 1);
                                                 FileDisplayActivity.actionStart(mActivity, filePath, fileName);
-//                                                Intent intent = new Intent(mActivity, UserTermActivity.class);
-//                                                intent.setData(Uri.parse(filePath));
-//                                                intent.putExtra("openType", "2");// 文件
-//                                                mActivity.startActivity(intent);
                                             }
 
                                             @Override
@@ -314,6 +320,11 @@ public class MomentAdapter extends RecyclerView.Adapter {
                     layoutNineGrid.setUrlList(model.urlList);
 
                     tvAuthorDate.setText(DateUtil.convertTime(Long.valueOf(pData.getTime())));
+                    if (pData.getAuthorId() != null) {
+                        tvDelMoment.setVisibility(pData.getAuthorId().equals(
+                                UserManager.getInstance().userData.getUid())
+                                ? View.VISIBLE : View.GONE);
+                    }
                     if (!TextUtils.isEmpty(pData.getLike()) || pData.getComments().size() > 0) {
                         llComment.setVisibility(View.VISIBLE);
                         if (TextUtils.isEmpty(pData.getLike())) {
@@ -396,6 +407,11 @@ public class MomentAdapter extends RecyclerView.Adapter {
                         mActivity.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
                         return false;
                     });
+                    tvDelMoment.setOnClickListener(v -> {
+                        if (momentListener != null) {
+                            momentListener.delMoment(pData, position);
+                        }
+                    });
                     break;
                 }
                 case "5"://广告
@@ -427,7 +443,6 @@ public class MomentAdapter extends RecyclerView.Adapter {
             }
         }
     }
-
 
     public void setData(ArrayList<MomentMessageEntity> argList, Boolean isClear) {
         if (isClear) {

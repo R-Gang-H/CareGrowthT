@@ -18,7 +18,6 @@ import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.OrgNotifyEntity;
-import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.model.UserEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
@@ -215,6 +214,7 @@ public class CustomActivity extends BaseActivity implements RadioGroup.OnChecked
         String content = tvNotifyContent.getText().toString();
         if (TextUtils.isEmpty(content)) {
             U.showToast("请编写通知内容");
+            return;
         }
         if (courseList.size() > 0) {
             boolean courseCount = false;
@@ -265,6 +265,8 @@ public class CustomActivity extends BaseActivity implements RadioGroup.OnChecked
                         if (statusCode == 1002) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(CustomActivity.this);
+                        } else if (statusCode == 1001) {
+                            U.showToast("请选择通知对象");
                         } else {
                             U.showToast(errorMsg);
                         }

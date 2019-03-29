@@ -1,16 +1,29 @@
 package com.caregrowtht.app.adapter;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewParent;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.library.MyApplication;
 import com.android.library.utils.DateUtil;
+import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.BaseActivity;
+import com.caregrowtht.app.activity.FileDisplayActivity;
 import com.caregrowtht.app.activity.SpaceImageDetailActivity;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
+import com.caregrowtht.app.view.ninegrid.NineGridLayout;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
 
@@ -54,8 +67,16 @@ public class CourseListAdapter extends XrecyclerAdapter {
             tvSign.setText(entity.getOperateType().equals("1") ? "学员签到" : "机构代签到");
         } else {
             tvSign.setVisibility(View.GONE);
-            tvCourseName.setVisibility(View.GONE);
-            tvTime.setText(TextUtils.isEmpty(entity.getContent()) ? entity.getCreate_at() : entity.getContent());
+            String content = TextUtils.isEmpty(entity.getContent()) ? entity.getCreate_at() : entity.getContent();
+            if (entity.getIs_remark().equals("1")) {// 1：备注 2：非
+                tvCourseName.setVisibility(View.VISIBLE);
+                tvTime.setText("备注");
+                tvCourseName.setTextColor(mContext.getResources().getColor(R.color.color_9));
+                tvCourseName.setText(content);
+            } else {
+                tvCourseName.setVisibility(View.GONE);
+                tvTime.setText(content);
+            }
         }
         if (TextUtils.isEmpty(entity.getUseNum()) && TextUtils.isEmpty(entity.getUsePrice())) {
             tvMoneyOrNum.setVisibility(View.GONE);
@@ -79,14 +100,61 @@ public class CourseListAdapter extends XrecyclerAdapter {
                 if (!TextUtils.isEmpty(signSheet)) {
                     circlePicture = signSheet.split("#");
                 }
-                ArrayList<String> arrImageList = new ArrayList<>();
-                Collections.addAll(arrImageList, circlePicture);//转化为数组
-                Intent intent = new Intent(MyApplication.getAppContext(), SpaceImageDetailActivity.class);
-                intent.putExtra("images", arrImageList);//非必须
-                intent.putExtra("position", 0);
-                mContext.startActivity(intent);
+                showImage(circlePicture);
             });
         }
+
+        final LinearLayout llAtter = holder.itemView.findViewById(R.id.ll_atter);
+        llAtter.setVisibility(TextUtils.isEmpty(entity.getCard_file()) ? View.GONE : View.VISIBLE);
+        if (llAtter.getVisibility() == View.VISIBLE) {
+            //必须先清空上次add的View
+            ViewParent parent = llAtter.getParent();
+            if (parent != null) {
+                llAtter.removeAllViews();
+            }
+            String accessoryPath = entity.getCard_file();
+            String[] accessory = accessoryPath.split(",");
+            for (String filePath : accessory) {
+                final View view = LayoutInflater.from(context).inflate(R.layout.item_atter_text, null);
+                final TextView tvAtter = view.findViewById(R.id.tv_atter);
+                tvAtter.setGravity(Gravity.START);
+                tvAtter.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
+                tvAtter.setOnClickListener(v -> {
+                    if (NineGridLayout.CheckIsImage(filePath)) {
+                        String[] circlePicture = {filePath};
+                        showImage(circlePicture);
+                    } else {
+                        //动态权限申请
+                        ((BaseActivity) mContext).requestPermission(Constant.REQUEST_CODE_WRITE,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                mContext.getString(R.string.rationale_file),
+                                new PermissionCallBackM() {
+                                    @SuppressLint("MissingPermission")
+                                    @Override
+                                    public void onPermissionGrantedM(int requestCode, String... perms) {
+                                        String fileName = filePath.toString().substring(filePath.lastIndexOf("/") + 1);
+                                        FileDisplayActivity.actionStart(mContext, filePath, fileName);
+                                    }
+
+                                    @Override
+                                    public void onPermissionDeniedM(int requestCode, String... perms) {
+                                        LogUtils.e(mContext, "TODO: WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT);
+                                    }
+                                });
+                    }
+                });
+                llAtter.addView(tvAtter);
+            }
+        }
+    }
+
+    private void showImage(String[] circlePicture) {
+        ArrayList<String> arrImageList = new ArrayList<>();
+        Collections.addAll(arrImageList, circlePicture);//转化为数组
+        Intent intent = new Intent(MyApplication.getAppContext(), SpaceImageDetailActivity.class);
+        intent.putExtra("images", arrImageList);//非必须
+        intent.putExtra("position", 0);
+        mContext.startActivity(intent);
     }
 
     @Override

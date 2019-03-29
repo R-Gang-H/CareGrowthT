@@ -176,7 +176,7 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                                 rlNoOrg.setVisibility(View.VISIBLE);
                                 tvAuditing.setText("待审核");
                                 tag.setText("等待机构审核通过");
-                                refreshLayout.setEnableRefresh(false);
+                                refreshLayout.setEnableRefresh(true);
                             } else {
                                 rlNoOrg.setVisibility(View.VISIBLE);
                                 tvAuditing.setText("审核不通过");
@@ -353,9 +353,6 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                 } else if (type == 2) {
                     radioButtons.get(0).setText("机构课程");//选择的选项内容展示
                 }
-                break;
-            case ToUIEvent.REFERSH_TEACHER_HOME:
-                initData();
                 break;
         }
     }

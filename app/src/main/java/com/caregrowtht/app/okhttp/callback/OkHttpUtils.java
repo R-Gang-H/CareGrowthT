@@ -8,25 +8,15 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.UserManager;
-import com.lzy.okhttputils.callback.AbsCallback;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
-import org.reactivestreams.Subscription;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Response;
 import zlc.season.rxdownload3.RxDownload;
 import zlc.season.rxdownload3.core.Downloading;
 import zlc.season.rxdownload3.core.Failed;
@@ -64,12 +54,11 @@ public class OkHttpUtils {
                 encodeMap.put("uid", UserManager.getInstance().userData.getUid());
                 encodeMap.put("token", token);
             }
-            encodeMap.put("version", "2");
+            encodeMap.put("version", "3");
             encodeMap.put("deviceId", Build.SERIAL);
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
             encodeMap.put("registerType", "2");    // registerType 是账号类型 1：家长端  2：教师端
-//            encodeMap.put("deviceType", "2");    // deviceType 1 ios  2 安卓
             LogUtils.d(tag, "参数----" + U.transMap2String(encodeMap));
             // RSA
             try {
@@ -112,12 +101,11 @@ public class OkHttpUtils {
                 encodeMap.put("uid", UserManager.getInstance().userData.getUid());
                 encodeMap.put("token", token);
             }
-            encodeMap.put("version", "2");
+            encodeMap.put("version", "3");
             encodeMap.put("deviceId", Build.SERIAL);
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
             encodeMap.put("registerType", "2");   // registerType 是账号类型 1：家长端  2：教师端
-//            encodeMap.put("deviceType", "2");    // deviceType 1 ios  2 安卓
             Logger.d("参数----" + U.transMap2String(encodeMap));
             // RSA
             try {
