@@ -68,8 +68,7 @@ public class NotifyObjAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
                         tvTitle.setText(String.format("老师 %s 人\t已回执 %s 人\t未回执 %s 人",
                                 teacherEntitie.size(), teacher_receipt_true, teacher_receipt_false));
                     } else {
-                        tvTitle.setText(String.format("老师 %s 人\t已回执 %s 人",
-                                teacherEntitie.size(), teacher_receipt_true));
+                        tvTitle.setText(String.format("老师\t未回执 %s 人", teacher_receipt_false));
                     }
                     RecyclerView recyclerView = helper.getView(R.id.recycler_view);
                     recyclerView.setLayoutManager(manager);
@@ -99,7 +98,7 @@ public class NotifyObjAdapter extends BaseMultiItemQuickAdapter<MultipleItem, Ba
                     if (TextUtils.equals(type, "1")) {
                         tvTitle.setText(String.format("学员 %s 人\t已回执 %s 人\t未回执 %s 人", studendEntitie.size(), receipt_true, receipt_false));
                     } else {
-                        tvTitle.setText(String.format("学员 %s 人\t已回执 %s 人", studendEntitie.size(), receipt_true));
+                        tvTitle.setText(String.format("学员\t未回执 %s 人", receipt_false));
                     }
                     RecyclerView recyclerView = helper.getView(R.id.recycler_view);
                     recyclerView.setLayoutManager(manager);

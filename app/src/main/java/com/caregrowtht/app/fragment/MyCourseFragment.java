@@ -195,7 +195,7 @@ public class MyCourseFragment extends BaseFragment {
                 .build().show();
     }
 
-    public void getWeekCourseTable() {
+    private void getWeekCourseTable() {
         orgId = UserManager.getInstance().getOrgId();
         String startDate = getDayOfWeek("yyyy-MM-dd 00:00", 1);
         String endDate = getDayOfWeek("yyyy-MM-dd 24:00", 7);

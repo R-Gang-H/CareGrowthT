@@ -32,6 +32,7 @@ public class CourserReleaseAdapter extends XrecyclerAdapter {
     private Context mContext;
     public List<UploadModule> uploadModules = new ArrayList<>();
     public List<String> pngOravis = new ArrayList<>();
+    public static int img = 0;
 
     public CourserReleaseAdapter(List datas, Context context) {
         super(datas, context);
@@ -62,6 +63,7 @@ public class CourserReleaseAdapter extends XrecyclerAdapter {
         }
         tvAtterName.setText(new File(path).getName());
         ivDel.setOnClickListener(v -> {
+            if (img > 0) img--;
             pngOravis.remove(position);
             uploadModules.remove(position);
             notifyItemRemoved(position);

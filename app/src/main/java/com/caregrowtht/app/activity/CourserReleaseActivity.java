@@ -225,8 +225,8 @@ public class CourserReleaseActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_image:
-                if (img == 9 || img > 9) {
-                    U.showToast("图片最多可以添加9张");
+                if (CourserReleaseAdapter.img == 9 || CourserReleaseAdapter.img > 9) {
+                    U.showToast("图片和视频最多可以添加9张");
                     return;
                 }
                 openImageOr(PictureMimeType.ofImage());//选择图片
@@ -235,6 +235,10 @@ public class CourserReleaseActivity extends BaseActivity {
                 openFile();//选择文件
                 break;
             case R.id.iv_video:
+                if (CourserReleaseAdapter.img == 9 || CourserReleaseAdapter.img > 9) {
+                    U.showToast("图片和视频最多可以添加9张");
+                    return;
+                }
                 openImageOr(PictureMimeType.ofVideo());//选择视频
                 break;
             case R.id.iv_camera:
@@ -242,8 +246,8 @@ public class CourserReleaseActivity extends BaseActivity {
                     ActivityCompat.requestPermissions(CourserReleaseActivity.this,
                             new String[]{Manifest.permission.CAMERA}, 120);
                 } else {
-                    if (img == 9 || img > 9) {
-                        U.showToast("图片最多可以添加9张");
+                    if (CourserReleaseAdapter.img == 9 || CourserReleaseAdapter.img > 9) {
+                        U.showToast("图片和视频最多可以添加9张");
                         return;
                     }
                     openCamera();//拍照
@@ -417,7 +421,7 @@ public class CourserReleaseActivity extends BaseActivity {
 
     private void openImageOr(int type) {
         // 进入相册
-        int maxSelectNum = 9 - img;
+        int maxSelectNum = 9 - CourserReleaseAdapter.img;
         getPicture()
                 .openGallery(type)// 图片.ofImage()、视频.ofVideo()、音频
                 .theme(themeId)// 主题样式设置
@@ -457,8 +461,6 @@ public class CourserReleaseActivity extends BaseActivity {
         LogUtils.d("CourserActivity === 开始拍照路径", destPath);
         SystemUtils.imageCapture(this, destPath, PictureConfig.CAMERA);
     }
-
-    int img = 0;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -527,7 +529,7 @@ public class CourserReleaseActivity extends BaseActivity {
     //准备上传参数
     private void readyUpload(String path, String pictureType, String mImageName) {
         if (pictureType.contains("jpg") || pictureType.contains("png") || pictureType.contains("jpeg")) {
-            img++;
+            CourserReleaseAdapter.img++;
         }
         courReleAdapter.pngOravis.add(Constant.OSS_URL + mImageName);
         UploadModule uploadModule = new UploadModule();

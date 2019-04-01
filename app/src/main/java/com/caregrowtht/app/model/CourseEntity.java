@@ -1254,7 +1254,7 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.is_remark = is_remark;
     }
 
-    public class Handle {
+    public class Handle implements Serializable {
         private String handleName;
         private String handleType;
         private String handleTime;

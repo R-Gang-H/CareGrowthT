@@ -17,22 +17,20 @@ import android.widget.TextView;
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.WheelPopup;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.adapter.ClassTimeAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.BaseModel;
 import com.caregrowtht.app.model.CourseEntity;
-import com.caregrowtht.app.model.TimeEntity;
 import com.caregrowtht.app.model.UserEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
-import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
+import com.caregrowtht.app.view.picker.builder.TimePickerBuilder;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -53,7 +50,7 @@ import cn.carbs.android.avatarimageview.library.AvatarImageView;
  * haoruigang on 2018-9-4 11:43:23
  * 修改这节课
  */
-public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClick {
+public class MadifyCourseActivity extends BaseActivity {
 
     @BindView(R.id.rl_back_button)
     RelativeLayout rlBackButton;
@@ -63,8 +60,8 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
     TextView tvTitle;
     @BindView(R.id.tv_course_name)
     TextView tvCourseName;
-    @BindView(R.id.rv_class_times)
-    RecyclerView rvClassTimes;
+    @BindView(R.id.tv_class_times)
+    TextView tvClassTimes;
     @BindView(R.id.iv_avatar)
     AvatarImageView ivAvatar;
     @BindView(R.id.tv_name)
@@ -92,7 +89,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
     private List<UserEntity> studentLists = new ArrayList<>();
     //机构的所有教室
     List<CourseEntity> classRoomList = new ArrayList<>();
-    private ClassTimeAdapter classTimeAdapter;
+    private String courseTime;
 
     private CourseEntity editCourseData = new CourseEntity();//上页传过来的值
     private String orgId;
@@ -109,9 +106,6 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
     public void initView() {
         tvTitle.setText("修改这节课");
         ivLeft.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_close_1));
-        initRecyclerView(rvClassTimes, true);
-        classTimeAdapter = new ClassTimeAdapter(new ArrayList(), this, this);
-        rvClassTimes.setAdapter(classTimeAdapter);
     }
 
     @Override
@@ -155,14 +149,20 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
         String[] lesTime = courseData.getLesTime().split(",");
         String startAt = lesTime[0];
         String endAt = lesTime[1];
-        TimeEntity timeEntity = new TimeEntity();
-        timeEntity.setStartTime(startAt);
-        timeEntity.setEndTime(endAt);
-        classTimeAdapter.timeList.add(timeEntity);
         String selectStartDate1 = DateUtil.getDate(Long.valueOf(startAt), "yyyy年MM月dd日 HH:mm");
         String selectEndTime = DateUtil.getDate(Long.valueOf(endAt), "HH:mm");
-        classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
-        classTimeAdapter.notifyDataSetChanged();
+        tvClassTimes.setText(String.format("%s~%s", selectStartDate1, selectEndTime));
+        courseTime = String.format("%s,%s", startAt, endAt);
+
+        long nowTime = System.currentTimeMillis() / 1000;
+        long endTime = Long.valueOf(endAt);
+        boolean isToday = TimeUtils.IsToday(DateUtil.getDate(endTime, "yyyy-MM-dd"));// 是否为今天
+        if (isToday) {
+            if (nowTime > endTime) {
+                tvClassTimes.setEnabled(false);// 禁用TextView
+            }
+        }
+
         String teacherId = courseData.getTeacherId();//主教
         getNoticeHuman(teacherId, "1", "1");
         String teacherIds = courseData.getTeacherIds();//助教
@@ -311,7 +311,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 });
     }
 
-    @OnClick({R.id.rl_back_button, R.id.iv_class_time, R.id.iv_mainTeacher_arrow, R.id.iv_assistant_arrow,
+    @OnClick({R.id.rl_back_button, R.id.tv_class_times, R.id.iv_mainTeacher_arrow, R.id.iv_assistant_arrow,
             R.id.iv_student, R.id.iv_school, R.id.btn_check_conflict, R.id.btn_dereact_course})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -319,8 +319,8 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out);
                 finish();
                 break;
-            case R.id.iv_class_time:
-                selectStartEndTime(-1);
+            case R.id.tv_class_times:
+                selectStartEndTime();
                 break;
             case R.id.iv_mainTeacher_arrow:
                 startActivityForResult(new Intent(MadifyCourseActivity.this, TeacherSelectActivity.class)
@@ -353,9 +353,11 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 showSchoolDialog();
                 break;
             case R.id.btn_check_conflict:
+                btnCheckConflict.setEnabled(false);
                 modifyCourseLesson("1");
                 break;
             case R.id.btn_dereact_course:
+                btnDereactCourse.setEnabled(false);
                 // 修改这一节课
                 modifyCourseLesson("2");
                 break;
@@ -383,8 +385,11 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
      */
     private void modifyCourseLesson(String check) {//1:检查排课冲突 2：直接排入课表
         CheckValadata checkValadata = new CheckValadata(check).invoke();
-        if (checkValadata.is()) return;
-        StringBuilder courseTime = checkValadata.getCourseTime();
+        if (checkValadata.is()) {
+            btnCheckConflict.setEnabled(true);
+            btnDereactCourse.setEnabled(true);
+            return;
+        }
         String mainTeacher = checkValadata.getMainTeacher();
         StringBuilder subTeachers = checkValadata.getSubTeachers();
         StringBuilder students = checkValadata.getStudents();
@@ -434,7 +439,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
     /**
      * Select start and end time of CourseTimeAdapter's item.
      */
-    private void selectStartEndTime(int position) {
+    private void selectStartEndTime() {
         Calendar startDate = Calendar.getInstance();
         new TimePickerBuilder(this, (startTime, v) -> {
             String selectStartDate1 = DateUtil.getDate(startTime.getTime() / 1000, "yyyy年MM月dd日 HH:mm");
@@ -456,7 +461,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                     U.showToast("开始时间不能小于结束时间");
                     return;
                 }
-                addCourseTime(position, startTime, selectStartDate1, endTime, selectEndTime);
+                addCourseTime(startTime, selectStartDate1, endTime, selectEndTime);
             }).setType(new boolean[]{false, false, false, true, true, false})
                     .setRangDate(startDate, startDate)
                     .setTitleText("选择结束时间")
@@ -472,30 +477,17 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
     /**
      * 添加上课时间段
      *
-     * @param position
      * @param startTime
      * @param selectStartDate1
      * @param endTime
      * @param selectEndTime
      */
-    private void addCourseTime(int position, Date startTime, String selectStartDate1, Date endTime, String selectEndTime) {
+    private void addCourseTime(Date startTime, String selectStartDate1, Date endTime, String selectEndTime) {
+        String startAt = String.valueOf(startTime.getTime() / 1000);
+        String endAt = String.valueOf(endTime.getTime() / 1000);
 
-        TimeEntity timeEntity = new TimeEntity();
-        timeEntity.setStartTime(String.valueOf(startTime.getTime() / 1000));
-        timeEntity.setEndTime(String.valueOf(endTime.getTime() / 1000));
-
-        if (position >= 0) {
-            classTimeAdapter.timeList.remove(position);
-            classTimeAdapter.timeList.add(position, timeEntity);
-
-            classTimeAdapter.classTimes.remove(position);
-            classTimeAdapter.classTimes.add(position, String.format("%s~%s", selectStartDate1, selectEndTime));
-        } else {
-            classTimeAdapter.timeList.add(timeEntity);
-
-            classTimeAdapter.classTimes.add(String.format("%s~%s", selectStartDate1, selectEndTime));
-        }
-        classTimeAdapter.notifyDataSetChanged();
+        tvClassTimes.setText(String.format("%s~%s", selectStartDate1, selectEndTime));
+        courseTime = String.format("%s,%s", startAt, endAt);
     }
 
     @Override
@@ -638,15 +630,9 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
         dialog.show();
     }
 
-    @Override
-    public void setOnItemClickListener(View view, int postion) {
-        selectStartEndTime(postion);
-    }
-
     private class CheckValadata {
         private boolean myResult;
         private String check;
-        private StringBuilder courseTime;
         private String mainTeacher;
         private StringBuilder subTeachers;
         private StringBuilder students;
@@ -660,7 +646,7 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
             return myResult;
         }
 
-        StringBuilder getCourseTime() {
+        String getCourseTime() {
             return courseTime;
         }
 
@@ -685,14 +671,6 @@ public class MadifyCourseActivity extends BaseActivity implements ViewOnItemClic
                 LogUtils.d("NewWorkActivity", "check、orgId");
                 myResult = true;
                 return this;
-            }
-            courseTime = new StringBuilder();
-            for (int i = 0; i < classTimeAdapter.timeList.size(); i++) {
-                TimeEntity timeEntity = classTimeAdapter.timeList.get(i);
-                courseTime.append(String.format("%s,%s", timeEntity.getStartTime(), timeEntity.getEndTime()));
-                if (i < classTimeAdapter.timeList.size() - 1) {
-                    courseTime.append("#");
-                }
             }
             if (TextUtils.isEmpty(courseTime)) {
                 U.showToast("请选择排课时间");

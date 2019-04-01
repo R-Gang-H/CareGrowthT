@@ -1,8 +1,6 @@
 package com.caregrowtht.app.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -25,6 +23,7 @@ import com.caregrowtht.app.model.TimeEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.picker.builder.TimePickerBuilder;
@@ -36,10 +35,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.caregrowtht.app.Constant.sexWeekly;
 
 /**
  * haoruigang on 2018-9-4 12:02:33
@@ -289,18 +288,30 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
         String orgId = UserManager.getInstance().getOrgId();
         if (TextUtils.isEmpty(check) || TextUtils.isEmpty(orgId)) {
             LogUtils.d("AddCourseActivity", "check、orgId");
+            btnCheckConflict.setEnabled(true);
+            btnDereactCourse.setEnabled(true);
             return;
         }
         StringBuilder courseTime = new StringBuilder();
         for (int i = 0; i < classTimeAdapter.timeList.size(); i++) {
             TimeEntity timeEntity = classTimeAdapter.timeList.get(i);
-            courseTime.append(String.format("%s,%s", timeEntity.getStartTime(), timeEntity.getEndTime()));
-            if (i < classTimeAdapter.timeList.size() - 1) {
-                courseTime.append("#");
+            if (Long.parseLong(timeEntity.getStartTime()) * 1000 < TimeUtils.getCurTimeLong()) {
+                showSuccessDialog(AddCourseActivity.this,
+                        getResources().getString(R.string.text_update_rule));
+                btnCheckConflict.setEnabled(true);
+                btnDereactCourse.setEnabled(true);
+                return;
+            } else {
+                courseTime.append(String.format("%s,%s", timeEntity.getStartTime(), timeEntity.getEndTime()));
+                if (i < classTimeAdapter.timeList.size() - 1) {
+                    courseTime.append("#");
+                }
             }
         }
         if (TextUtils.isEmpty(courseTime)) {
             U.showToast("请选择排课时间");
+            btnCheckConflict.setEnabled(true);
+            btnDereactCourse.setEnabled(true);
             return;
         }
         HttpManager.getInstance().doAddLessonV2("AddCourseActivity", check, orgId, courseTime.toString(),
@@ -343,6 +354,22 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
 
                     }
                 });
+    }
+
+    /**
+     * 提示语
+     */
+    public void showSuccessDialog(final Activity mContext, String desc) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(mContext, R.layout.dialog_teach_lib, null);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setText(desc);
+        TextView tvOk = view.findViewById(R.id.tv_ok);
+        tvOk.setOnClickListener(v -> dialog.dismiss());
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
     }
 
     /**

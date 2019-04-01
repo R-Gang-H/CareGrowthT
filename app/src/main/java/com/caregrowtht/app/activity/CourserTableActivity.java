@@ -180,9 +180,11 @@ public class CourserTableActivity extends BaseActivity {
                             , getString(R.string.text_role));
                     break;
                 } else {
-                    startActivity(new Intent(this, AddCourseActivity.class)
-                            .putExtra("courseData", courseData));
-                    finishAfterTransition();
+                    if (courseData != null) {
+                        startActivity(new Intent(this, AddCourseActivity.class)
+                                .putExtra("courseData", courseData));
+                        finishAfterTransition();
+                    }
                 }
                 break;
             case R.id.btn_delete:

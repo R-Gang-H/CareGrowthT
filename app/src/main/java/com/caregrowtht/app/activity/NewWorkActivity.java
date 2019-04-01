@@ -796,7 +796,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         } else {
                             btnDereactCourse.setEnabled(true);
                             U.showToast("新建排课成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, true));
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, msgEntity != null));// 获取离开主页时保存的OrgId ture 动态进入 , false 机构课表进入
                             finish();
                         }
                     }
@@ -1008,7 +1008,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         Integer.parseInt(split[3]), Integer.parseInt(split[4]));
                 new TimePickerBuilder(this, (endTime, view) -> {
                     if (endTime.getTime() < startTime.getTime()) {
-                        U.showToast("结束时间不能小于当前时间");
+                        U.showToast("结束时间不能小于开始时间");
                     } else {
                         String selectEndTime = DateUtil.getDate(endTime.getTime() / 1000, "HH:mm");
                         Logger.d(selectStartDate + " ~ " + selectEndTime);

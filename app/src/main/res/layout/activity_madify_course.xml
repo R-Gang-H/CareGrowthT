@@ -43,21 +43,16 @@
             android:textColor="@color/col_a"
             android:textSize="@dimen/text_size_15" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_class_times"
+        <TextView
+            android:id="@+id/tv_class_times"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_8"
-            tools:listitem="@layout/item_class_time" />
-
-        <ImageView
-            android:id="@+id/iv_class_time"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:paddingLeft="@dimen/margin_size_5"
-            android:paddingRight="@dimen/margin_size_15"
-            android:scaleType="center"
-            android:src="@mipmap/ic_add_class_time" />
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_rv_item"
+            android:gravity="center_vertical"
+            android:hint="2018年7月19日  9:00～10:00"
+            android:paddingRight="@dimen/margin_size_35"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15" />
 
     </LinearLayout>
 

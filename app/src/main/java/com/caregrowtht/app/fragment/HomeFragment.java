@@ -73,7 +73,9 @@ public class HomeFragment extends BaseFragment {
             for (String teacherOrd : teacherOrgs) {
                 fragmentList.add(createFragments(teacherOrd));
             }
-            UserManager.getInstance().setOrgId(teacherOrgs[0]);//默认第一个
+            String orgId = teacherOrgs[0];//默认第一个
+            UserManager.getInstance().setOrgId(orgId);
+            U.savePreferences("orgId", orgId);
             if (fragmentAdapter == null) {
                 fragmentAdapter = new OrgFragmentAdapter(getFragmentManager(), fragmentList);
             } else {
