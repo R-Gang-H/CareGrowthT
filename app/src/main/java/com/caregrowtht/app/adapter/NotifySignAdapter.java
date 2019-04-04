@@ -34,10 +34,13 @@ public class NotifySignAdapter extends XrecyclerAdapter {
     private Context activity;
     ArrayList<OrgNotifyEntity> mArrDatas = new ArrayList<>();//通知人
 
-    public NotifySignAdapter(List datas, Context context) {
+    private String isReceipt;// 1：需要回执 2：不需要回执
+
+    public NotifySignAdapter(List datas, Context context, String isReceipt) {
         super(datas, context);
         this.activity = context;
         this.mArrDatas.addAll(datas);
+        this.isReceipt = isReceipt;
     }
 
     @Override
@@ -47,13 +50,17 @@ public class NotifySignAdapter extends XrecyclerAdapter {
                 mContext.getResources().getColor(R.color.b0b2b6));
         GlideUtils.setGlideImg(activity, mArrDatas.get(position).getIcon(), 0, ivHeadIcon);
         tvName.setText(mArrDatas.get(position).getName());
-        if (TextUtils.equals(mArrDatas.get(position).getIsReceipt(), "2")) {//是否已经回执 1：未回执 2：已回执
-            tvReceipt.setText(String.format("已回执\t\t%s", DateUtil.getDate(Long.parseLong(mArrDatas.get(position).getTime()), "yyyy-MM-dd HH:mm")));
-        } else if (TextUtils.equals(mArrDatas.get(position).getIsReceipt(), "1")) {
-            tvReceipt.setText("未回执");
-            tvReceipt.setTextColor(ResourcesUtils.getColor(R.color.blueLight));
-        } else {
-            tvReceipt.setVisibility(View.GONE);
+        tvReceipt.setVisibility(View.GONE);
+        if (isReceipt.equals("1")) {// 1：需要回执
+            tvReceipt.setVisibility(View.VISIBLE);
+            if (TextUtils.equals(mArrDatas.get(position).getIsReceipt(), "2")) {//是否已经回执 1：未回执 2：已回执
+                tvReceipt.setText(String.format("已回执\t\t%s", DateUtil.getDate(Long.parseLong(mArrDatas.get(position).getTime()), "yyyy-MM-dd HH:mm")));
+            } else if (TextUtils.equals(mArrDatas.get(position).getIsReceipt(), "1")) {
+                tvReceipt.setText("未回执");
+                tvReceipt.setTextColor(ResourcesUtils.getColor(R.color.blueLight));
+            } else {
+                tvReceipt.setVisibility(View.GONE);
+            }
         }
     }
 

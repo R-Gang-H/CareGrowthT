@@ -2,9 +2,6 @@ package com.caregrowtht.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +26,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -162,6 +160,7 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
     public void onEvent(ToUIEvent event) {
         super.onEvent(event);
         if (event.getWhat() == ToUIEvent.REFERSH_NOTIFY) {
+            pageIndex = 1;
             OrgNotify(true);
         }
     }

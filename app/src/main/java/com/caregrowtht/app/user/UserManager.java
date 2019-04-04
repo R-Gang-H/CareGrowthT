@@ -36,6 +36,7 @@ import com.caregrowtht.app.model.MomentMessageEntity;
 import com.caregrowtht.app.model.OrgEntity;
 import com.caregrowtht.app.model.PowersEntity;
 import com.caregrowtht.app.model.RoleEntity;
+import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.model.UserEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
@@ -71,7 +72,6 @@ public class UserManager {
     private List<RoleEntity> roleEntityList = new ArrayList<>();
     private List<OrgEntity> orgEntityList = new ArrayList<>();
 
-    private ArrayList<MomentMessageEntity> mMyCollectCircles;
     private ArrayList<MomentMessageEntity> mMyStarCircles;
 
     private String OrgId;
@@ -103,6 +103,76 @@ public class UserManager {
         U.savePreferences("uid", userData.getUid());
         U.savePreferences("token", U.MD5(UserManager.getInstance().userData.getToken() + "_" + Constant.API_KEY));
         Constant.UID_TOKEN = "/uid/" + userData.getUid() + "/token/" + userData.getToken();
+    }
+
+    /**
+     * 审核不通过，重新拼接机构Id
+     *
+     * @param orgId
+     */
+    public void isNoPass(String orgId) {
+        String[] orgIds = UserManager.getInstance().userData.getOrgIds().split(",");
+        StringBuilder OrgId = new StringBuilder();
+        boolean isSave = false;
+        for (String Id : orgIds) {
+            if (!TextUtils.isEmpty(Id) && !Id.equals(orgId)) {
+                if (isSave) {
+                    OrgId.append(",");
+                }
+                OrgId.append(Id);
+                isSave = true;
+            }
+        }
+        userData.setOrgIds(OrgId.toString());
+        userData.setPassOrgIds(OrgId.toString());
+    }
+
+    /**
+     * 检查 在职或离职
+     *
+     * @param isStatus
+     * @param userId
+     * @param tercherData
+     * @return
+     */
+    public boolean isStatus(boolean isStatus, String userId, ArrayList<StudentEntity> tercherData) {
+        for (int i = 0; i < tercherData.size(); i++) {
+            if (userId.equals(tercherData.get(i).getMobile())) {// 在职教师
+                isStatus = true;
+                break;
+            }
+        }
+        return isStatus;
+    }
+
+    /**
+     * 检查教师是否离职
+     * true:在职动态 false:离职动态
+     */
+    public boolean CheckIsLeave(String orgId) {
+        String[] passOrgIds = UserManager.getInstance().userData.getPassOrgIds().split(",");
+        for (String passOrgId : passOrgIds) {
+            if (passOrgId.equals(orgId)) {// 在职动态
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 添加机构、创建机构、机构分配的教师
+     *
+     * @param orgId
+     */
+    public void orgAddTeacher(String orgId) {
+        String[] OrgIds = UserManager.getInstance().userData.getOrgIds().split(",");
+        String OrgId = "";
+        if (OrgIds.length > 0 && !TextUtils.isEmpty(OrgIds[0])) {// 已经有机构
+            OrgId = UserManager.getInstance().userData.getOrgIds() + ",";
+        }
+        OrgId += orgId;
+        userData.setOrgIds(OrgId);
+        userData.setPassOrgIds(OrgId);
     }
 
     /**
@@ -183,33 +253,9 @@ public class UserManager {
     }
 
     private void refreshMyCollectDatas(Activity argActivity) {
-        if (mMyCollectCircles == null) {
-            mMyCollectCircles = new ArrayList<>();
-        }
         if (mMyStarCircles == null) {
             mMyStarCircles = new ArrayList<>();
         }
-        HttpManager.getInstance().getMyCollectCircleId("refreshMyCollectCircleId",
-                new HttpCallBack<BaseDataModel<MomentMessageEntity>>() {
-                    @Override
-                    public void onSuccess(BaseDataModel<MomentMessageEntity> data) {
-                        mMyCollectCircles.clear();
-                        mMyCollectCircles.addAll(data.getData());
-                    }
-
-                    @Override
-                    public void onFail(int statusCode, String errorMsg) {
-                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
-                            U.showToast("该账户在异地登录!");
-                            HttpManager.getInstance().dologout(argActivity);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-
-                    }
-                });
         HttpManager.getInstance().getMyStarCircleId("refreshMyStarCircleId",
                 new HttpCallBack<BaseDataModel<MomentMessageEntity>>() {
                     @Override
@@ -230,22 +276,6 @@ public class UserManager {
 
                     }
                 });
-    }
-
-    /**
-     * 检查是否已收藏
-     *
-     * @param argCircleId
-     */
-    public boolean CheckIsCollect(String argCircleId) {
-        if (mMyCollectCircles != null) {//解决空指针异常
-            for (MomentMessageEntity pEntity : mMyCollectCircles) {
-                if (pEntity.getCircleId().equals(argCircleId + "")) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -574,12 +604,11 @@ public class UserManager {
      * @return
      */
     private OrgEntity getSqlIsOrgEntity(String orgId) {
-        List<OrgEntity> orgEntities = UserManager.getInstance().getOrgEntityList(null);//设置权限参数 传null是获取,传entity是add
-        if (orgEntities.size() > 0) {
-            for (int i = 0; i < orgEntities.size(); i++) {
-                String org_Id = orgEntities.get(i).getOrgId();
+        if (orgEntityList.size() > 0) {
+            for (int i = 0; i < orgEntityList.size(); i++) {
+                String org_Id = orgEntityList.get(i).getOrgId();
                 if (orgId.equals(org_Id)) {// 和当前机构匹配
-                    return orgEntities.get(i);
+                    return orgEntityList.get(i);
                 }
             }
         }

@@ -528,7 +528,8 @@ public class CourserReleaseActivity extends BaseActivity {
 
     //准备上传参数
     private void readyUpload(String path, String pictureType, String mImageName) {
-        if (pictureType.contains("jpg") || pictureType.contains("png") || pictureType.contains("jpeg")) {
+        if (pictureType.contains("jpg") || pictureType.contains("png")
+                || pictureType.contains("jpeg") || pictureType.contains("mp4")) {
             CourserReleaseAdapter.img++;
         }
         courReleAdapter.pngOravis.add(Constant.OSS_URL + mImageName);

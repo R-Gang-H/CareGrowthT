@@ -1413,7 +1413,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             courseTime = new StringBuilder();
             for (int i = 0; i < classTimeAdapter.timeList.size(); i++) {
                 TimeEntity timeEntity = classTimeAdapter.timeList.get(i);
-                if (classTimeAdapter.isTimeEdit.equals("1") &&
+                if (classTimeAdapter.isTimeEdit.equals("1") && updateAll &&
                         Long.parseLong(timeEntity.getStartTime()) * 1000 < TimeUtils.getCurTimeLong()) {
                     showSuccessDialog(NewWorkActivity.this,
                             getResources().getString(R.string.text_update_time_rule));

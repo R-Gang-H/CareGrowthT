@@ -273,7 +273,7 @@ public class StateAdapter extends XrecyclerAdapter {
 
             boolean isCircle = !TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                     || !TextUtils.isEmpty(msgEntity.getCircleCommentCount());
-            String orgContent = "";
+            String orgContent;
             String sentNotice = "请点击查看详情";
             if (isCircle) {// 课程反馈
                 orgContent = "教师" + msgEntity.getCircleAuthor() + "为" +
@@ -282,21 +282,18 @@ public class StateAdapter extends XrecyclerAdapter {
                         msgEntity.getCircleCourseName() + "\"发布了一条课程反馈";
             } else if (msgEntity.getType().equals("4")) {//4：机构发出的通知
                 String newNotice = "";
-                switch (msgEntity.getReceipt()) {
-                    case "2"://2：待回执
-                        newNotice = "新通知:";
-                        sentNotice = "请点击查看详情并回执";
-                        break;
-                    case "3"://3：已经回执
-                    case "4":
-                        newNotice = "已发送通知:";
-                        sentNotice = "请点击查看通知的回执状态";
-                        break;
-                }
-                if (msgEntity.getType2().equals("20")) {
+                if (msgEntity.getType2().equals("20")) {// 发送者
                     newNotice = "已发送通知:";
-                } else if (msgEntity.getType2().equals("24")) {
+                    if (msgEntity.getReceipt().equals("4")) {
+                        sentNotice = "请点击查看通知的回执状态";
+                    }
+                } else if (msgEntity.getType2().equals("24")) {// 接收者
                     newNotice = "新通知:";
+                    if (msgEntity.getReceipt().equals("1")) {
+                        sentNotice = "请点击查看详情";
+                    } else {
+                        sentNotice = "请点击查看详情并回执";
+                    }
                 }
                 orgContent = String.format("%s\n%s%s", msgEntity.getOrgName(), newNotice, msgEntity.getContent());
             } else {
@@ -332,7 +329,7 @@ public class StateAdapter extends XrecyclerAdapter {
                 return;
             }
             UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
-            if (!CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
+            if (!UserManager.getInstance().CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
                 U.showToast("已离职");
                 return;
             }
@@ -410,19 +407,24 @@ public class StateAdapter extends XrecyclerAdapter {
                 }
             } else if (TextUtils.equals(msgEntity.getType(), "4")) {
                 switch (msgEntity.getType2()) {
+                    case "13":// 13：与机构解除绑定
+                        U.showToast("已离职");
+                        break;
                     case "20":// 20：查看通知回执的状态
-                    case "24":
                         if (msgEntity.getReceipt().equals("1") || msgEntity.getReceipt().equals("2")) {// 不需要回执/ 待回执
                             startActivity(msgEntity, NotifityInfoActivity.class);
                         } else {
                             OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
-                            notifyEntity.setIsReceipt(msgEntity.getReceipt());
+                            notifyEntity.setIsReceipt("1");// 如果点击跳转通知对象,默认值是1需要回执
                             notifyEntity.setNotifiId(msgEntity.getTargetId());
                             mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
                                     .putExtra("msgEntity", msgEntity)
                                     .putExtra("notifyEntity", notifyEntity));
                             ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
                         }
+                        break;
+                    case "24":
+                        startActivity(msgEntity, NotifityInfoActivity.class);
                         break;
                     default:
                         startActivity(msgEntity, NotifityInfoActivity.class);
@@ -471,20 +473,6 @@ public class StateAdapter extends XrecyclerAdapter {
         mContext.startActivity(new Intent(mContext, activity)
                 .putExtra("msgEntity", msgEntity)
                 .putExtra("courseId", msgEntity.getTargetId()));
-    }
-
-    /**
-     * 检查教师是否离职
-     * true:在职动态 false:离职动态
-     */
-    private boolean CheckIsLeave(String orgId) {
-        String[] passOrgIds = UserManager.getInstance().userData.getPassOrgIds().split(",");
-        for (String passOrgId : passOrgIds) {
-            if (passOrgId.equals(orgId)) {// 在职动态
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

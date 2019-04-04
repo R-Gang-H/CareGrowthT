@@ -1,7 +1,6 @@
 package com.caregrowtht.app.activity;
 
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,11 +13,13 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.UserManager;
+import com.caregrowtht.app.view.LoadingFrameView;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -32,6 +33,8 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
     EditText tvTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.load_view)
+    LoadingFrameView loadView;
 
     OrgSearchAdapter mAdapter;
     List<OrgEntity> orgDatas = new ArrayList<>();
@@ -61,7 +64,15 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
      * 搜索机构
      */
     private void searchOrg() {
+        loadView.setVisibility(View.VISIBLE);
+        loadView.setProgressShown(true);
         String orgName = tvTitle.getText().toString().trim();
+        orgDatas.clear();
+        if (TextUtils.isEmpty(U.stringFilter(orgName))) {
+            mAdapter.setData(orgDatas);
+            loadView.setNoShown(true);
+            return;
+        }
         HttpManager.getInstance().doSearchOrg("OrgSearchActivity", orgName,
                 new HttpCallBack<BaseDataModel<OrgEntity>>() {
                     @Override
@@ -69,6 +80,11 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
                         orgDatas.clear();
                         orgDatas.addAll(data.getData());
                         mAdapter.setData(orgDatas);
+                        if (orgDatas.size() > 0) {
+                            loadView.delayShowContainer(true);
+                        } else {
+                            loadView.setNoShown(true);
+                        }
                     }
 
                     @Override
@@ -79,6 +95,7 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
                             HttpManager.getInstance().dologout(OrgSearchActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> searchOrg());
                         }
                     }
 

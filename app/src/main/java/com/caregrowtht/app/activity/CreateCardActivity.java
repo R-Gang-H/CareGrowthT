@@ -194,9 +194,11 @@ public class CreateCardActivity extends BaseActivity {
                         etReality.setText(totalCount);
                         tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
                                 cardPrice, totalCount));
-                        tvTotal.setText(String.format("%s元", Integer.parseInt(cardPrice)
-                                / Integer.parseInt(TextUtils.isEmpty(totalCount) ? "1"
-                                : totalCount)));
+                        String total = String.format("%s元", Integer.parseInt(cardPrice)
+                                / Integer.parseInt(TextUtils.isEmpty(totalCount) || totalCount.equals("0")
+                                ? "1" : totalCount));
+                        total = total.contains("NaN") ? "元" : total;
+                        tvTotal.setText(total);
                     }
 
                     textColor = R.color.color_caa0;
@@ -371,6 +373,9 @@ public class CreateCardActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(StrUtils.getReplaceTrim(etMonth.getText().toString()))) {
+                    if (s.toString().trim().equals("0")) {
+                        U.showToast("请输入大于0的有效期");
+                    }
                     tvTime.setText(String.format("有效期:\t%s",
                             StrUtils.getReplaceTrim(etMonth.getText().toString()) + "个月"));//卡的有效月数
                 }
@@ -412,10 +417,13 @@ public class CreateCardActivity extends BaseActivity {
                     tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
                             StrUtils.getReplaceTrim(s.toString()),
                             StrUtils.getReplaceTrim(etReality.getText().toString())));
-                    tvTotal.setText(String.format("%s元", Integer.parseInt(StrUtils.getReplaceTrim(s.toString()))
+                    String total = String.format("%s元", Integer.parseInt(StrUtils.getReplaceTrim(s.toString()))
                             / Integer.parseInt(TextUtils.isEmpty(
-                            StrUtils.getReplaceTrim(etReality.getText().toString())) ? "1"
-                            : StrUtils.getReplaceTrim(etReality.getText().toString()))));
+                            StrUtils.getReplaceTrim(etReality.getText().toString()))
+                            || TextUtils.equals(etReality.getText().toString(), "0") ? "1"
+                            : StrUtils.getReplaceTrim(etReality.getText().toString())));
+                    total = total.contains("NaN") ? "元" : total;
+                    tvTotal.setText(total);
                     // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
                     if (cardsEntity.getCardType().equals("4")) {
                         cardPrice = String.format("%s\t\t%s折", StrUtils.getReplaceTrim(s.toString()),
@@ -444,10 +452,13 @@ public class CreateCardActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(StrUtils.getReplaceTrim(s.toString()))) {
                     tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
                             etPrice.getText(), StrUtils.getReplaceTrim(s.toString())));
-                    tvTotal.setText(String.format("%s元", Double.parseDouble(TextUtils.isEmpty(
+                    String total = String.format("%s元", Double.parseDouble(TextUtils.isEmpty(
                             StrUtils.getReplaceTrim(etPrice.getText().toString()))
-                            ? "1" : StrUtils.getReplaceTrim(etPrice.getText().toString()))
-                            / Double.parseDouble(StrUtils.getReplaceTrim(s.toString()))));
+                            || etPrice.getText().toString().equals("0") ?
+                            "1" : StrUtils.getReplaceTrim(etPrice.getText().toString()))
+                            / Double.parseDouble(StrUtils.getReplaceTrim(s.toString())));
+                    total = total.contains("NaN") ? "元" : total;
+                    tvTotal.setText(total);
                     // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
                     if (cardsEntity.getCardType().equals("1")) {
                         tvNum.setText(String.format("%s次", StrUtils.getReplaceTrim(s.toString())));
@@ -558,6 +569,10 @@ public class CreateCardActivity extends BaseActivity {
                 U.showToast("请输入有效期");
                 return;
             }
+            if (validMonth.equals("0")) {// 新卡有效期必须大于0
+                U.showToast("有效期不可以为0");
+                return;
+            }
         }
         price = StrUtils.getReplaceTrim(etPrice.getText().toString());
         if (TextUtils.isEmpty(price)) {
@@ -646,6 +661,10 @@ public class CreateCardActivity extends BaseActivity {
             validMonth = StrUtils.getReplaceTrim(etMonth.getText().toString());
             if (TextUtils.isEmpty(validMonth)) {
                 U.showToast("请输入有效期");
+                return;
+            }
+            if (validMonth.equals("0")) {// 新卡有效期必须大于0
+                U.showToast("有效期不可以为0");
                 return;
             }
         }

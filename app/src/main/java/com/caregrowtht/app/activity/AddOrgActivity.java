@@ -73,7 +73,7 @@ public class AddOrgActivity extends BaseActivity {
             tvOrgName.setText(String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
                     orgEntity.getOrgName() : orgEntity.getOrgName() + orgEntity.getOrgChainName()));
             orgId = orgEntity.getOrgId();
-            getOrgTeachers("1");
+            getOrgTeachers("1", "1");
         }
     }
 
@@ -87,6 +87,7 @@ public class AddOrgActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_submit:
+                getOrgTeachers("2", "2");
                 if (checkStatus()) return;
                 bandOrg();
                 break;
@@ -94,18 +95,27 @@ public class AddOrgActivity extends BaseActivity {
     }
 
     private boolean checkStatus() {
-        tvExcut.setVisibility(View.VISIBLE);
         String status = orgEntity.getStatus();//审核状态 1审核通过 2待审核 3审核不通过
-        if (status.equals("2")) {
-            tvExcut.setText("该机构审核中");
-            return true;
-        } else if (status.equals("1")) {
-            tvExcut.setText("已加入该机构");
-            return true;
-        } else {
-            tvExcut.setText("审核不通过");
+        switch (status) {
+            case "1":
+                tvExcut.setText("已加入该机构");
+                isVisible(false, false, true);
+                return true;
+            case "2":
+                tvExcut.setText("该机构审核中");
+                isVisible(false, false, true);
+                return true;
+            default:
+                UserManager.getInstance().isNoPass(orgId);
+                isVisible(true, true, false);
+                return false;
         }
-        return false;
+    }
+
+    private void isVisible(boolean cancel, boolean submit, boolean excut) {
+        btnCancel.setVisibility(cancel ? View.VISIBLE : View.GONE);
+        btnSubmit.setVisibility(submit ? View.VISIBLE : View.GONE);
+        tvExcut.setVisibility(excut ? View.VISIBLE : View.GONE);
     }
 
     private void bandOrg() {
@@ -117,14 +127,7 @@ public class AddOrgActivity extends BaseActivity {
                 new HttpCallBack<BaseDataModel<OrgEntity>>(AddOrgActivity.this) {
                     @Override
                     public void onSuccess(BaseDataModel<OrgEntity> data) {
-                        String[] OrgIds = UserManager.getInstance().userData.getOrgIds().split(",");
-                        String OrgId = "";
-                        if (OrgIds.length > 0 && !TextUtils.isEmpty(OrgIds[0])) {// 已经有机构
-                            OrgId = UserManager.getInstance().userData.getOrgIds() + ",";
-                        }
-                        OrgId += orgId;
-                        UserManager.getInstance().userData.setOrgIds(OrgId);
-                        UserManager.getInstance().userData.setPassOrgIds(OrgId);
+                        UserManager.getInstance().orgAddTeacher(orgId);
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
                         startActivity(new Intent(AddOrgActivity.this, MainActivity.class));
                         finish();
@@ -152,34 +155,34 @@ public class AddOrgActivity extends BaseActivity {
     /**
      * 48.获取机构的教师
      *
-     * @param status 教师的状态 1：正式 2：待审核
+     * @param status       教师的状态 1：正式 2：待审核
+     * @param leave_status 离职状态 1：在职 2：离职
      */
-    private void getOrgTeachers(String status) {
+    private void getOrgTeachers(String status, String leave_status) {
         HttpManager.getInstance().doGetOrgTeachers("TeacherMsgActivity",
-                orgId, status, "1", new HttpCallBack<BaseDataModel<StudentEntity>>() {
+                orgId, status, leave_status, new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
-                        if (TextUtils.equals("1", status)) {//正式
-                            String[] orgIds = UserManager.getInstance().userData.getOrgIds().split(",");
-                            boolean isExcut = false, isStatus = false;
+                        boolean isExcut = false, isStatus = false;
+                        UserManager instance = UserManager.getInstance();
+                        String UserId = instance.userData.getMobile();// 当前用户手机
+                        ArrayList<StudentEntity> tercherData = data.getData();
+                        if (TextUtils.equals("1", status) && TextUtils.equals("1", leave_status)) {//正式,在职
+                            String[] orgIds = instance.userData.getOrgIds().split(",");
                             for (String orgid : orgIds) {
                                 if (orgid.equals(orgId)) {// 已添加
                                     isExcut = true;
                                     break;
                                 }
                             }
-                            String UserId = UserManager.getInstance().userData.getMobile();// 当前用户手机
-                            ArrayList<StudentEntity> tercherData = data.getData();
-                            for (int i = 0; i < tercherData.size(); i++) {
-                                if (UserId.equals(tercherData.get(i).getMobile())) {// 在职教师
-                                    isStatus = true;
-                                    break;
-                                }
-                            }
+                            isStatus = instance.isStatus(isStatus, UserId, tercherData);// 在职教师
                             if (isExcut || isStatus) {
-                                btnCancel.setVisibility(View.GONE);
-                                btnSubmit.setVisibility(View.GONE);
                                 checkStatus();
+                            }
+                        } else {
+                            isStatus = instance.isStatus(isStatus, UserId, tercherData);// 离职教师
+                            if (isStatus) {
+                                bandOrg();
                             }
                         }
                     }

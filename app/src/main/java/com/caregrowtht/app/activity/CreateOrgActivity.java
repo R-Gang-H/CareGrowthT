@@ -240,14 +240,7 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
                     @Override
                     public void onSuccess(BaseDataModel<OrgEntity> data) {
                         if (orgEntity == null || orgId == null || orgId.equals("")) {//不为空是创建新机构
-                            String[] OrgIds = UserManager.getInstance().userData.getOrgIds().split(",");
-                            String OrgId = "";
-                            if (OrgIds.length > 0 && !TextUtils.isEmpty(OrgIds[0])) {// 已经有机构
-                                OrgId = UserManager.getInstance().userData.getOrgIds() + ",";
-                            }
-                            OrgId += data.getData().get(0).getOrgId();
-                            UserManager.getInstance().userData.setOrgIds(OrgId);
-                            UserManager.getInstance().userData.setPassOrgIds(OrgId);
+                            UserManager.getInstance().orgAddTeacher(data.getData().get(0).getOrgId());
                             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
                             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                             startActivity(new Intent(CreateOrgActivity.this, MainActivity.class));

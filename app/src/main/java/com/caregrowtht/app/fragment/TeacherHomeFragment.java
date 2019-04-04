@@ -94,23 +94,14 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
-        if (getArguments() != null) {
-            orgId = getArguments().getString("orgId");//机构id
-        }
         refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             //清空数据,重新添加数据
             UserManager instance = UserManager.getInstance();
             instance.getRoleEntityList(null).clear();
             instance.getOrgEntityList(null).clear();
+            type = 1;
             initData();
-            if (orgEntity != null) {
-                // 教务老师和管理者，进去教师端默认是机构课表，教学老师默认是我的课表
-                if (orgEntity.getIdentity().contains("教务") || orgEntity.getIdentity().contains("管理")) {
-                    type = 2;
-                }
-                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
-            }
         });
 
         radioButtons.get(0).setOnClickListener(this);
@@ -121,6 +112,9 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void initData() {
+        if (getArguments() != null) {
+            orgId = getArguments().getString("orgId");//机构id
+        }
         getOrgInfo();
     }
 
@@ -138,7 +132,6 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                         LogUtils.d("TeacherHomeFragment onSuccess", data.getData().toString());
                         orgEntity = data.getData().get(0);
                         if (orgEntity != null) {
-
                             // 79.获取机构权限配置
                             UserManager.getInstance().getOrgRole(getActivity(), orgEntity);
 
@@ -149,6 +142,8 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                                 type = 2;
                                 radioButtons.get(0).setText("机构课表");//选择的选项内容展示
                             }
+                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
+
                             setChioceItem(position);
 
                             tvOrgName.setText(String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
@@ -176,12 +171,12 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                                 rlNoOrg.setVisibility(View.VISIBLE);
                                 tvAuditing.setText("待审核");
                                 tag.setText("等待机构审核通过");
+                                llYesOrg.setVisibility(View.GONE);
+                                ivAdd.setVisibility(View.GONE);
                                 refreshLayout.setEnableRefresh(true);
                             } else {
-                                rlNoOrg.setVisibility(View.VISIBLE);
-                                tvAuditing.setText("审核不通过");
-                                tag.setText("审核不通过");
-                                refreshLayout.setEnableRefresh(false);
+                                UserManager.getInstance().isNoPass(orgId);
+                                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
                             }
                         }
                         refreshLayout.finishLoadmore();

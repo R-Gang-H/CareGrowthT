@@ -128,6 +128,7 @@ public class TimeCardBuyActivity extends BaseActivity {
     private String audit;
     private String dataMonth;
     private String courses;
+    private String validMonth;
 
     @Override
     public int getLayoutId() {
@@ -146,7 +147,7 @@ public class TimeCardBuyActivity extends BaseActivity {
 
         audit = getIntent().getStringExtra("audit");// 学员审核通过为学员添加课时卡
 
-        String validMonth = cardsEntity.getValidMonth();
+        validMonth = cardsEntity.getValidMonth();
         if (TextUtils.equals(addType, "1") || TextUtils.equals(addType, "3")) {// 1：充值缴费 3：编辑课时卡
             String date = DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd");
             if (TextUtils.equals(validMonth, "0") || Integer.valueOf(validMonth) < 0) {
@@ -201,6 +202,9 @@ public class TimeCardBuyActivity extends BaseActivity {
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (!TextUtils.isEmpty(s)) {
+                        if (s.toString().trim().equals("0")) {
+                            U.showToast("请输入大于0的有效期");
+                        }
                         if (cardsEntity.getCardType().equals("3")) {// 年卡
                             String validity = String.format("%s", TextUtils.equals(s, "0") ? "长期有效" : s + "个月");
                             tvNum.setText(validity);
@@ -231,7 +235,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvReality.setText("新实得次数");
                         rlCardCount.setVisibility(View.VISIBLE);
                         tvValidityTerm.setText("新有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     } else if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) {// 2：购买新卡 4,5
                         String reality = "实得次数";
@@ -258,7 +261,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         ivLine.setVisibility(View.GONE);
                         tvReality.setText("修改剩余次数");
                         tvValidityTerm.setText("修改有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("次数卡");
@@ -290,7 +292,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvSurplus.setText("原卡余额:200元");
                         tvTotal.setText("总金额:6000元");
                         tvValidityTerm.setText("新有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     } else if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) {// 2：购买新卡 4,5
                         String reality = "实得金额";
@@ -319,7 +320,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvRealityUnit.setVisibility(View.GONE);
                         ivLine2.setVisibility(View.GONE);
                         tvValidityTerm.setText("修改有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("储值卡");
@@ -368,7 +368,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                         realityPrice = String.format("%s", TextUtils.equals(validMonth, "0") ?
                                 "长期有效" : cardsEntity.getValidMonth() + "个月");
                         tvPrice.setText("新购买金额");
-                        rlCardCount.setVisibility(View.VISIBLE);
+                        rlCardCount.setVisibility(TextUtils.equals(validMonth, "0") ? View.GONE : View.VISIBLE);
                         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
                                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         params.topToBottom = R.id.rl_validity;
@@ -411,7 +411,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvRealityUnit.setVisibility(View.GONE);
                         ivLine2.setVisibility(View.GONE);
                         tvValidityTerm.setText("修改有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
@@ -430,7 +429,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvSurplus.setText("原卡余额:1000元");
                         tvTotal.setText("总金额:6000元");
                         tvValidityTerm.setText("新有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     } else if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) {
                         if (TextUtils.equals(addType, "2")) {
@@ -454,7 +452,6 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvRealityUnit.setVisibility(View.GONE);
                         ivLine2.setVisibility(View.GONE);
                         tvValidityTerm.setText("修改有效期至");
-                        etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("折扣卡");
@@ -498,6 +495,15 @@ public class TimeCardBuyActivity extends BaseActivity {
         rlCardTime.setBackgroundResource(timeRes);
     }
 
+    private void setValidityTerm() {
+        if (TextUtils.equals(validMonth, "0") || Integer.valueOf(validMonth) < 0) {
+            dataMonth = "长期有效";
+        } else {
+            dataMonth = DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd");
+        }
+        etValidityTerm.setText(dataMonth);
+    }
+
     /**
      * 设置初始值
      */
@@ -519,7 +525,7 @@ public class TimeCardBuyActivity extends BaseActivity {
             etReality.setText(String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100));
         }
         if (TextUtils.equals(addType, "1") || TextUtils.equals(addType, "3")) {// 1：充值缴费 3：编辑课时卡
-            etValidityTerm.setText(DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd"));
+            setValidityTerm();
         } else if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) {// 2：购买新卡 4,5
             String validMonth;
             if (TextUtils.equals(cardsEntity.getValidMonth(), "0")) {//卡的有效月数 长期有效返回 字符串 "0"
@@ -591,7 +597,9 @@ public class TimeCardBuyActivity extends BaseActivity {
                                 "\t\t" + cardsEntity.getDiscount() + "折";
                         tvMoney.setText(String.format("¥%s", cardPrice));
                         Integer realityPrice = Integer.valueOf(cardsEntity.getBalance()) / 100 + Integer.valueOf(s.toString().trim());
-                        tvTotal.setText(String.format("总金额:%s元", realityPrice));
+                        if (!TextUtils.equals(cardsEntity.getCardType(), "3")) { //不是年卡
+                            tvTotal.setText(String.format("总金额:%s元", realityPrice));
+                        }
                         tvNum.setText(String.format("¥%s元", realityPrice));
                     } else if (TextUtils.equals(addType, "3")) {// 3：编辑课时卡
                         if (TextUtils.equals(cardsEntity.getCardType(), "2")) { //储值卡
@@ -703,6 +711,12 @@ public class TimeCardBuyActivity extends BaseActivity {
                         valid += "个月";
                     }
                     tvTime.setText(valid);
+                    if (TextUtils.equals(cardsEntity.getCardType(), "3")) {
+                        if (TextUtils.equals(addType, "1")) {
+                            tvTotal.setText(String.format("新有效期至:%s", s.toString().trim()));
+                        }
+                    }
+
                 }
             }
         });
@@ -819,6 +833,10 @@ public class TimeCardBuyActivity extends BaseActivity {
                                 U.showToast("请输入有效期");
                                 return;
                             }
+                            if (validMonth.equals("0")) {// 新卡有效期必须大于0
+                                U.showToast("有效期不可以为0");
+                                return;
+                            }
                         }
                         if (TextUtils.equals(addType, "5")) {// 5、选择 绑定已有课时卡
                             cardsEntity.setPassMonth(validMonth);//有效期
@@ -856,7 +874,6 @@ public class TimeCardBuyActivity extends BaseActivity {
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "2") || TextUtils.equals(cardsEntity.getCardType(), "3")
                 || TextUtils.equals(cardsEntity.getCardType(), "4")) {
-//            price = String.valueOf((Integer.valueOf(price) * 100));
             map.put("leftPrice", price);
         }
         HttpManager.getInstance().doEditChildCard("TimeCardBuyActivity", map,

@@ -226,6 +226,7 @@ public class CustomActivity extends BaseActivity implements RadioGroup.OnChecked
                 courseCount = true;
             }
         }
+        assert courseIds != null;
         boolean teacherCount = false;
         for (UserEntity teacher : teacherList) {
             if (teacherCount) {
@@ -248,7 +249,11 @@ public class CustomActivity extends BaseActivity implements RadioGroup.OnChecked
             toStudent.append(userId);
             studCount = true;
         }
-        assert courseIds != null;
+        if (notifyType.equals("1") && teacherList.size() == 0
+                && studentList.size() == 0) {// 发送自定义通知如果没选择通知对象提示
+            U.showToast("请选择通知对象");
+            return;
+        }
         HttpManager.getInstance().doBuildNewNotice("CustomActivity", OrgId, notifyType,
                 isReceipt, content, courseIds.toString(), toStudent.toString(),
                 toTeacher.toString(), new HttpCallBack<BaseDataModel<OrgNotifyEntity>>(this, true) {

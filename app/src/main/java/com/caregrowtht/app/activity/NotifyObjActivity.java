@@ -74,9 +74,11 @@ public class NotifyObjActivity extends BaseActivity {
         ivLeft.setBackgroundResource(R.mipmap.ic_close_1);
         tvTitle.setText("通知对象");
         notifyEntity = (OrgNotifyEntity) getIntent().getSerializableExtra("notifyEntity");
-        if (TextUtils.equals(notifyEntity.getIsReceipt(), "2")) {//是否需要回执 1：需要回执 2：不需要回执
+        String isReceipt = notifyEntity.getIsReceipt();// 是否需要回执 1：需要回执 2：不需要回执
+        if (TextUtils.equals(isReceipt, "2")) {
             llTob.setVisibility(View.GONE);
             type = "1";
+            btnSend.setVisibility(View.GONE);
         }
         initRecyclerView(recyclerView, true);
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
@@ -84,7 +86,7 @@ public class NotifyObjActivity extends BaseActivity {
         list.clear();
         list.add(new MultipleItem(MultipleItem.TYPE_RECEIPT_NO));
         list.add(new MultipleItem(MultipleItem.TYPE_RECEIPT_ALL));
-        notifyObjAdapter = new NotifyObjAdapter(this, list, orgNotifyList);
+        notifyObjAdapter = new NotifyObjAdapter(this, list, orgNotifyList, isReceipt);
         recyclerView.setAdapter(notifyObjAdapter);
     }
 

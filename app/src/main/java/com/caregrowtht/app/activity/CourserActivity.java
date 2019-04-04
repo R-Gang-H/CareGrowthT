@@ -29,6 +29,7 @@ import com.android.library.utils.SystemUtils;
 import com.android.library.utils.U;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.adapter.CourserReleaseAdapter;
 import com.caregrowtht.app.adapter.MomentAdapter;
 import com.caregrowtht.app.adapter.RootListViewAdapter;
 import com.caregrowtht.app.adapter.SubListViewAdapter;
@@ -534,6 +535,7 @@ public class CourserActivity extends BaseActivity {
                             break;
                         } else {
                             if (stuNum > 0) {// 学生人数大于0可以发布课程反馈
+                                CourserReleaseAdapter.img = 0;
                                 startActivity(new Intent(this, CourserReleaseActivity.class)
                                         .putExtra("courseData", courseData));
                             } else {

@@ -27,12 +27,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margin_size_50"
                 android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginEnd="@dimen/margin_size_50"
                 android:layout_toEndOf="@id/rl_back_button"
                 android:background="@drawable/add_circle_corner_transparent_bg"
-                android:drawablePadding="@dimen/margin_size_10"
                 android:drawableStart="@mipmap/ic_search"
+                android:drawablePadding="@dimen/margin_size_10"
                 android:ellipsize="end"
                 android:gravity="center|left"
                 android:hint="请输入机构名称"
@@ -61,5 +61,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/my_toolbar" />
+
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/my_toolbar"
+        android:visibility="gone" />
 
 </RelativeLayout>

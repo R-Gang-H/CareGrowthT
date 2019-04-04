@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,7 +32,7 @@ public class QRCodeActivity extends BaseActivity {
     @BindView(R.id.rl_back_button)
     RelativeLayout rlBackButton;
     @BindView(R.id.tv_title)
-    EditText tvTitle;
+    TextView tvTitle;
     @BindView(R.id.tv_scan)
     TextView tvScan;
     @BindView(R.id.tv_dist)
