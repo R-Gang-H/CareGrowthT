@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
+import com.android.library.view.WheelPopup;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bumptech.glide.Glide;
@@ -79,6 +81,12 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
     EditText etTelephone;
     @BindView(R.id.et_org_mobile)
     EditText etOrgMobile;
+    @BindView(R.id.tv_stu_num)
+    TextView tvStuNum;
+    @BindView(R.id.et_promo_code)
+    EditText etPromoCode;
+    @BindView(R.id.et_marke)
+    EditText etMarke;
     @BindView(R.id.btn_cancel)
     Button btnCancel;
     @BindView(R.id.btn_create)
@@ -121,6 +129,9 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
             etDetailAddress.setText(orgEntity.getOrgAddress());
             etTelephone.setText(orgEntity.getTelephone());
             etOrgMobile.setText(orgEntity.getOrgPhone());
+            tvStuNum.setText(orgEntity.getScale());
+            etPromoCode.setText(orgEntity.getCoupon());
+            etMarke.setText(orgEntity.getRecommend_mobile());
             btnCreate.setText("确定");
         } else {// ""是创建
             tvTitle.setText("创建新机构");
@@ -182,7 +193,7 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
         return detail;
     }
 
-    @OnClick({R.id.rl_back_button, R.id.rl_avatar, R.id.tv_address, R.id.btn_cancel, R.id.btn_create})
+    @OnClick({R.id.rl_back_button, R.id.rl_avatar, R.id.tv_address, R.id.tv_stu_num, R.id.btn_cancel, R.id.btn_create})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back_button:
@@ -196,10 +207,23 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
                 hideKeyboard();
                 showPickerView();
                 break;
+            case R.id.tv_stu_num:
+                selectStuNum();
+                break;
             case R.id.btn_create:
                 editOrg();
                 break;
         }
+    }
+
+    private void selectStuNum() {
+        WheelPopup pop = new WheelPopup(this, Constant.setStuNum);
+        pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
+                .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        pop.setSelectListener((argValue, position) -> {
+            tvStuNum.setText(argValue);
+            return null;
+        });
     }
 
     private void editOrg() {
@@ -233,17 +257,24 @@ public class CreateOrgActivity extends BaseActivity implements TakePhoto.TakeRes
         if (mImageName != null && !mImageName.equals("")) {
             headImage = Constant.OSS_URL + mImageName;
         }
+        String scale = tvStuNum.getText().toString();
+        String coupon = etPromoCode.getText().toString();
+        String recommendMobile = etMarke.getText().toString();
         HttpManager.getInstance().doEditOrg("CreateOrgActivity",
                 orgId, orgName, orgShortName, orgChainName, headImage, pname,
-                cname, dname, address, telephone, orgPhone,
+                cname, dname, address, telephone, orgPhone, scale, coupon, recommendMobile,
                 new HttpCallBack<BaseDataModel<OrgEntity>>(this) {
                     @Override
                     public void onSuccess(BaseDataModel<OrgEntity> data) {
                         if (orgEntity == null || orgId == null || orgId.equals("")) {//不为空是创建新机构
+
+                            UserManager.getInstance().getOrgEntityList(data.getData().get(0));
+
                             UserManager.getInstance().orgAddTeacher(data.getData().get(0).getOrgId());
                             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
                             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
-                            startActivity(new Intent(CreateOrgActivity.this, MainActivity.class));
+                            startActivity(new Intent(CreateOrgActivity.this, BuyActivity.class)
+                                    .putExtra("orgId", data.getData().get(0).getOrgId()));
                         }
                         finish();
                     }

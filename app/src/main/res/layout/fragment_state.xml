@@ -52,8 +52,8 @@
                     android:id="@+id/rl_next_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/ll_emtity"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="15dp"
@@ -119,8 +119,8 @@
                     android:id="@+id/tv_title_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_size_18"
                     android:layout_marginStart="@dimen/margin_size_19"
+                    android:layout_marginEnd="@dimen/margin_size_18"
                     android:text="查看全部"
                     android:textColor="#69ace5"
                     android:textSize="@dimen/text_size_14"
@@ -141,10 +141,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/ll_all"
-                android:layout_marginLeft="@dimen/margin_size_10"
-                android:layout_marginRight="@dimen/margin_size_10"
-                android:layout_marginTop="@dimen/margin_size_10" />
+                android:layout_below="@id/ll_all" />
 
         </RelativeLayout>
 

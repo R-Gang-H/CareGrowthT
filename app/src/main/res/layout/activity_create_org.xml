@@ -179,8 +179,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="120dp"
                     android:background="@null"
-                    android:drawablePadding="@dimen/margin_size_10"
                     android:drawableRight="@mipmap/ic_right_arrow"
+                    android:drawablePadding="@dimen/margin_size_10"
                     android:gravity="center_vertical|right"
                     android:hint="请选择"
                     android:paddingRight="@dimen/margin_size_15"
@@ -222,8 +222,8 @@
                     android:gravity="top|right"
                     android:hint="请输入详细地址"
                     android:maxLength="100"
-                    android:paddingRight="@dimen/margin_size_15"
                     android:paddingTop="@dimen/margin_size_15"
+                    android:paddingRight="@dimen/margin_size_15"
                     android:textColor="@color/gray2"
                     android:textColorHint="@color/gray"
                     android:textSize="@dimen/text_size_15" />
@@ -308,6 +308,113 @@
                     android:textColorHint="@color/gray"
                     android:textSize="@dimen/text_size_15" />
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_0.5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
+                    android:background="@color/col_e8" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_stu_num"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_org_mobile">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:text="学员人数"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_stu_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_promo_code"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_stu_num">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="渠道代码"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_promo_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入渠道代码"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_marke"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/rl_promo_code">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_15"
+                    android:text="推荐人手机号"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
+                <EditText
+                    android:id="@+id/et_marke"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="120dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入推荐人手机号"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:textColor="@color/gray2"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/text_size_15" />
+
             </RelativeLayout>
 
             <Button
@@ -320,7 +427,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rl_org_mobile"
+                app:layout_constraintTop_toBottomOf="@id/rl_marke"
                 app:layout_goneMarginTop="@dimen/margin_size_40" />
 
             <Button
@@ -333,7 +440,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rl_org_mobile" />
+                app:layout_constraintTop_toBottomOf="@id/rl_marke" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.caregrowtht.app.view.ReboundScrollView>

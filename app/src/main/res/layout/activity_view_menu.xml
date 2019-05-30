@@ -1,76 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_cancel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/margin_size_90"
     tools:context="com.caregrowtht.app.activity.ScreenActivity">
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/margin_size_60"
+        android:layout_height="@dimen/margin_size_60"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_close_2" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_below="@id/iv_back">
+
+        <TextView
+            android:id="@+id/tv_course_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:text="课程范围"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_my_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_course_range"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:background="@drawable/selector_screen"
+            android:gravity="center"
+            android:text="我的课"
+            android:textColor="@drawable/selector_color_white_black"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_org_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_course_range"
+            android:layout_marginStart="@dimen/margin_size_11"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_toEndOf="@id/tv_my_course"
+            android:background="@drawable/selector_screen"
+            android:gravity="center"
+            android:text="机构的课"
+            android:textColor="@drawable/selector_color_white_black"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_time_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_my_course"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:text="时间段"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_time_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_time_range"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_20"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_time_frame" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/rl_time_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rv_time_frame"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_11"
+            android:layout_marginEnd="@dimen/margin_size_20">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_size_1"
-        android:layout_above="@id/ll_PupoBom"
-        android:background="#e1eefa" />
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_time_frame_bg"
+                android:gravity="center"
+                android:hint="请选择开始段"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_14" />
+
+            <View
+                android:layout_width="@dimen/margin_size_10"
+                android:layout_height="@dimen/margin_size_1"
+                android:layout_centerInParent="true"
+                android:background="@color/color_84" />
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@mipmap/ic_time_frame_bg"
+                android:gravity="center"
+                android:hint="请选择结束段"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_time_frame"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_11"
+            android:layout_marginEnd="@dimen/margin_size_20"
+            android:background="@mipmap/ic_time_frame_bg"
+            android:gravity="center"
+            android:hint="请选择一个月"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_14" />
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_PupoBom"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:gravity="center">
 
-        <LinearLayout
-            android:id="@+id/ll_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#e1eefa"
-            android:gravity="center">
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:text="取消"
-                android:textColor="@color/color_6"
-                android:textSize="@dimen/text_size_18" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/color_eb" />
-
-        <LinearLayout
-            android:id="@+id/ll_confirm"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/color_69ac"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:text="确认"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
     </LinearLayout>
-
 </RelativeLayout>

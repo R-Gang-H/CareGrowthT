@@ -13,9 +13,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_size_4"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_5"
         tools:listitem="@layout/item_init_data" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_add_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/margin_size_10"
+        tools:listitem="@layout/item_new_notify" />
 
 </LinearLayout>

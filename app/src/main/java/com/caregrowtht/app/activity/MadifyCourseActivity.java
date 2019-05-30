@@ -173,8 +173,8 @@ public class MadifyCourseActivity extends BaseActivity {
 
         classroomId = courseData.getClassroomId();
         for (CourseEntity classRoom : classRoomList) {
-            if (TextUtils.equals(classRoom.getClassroomId(), classroomId)) {
-                classroomId = classRoom.getClassroomId();
+            if (TextUtils.equals(classRoom.getId(), classroomId)) {
+                classroomId = classRoom.getId();
                 tvClassRoom.setText(classRoom.getClassroomName());
                 break;
             }
@@ -579,7 +579,7 @@ public class MadifyCourseActivity extends BaseActivity {
         pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
                 .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         pop.setSelectListener((argValue, position) -> {
-            classroomId = classRoomList.get(position).getClassroomId();
+            classroomId = classRoomList.get(position).getId();
             tvClassRoom.setText(argValue);
             return null;
         });

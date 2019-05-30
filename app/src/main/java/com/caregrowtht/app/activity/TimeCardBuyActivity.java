@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -116,6 +117,8 @@ public class TimeCardBuyActivity extends BaseActivity {
     EditText etMonth;
     @BindView(R.id.rb_valid)
     CheckBox rbValid;
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
 
     private Boolean validTerm = false;//默认非长期有效
 
@@ -520,7 +523,11 @@ public class TimeCardBuyActivity extends BaseActivity {
             etPrice.setText(String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100));
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "1")) { //次数卡
-            etReality.setText(cardsEntity.getTotalCount());
+            if (addType.equals("3")) {// 3.编辑课时卡
+                etReality.setText(cardsEntity.getLeftCount());
+            } else {
+                etReality.setText(cardsEntity.getTotalCount());
+            }
         } else {
             etReality.setText(String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100));
         }
@@ -746,6 +753,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                 overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out);
                 break;
             case R.id.btn_submit:
+                btnSubmit.setClickable(false);
                 if (TextUtils.equals(addType, "1")) {// 1：充值缴费
                     rechargeCard();
                 } else if (TextUtils.equals(addType, "2")) {// 2：购买新卡
@@ -892,6 +900,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
                         LogUtils.d("TimeCardBuyActivity onFail", statusCode + ":" + errorMsg);
+                        btnSubmit.setClickable(true);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(TimeCardBuyActivity.this);
@@ -944,6 +953,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
                         LogUtils.d("TimeCardBuyActivity onFail", statusCode + ":" + errorMsg);
+                        btnSubmit.setClickable(true);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(TimeCardBuyActivity.this);
@@ -1005,6 +1015,7 @@ public class TimeCardBuyActivity extends BaseActivity {
             @Override
             public void onFail(int statusCode, String errorMsg) {
                 LogUtils.d("TimeCardBuyActivity onFail", statusCode + ":" + errorMsg);
+                btnSubmit.setClickable(true);
                 if (statusCode == 1002 || statusCode == 1011) {//异地登录
                     U.showToast("该账户在异地登录!");
                     HttpManager.getInstance().dologout(TimeCardBuyActivity.this);
@@ -1133,6 +1144,7 @@ public class TimeCardBuyActivity extends BaseActivity {
 
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
+                        btnSubmit.setClickable(true);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(TimeCardBuyActivity.this);

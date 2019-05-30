@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
+import com.caregrowtht.app.view.xrecyclerview.SpaceItemDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -45,6 +47,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -104,6 +107,7 @@ public class StateFragment extends BaseFragment {
         initRecyclerView(recyclerView, true);
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
         recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(5));
         stateAdapter = new StateAdapter(messageAllList, getActivity());//@TODO
         recyclerView.setAdapter(stateAdapter);
 
@@ -119,6 +123,22 @@ public class StateFragment extends BaseFragment {
             MyMessageV2(false, status);
         });
         refreshLayout.setEnableLoadmoreWhenContentNotFull(false);
+    }
+
+    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
+
+        private int mSpacing;
+
+        public ItemOffsetDecoration(int itemOffset) {
+            mSpacing = itemOffset;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.set(0, mSpacing, 0, mSpacing);
+        }
     }
 
     @Override
@@ -221,7 +241,6 @@ public class StateFragment extends BaseFragment {
                             llAll.setVisibility(View.GONE);
                         }
                         tvTitleAll.setText(String.format("查看未完成待办（%s）条", count));
-
                     }
 
                     @Override
@@ -405,6 +424,10 @@ public class StateFragment extends BaseFragment {
         switch (event.getWhat()) {
             case ToUIEvent.REFERSH_TEACHER:
                 initData();
+                break;
+            case ToUIEvent.REFERSH_ADD_ORG:
+                //动态获取 Camera 权限 haoruigang on 2018-4-4 19:13:48
+                getCamera();
                 break;
         }
     }

@@ -31,20 +31,23 @@ public class Constant {
     public static final String accessKeySecret = "t2mX9zfALLCuHFhZVkBWGuscNH1pAt";
     public static final String ossBucket = isTest ? "acztest" : "acz";
     public static final String ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/";//oss-cn-beijing.aliyuncs.com
+    public static final String OSS_URL = "https://" + ossBucket + ".oss-cn-beijing.aliyuncs.com/";
 
     public static final String photo = "user/avatar/";
     public static final String picture = "user/circle/picture/";
     public static final String video = "user/circle/video/";
     public static final String accessory = "user/circle/accessory/";
-    public static final String OSS_URL = "https://" + ossBucket + ".oss-cn-beijing.aliyuncs.com/";
 
     // 机构主页
     public static final String BASE_ORG_URL = isTest ? " http://newadmin.acz.1bu2bu.com/index.php?s=/Home/User/mindex/orgId/"
             : "https://trialadmin.ilovegrowth.cn/index.php?s=/Home/User/mindex/orgId/";
     // 用户协议
     public static final String USER_AGREEMENT = "https://trialadmin.ilovegrowth.cn/index.php?s=/Home/user/agreement";
-    public static final String BASE_VERSION = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/";
+    // 调查问卷
+    public static final String BASE_QUEST = isTest ? "http://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
+    public static final String QUESTIONNAIRE = BASE_QUEST + "index.php?s=/Home/OtherInfo/answer/lftkc/%s/jke/%s/isApp/%s/isAndroid/%s.html";// orgid = lftkc /  uid = jke
     // 版本更新 Apk 地址
+    public static final String BASE_VERSION = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/";
     public static final String VERSION_PATH = BASE_VERSION + (isTest ? "version_test_update.txt" : "version_update.txt");
 
 
@@ -182,7 +185,7 @@ public class Constant {
     // 34.编辑学员已有的课时卡
     public static String EDITCHILDCARD = BASE_API + "editChildCard";
     // 35.新建课时卡
-    public static String ADDCHILDCARD = BASE_API + "addOrgCard";
+    public static String ADDCHILDCARD = BASE_API + "addOrgCard";//
     // 36.解除绑定课时卡
     public static String DROPCHILDCARD = BASE_API + "dropChildCard";
     // 37.获取机构的所有排课或班级
@@ -281,6 +284,28 @@ public class Constant {
     public static String CHECKSTUDENTNUM = BASE_API + "checkStudentNum";
     // 删除课程反馈
     public static String DELCIRCLE = BASE_API + "delCircle";
+    // 产品价格列表
+    public static String GETPRODUCTS = BASE_API + "getProducts";
+    // 根据产品id获取有哪些期限
+    public static String GETPRICELIST = BASE_API + "getPriceList";
+    // 根据期限id返回对应的价格
+    public static String GETONEPRODUCTDETAIL = BASE_API + "getOneProductDetail";
+    // 获取折扣后的价钱
+    public static String GETORGLEFTPRICE = BASE_API + "getOrgLeftPrice";
+    // 校验签名
+    public static String ANDUPDATEORDER = BASE_API + "andUpdateOrder";
+    // 85.获取机构 未发布课程反馈的课程列表
+    public static String GETUNPUBLISHED = BASE_API + "getUnpublished";
+    // 86.获取机构 需要处理出勤的课程列表
+    public static String GETATTENDANCE = BASE_API + "getattendance";
+    // 87.获取机构 有学员请假的课程列表
+    public static String GETLEAVELIST = BASE_API + "getLeaveList";
+    // 88.获取机构 日报列表
+    public static String GETDAILY = BASE_API + "getDaily";
+
+    // 获取支付宝订单信息
+    public static String BASE_THERINOF = isTest ? "https://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
+    public static String GETOTHERINFO = BASE_THERINOF + "index.php?s=/Home/OtherInfo/appSetOrder";
 
     // origin array
     public static String[] originArray = {"老学员推荐", "课程顾问招生", "爱成长引流", "进店咨询", "地推传单", "资源互换", "有偿获取", "其他"};
@@ -299,11 +324,17 @@ public class Constant {
 
     //排课重复周期
     public static String[] sexWeekly = {"无", "每天", "每周"};
+    public static String[] sexWeekly0 = {"无", "每周"};
     public static String[] sexWeekly1 = {"于", "于日前", "永不"};
 
+    // 学员人数
+    public static String[] setStuNum = {"0-50人", "50-100人", "100-150人", "150-200人", "200-250人", "250-300人", "300-400人", "400-500人", "500-1000人"};
+
+    public static final int REQUEST_CODE_PICK_FILE = 0x400;
     //CALL_PHONE权限
     public static final int RC_CALL_PHONE = 100;
     public static final int RC_SEND = 101;
-    public static final int REQUEST_CODE_PICK_FILE = 0x400;
     public static final int REQUEST_CODE_WRITE = 102;
+
+    public static final int PERMISSIONS_REQUEST_CODE = 1002;
 }

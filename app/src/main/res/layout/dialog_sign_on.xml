@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/margin_size_15"
     android:layout_marginLeft="@dimen/margin_size_10"
     android:layout_marginRight="@dimen/margin_size_10"
+    android:layout_marginBottom="@dimen/margin_size_15"
     android:gravity="bottom"
     android:orientation="vertical">
 
@@ -38,6 +38,22 @@
             android:text="学员缺席,消课签到"
             android:textColor="@color/color_3"
             android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#b2b2b2" />
+
+        <TextView
+            android:id="@+id/tv_table_sign"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="签到表签到"
+            android:textColor="@color/color_3"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

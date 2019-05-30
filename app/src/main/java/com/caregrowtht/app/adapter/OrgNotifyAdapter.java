@@ -81,7 +81,7 @@ public class OrgNotifyAdapter extends XrecyclerAdapter {
                         tvNotifyCount.setText(String.format("教师%s人\t学员%s人\n%s\t%s-%s\t%s\t人",
                                 notifyEntity.getTeacherCount(), notifyEntity.getStudentCount(),
                                 coursesBean.getCourseName(), DateUtil.getDate(Long.parseLong(coursesBean.getCourseStarTime()), "yyyy-MM-dd HH:mm"),
-                                DateUtil.getDate(Long.parseLong(coursesBean.getCourseStarTime()), "HH:mm"), coursesBean.getCourseCount()));
+                                DateUtil.getDate(Long.parseLong(coursesBean.getCourseEndTime()), "HH:mm"), coursesBean.getCourseCount()));
                     }
                 }
                 break;

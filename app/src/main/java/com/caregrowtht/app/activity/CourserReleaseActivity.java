@@ -259,7 +259,7 @@ public class CourserReleaseActivity extends BaseActivity {
                             , getString(R.string.text_role));
                     break;
                 } else {
-                    btnSubmit.setEnabled(false);
+                    btnSubmit.setClickable(false);
                     int index = 0;
                     for (StudentCardAdapter adapter : stuCardAdapter) {
                         for (int i = 0; i < adapter.getStudentIds().size(); i++) {
@@ -391,24 +391,24 @@ public class CourserReleaseActivity extends BaseActivity {
     private boolean validation() {
         if (StrUtils.isEmpty(courseId)) {
             U.showToast("courseId");
-            btnSubmit.setEnabled(true);
+            btnSubmit.setClickable(true);
             return false;
         }
         content = etCourseIntro.getText().toString().trim();
 //        if (StrUtils.isEmpty(content)) {
 //            U.showToast("写点什么吧");
-//            btnSubmit.setEnabled(true);
+//            btnSubmit.setClickable(true);
 //            return false;
 //        }
         if (StrUtils.isEmpty(content) && courReleAdapter.uploadModules.size() == 0) {
             U.showToast("请编写文字或选择照片/视频/文件!");
-            btnSubmit.setEnabled(true);
+            btnSubmit.setClickable(true);
             return false;
         }
         String[] student = studentIds.toString().split(",");
         if (student.length > 0 && student[0].isEmpty()) {
             U.showToast("请选择要发送的学员!");
-            btnSubmit.setEnabled(true);
+            btnSubmit.setClickable(true);
             return false;
         }
         return true;
@@ -557,7 +557,7 @@ public class CourserReleaseActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         LogUtils.d("CourserReleaseActivity", "onSuccess");
-                        btnSubmit.setEnabled(true);
+                        btnSubmit.setClickable(true);
                         mCircleProgress.setVisibility(View.GONE);
                         U.showToast("发布成功");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE));
@@ -567,7 +567,7 @@ public class CourserReleaseActivity extends BaseActivity {
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
                         LogUtils.d("CourserReleaseActivity onFail", statusCode + ":" + errorMsg);
-                        btnSubmit.setEnabled(true);
+                        btnSubmit.setClickable(true);
                         mCircleProgress.setVisibility(View.GONE);
                         rlBackButton.setClickable(true);
                         isBackPressed = true;
@@ -582,7 +582,7 @@ public class CourserReleaseActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("CourserReleaseActivity onError", throwable.getMessage());
-                        btnSubmit.setEnabled(true);
+                        btnSubmit.setClickable(true);
                         mCircleProgress.setVisibility(View.GONE);
                         rlBackButton.setClickable(true);
                         isBackPressed = true;

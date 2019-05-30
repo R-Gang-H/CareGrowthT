@@ -279,6 +279,19 @@ public class PendingAdapter extends XrecyclerAdapter {
             dialog.dismiss();
             notifyItemChanged(position);
         });
+        final TextView tvTableSign = view.findViewById(R.id.tv_table_sign);
+        tvTableSign.setVisibility(View.VISIBLE);
+        tvTableSign.setOnClickListener(v -> {
+            String tableSign = tvTableSign.getText().toString();
+            if (!isShowSign) {
+                initSignBz(tableSign);//批量签到
+                isShowSign = true;
+            } else {
+                getIsSignBz().put(position, tableSign);//单个签到
+            }
+            dialog.dismiss();
+            notifyItemChanged(position);
+        });
         final TextView tvCancel = view.findViewById(R.id.tv_cancel);
         tvCancel.setOnClickListener(v -> {
             getIsSign().put(position, false);

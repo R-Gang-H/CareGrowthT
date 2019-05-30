@@ -3,11 +3,6 @@ package com.caregrowtht.app.activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,6 +30,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -130,7 +128,7 @@ public class CourseVsActivity extends BaseActivity implements ViewOnItemClick {
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         mListCard.clear();
                         mListCard.addAll(data.getData());
-                        mCardsAdapter.update(mListCard, "0");
+                        mCardsAdapter.updateStatus(mListCard, "0");
                         if (mListCard.size() > 0) {
                             getCardResource(mListPost);//17.获取课时卡所关联的排课列表
                             loadView.delayShowContainer(true);

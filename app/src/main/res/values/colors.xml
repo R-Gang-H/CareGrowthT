@@ -29,6 +29,9 @@
     <color name="gray4">#444444</color>
     <color name="hint">#909090</color>
     <color name="blue">#52A6EF</color>
+    <color name="col_3a9">#3A99E7</color>
+    <color name="col_409">#4094DB</color>
+    <color name="col_edf">#EDF6FF</color>
 
     <color name="color_B">#BBBBBB</color>
     <color name="color_D">#DDDDDD</color>
@@ -37,6 +40,7 @@
     <color name="color_054F">#054F89</color>
     <color name="color_9a7">#9a78d2</color>
     <color name="color_93c">#93cf5d</color>
+    <color name="color_99c">#99CE50</color>
     <color name="color_3b">#3BB9D3</color>
     <color name="color_ffb">#ffb733</color>
 
@@ -47,6 +51,7 @@
     <color name="color_f4">#F4F4F4</color>
     <color name="color_f8">#F8F8F8</color>
     <color name="color_f2">#F2F2F2</color>
+    <color name="color_d0">#D0D0D0</color>
     <color name="color_f6ab">#F6ab00</color>
     <color name="color_e4">#e4e4e4</color>
     <color name="color_e6">#e6e6e6</color>
@@ -73,6 +78,7 @@
     <color name="color_8">#888888</color>
     <color name="color_7">#777777</color>
     <color name="color_29">#292929</color>
+    <color name="color_84">#848484</color>
     <color name="col_f6ab">#f6ab00</color>
     <color name="col_efee">#efeef4</color>
     <color name="col_f0">#f0f0f0</color>
@@ -100,6 +106,9 @@
     <color name="blueLight">#69ACE5</color>
     <color name="blueMaskDark">#C8E3FF</color>
     <color name="blueMask">#E8F3FF</color>
+    <color name="color_f1f">#F1F6FD</color>
+    <color name="color_d3e">#D3E6F8</color>
+    <color name="color_e3e">#E3EEFA</color>
     <color name="blueHome">#4aa0fe</color>
     <color name="blueMine">#51A1F9</color>
 
@@ -107,6 +116,7 @@
     <color name="color_green">#9fd651</color>
     <color name="color_0002">#000002</color>
     <color name="color_caa0">#caa0cf</color>
+    <color name="color_91c9">#91C943</color>
     <color name="color_93ca">#93ca46</color>
     <color name="color_57a1">#57a1df</color>
     <color name="color_e38f">#e38f4e</color>

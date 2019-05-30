@@ -17,7 +17,7 @@
             android:fillViewport="true"
             android:focusableInTouchMode="true"
             android:scrollbars="none">
-            <!--android:background="@mipmap/ic_homepage_bg"-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,13 +27,27 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/blueHome">
+
+                    <TextView
+                        android:id="@+id/tv_org_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:layout_below="@id/title_bar"
+                        android:layout_marginTop="@dimen/margin_size_20"
+                        android:background="@color/color_99c"
+                        android:gravity="center"
+                        android:text="您的爱成长使用过期时间：2019/12/31  请您尽快续费"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/margin_size_14"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/rl_avatar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_org_status">
 
                         <com.android.library.view.CircleImageView
                             android:id="@+id/iv_avatar"
@@ -74,6 +88,7 @@
                         android:id="@+id/tv_org_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_org_status"
                         android:layout_marginLeft="@dimen/margin_size_17"
                         android:layout_marginTop="@dimen/margin_size_35"
                         android:layout_toRightOf="@id/rl_avatar"
@@ -93,11 +108,11 @@
                         android:layout_marginTop="@dimen/margin_size_10"
                         android:layout_toRightOf="@id/rl_avatar"
                         android:background="@mipmap/ic_cours_fb"
-                        android:drawablePadding="@dimen/margin_size_6"
                         android:drawableStart="@mipmap/icon_role"
+                        android:drawablePadding="@dimen/margin_size_6"
                         android:gravity="center_vertical"
-                        android:paddingEnd="@dimen/margin_size_6"
                         android:paddingStart="@dimen/margin_size_6"
+                        android:paddingEnd="@dimen/margin_size_6"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_size_12" />
 
@@ -139,6 +154,52 @@
 
                 </RelativeLayout>
 
+                <!--未付费或未续费-->
+                <RelativeLayout
+                    android:id="@+id/rl_no_unpaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_unpaid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="120dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_unpaid" />
+
+                    <TextView
+                        android:id="@+id/tv_unpaid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_unpaid"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_size_40"
+                        android:gravity="center"
+                        android:lineSpacingExtra="@dimen/margin_size_6"
+                        android:text="@string/string_unpaid"
+                        android:textColor="@color/color_6"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <Button
+                        android:id="@+id/btn_pay_base"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_unpaid"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_size_8"
+                        android:layout_marginEnd="@dimen/margin_size_5"
+                        android:background="@drawable/selector_small_btn_click"
+                        android:gravity="center"
+                        android:text="支付"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_18" />
+
+                </RelativeLayout>
+
                 <!--审核通过-->
                 <include
                     android:id="@+id/ll_yes_org"
@@ -153,10 +214,10 @@
         android:id="@+id/iv_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_20"
         android:src="@mipmap/ic_add_more"
         android:visibility="gone" />
 

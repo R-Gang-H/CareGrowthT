@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -107,7 +108,7 @@ public class SharePopupWindow extends PopupWindow {
                         LogUtils.e(mActivity, "TODO: SEND_SMS Granted" + file.getPath(), Toast.LENGTH_SHORT);
 //                        //由文件得到uri
                         Uri uri = null;
-                        Intent cameraIntent = new Intent(Intent.ACTION_SEND);
+                        Intent cameraIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
                         if (cameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
                             if (Build.VERSION.SDK_INT < 24) {
                                 uri = Uri.parse(file.getAbsolutePath());//Uri.fromFile(file)
@@ -116,11 +117,13 @@ public class SharePopupWindow extends PopupWindow {
                                 ContentValues contentValues = new ContentValues(1);
                                 contentValues.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
                                 uri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                                if (uri == null) {
+                                    uri = getImageContentUri(mActivity, file);
+                                }
                                 if (uri != null) {
                                     mActivity.grantUriPermission(mActivity.getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                                     cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                     cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
                                 }
                             }
                         }
@@ -147,17 +150,25 @@ public class SharePopupWindow extends PopupWindow {
                     .setCallback(shareListener)
                     .withMedia((UMWeb) web)
                     .share();
-        }
-
-        if (web instanceof UMImage) {
+        } else if (web instanceof UMImage) {
 
             new ShareAction(mActivity)
                     .setPlatform(platform)
                     .setCallback(shareListener)
                     .withMedia((UMImage) web)
                     .share();
+        } else {
+            File f = new File(file.getPath());
+            new ShareAction(mActivity)
+                    .withFile(f)
+                    .withText(f.getPath().substring(f.getAbsolutePath().lastIndexOf("/") + 1))
+                    .withSubject(f.getPath().substring(f.getAbsolutePath().lastIndexOf("/") + 1))
+                    .setPlatform(platform)
+                    .setCallback(shareListener)
+                    .share();
         }
     }
+
 
     private UMShareListener shareListener = new UMShareListener() {
         /**
@@ -223,6 +234,33 @@ public class SharePopupWindow extends PopupWindow {
         WindowManager.LayoutParams params = mActivity.getWindow().getAttributes();
         params.alpha = v;
         mActivity.getWindow().setAttributes(params);
+    }
+
+    /**
+     * Gets the content:// URI from the given corresponding path to a file
+     *
+     * @param context
+     * @param imageFile
+     * @return content Uri
+     */
+    public static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
     }
 
 }

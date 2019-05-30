@@ -588,7 +588,7 @@ public class CourserActivity extends BaseActivity {
     private void showPhotoDialog() {
         final String items[] = {"拍照", "相册"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("选择头像");
+        builder.setTitle("选择签到表");
         builder.setItems(items, (dialog, which) -> {
             dialog.dismiss();
             switch (which) {

@@ -55,8 +55,8 @@
             android:layout_height="54dp"
             android:layout_weight="1"
             android:background="@null"
-            android:drawablePadding="5dp"
             android:drawableStart="@color/white"
+            android:drawablePadding="5dp"
             android:hint="@string/search_contacts"
             android:imeOptions="actionSearch"
             android:inputType="text"
@@ -98,7 +98,7 @@
         android:id="@+id/load_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_bar" />
+        android:layout_below="@id/toolbar" />
 
     <Button
         android:id="@+id/btn_submit"

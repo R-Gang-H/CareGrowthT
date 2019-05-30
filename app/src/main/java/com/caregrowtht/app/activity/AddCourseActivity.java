@@ -205,7 +205,14 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
     boolean isShowAfter = true;//首次是否显示几次后结束
 
     private void selectRepeat() {
-        WheelPopup pop = new WheelPopup(this, Constant.sexWeekly);
+        String[] sexWeekly;
+        if (UserManager.getInstance().removeDuplicateOrder(
+                classTimeAdapter.classTimes).size() > 1) {// 两个时间段，去掉每天
+            sexWeekly = Constant.sexWeekly0;
+        } else {
+            sexWeekly = Constant.sexWeekly;
+        }
+        WheelPopup pop = new WheelPopup(this, sexWeekly);
         pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
                 .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         pop.setSelectListener((argValue, position) -> {
@@ -227,7 +234,12 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
                         break;
                     }
             }
-            repeat = position + 1 + "";
+            if (UserManager.getInstance().removeDuplicateOrder(
+                    classTimeAdapter.classTimes).size() > 1) {// 两个时间段，去掉每天
+                repeat = position + 2 + "";
+            } else {
+                repeat = position + 1 + "";
+            }
             tvWeekly.setText(argValue);
             return null;
         });
@@ -342,8 +354,6 @@ public class AddCourseActivity extends BaseActivity implements ViewOnItemClick {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(AddCourseActivity.this);
-                        } else if (statusCode == 1057 || statusCode == 1055) {//排课名称相同
-                            U.showToast("排课名称相同!");
                         } else {
                             U.showToast(errorMsg);
                         }

@@ -18,10 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.library.utils.U;
+import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.okhttp.callback.OkHttpUtils;
 import com.caregrowtht.app.uitil.X5WebView;
 import com.caregrowtht.app.uitil.alicloud.oss.AliYunOss;
+import com.caregrowtht.app.user.UserManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.TbsReaderView;
 import com.tencent.smtt.sdk.WebSettings;
@@ -62,9 +64,7 @@ public class UserTermActivity extends BaseActivity {
 
     private ProgressBar mProgressBar;
     X5WebView mWebView;
-    TbsReaderView mTbsReaderView;
 
-    private String tbsReaderTemp = Environment.getExternalStorageDirectory() + "/TbsReaderTemp/";
     private URL mIntentUrl;
     private String openType;
 
@@ -79,7 +79,6 @@ public class UserTermActivity extends BaseActivity {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         openType = getIntent().getStringExtra("openType");
         Uri data = getIntent().getData();
-        assert data != null;
         if (data != null) {
             try {
                 mIntentUrl = new URL(data.toString());
@@ -104,46 +103,16 @@ public class UserTermActivity extends BaseActivity {
         if (!TextUtils.isEmpty(openType) && mIntentUrl != null) {
             if (openType.equals("1")) {
                 tvTitle.setText("爱成长用户协议");
-                init2();
             } else if (openType.equals("2")) {
-                tvTitle.setText("文件");
-
-                /*添加进度条*/
-                mProgressBar = new ProgressBar(this, null,
-                        android.R.attr.progressBarStyleHorizontal);
-                LinearLayout.LayoutParams barParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 10);
-                mProgressBar.setLayoutParams(barParams);
-                mProgressBar.setProgress(0);
-                mViewParent.addView(mProgressBar);
-
-                //创建文件夹 MyDownLoad，在存储卡下
-                String fileName = tbsReaderTemp + mIntentUrl.toString().substring(mIntentUrl.toString().lastIndexOf("/") + 1);
-                //判断是否在本地/[下载/直接打开]
-                if (AliYunOss.getInstance(this).fileIsExists(fileName)) {
-                    init(fileName);
-                } else {
-                    //下载的文件名
-                    OkHttpUtils.download(mIntentUrl.toString(), status -> {
-                        //当进度走到100的时候做自己的操作，我这边是弹出dialog
-                        int i = (int) status.getDownloadSize();
-                        if (i == 100) {
-                            mProgressBar.setVisibility(GONE);
-                        } else {
-                            if (mProgressBar.getVisibility() == GONE)
-                                mProgressBar.setVisibility(VISIBLE);
-                            mProgressBar.setProgress(i);
-                        }
-                        Log.d("进度 ", i + "");
-                        if (status instanceof Succeed) {
-                            init(fileName);
-                        }
-                    });
-                }
-            } else {
+                tvTitle.setText("调查问卷");
+            } else if (openType.equals("3")) {
                 tvTitle.setText("机构主页");
-                init2();
+            } else if (openType.equals("4")) {
+                tvTitle.setText("来自创始人的信");
+            } else {// 5
+                tvTitle.setText("3分钟快速了解爱成长");
             }
+            init();
         }
     }
 
@@ -152,63 +121,7 @@ public class UserTermActivity extends BaseActivity {
         finish();
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private void init(String fileName) {
-        mTbsReaderView = new TbsReaderView(this, (integer, o, o1) ->
-                Log.d("lm", "onCallBackAction: " + integer));
-        mViewParent.addView(mTbsReaderView, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT));
-        //防止布局参数设置失败
-        mTbsReaderView.post(() -> {
-            //添加title
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            layoutParams.topMargin = 0;//actionBar高度+状态栏高度
-            mTbsReaderView.setLayoutParams(layoutParams);
-        });
-
-        //增加下面一句解决没有TbsReaderTemp文件夹存在导致加载文件失败
-        String bsReaderTemp = tbsReaderTemp;
-        File bsReaderTempFile = new File(bsReaderTemp);
-        if (!bsReaderTempFile.exists()) {
-            Log.d("print", "准备创建/TbsReaderTemp！！");
-            boolean mkdir = bsReaderTempFile.mkdir();
-            if (!mkdir) {
-                Log.d("print", "创建/TbsReaderTemp失败！！！！！");
-            }
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString("filePath", fileName);
-        bundle.putString("tempPath", tbsReaderTemp);
-        boolean result = mTbsReaderView.preOpen(getFileType(fileName), false);
-        Log.d("print", "查看文档---" + result);
-        if (result) {
-            mTbsReaderView.openFile(bundle);
-        }
-    }
-
-    private String getFileType(String paramString) {
-        String str = "";
-
-        if (TextUtils.isEmpty(paramString)) {
-            Log.d("print", "paramString---->null");
-            return str;
-        }
-        Log.d("print", "paramString:" + paramString);
-        int i = paramString.lastIndexOf('.');
-        if (i <= -1) {
-            Log.d("print", "i <= -1");
-            return str;
-        }
-
-        str = paramString.substring(i + 1);
-        Log.d("print", "paramString.substring(i + 1)------>" + str);
-        return str;
-    }
-
-
-    private void init2() {
+    private void init() {
         mWebView = new X5WebView(this, null);
         mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -253,8 +166,6 @@ public class UserTermActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mTbsReaderView != null)
-                mTbsReaderView.onStop();
             if (mWebView != null && mWebView.canGoBack()) {
                 mWebView.goBack();
                 return true;
@@ -266,8 +177,6 @@ public class UserTermActivity extends BaseActivity {
 
     @Override
     public void onDestroy() {
-        if (mTbsReaderView != null)
-            mTbsReaderView.onStop();
         if (mWebView != null)
             mWebView.destroy();
         super.onDestroy();

@@ -130,7 +130,7 @@ public class FormalCardAdapter extends CommonAdapter {
     private void signStar(StudentEntity entity) {
         //20.标星/取消标星学员
         HttpManager.getInstance().doSignStar("FormalCardAdapter", entity.getStuId(),
-                UserManager.getInstance().userData.getOrgIds(),
+                UserManager.getInstance().getOrgId(),
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {

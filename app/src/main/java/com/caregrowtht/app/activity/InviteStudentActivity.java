@@ -13,6 +13,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgEntity;
+import com.caregrowtht.app.uitil.FilePickerUtils;
 import com.caregrowtht.app.uitil.ImgLabelUtils;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.RecoDialog;
@@ -106,7 +107,7 @@ public class InviteStudentActivity extends BaseActivity {
                     UMImage pImg = new UMImage(this, new File(retentImg));
                     pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, view1 -> {//type:1邀请孩子分享二维码
-                        ImgLabelUtils.delFile(retentImg);//删除
+                        FilePickerUtils.getInstance().deleteSingleFile(retentImg);//删除
                     }).share(SHARE_MEDIA.WEIXIN);
                 } else {
                     U.showToast("分享失败!");
@@ -118,7 +119,7 @@ public class InviteStudentActivity extends BaseActivity {
                     UMImage pImg = new UMImage(this, new File(retentImg));
                     pImg.setThumb(pImg);// 设置缩略图
                     new RecoDialog(this, pImg, new File(retentImg), view1 -> {
-                        ImgLabelUtils.delFile(retentImg);//删除
+                        FilePickerUtils.getInstance().deleteSingleFile(retentImg);//删除
                     }).shareMessage();
                 } else {
                     U.showToast("分享失败!");

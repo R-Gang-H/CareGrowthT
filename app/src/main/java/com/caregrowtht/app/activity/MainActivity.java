@@ -67,7 +67,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //动态权限申请
         requestPermission(
                 Constant.REQUEST_CODE_WRITE,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 getString(R.string.rationale_file),
                 new PermissionCallBackM() {
                     @Override

@@ -199,6 +199,16 @@
             android:textSize="28sp"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/ll_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_num"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:orientation="horizontal" />
+
     </RelativeLayout>
 
     <RelativeLayout

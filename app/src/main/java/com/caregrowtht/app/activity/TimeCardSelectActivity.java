@@ -1,7 +1,6 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.TimeCardsAdapter;
-import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -131,7 +131,7 @@ public class TimeCardSelectActivity extends BaseActivity implements ViewOnItemCl
                     CourseEntity courseEntity = mCourseModels.get(j);
                     String count = mCount.get(j);
                     if (courseEntity != null) {
-                        if (!TextUtils.isEmpty(count)) {
+                        if (!TextUtils.isEmpty(count) || courseEntity.getCardType().equals("3")) {// 是年卡
                             mCourseCards.add(courseEntity);
                             CourseEntity course = new CourseEntity();
                             course.setCourseCount(count);

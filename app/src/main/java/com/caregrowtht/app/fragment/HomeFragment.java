@@ -109,6 +109,9 @@ public class HomeFragment extends BaseFragment {
                             }
                             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
                         }
+                    } else {
+                        // 获取离开主页时保存的OrgId ture 动态进入 , false 机构课表进入
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, instance.getOrgEntity() == null));
                     }
                 }
 

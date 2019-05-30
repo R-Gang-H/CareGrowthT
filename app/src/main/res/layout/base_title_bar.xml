@@ -31,13 +31,14 @@
                     android:id="@+id/iv_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_back" />
+                    android:background="@mipmap/ic_back"
+                    android:contentDescription="@string/todo" />
 
                 <com.android.library.view.CircleImageView
                     android:id="@+id/iv_title_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_size_15" />
+                    android:layout_marginStart="@dimen/margin_size_15" />
 
             </RelativeLayout>
 
@@ -45,10 +46,10 @@
                 android:id="@+id/rl_next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:visibility="gone">
 
                 <ImageView
@@ -56,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:contentDescription="@string/todo"
                     android:visibility="visible" />
 
                 <TextView
@@ -72,12 +74,12 @@
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="标题"
+                android:text="@string/string_title"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18" />
         </RelativeLayout>

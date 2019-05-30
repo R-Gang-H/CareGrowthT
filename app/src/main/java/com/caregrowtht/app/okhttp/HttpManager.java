@@ -51,13 +51,12 @@ public class HttpManager {
      * @param pwd
      * @param callBack
      */
-    public void doLoginRequest(String tag, String phone, String pwd, HttpCallBack callBack) {
+    public void doLoginRequest(String tag, String phone, String pwd, String clientVersion, HttpCallBack callBack) {
         final HashMap<String, String> map = new HashMap<>();
-        map.put("versionId ", "1.1");//新版本传1.1
         map.put("mobile", phone);
         map.put("pwd", pwd);
         map.put("deviceType", "2");// 1:iOS 2:Android
-        map.put("clientVersion ", "1.1.9");// 版本号
+        map.put("clientVersion", clientVersion);// 版本号
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.LOGINPWD, map, callBack);
     }
 
@@ -70,12 +69,12 @@ public class HttpManager {
      * @param token
      * @param callBack
      */
-    public void doAutoLogin(String tag, String uid, String token, HttpCallBack callBack) {
+    public void doAutoLogin(String tag, String uid, String token, String clientVersion, HttpCallBack callBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("uid", uid);
         map.put("token", token);
         map.put("deviceType", "2");// 1:iOS 2:Android
-        map.put("clientVersion ", "1.1.9");// 版本号
+        map.put("clientVersion", clientVersion);// 版本号
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.AUTO_LOGIN, map, callBack);
     }
 
@@ -1331,8 +1330,8 @@ public class HttpManager {
      * @param httpCallBack
      */
     public void doEditOrg(String tag, String orgId, String orgName, String orgShortName, String orgChainName, String orgImg,
-                          String pname, String cname, String dname, String address, String telephone, String orgPhone,
-                          HttpCallBack httpCallBack) {
+                          String pname, String cname, String dname, String address, String telephone, String orgPhone, String scale,
+                          String coupon, String recommend_mobile, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("orgId", orgId);
         map.put("orgName", orgName);
@@ -1345,6 +1344,9 @@ public class HttpManager {
         map.put("address", address);
         map.put("telephone", telephone);
         map.put("orgPhone", orgPhone);
+        map.put("scale", scale);
+        map.put("coupon", coupon);
+        map.put("recommend_mobile", recommend_mobile);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.EDITORG, new HashMap<>(), map, httpCallBack);
     }
 
@@ -1718,13 +1720,14 @@ public class HttpManager {
      * @param isTimeEdit   0： 时间，排课规则,没有改动 1：时间改变或排课规则改变了
      * @param planId
      * @param editLessonId
+     * @param ifEditStu    默认为2, 1未修改，2已修改
      * @param httpCallBack
      */
     public void doEditALesV2(String tag, String check, String orgId, String isOrder, String courseName,
                              String courseTime, String repeat, String repeatCount, boolean isShowOfTime, String repeatEver,
                              String mainTeacher, String subTeachers, String students, String classroomId,
                              String minCount, String maxCount, String tryPrice, String cards, String classifyId,
-                             String isTimeEdit, String planId, String editLessonId, HttpCallBack httpCallBack) {
+                             String isTimeEdit, String planId, String editLessonId, String ifEditStu, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("check", check);
         map.put("orgId", orgId);
@@ -1753,6 +1756,7 @@ public class HttpManager {
         map.put("isTimeEdit", isTimeEdit);
         map.put("planId", planId);
         map.put("editLessonId  ", editLessonId);
+        map.put("ifEditStu  ", ifEditStu);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.EDITALES_V2, new HashMap<>(), map, httpCallBack);
     }
 
@@ -1778,7 +1782,7 @@ public class HttpManager {
      * @param courseId
      * @param count
      * @param price
-     * @param type
+     * @param type         1 关联 2取消关联
      * @param httpCallBack
      */
     public void doEditCardLesson(String tag, String orgCardId, String orgId, String courseId,
@@ -1983,6 +1987,150 @@ public class HttpManager {
         map.put("circleId", circleId);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.DELCIRCLE, map, httpCallBack);
     }
+
+    /**
+     * @param tag
+     * @param orgVersion   2 基础版 3：是高级版
+     * @param httpCallBack
+     */
+    public void doGetProducts(String tag, String orgVersion, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgVersion", orgVersion);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETPRODUCTS, map, httpCallBack);
+    }
+
+    /**
+     * 根据产品id获取有哪些期限
+     *
+     * @param tag
+     * @param pid          产品id
+     * @param httpCallBack
+     */
+    public void doGetPriceList(String tag, String pid, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("pid", pid);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETPRICELIST, map, httpCallBack);
+    }
+
+    /**
+     * 根据期限id返回对应的价格
+     *
+     * @param tag
+     * @param id
+     * @param httpCallBack
+     */
+    public void doGetOneProductDetail(String tag, String id, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETONEPRODUCTDETAIL, map, httpCallBack);
+    }
+
+    /**
+     * 获取支付宝订单信息
+     *
+     * @param tag
+     * @param orgId
+     * @param subject
+     * @param total_amount
+     * @param end_at
+     * @param version
+     * @param stu_num_allowed
+     * @param httpCallBack
+     */
+    public void doGetOrderInfo(String tag, String orgId, String subject, String total_amount, String end_at,
+                               String version, String stu_num_allowed, String total_day, String facePrice,
+                               HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("uid", UserManager.getInstance().userData.getUid());
+        map.put("orgId", orgId);
+        map.put("subject", subject);
+        map.put("total_amount", total_amount);
+        map.put("end_at", end_at);
+        map.put("newVersion", version);
+        map.put("stu_num_allowed", stu_num_allowed);
+        map.put("total_day", total_day);
+        map.put("facePrice", facePrice);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETOTHERINFO, new HashMap<>(), map, httpCallBack);
+    }
+
+    /**
+     * 折扣后的价钱
+     *
+     * @param tag
+     * @param orgId
+     * @param httpCallBack
+     */
+    public void doGetOrgLeftPrice(String tag, String orgId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETORGLEFTPRICE, map, httpCallBack);
+    }
+
+    /**
+     * 校验签名
+     *
+     * @param tag
+     * @param orgId
+     * @param order_number
+     * @param httpCallBack
+     */
+    public void doAndUpdateOrder(String tag, String orgId, String order_number, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("order_number", order_number);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.ANDUPDATEORDER, map, httpCallBack);
+    }
+
+    /**
+     * 85.获取机构 未发布课程反馈的课程列表
+     * 86.获取机构 需要处理出勤的课程列表
+     * 87.获取机构 有学员请假的课程列表
+     *
+     * @param tag
+     * @param orgId
+     * @param isMy
+     * @param beginAt
+     * @param endAt
+     * @param status       1,  2,
+     * @param page
+     * @param Url
+     * @param httpCallBack
+     */
+    public void doGetUnpublished(String tag, String orgId, String isMy, String beginAt, String endAt,
+                                 String status, String page, String Url, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("isMy", isMy);
+        map.put("beginAt", beginAt);
+        map.put("endAt", endAt);
+        map.put("status", status);
+        map.put("page", page);
+        map.put("pageSize", "10");
+        OkHttpUtils.getOkHttpJsonRequest(tag, Url, map, httpCallBack);
+    }
+
+    /**
+     * 88.获取机构 日报列表
+     *
+     * @param tag
+     * @param orgId
+     * @param beginAt
+     * @param endAt
+     * @param page
+     * @param httpCallBack
+     */
+    public void doGetDaily(String tag, String orgId, String beginAt, String endAt,
+                           String page, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("beginAt", beginAt);
+        map.put("endAt", endAt);
+        map.put("page", page);
+        map.put("pageSize", "10");
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETDAILY, map, httpCallBack);
+    }
+
+
 }
 
 

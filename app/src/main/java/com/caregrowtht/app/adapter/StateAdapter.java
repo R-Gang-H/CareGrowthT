@@ -4,14 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
@@ -21,13 +26,17 @@ import com.caregrowtht.app.activity.CourserActivity;
 import com.caregrowtht.app.activity.CourserCardMsgActivity;
 import com.caregrowtht.app.activity.CourserCoverActivity;
 import com.caregrowtht.app.activity.CourserFeedbackActivity;
+import com.caregrowtht.app.activity.CreateOrgHintActivity;
 import com.caregrowtht.app.activity.FormalActivity;
 import com.caregrowtht.app.activity.InitDataActivity;
 import com.caregrowtht.app.activity.NewWorkActivity;
 import com.caregrowtht.app.activity.NoClassStuActivity;
 import com.caregrowtht.app.activity.NotifityInfoActivity;
 import com.caregrowtht.app.activity.NotifyObjActivity;
+import com.caregrowtht.app.activity.StatisReportActivity;
+import com.caregrowtht.app.activity.StuLevaeActivity;
 import com.caregrowtht.app.activity.StuOrderActivity;
+import com.caregrowtht.app.activity.UserTermActivity;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgNotifyEntity;
@@ -52,8 +61,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
@@ -126,6 +133,69 @@ public class StateAdapter extends XrecyclerAdapter {
     @BindView(R.id.ll_work_daily)
     LinearLayout llWorkDaily;
 
+
+    @BindView(R.id.rl_read_aicz)
+    RelativeLayout rlReadAicz;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.tv_text)
+    TextView tvText;
+
+
+    @BindView(R.id.rl_add_aicz)
+    RelativeLayout rlAddAicz;
+    @BindView(R.id.tv_add_time)
+    TextView tvAddTime;
+    @BindView(R.id.iv_add_status)
+    TextView ivAddStatus;
+    @BindView(R.id.btn_add_org)
+    Button btnAddOrg;
+    @BindView(R.id.btn_create_org)
+    Button btnCreateOrg;
+
+
+    @BindView(R.id.rl_sign_levae)
+    RelativeLayout rlSignLevae;
+    @BindView(R.id.iv_sign_leave_type)
+    ImageView ivSignLeaveType;
+    @BindView(R.id.tv_sign_leave_title)
+    TextView tvSignLeaveTitle;
+    @BindView(R.id.iv_sign_leave_status)
+    TextView ivSignLeaveStatus;
+    @BindView(R.id.tv_org_name)
+    TextView tvOrgName;
+    @BindView(R.id.tv_sign_leave_content)
+    TextView tvSignLeaveContent;
+    @BindView(R.id.rl_sign)
+    RelativeLayout rlSign;
+    @BindView(R.id.iv_levae_author_avatar)
+    AvatarImageView ivLevaeAuthorAvatar;
+    @BindView(R.id.tv_leave_author_name)
+    TextView tvLevaeAuthorName;
+    @BindView(R.id.tv_stu_detail)
+    TextView tvStuDetail;
+    @BindView(R.id.tv_in_time)
+    TextView tvInTime;
+    @BindView(R.id.cl_rb)
+    RelativeLayout clRb;
+    @BindView(R.id.tv_day_xk_monery)
+    TextView tvDayXkMonery;
+    @BindView(R.id.tv_day_xz_monery)
+    TextView tvDayXzMonery;
+    @BindView(R.id.tv_day_tf_monery)
+    TextView tvDayTfMonery;
+    @BindView(R.id.tv_month_xk_monery)
+    TextView tvMonthXkMonery;
+    @BindView(R.id.tv_month_xz_monery)
+    TextView tvMonthXzMonery;
+    @BindView(R.id.tv_month_tf_monery)
+    TextView tvMonthTfMonery;
+    @BindView(R.id.v_line_1)
+    View Vline1;
+    @BindView(R.id.tv_sign_leave_time)
+    TextView tvSignLeaveTime;
+
+
     public StateAdapter(List datas, Context context) {
         super(datas, context);
         this.mContext = context;
@@ -136,25 +206,44 @@ public class StateAdapter extends XrecyclerAdapter {
     @Override
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
         MessageEntity msgEntity = messageAllList.get(position);
-        // 1：课程代办 2：课程反馈 3：机构待办 4：机构通知 5：系统通知 6：每日工作日报
+        // 1：课程代办 2：课程反馈 3：机构待办 4：机构通知 5：系统通知 6：每日工作日报 7：创始人看懂爱成长 8：欢迎加入爱成长
+        // 9：有学员请假汇总动态 10：签到提醒汇总动态 11：每日日报汇总动态 12：未发布课程反馈提醒汇总动态
         switch (msgEntity.getType()) {
             case "1":// 1：课程代办
                 ivType.setImageResource(R.mipmap.ic_type_course);
+                setVisibilitys(true, false, false, false);
                 break;
             case "2":// 2：课程反馈
                 ivType.setImageResource(R.mipmap.ic_type_feedback);
+                setVisibilitys(true, false, false, false);
                 break;
             case "3":// 3：机构待办
                 ivType.setImageResource(R.mipmap.ic_type_org);
+                setVisibilitys(true, false, false, false);
                 break;
             case "4"://4：机构通知
                 ivType.setImageResource(R.mipmap.ic_type_noti);
+                setVisibilitys(true, false, false, false);
                 break;
             case "5":// 5：系统通知
                 ivType.setImageResource(R.mipmap.ic_type_noti);
+                setVisibilitys(true, false, false, false);
                 break;
             case "6":// 6：每日工作日报
                 ivType.setImageResource(R.mipmap.ic_work_daily);
+                setVisibilitys(true, false, false, false);
+                break;
+            case "7":// 7：创始人看懂爱成长
+                setVisibilitys(false, true, false, false);
+                break;
+            case "8":// 8：欢迎加入爱成长
+                setVisibilitys(false, false, true, false);
+                break;
+            case "9":// 9：有学员请假汇总动态
+            case "10":// 10：签到提醒汇总动态
+            case "11":// 11：每日日报汇总动态
+            case "12":// 12：未发布课程反馈提醒汇总动态
+                setVisibilitys(false, false, false, true);
                 break;
         }
         ivStatus.setVisibility(View.GONE);
@@ -165,6 +254,7 @@ public class StateAdapter extends XrecyclerAdapter {
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
+        UserManager instance = UserManager.getInstance();
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
             tvTitle.setVisibility(View.VISIBLE);
             llWorkDaily.setVisibility(View.VISIBLE);
@@ -173,7 +263,6 @@ public class StateAdapter extends XrecyclerAdapter {
             tvTime.setText(String.format("%s\t%s", data, week));
             tvTitleContent.setText(msgEntity.getOrgName());
             try {
-                UserManager instance = UserManager.getInstance();
                 JSONObject jsonObject = new JSONObject(msgEntity.getContent());
                 String courseCount = instance.getJsonString(jsonObject, "dpTodayCourseCount");
                 String courseHour = instance.getJsonString(jsonObject, "dpTodayCourseHourMinutes");
@@ -228,6 +317,106 @@ public class StateAdapter extends XrecyclerAdapter {
             } catch (JSONException e) {
                 LogUtils.e("StateAdapter", e.getMessage());
             }
+        } else if (msgEntity.getType().equals("7") || msgEntity.getType().equals("8")) {
+            if (msgEntity.getType2().equals("74")) {// 来自创始人的信
+                ivIcon.setImageResource(R.mipmap.icon_originator);
+                tvText.setText("来自创始人的信");
+            } else if (msgEntity.getType2().equals("75")) {// 一分钟看懂爱成长
+                ivIcon.setImageResource(R.mipmap.icon_state);
+                tvText.setText("3分钟快速了解爱成长");
+            }
+            tvAddTime.setText(DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm"));
+            // 1待处理 2已处理 3不需要处理
+            switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
+                case "1"://1：待处理
+                    ivAddStatus.setText("待处理");
+                    ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_pending));
+                    break;
+                case "2"://2：已完成(已处理)
+                    ivAddStatus.setText("已完成");
+                    ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_complet));
+                    break;
+            }
+        } else if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10")
+                || msgEntity.getType().equals("11") || msgEntity.getType().equals("12")) {
+            tvOrgName.setText(msgEntity.getOrgName());
+            long courseStartAt = Long.valueOf(msgEntity.getCourseStartAt());
+            String Month = TimeUtils.getDateToString(courseStartAt, "MM月dd日");
+            String data = DateUtil.getDate(courseStartAt, "yyyy年MM月dd日");
+            String week = TimeUtils.getWeekByDateStr(data);//获取周几
+            String time = TimeUtils.getDateToString(courseStartAt, "HH:mm");
+            String teacherName = msgEntity.getTeacherName();
+            String courseName = msgEntity.getCourseName();
+            tvSignLeaveContent.setText(String.format("%s\t\t%s\t\t%s\n%s\t\t%s",
+                    Month, week, time, teacherName, courseName));
+            ivSignLeaveStatus.setVisibility(msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
+            tvSignLeaveTime.setText(String.format("%s\t\t%s", DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm")
+                    , msgEntity.getRead().equals("0") ? "更新" : ""));
+            if (msgEntity.getType().equals("9")) {// 9：有学员请假汇总动态
+                tvSignLeaveTitle.setText("学员请假");
+                rlSign.setVisibility(View.VISIBLE);
+                tvStuDetail.setVisibility(View.GONE);
+                clRb.setVisibility(View.GONE);
+                ivLevaeAuthorAvatar.setTextAndColor(TextUtils.isEmpty(msgEntity.getShowName()) ? ""
+                        : msgEntity.getShowName().substring(0, 1), mContext.getResources().getColor(R.color.b0b2b6));
+                GlideUtils.setGlideImg(mContext, msgEntity.getShowHeadImage(), 0, ivLevaeAuthorAvatar);
+                tvLevaeAuthorName.setText(msgEntity.getShowName());
+            } else if (msgEntity.getType().equals("10")) {// 10：签到提醒汇总动态
+                tvSignLeaveTitle.setText("签到提醒");
+                ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
+                ivSignLeaveStatus.setText("待处理");
+                rlSign.setVisibility(View.GONE);
+                tvStuDetail.setVisibility(View.VISIBLE);
+                clRb.setVisibility(View.GONE);
+                try {
+                    JSONObject jsonObject = new JSONObject(msgEntity.getContent());
+                    String childNum = instance.getJsonString(jsonObject, "childNum");
+                    String sign = instance.getJsonString(jsonObject, "sign");
+                    String leav = instance.getJsonString(jsonObject, "leav");
+                    String noTake = instance.getJsonString(jsonObject, "noTake");
+                    tvStuDetail.setText(String.format("学员\t%s人\t\t|\t\t签到\t%s人\t\t|\t\t请假\t%s人\t\t|\t\t待处理\t%s人",
+                            childNum, sign, leav, noTake));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (msgEntity.getType().equals("12")) {// 12：未发布课程反馈提醒汇总动态
+                tvSignLeaveTitle.setText("未发布课程反馈提醒");
+                ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
+                ivSignLeaveStatus.setText("待处理");
+                rlSign.setVisibility(View.GONE);
+                tvStuDetail.setVisibility(View.GONE);
+                clRb.setVisibility(View.GONE);
+            } else {// 11：每日日报汇总动态
+                ivSignLeaveType.setImageResource(R.mipmap.ic_type_feedback);
+                tvSignLeaveTitle.setText("每日日报");
+                tvSignLeaveContent.setVisibility(View.GONE);
+                rlSign.setVisibility(View.GONE);
+                tvStuDetail.setVisibility(View.GONE);
+                Vline1.setVisibility(View.GONE);
+                tvSignLeaveTime.setVisibility(View.GONE);
+                long updateTime = Long.valueOf(msgEntity.getUpdateTime());
+                String rbMonth = TimeUtils.getDateToString(updateTime, "MM月dd日");
+                String rbData = DateUtil.getDate(updateTime, "yyyy年MM月dd日");
+                String rbWeek = TimeUtils.getWeekByDateStr(rbData);//获取周几
+                tvInTime.setText(String.format("%s\t%s", rbMonth, rbWeek));
+                try {
+                    JSONObject jsonObject = new JSONObject(msgEntity.getContent());
+                    String todayIncome = instance.getJsonString(jsonObject, "dpTodayCourseIncome");
+                    tvDayXkMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(todayIncome) / 100)));
+                    String todayCardIncome = instance.getJsonString(jsonObject, "dpTodayCourseCardIncome");
+                    tvDayXzMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(todayCardIncome) / 100)));
+                    String todayRefund = instance.getJsonString(jsonObject, "dpTodayRefund");
+                    tvDayTfMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(todayRefund) / 100)));
+                    String monthIncome = instance.getJsonString(jsonObject, "dpMonthCourseIncome");
+                    tvMonthXkMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(monthIncome) / 100)));
+                    String monthCardIncome = instance.getJsonString(jsonObject, "dpMonthCourseCardIncome");
+                    tvMonthXzMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(monthCardIncome) / 100)));
+                    String monthRefund = instance.getJsonString(jsonObject, "dpMonthRefund");
+                    tvMonthTfMonery.setText(String.format("%s元", String.valueOf(Float.parseFloat(monthRefund) / 100)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
             tvTime.setText(DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm"));
             switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
@@ -276,7 +465,7 @@ public class StateAdapter extends XrecyclerAdapter {
             String orgContent;
             String sentNotice = "请点击查看详情";
             if (isCircle) {// 课程反馈
-                orgContent = "教师" + msgEntity.getCircleAuthor() + "为" +
+                orgContent = msgEntity.getOrgName() + "\n教师" + msgEntity.getCircleAuthor() + "为" +
                         DateUtil.getDate(Long.parseLong(msgEntity.getCircleCourseBeginTime()), "MM月dd日 HH:mm") + "~"
                         + DateUtil.getDate(Long.parseLong(msgEntity.getCircleCourseEndTime()), "HH:mm") + "的\"" +
                         msgEntity.getCircleCourseName() + "\"发布了一条课程反馈";
@@ -322,8 +511,8 @@ public class StateAdapter extends XrecyclerAdapter {
             ivCircle.setVisibility(bannerSize > 0 ? View.VISIBLE : View.GONE);
             String circleAccessory = msgEntity.getCircleAccessory();
             tvAtter.setVisibility(TextUtils.isEmpty(circleAccessory) ? View.GONE : View.VISIBLE);
-//        tvAtter.setText(circleAccessory);
         }
+//        tvAtter.setText(circleAccessory);
         clItem.setOnClickListener(v -> {
             if (msgEntity.getType().equals("6")) {
                 return;
@@ -465,7 +654,40 @@ public class StateAdapter extends XrecyclerAdapter {
                 }
             }
         });
+        rlReadAicz.setOnClickListener(v -> {
+            if (msgEntity.getType2().equals("74")) {// 来自创始人的信
+                mContext.startActivity(new Intent(mContext, UserTermActivity.class)
+                        .setData(Uri.parse(msgEntity.getContent()))
+                        .putExtra("openType", "4") // 来自创始人的信
+                );
+            } else if (msgEntity.getType2().equals("75")) {// 一分钟看懂爱成长
+                mContext.startActivity(new Intent(mContext, UserTermActivity.class)
+                        .setData(Uri.parse(msgEntity.getContent()))
+                        .putExtra("openType", "5") // 3分钟快速了解爱成长
+                );
+            }
+        });
+        btnAddOrg.setOnClickListener(v -> {
+            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ADD_ORG));
+        });
+        btnCreateOrg.setOnClickListener(v -> {
+            mContext.startActivity(new Intent(mContext, CreateOrgHintActivity.class));
+        });
+        rlSignLevae.setOnClickListener(v -> {
+            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+                startActivity(msgEntity, StuLevaeActivity.class);
+            } else if (msgEntity.getType().equals("11")) {
+                startActivity(msgEntity, StatisReportActivity.class);
+            }
+        });
 
+    }
+
+    private void setVisibilitys(boolean isItem, boolean isRead, boolean isAdd, boolean isSignLevae) {
+        clItem.setVisibility(isItem ? View.VISIBLE : View.GONE);
+        rlReadAicz.setVisibility(isRead ? View.VISIBLE : View.GONE);
+        rlAddAicz.setVisibility(isAdd ? View.VISIBLE : View.GONE);
+        rlSignLevae.setVisibility(isSignLevae ? View.VISIBLE : View.GONE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

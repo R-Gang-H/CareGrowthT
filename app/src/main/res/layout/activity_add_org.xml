@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@mipmap/ic_small_btn_normal"
+        android:background="@drawable/selector_small_btn_click"
         android:gravity="center"
         android:text="已加入该机构"
         android:textColor="@color/white"

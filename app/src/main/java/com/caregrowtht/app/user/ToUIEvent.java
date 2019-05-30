@@ -32,6 +32,8 @@ public class ToUIEvent {
     public static final int REFERSH_SHARE_CARDS = 23;//为学员添加共用课时卡
     public static final int REFERSH_WORK_COUNT = 24;//刷新 排课/班级 全选的值
     public static final int REFERSH_TEACHER_HOME = 25;//刷新 教师主页
+    public static final int REFERSH_ADD_ORG = 26;//刷新 加入机构
+    public static final int SET_SCREEN_LES = 27;//设置课程筛选条件
 
     private int what;
     private Object obj;

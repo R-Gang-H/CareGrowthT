@@ -8,7 +8,6 @@
     android:fillViewport="true"
     android:scrollbars="none"
     tools:context="com.caregrowtht.app.activity.SchoolWorkActivity">
-    <!--android:background="@mipmap/ic_homepage_bg"-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

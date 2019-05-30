@@ -233,7 +233,7 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
 
         mListCard.clear();
         mListCard.addAll(data.getCourseCards());
-        mCardsAdapter.update(mListCard, null);
+        mCardsAdapter.update(mListCard);
     }
 
     @OnClick({R.id.rl_back_button, R.id.tv_title_right, R.id.rl_star, R.id.iv_add})
@@ -267,7 +267,7 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
     private void signStar(StudentEntity entity) {
         //20.标星/取消标星学员
         HttpManager.getInstance().doSignStar("StudentDetailsActivity", entity.getStuId(),
-                UserManager.getInstance().userData.getOrgIds(),
+                UserManager.getInstance().getOrgId(),
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {

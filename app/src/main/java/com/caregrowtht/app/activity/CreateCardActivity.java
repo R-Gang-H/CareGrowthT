@@ -123,6 +123,8 @@ public class CreateCardActivity extends BaseActivity {
     private List<CourseEntity> mCourses = new ArrayList<>();
     //选中课程的消课次数
     private List<CourseEntity> mCount = new ArrayList<>();
+    // 机构所有排课/班级
+    private List<CourseEntity> courseDatas = new ArrayList<>();
 
     private String cardPrice;
     private String realityPrice;
@@ -532,7 +534,9 @@ public class CreateCardActivity extends BaseActivity {
                 "", new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
-                        clWorkClass.setVisibility(data.getData().size() > 0 ? View.VISIBLE : View.GONE);
+                        courseDatas.clear();
+                        courseDatas.addAll(data.getData());
+                        clWorkClass.setVisibility(courseDatas.size() > 0 ? View.VISIBLE : View.GONE);
                     }
 
                     @Override
@@ -670,20 +674,23 @@ public class CreateCardActivity extends BaseActivity {
         }
         String realityCount = StrUtils.getReplaceTrim(etReality.getText().toString());
 
+        cardType = cardsEntity.getCardType();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("orgCardId", cardsEntity.getOrgCardId());
         map.put("price", price);
         map.put("validMonth", validMonth);
         map.put("cardName", etCardName.getText().toString());
         map.put("orgId", orgId);
-        if (TextUtils.equals(cardsEntity.getCardType(), "1")
-                || TextUtils.equals(cardsEntity.getCardType(), "4")) {
+        if (TextUtils.equals(cardType, "1")
+                || TextUtils.equals(cardType, "4")) {
             map.put("count", realityCount);
         }
-        if (TextUtils.equals(cardsEntity.getCardType(), "2")) {
+        if (TextUtils.equals(cardType, "2")) {
             realityCount = String.valueOf((Integer.valueOf(realityCount) * 100));
             map.put("realityPrice", realityCount);
         }
+        map.put("cardType", cardType);
         map.put("course", courses);
         HttpManager.getInstance().doBuyNewCard("CreateCardActivity", map, new HttpCallBack<CourseEntity>() {
             @Override
@@ -732,16 +739,16 @@ public class CreateCardActivity extends BaseActivity {
                             boolean isAddCour = false;
                             NewCardEntity newCardEntity = new NewCardEntity();
                             newCardEntity.setCourseId(mCourseModels.get(i).getId());
+                            String courseId = mCourseModels.get(i).getCourseId();
                             if (TextUtils.equals(cardsEntity.getCardType(), "1")) {
                                 String singleTimes = mCourseModels.get(i).getSingleTimes();
-                                if (!TextUtils.isEmpty(singleTimes) && Double.valueOf(singleTimes) > 0) {
+                                if (!TextUtils.isEmpty(singleTimes) && !TextUtils.isEmpty(courseId)) { // && Double.valueOf(singleTimes) > 0
                                     courseCount = singleTimes;
                                     newCardEntity.setCount(courseCount);
                                     newCardEntity.setPrice("");
                                     isAddCour = true;
                                 }
                             } else if (TextUtils.equals(cardsEntity.getCardType(), "3")) {//年卡
-                                String courseId = mCourseModels.get(i).getCourseId();
                                 if (!TextUtils.isEmpty(courseId)) {//课时卡id有值是年卡
                                     newCardEntity.setCount("");
                                     newCardEntity.setPrice(courseCount);
@@ -749,7 +756,7 @@ public class CreateCardActivity extends BaseActivity {
                                 }
                             } else {
                                 String singleMoney = mCourseModels.get(i).getSingleMoney();
-                                if (!TextUtils.isEmpty(singleMoney) && Double.valueOf(singleMoney) > 0) {
+                                if (!TextUtils.isEmpty(singleMoney) && !TextUtils.isEmpty(courseId)) {// && Double.valueOf(singleMoney) > 0
                                     courseCount = String.valueOf((Double.valueOf(singleMoney) / 100));
                                     newCardEntity.setCount("");
                                     newCardEntity.setPrice(courseCount);

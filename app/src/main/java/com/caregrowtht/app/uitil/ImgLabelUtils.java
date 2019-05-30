@@ -272,20 +272,6 @@ public class ImgLabelUtils {
     }
 
     /**
-     * 删除文件
-     *
-     * @param filePath
-     */
-    public static void delFile(String filePath) {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            File root = new File(filePath);
-            final File[] files = root.listFiles();
-            files[0].delete();
-        }
-    }
-
-    /**
      * 截图
      *
      * @param pActivity

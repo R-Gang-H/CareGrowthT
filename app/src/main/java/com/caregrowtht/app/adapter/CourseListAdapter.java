@@ -60,7 +60,7 @@ public class CourseListAdapter extends XrecyclerAdapter {
         if (!TextUtils.isEmpty(entity.getOperateType())) {
             tvTime.setText(String.format("%s-%s",
                     DateUtil.getDate(Long.valueOf(entity.getStart_at()), "yyyy-MM-dd HH:mm"),
-                    DateUtil.getDate(Long.valueOf(entity.getEnd_at()), "HH-mm")));
+                    DateUtil.getDate(Long.valueOf(entity.getEnd_at()), "HH:mm")));
             tvCourseName.setVisibility(View.VISIBLE);
             tvCourseName.setText(entity.getLessonName());
             tvSign.setVisibility(View.VISIBLE);

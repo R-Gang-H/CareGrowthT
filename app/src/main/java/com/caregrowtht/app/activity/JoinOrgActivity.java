@@ -4,9 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,32 +63,9 @@ public class JoinOrgActivity extends BaseActivity {
                 break;
             case R.id.iv_avatar_create:
             case R.id.btn_create_org://创建新机构
-                showPromptOrgDialog();
+                startActivity(new Intent(this, CreateOrgHintActivity.class));
                 break;
         }
-    }
-
-    /**
-     * 提示
-     */
-    private void showPromptOrgDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(JoinOrgActivity.this, R.style.CustomDialog);
-        final AlertDialog dialog = builder.create();
-        View view = View.inflate(JoinOrgActivity.this, R.layout.dialog_prompt_org, null);
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText("重要提示");
-        TextView tv_ok = view.findViewById(R.id.tv_ok);
-        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
-        tv_ok.setOnClickListener(v -> {
-            startActivity(new Intent(JoinOrgActivity.this, CreateOrgActivity.class));
-            dialog.dismiss();
-        });
-        tv_cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-        dialog.setCancelable(false);
-        dialog.setView(view);
-        dialog.show();
     }
 
     //获取CAMERA权限 haoruigang on 2018-4-9 17:07:32

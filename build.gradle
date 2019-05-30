@@ -2,14 +2,16 @@
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.0.0'
+        //GrowingIO 无埋点 SDK
+        classpath 'com.growingio.android:vds-gradle-plugin:autotrack-2.7.5'
     }
 }
 
@@ -20,6 +22,7 @@ ext {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         flatDir {
             dirs 'libs'
@@ -28,7 +31,6 @@ allprojects {
             url 'https://jitpack.io'
             credentials { username "jp_suemrfakjjr7b7r5t1mbmfe9iv" }
         }
-        google()
     }
 }
 

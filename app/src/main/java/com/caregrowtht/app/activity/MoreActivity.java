@@ -3,7 +3,6 @@ package com.caregrowtht.app.activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -36,12 +36,11 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
 
     ArrayList<NotifyCardEntity> moreCards = new ArrayList<>();
     //更多管理的类型 1：机构信息 2：教师管理 3：课程管理 4：课时卡管理 5：教室管理 6：课时卡VS排课 7：通知管理
-    private String[] moreType = new String[]{"1", "2", "3", "4", "5", "6"};
     private int[] moreImage = new int[]{R.mipmap.ic_org_info, R.mipmap.ic_teacher_msg,
             R.mipmap.ic_course_msg, R.mipmap.ic_course_time_msg, R.mipmap.ic_class_msg,
-            R.mipmap.ic_course_vs};
+            R.mipmap.ic_course_vs, R.mipmap.ic_my_aicz};
     private String[] moreName = new String[]{"机构信息", "教师管理", "课程管理", "课时卡管理",
-            "教室管理", "课时卡VS排课"};
+            "教室管理", "课时卡VS排课", "我的爱成长"};
     //更多管理的类型 1：机构信息 2：教师管理 3：课程管理 4：课时卡管理 5：教室管理 6：课时卡VS排课 7：通知管理
 
     private String[] moreFunct = new String[]{
@@ -86,8 +85,8 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
         final int spacing = getResources().getDimensionPixelOffset(R.dimen.margin_size_20);
         initRecyclerGrid(rvMore, 3);
         moreCards.clear();
-        for (int i = 0; i < moreType.length; i++) {
-            moreCards.add(new NotifyCardEntity(moreType[i], moreImage[i], moreName[i]));
+        for (int i = 0; i < moreImage.length; i++) {
+            moreCards.add(new NotifyCardEntity(moreImage[i], moreName[i]));
         }
         rvMore.setAdapter(new NotifyCardAdapter(moreCards, this, this));
         rvMore.addItemDecoration(new ItemOffsetDecoration(spacing));
@@ -96,7 +95,7 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
     @Override
     public void setOnItemClickListener(View view, int postion) {
         //更多管理的类型 1：机构信息 2：教师管理 3：课程管理 4：课时卡管理 5：教室管理 6：课时卡VS排课 7：通知管理
-        switch (moreType[postion]) {
+        switch (String.valueOf(postion + 1)) {
             case "1":
                 //机构信息
                 startActivity(new Intent(this, OrgInfoActivity.class));
@@ -121,10 +120,11 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
                 // 课时卡VS排课
                 startActivity(new Intent(this, CourseVsActivity.class));
                 break;
-//            case "7":
-//                // 机构通知管理
-//                startActivity(new Intent(this, OrgNotifyActivity.class));
-//                break;
+            case "7":
+//                // 我的爱成长（续费）
+                startActivity(new Intent(this, BuyActivity.class)
+                        .putExtra("renew", true));
+                break;
             default:
                 //活动
                 startActivity(new Intent(this, ActionActivity.class).putExtra(

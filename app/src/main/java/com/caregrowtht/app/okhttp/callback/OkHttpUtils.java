@@ -46,7 +46,7 @@ public class OkHttpUtils {
     public static void getOkHttpJsonRequest(String tag, String url, Map<String, String> encodeMap, HttpCallBack callBack) {
         JSONObject jsonObj = new JSONObject(encodeMap);
         String jsonParams = jsonObj.toString();
-        Log.d(tag, "请求:" + url + "    加密前的参数：" + jsonParams);
+        LogUtils.d(tag, "请求:" + url + "    加密前的参数：" + jsonParams);
 
         if (encodeMap != null) {
             if (!url.contains("/code") && !url.contains("/login") && !url.contains("/autoLogin") && !url.contains("/reg")) {
@@ -54,7 +54,7 @@ public class OkHttpUtils {
                 encodeMap.put("uid", UserManager.getInstance().userData.getUid());
                 encodeMap.put("token", token);
             }
-            encodeMap.put("version", "3");
+            encodeMap.put("version", "5");
             encodeMap.put("deviceId", Build.SERIAL);
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
@@ -66,7 +66,9 @@ public class OkHttpUtils {
                 RSAUtils.loadPublicKey(Constant.PUBLIC_KEY);
                 // 加密
                 String encryptByte = RSAUtils.encryptWithRSA(U.transMap2String(encodeMap));
-                Logger.d("加密：" + encryptByte);
+                if (Constant.isTest) {
+                    Logger.d("加密：" + encryptByte);
+                }
                 HashMap<String, String> params = new HashMap<>();
                 params.put("params", encryptByte);  // 加密的参数串
                 com.lzy.okhttputils.OkHttpUtils.post(url)
@@ -93,7 +95,7 @@ public class OkHttpUtils {
     public static void getOkHttpJsonRequest(String tag, String url, Map<String, String> encodeMap, Map<String, String> map, HttpCallBack callBack) {
         JSONObject jsonObj = new JSONObject(encodeMap);
         String jsonParams = jsonObj.toString();
-        Log.d(tag, "请求:" + url + "    不加密的参数：" + jsonParams);
+        LogUtils.d(tag, "请求:" + url + "    不加密的参数：" + jsonParams);
 
         if (map != null && encodeMap != null) {
             String token = U.MD5(UserManager.getInstance().userData.getToken() + "_" + Constant.API_KEY);
@@ -101,21 +103,22 @@ public class OkHttpUtils {
                 encodeMap.put("uid", UserManager.getInstance().userData.getUid());
                 encodeMap.put("token", token);
             }
-            encodeMap.put("version", "3");
+            encodeMap.put("version", "5");
             encodeMap.put("deviceId", Build.SERIAL);
             encodeMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
             encodeMap.put("appKey", U.MD5(Constant.API_KEY));
             encodeMap.put("registerType", "2");   // registerType 是账号类型 1：家长端  2：教师端
-            Logger.d("参数----" + U.transMap2String(encodeMap));
+            LogUtils.d(tag, "参数----" + U.transMap2String(encodeMap));
             // RSA
             try {
                 // 从字符串中得到公钥
                 RSAUtils.loadPublicKey(Constant.PUBLIC_KEY);
                 // 加密
                 String encryptByte = RSAUtils.encryptWithRSA(U.transMap2String(encodeMap));
-
-                Logger.d("不加密：" + U.transMap2String(map));
-                Logger.d("加密：" + encryptByte);
+                if (Constant.isTest) {
+                    Logger.d("不加密：" + U.transMap2String(map));
+                    Logger.d("加密：" + encryptByte);
+                }
                 HashMap<String, String> params = new HashMap<>();
                 params.put("params", encryptByte);  // 加密的参数串
                 params.putAll(map);   // 不加密的参数
@@ -132,7 +135,6 @@ public class OkHttpUtils {
         }
     }
 
-
     /**
      * 下载文件
      *
@@ -144,67 +146,6 @@ public class OkHttpUtils {
         return RxDownload.INSTANCE.create(url, true)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(download::onSuccess);
-    }
-
-    public static void setProgress(Status status) {
-        int Max = (int) status.getTotalSize();
-        int Progresss = (int) status.getDownloadSize();
-        String showText = status.percent();
-        String sizeText = status.formatString();
-    }
-
-    public static String setActionText(Status status) {
-        String text = "";
-        if (status instanceof Normal) {
-            text = "开始";
-        } else if (status instanceof Suspend) {
-            text = "已暂停";
-        } else if (status instanceof Waiting) {
-            text = "等待中";
-        } else if (status instanceof Downloading) {
-            text = "暂停";
-        } else if (status instanceof Failed) {
-            text = "失败";
-        } else if (status instanceof Succeed) {
-            text = "安装";
-        } else if (status instanceof ApkInstallExtension.Installing) {
-            text = "安装中";
-        } else if (status instanceof ApkInstallExtension.Installed) {
-            text = "打开";
-        }
-        return text;
-    }
-
-    public static void dispatchClick(Status currentStatus, String url) {
-        if (currentStatus instanceof Normal) {
-            start(url);
-        } else if (currentStatus instanceof Suspend) {
-            start(url);
-        } else if (currentStatus instanceof Failed) {
-            start(url);
-        } else if (currentStatus instanceof Downloading) {
-            stop(url);
-        } else if (currentStatus instanceof Succeed) {
-            install(url);
-        } else if (currentStatus instanceof ApkInstallExtension.Installed) {
-            open();
-        }
-    }
-
-    private static void start(String url) {
-        RxDownload.INSTANCE.start(url).subscribe();
-    }
-
-    private static void install(String url) {
-        RxDownload.INSTANCE.extension(url, ApkInstallExtension.class).subscribe();
-    }
-
-    private static void stop(String url) {
-        RxDownload.INSTANCE.stop(url).subscribe();
-    }
-
-    private static void open() {
-        //TODO: open app
     }
 
     public interface Download {

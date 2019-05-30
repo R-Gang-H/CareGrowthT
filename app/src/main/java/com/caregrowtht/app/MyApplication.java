@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.bulong.rudeness.RudenessScreenHelper;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.lzy.okgo.OkGo;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -117,5 +119,10 @@ public class MyApplication extends com.android.library.MyApplication {
                 .debug(true, "okHttp")
                 .timeout(20 * 1000);
         OkGo.getInstance().init(this);
+
+        GrowingIO.startWithConfiguration(this, new Configuration()
+                .trackAllFragments()
+                .setChannel("XXX应用商店")
+        );
     }
 }

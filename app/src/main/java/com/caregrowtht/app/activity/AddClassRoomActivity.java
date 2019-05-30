@@ -76,7 +76,6 @@ public class AddClassRoomActivity extends BaseActivity {
                 roomId, roomName, new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
-                        U.showToast("成功");
                         setResult(RESULT_OK);
                         finish();
                     }

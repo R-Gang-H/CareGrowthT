@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -24,6 +22,8 @@ import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -35,7 +35,6 @@ public class AddStuActivity extends BaseActivity implements ViewOnItemClick {
 
     ArrayList<NotifyCardEntity> addTypeCards = new ArrayList<>();
 
-    private String[] addType = new String[]{"1", "2"};//学员添加的类型 1：邀请学员 2：添加学员
     private int[] addImage = new int[]{R.mipmap.ic_invite, R.mipmap.ic_add_stu};
     private String[] addName = new String[]{"邀请学员", "添加学员"};//学员添加的类型 1：邀请学员 2：添加学员
 
@@ -76,8 +75,8 @@ public class AddStuActivity extends BaseActivity implements ViewOnItemClick {
         final int spacing = getResources().getDimensionPixelOffset(R.dimen.margin_size_60);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         addTypeCards.clear();
-        for (int i = 0; i < addType.length; i++) {
-            addTypeCards.add(new NotifyCardEntity(addType[i], addImage[i], addName[i]));
+        for (int i = 0; i < addImage.length; i++) {
+            addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
         recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
@@ -96,7 +95,7 @@ public class AddStuActivity extends BaseActivity implements ViewOnItemClick {
     public void setOnItemClickListener(View view, int postion) {
         // 学员添加的类型 1：邀请学员 2：添加学员
         Bundle bundle = new Bundle();
-        bundle.putString("addType", addType[postion]);
+        bundle.putString("addType", String.valueOf(postion + 1));
         if (postion == 0) {
             startActivity(new Intent(this, InviteStuRegActivity.class)
                     .putExtras(bundle));

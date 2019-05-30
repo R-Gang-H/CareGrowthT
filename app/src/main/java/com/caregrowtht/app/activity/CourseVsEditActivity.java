@@ -88,15 +88,16 @@ public class CourseVsEditActivity extends BaseActivity {
                 : Color.parseColor(courseEntity.getColor()));
         tvCourseType.setText(courseEntity.getCourseName());
         if (!TextUtils.isEmpty(number)) {
-            if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {
-                etNumber.setText(String.format("%s",
-                        TextUtils.equals(number, "0") ?
-                                "" : number));
-            } else {
-                etNumber.setText(String.format("%s",
-                        String.valueOf(TextUtils.equals(number, "0") ?
-                                "" : Integer.parseInt(number))));
-            }
+//            if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {
+//                etNumber.setText(String.format("%s",
+//                        TextUtils.equals(number, "0") ?
+//                                "" : number));
+//            } else {
+//                etNumber.setText(String.format("%s",
+//                        String.valueOf(TextUtils.equals(number, "0") ?
+//                                "" : Integer.parseInt(number))));
+//            }
+            etNumber.setText(number);
         }
 
         tvSelectCourse.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -138,11 +139,14 @@ public class CourseVsEditActivity extends BaseActivity {
                     if (TextUtils.equals(courseCardEntity.getCardType(), "3")) {
                         editCardLesson(number);
                     } else {
-                        // 如果填入数据与缓存数据相同返回
-                        if (!TextUtils.isEmpty(number) && Double.parseDouble(number) > 0) {
-                            // 编辑结束之后
-                            editCardLesson(number);
+                        if (TextUtils.isEmpty(number)) {
+                            type = "2";// 2：取消关联
                         }
+                        // 如果填入数据与缓存数据相同返回
+//                        if (!TextUtils.isEmpty(number)) {// && Double.parseDouble(number) > 0
+                        // 编辑结束之后
+                        editCardLesson(number);
+//                        }
                     }
                 }
                 supportFinishAfterTransition();

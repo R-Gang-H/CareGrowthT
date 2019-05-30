@@ -1,314 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_size_10"
-    android:layout_marginTop="@dimen/margin_size_10"
     android:layout_marginRight="@dimen/margin_size_10"
-    android:background="@drawable/shape_shadow_bg"
-    android:paddingBottom="@dimen/margin_size_12">
-
-    <ImageView
-        android:id="@+id/iv_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_12"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:scaleType="center"
-        android:src="@mipmap/ic_type_course"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_10"
-        android:layout_marginTop="@dimen/margin_size_13"
-        android:text="每日工作汇报"
-        android:textColor="@color/col_t9"
-        android:textSize="@dimen/text_size_14"
-        android:visibility="gone"
-        app:layout_constraintLeft_toRightOf="@id/iv_type"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_5"
-        android:layout_marginTop="@dimen/margin_size_15"
-        android:text="7月4日  17:50"
-        android:textColor="@color/color_6"
-        android:textSize="@dimen/text_size_12"
-        app:layout_constraintLeft_toRightOf="@id/tv_title"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/iv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_size_3"
-        android:background="@mipmap/ic_pending"
-        android:gravity="center"
-        android:text="待处理"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_13"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_title_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_8"
-        android:ellipsize="end"
-        android:lineSpacingExtra="9dp"
-        android:maxLines="4"
-        android:paddingLeft="@dimen/margin_size_12"
-        android:paddingRight="@dimen/margin_size_12"
-        android:text="瀚瀚提交了学员课后反馈,课程2018年7月4日18:04:58的课程“少儿英语一班”,鼓励一下吧!"
-        android:textColor="@color/color_3"
-        android:textSize="@dimen/text_size_15"
-        app:layout_constraintTop_toBottomOf="@id/iv_type" />
-
-    <TextView
-        android:id="@+id/tv_title_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/margin_size_12"
-        android:paddingTop="@dimen/margin_size_6"
-        android:paddingRight="@dimen/margin_size_12"
-        android:textColor="@color/color_3"
-        android:textSize="@dimen/text_size_15"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+    android:background="@drawable/shape_shadow_bg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_message"
+        android:id="@+id/cl_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_end">
+        android:paddingBottom="@dimen/margin_size_12">
 
-        <TextView
-            android:id="@+id/tv_likes"
+        <ImageView
+            android:id="@+id/iv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_size_11"
-            android:layout_marginTop="@dimen/margin_size_14"
-            android:drawableLeft="@mipmap/ic_follow_no1"
-            android:drawablePadding="@dimen/margin_size_7"
-            android:text="56"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15"
+            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:scaleType="center"
+            android:src="@mipmap/ic_type_course"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_size_13"
-            android:layout_marginTop="@dimen/margin_size_14"
-            android:drawableLeft="@mipmap/ic_comm_num"
-            android:drawablePadding="@dimen/margin_size_7"
-            android:text="12"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_13"
+            android:text="每日工作汇报"
+            android:textColor="@color/col_t9"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@id/iv_type"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:text="7月4日  17:50"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_12"
+            app:layout_constraintLeft_toRightOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/iv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size_3"
+            android:background="@mipmap/ic_pending"
+            android:gravity="center"
+            android:text="待处理"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_13"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="4"
+            android:paddingLeft="@dimen/margin_size_12"
+            android:paddingRight="@dimen/margin_size_12"
+            android:text="瀚瀚提交了学员课后反馈,课程2018年7月4日18:04:58的课程“少儿英语一班”,鼓励一下吧!"
             android:textColor="@color/color_3"
             android:textSize="@dimen/text_size_15"
-            app:layout_constraintLeft_toRightOf="@id/tv_likes"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/iv_type" />
+
+        <TextView
+            android:id="@+id/tv_title_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_size_12"
+            android:paddingTop="@dimen/margin_size_6"
+            android:paddingRight="@dimen/margin_size_12"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_end">
+
+            <TextView
+                android:id="@+id/tv_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_11"
+                android:layout_marginTop="@dimen/margin_size_14"
+                android:drawableLeft="@mipmap/ic_follow_no1"
+                android:drawablePadding="@dimen/margin_size_7"
+                android:text="56"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_13"
+                android:layout_marginTop="@dimen/margin_size_14"
+                android:drawableLeft="@mipmap/ic_comm_num"
+                android:drawablePadding="@dimen/margin_size_7"
+                android:text="12"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintLeft_toRightOf="@id/tv_likes"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/cl_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_11"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:layout_marginRight="@dimen/margin_size_11"
+            android:background="@drawable/shape_state_handler_bg"
+            android:paddingBottom="@dimen/margin_size_8"
+            app:layout_constraintTop_toBottomOf="@id/cl_message">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingExtra="9dp"
+                android:maxLines="3"
+                android:paddingLeft="@dimen/margin_size_12"
+                android:paddingTop="@dimen/margin_size_8"
+                android:paddingRight="@dimen/margin_size_12"
+                android:paddingBottom="@dimen/margin_size_8"
+                android:text="瀚瀚提交了学员课后反馈,课程2018年7月4日18:04:58的课程“少儿英语一班”,鼓励一下吧!"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_atter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginLeft="@dimen/margin_size_10"
+                android:drawableLeft="@mipmap/ic_atter"
+                android:drawablePadding="@dimen/margin_size_5"
+                android:gravity="center"
+                android:text="内含附件"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_14" />
+
+            <com.caregrowtht.app.view.ninegrid.RatioImageView
+                android:id="@+id/iv_circle"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_below="@id/tv_atter"
+                android:layout_marginLeft="@dimen/margin_size_13"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:background="@mipmap/ic_media_default"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/iv_author_avatar"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_below="@id/iv_circle"
+                android:layout_marginLeft="@dimen/margin_size_12"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:src="@mipmap/ic_per_avatar_default" />
+
+            <TextView
+                android:id="@+id/tv_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_circle"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:layout_toEndOf="@id/iv_author_avatar"
+                android:layout_toRightOf="@id/iv_author_avatar"
+                android:text="姓名"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_handlerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:layout_marginRight="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_handler_bg"
+            android:gravity="left"
+            android:padding="@dimen/margin_size_10"
+            android:text="郝瑞刚  7月4日  18:19  完成"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_11"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_event" />
+
+        <LinearLayout
+            android:id="@+id/ll_work_daily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin_size_12"
+            android:paddingEnd="@dimen/margin_size_12"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_content">
+
+            <TextView
+                android:id="@+id/tv_course_count_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="机构排课情况:4节/5小时"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_today_course_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="今日消课收入:2000元"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_today_add_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="今日新增收入:0元"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_today_add_stu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="今日新增学员:0人"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_today_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="今日退费:0元"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_month_course_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="本月消课收入:5000元"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_month_add_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="本月新增收入:3000元"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_month_add_stu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="本月新增学员:2人"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_month_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="本月退费:0元"
+                android:textSize="@dimen/text_size_16" />
+
+            <LinearLayout
+                android:id="@+id/ll_teacher_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_stu_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="学员出勤情况:预计出勤学员8人、实际签到 5人、请假1人、未处理 3人"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
-        android:id="@+id/cl_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_11"
-        android:layout_marginTop="@dimen/margin_size_8"
-        android:layout_marginRight="@dimen/margin_size_11"
-        android:background="@drawable/shape_state_handler_bg"
-        android:paddingBottom="@dimen/margin_size_8"
-        app:layout_constraintTop_toBottomOf="@id/cl_message">
+    <include
+        layout="@layout/item_sign_leave"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lineSpacingExtra="9dp"
-            android:maxLines="3"
-            android:paddingLeft="@dimen/margin_size_12"
-            android:paddingTop="@dimen/margin_size_8"
-            android:paddingRight="@dimen/margin_size_12"
-            android:paddingBottom="@dimen/margin_size_8"
-            android:text="瀚瀚提交了学员课后反馈,课程2018年7月4日18:04:58的课程“少儿英语一班”,鼓励一下吧!"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_13" />
+    <include
+        layout="@layout/item_read_aicz"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tv_atter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
-            android:layout_marginLeft="@dimen/margin_size_10"
-            android:drawableLeft="@mipmap/ic_atter"
-            android:drawablePadding="@dimen/margin_size_5"
-            android:gravity="center"
-            android:text="内含附件"
-            android:textColor="@color/blueLight"
-            android:textSize="@dimen/text_size_14" />
+    <include
+        layout="@layout/item_add_aicz"
+        android:visibility="gone" />
 
-        <com.caregrowtht.app.view.ninegrid.RatioImageView
-            android:id="@+id/iv_circle"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_below="@id/tv_atter"
-            android:layout_marginLeft="@dimen/margin_size_13"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:background="@mipmap/ic_media_default"
-            android:scaleType="centerCrop"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-        <cn.carbs.android.avatarimageview.library.AvatarImageView
-            android:id="@+id/iv_author_avatar"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_below="@id/iv_circle"
-            android:layout_marginLeft="@dimen/margin_size_12"
-            android:layout_marginTop="@dimen/margin_size_10"
-            android:src="@mipmap/ic_per_avatar_default" />
-
-        <TextView
-            android:id="@+id/tv_author_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_circle"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:layout_toEndOf="@id/iv_author_avatar"
-            android:layout_toRightOf="@id/iv_author_avatar"
-            android:text="姓名"
-            android:textColor="@color/gray2"
-            android:textSize="@dimen/text_size_14" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_handlerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_12"
-        android:layout_marginTop="@dimen/margin_size_8"
-        android:layout_marginRight="@dimen/margin_size_12"
-        android:background="@drawable/shape_state_handler_bg"
-        android:gravity="left"
-        android:padding="@dimen/margin_size_10"
-        android:text="郝瑞刚  7月4日  18:19  完成"
-        android:textColor="@color/color_6"
-        android:textSize="@dimen/text_size_11"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_event" />
-
-    <LinearLayout
-        android:id="@+id/ll_work_daily"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/margin_size_12"
-        android:paddingEnd="@dimen/margin_size_12"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_content">
-
-        <TextView
-            android:id="@+id/tv_course_count_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="机构排课情况:4节/5小时"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_today_course_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="今日消课收入:2000元"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_today_add_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="今日新增收入:0元"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_today_add_stu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="今日新增学员:0人"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_today_refund"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="今日退费:0元"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_month_course_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="本月消课收入:5000元"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_month_add_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="本月新增收入:3000元"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_month_add_stu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="本月新增学员:2人"
-            android:textSize="@dimen/text_size_16" />
-
-        <TextView
-            android:id="@+id/tv_month_refund"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_5"
-            android:text="本月退费:0元"
-            android:textSize="@dimen/text_size_16" />
-
-        <LinearLayout
-            android:id="@+id/ll_teacher_work"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:orientation="vertical" />
-
-        <TextView
-            android:id="@+id/tv_stu_work"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="学员出勤情况:预计出勤学员8人、实际签到 5人、请假1人、未处理 3人"
-            android:textSize="@dimen/text_size_16" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

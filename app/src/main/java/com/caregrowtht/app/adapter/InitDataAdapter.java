@@ -1,10 +1,14 @@
 package com.caregrowtht.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.AddBacthActivity;
+import com.caregrowtht.app.activity.InitDataActivity;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
@@ -25,6 +29,11 @@ public class InitDataAdapter extends XrecyclerAdapter {
     TextView tvAddTeacher;
     @BindView(R.id.tv_status)
     TextView tvStatus;
+    @BindView(R.id.btn_add_single)
+    Button btnAddSingle;
+    @BindView(R.id.btn_add_batch)
+    Button btnAddBatch;
+
     private int[] initRes = {};
     private String[] initName = {};
     private List<String> initSize = new ArrayList<>();
@@ -39,8 +48,14 @@ public class InitDataAdapter extends XrecyclerAdapter {
         tvAddTeacher.setText(initName[position]);
         if (Integer.valueOf(initSize.get(position)) > 0) {
             tvStatus.setText("已有数据");
-            tvStatus.setBackgroundResource(R.mipmap.ic_pending);
+            tvStatus.setBackgroundResource(R.mipmap.ic_init_status_true);
         }
+        btnAddSingle.setClickable(false);
+        btnAddBatch.setOnClickListener(v -> {
+            mContext.startActivity(new Intent(mContext, AddBacthActivity.class)
+                    .putExtra("type", position));
+            ((InitDataActivity) mContext).overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
+        });
     }
 
     public void setData(int[] initRes, String[] initName, List<String> initSize) {
@@ -60,4 +75,5 @@ public class InitDataAdapter extends XrecyclerAdapter {
     public int getLayoutResId() {
         return R.layout.item_init_data;
     }
+
 }

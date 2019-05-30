@@ -147,7 +147,7 @@ public class MyFollowActivity extends BaseActivity implements ViewOnItemClick {
         LogUtils.d("OrgFragment", position + ":" + orgList.get(position - 1).getOrgId());
         Intent intent = new Intent(this, UserTermActivity.class);
         intent.setData(Uri.parse(BASE_ORG_URL + orgList.get(position - 1).getOrgId()));
-        intent.putExtra("openType", "3");// 用户协议
+        intent.putExtra("openType", "3");// 机构主页
         startActivity(intent);
     }
 

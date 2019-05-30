@@ -168,6 +168,18 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String card_file;
     private String is_remark;
 
+    private String shareImg;
+    private String shareName;
+
+    private String courseBeginAt;
+    private String courseEndAt;
+    private String teacherName;
+    private String stuCount;
+    private String signCount;
+    private String leaveCount;
+    private String waitCount;
+    private String type;// 1.今天 2.7天内 3.7天之前
+
     public boolean isFront() {
         return isFront;
     }
@@ -1254,6 +1266,22 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.is_remark = is_remark;
     }
 
+    public String getShareImg() {
+        return shareImg;
+    }
+
+    public void setShareImg(String shareImg) {
+        this.shareImg = shareImg;
+    }
+
+    public String getShareName() {
+        return shareName;
+    }
+
+    public void setShareName(String shareName) {
+        this.shareName = shareName;
+    }
+
     public class Handle implements Serializable {
         private String handleName;
         private String handleType;
@@ -1282,5 +1310,69 @@ public class CourseEntity<M, A, S> implements Serializable {
         public void setHandleTime(String handleTime) {
             this.handleTime = handleTime;
         }
+    }
+
+    public String getCourseBeginAt() {
+        return courseBeginAt;
+    }
+
+    public void setCourseBeginAt(String courseBeginAt) {
+        this.courseBeginAt = courseBeginAt;
+    }
+
+    public String getCourseEndAt() {
+        return courseEndAt;
+    }
+
+    public void setCourseEndAt(String courseEndAt) {
+        this.courseEndAt = courseEndAt;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getStuCount() {
+        return stuCount;
+    }
+
+    public void setStuCount(String stuCount) {
+        this.stuCount = stuCount;
+    }
+
+    public String getSignCount() {
+        return signCount;
+    }
+
+    public void setSignCount(String signCount) {
+        this.signCount = signCount;
+    }
+
+    public String getLeaveCount() {
+        return leaveCount;
+    }
+
+    public void setLeaveCount(String leaveCount) {
+        this.leaveCount = leaveCount;
+    }
+
+    public String getWaitCount() {
+        return waitCount;
+    }
+
+    public void setWaitCount(String waitCount) {
+        this.waitCount = waitCount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

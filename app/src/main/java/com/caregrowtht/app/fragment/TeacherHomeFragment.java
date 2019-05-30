@@ -1,6 +1,7 @@
 package com.caregrowtht.app.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,10 +11,13 @@ import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.BuyActivity;
 import com.caregrowtht.app.activity.FormalActivity;
+import com.caregrowtht.app.activity.MainActivity;
 import com.caregrowtht.app.activity.MoreActivity;
 import com.caregrowtht.app.activity.NewWorkActivity;
 import com.caregrowtht.app.activity.OrgInfoActivity;
@@ -26,6 +30,7 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.StrUtils;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,6 +38,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +62,8 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
 
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_org_status)
+    TextView tvOrgStatus;
     @BindView(R.id.iv_avatar)
     CircleImageView ivAvatar;
     @BindView(R.id.cv_name_bg)
@@ -68,6 +76,8 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
     TextView tvAuditing;
     @BindView(R.id.rl_no_org)
     RelativeLayout rlNoOrg;
+    @BindView(R.id.rl_no_unpaid)
+    RelativeLayout rlNoUnpaid;
     @BindView(R.id.ll_yes_org)
     View llYesOrg;
     @BindView(R.id.tag)
@@ -164,15 +174,36 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                             if (TextUtils.equals(orgEntity.getStatus(), "1")) {//审核状态 1审核通过 2待审核 3审核不通过
                                 rlNoOrg.setVisibility(View.GONE);
                                 tvAuditing.setText(orgEntity.getIdentity());
-                                llYesOrg.setVisibility(View.VISIBLE);
-                                ivAdd.setVisibility(View.VISIBLE);
                                 refreshLayout.setEnableRefresh(true);
+                                String endAt = orgEntity.getEnd_at();
+                                if (StrUtils.isEmpty(endAt) || endAt.equals("0")
+                                        || Long.parseLong(endAt) <
+                                        TimeUtils.getCurTimeLong() / 1000) {// 未购买或未续费,过期
+                                    tvOrgStatus.setVisibility(View.GONE);
+                                    llYesOrg.setVisibility(View.GONE);
+                                    ivAdd.setVisibility(View.GONE);
+                                    rlNoUnpaid.setVisibility(View.VISIBLE);
+                                } else {
+                                    Long moday = DateUtil.getStringToDate(
+                                            TimeUtils.dateTiem(
+                                                    DateUtil.getDate(Long.parseLong(endAt), "yyyy-MM-dd")
+                                                    , -20, "yyyy-MM-dd"), "yyyy-MM-dd");// 20之前的时间戳
+                                    Long day = TimeUtils.getCurTimeLong() / 1000;// 今天的时间戳
+                                    tvOrgStatus.setVisibility(moday < day ? View.VISIBLE : View.GONE);
+                                    tvOrgStatus.setText(String.format("您的爱成长使用过期时间：%s\t\t请您尽快续费"
+                                            , TimeUtils.getDateToString(Long.parseLong(endAt)
+                                                    , "yyyy/MM/dd")));
+                                    llYesOrg.setVisibility(View.VISIBLE);
+                                    ivAdd.setVisibility(View.VISIBLE);
+                                    rlNoUnpaid.setVisibility(View.GONE);
+                                }
                             } else if (TextUtils.equals(orgEntity.getStatus(), "2")) {
                                 rlNoOrg.setVisibility(View.VISIBLE);
                                 tvAuditing.setText("待审核");
                                 tag.setText("等待机构审核通过");
                                 llYesOrg.setVisibility(View.GONE);
                                 ivAdd.setVisibility(View.GONE);
+                                rlNoUnpaid.setVisibility(View.GONE);
                                 refreshLayout.setEnableRefresh(true);
                             } else {
                                 UserManager.getInstance().isNoPass(orgId);
@@ -273,13 +304,18 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
     }
 
 
-    @OnClick({R.id.iv_avatar, R.id.cv_name_bg, R.id.iv_add})
+    @OnClick({R.id.iv_avatar, R.id.cv_name_bg, R.id.tv_org_status, R.id.btn_pay_base, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
             case R.id.cv_name_bg:
                 //机构信息
                 startActivity(new Intent(getActivity(), OrgInfoActivity.class));
+                break;
+            case R.id.tv_org_status:
+            case R.id.btn_pay_base:
+                startActivity(new Intent(getActivity(), BuyActivity.class)
+                        .putExtra("renew", true));
                 break;
             case R.id.iv_add://新建排课
                 if (!UserManager.getInstance().isTrueRole("zy_1")) {
@@ -348,6 +384,9 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                 } else if (type == 2) {
                     radioButtons.get(0).setText("机构课程");//选择的选项内容展示
                 }
+                break;
+            case ToUIEvent.REFERSH_TEACHER_HOME:
+                initData();
                 break;
         }
     }

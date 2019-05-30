@@ -217,7 +217,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_theacher_permis"
             android:layout_marginTop="@dimen/margin_size_10"
-            tools:listitem="@layout/item_screen_son" />
+            tools:listitem="@layout/item_teacher_permis" />
 
         <TextView
             android:id="@+id/tv_more"

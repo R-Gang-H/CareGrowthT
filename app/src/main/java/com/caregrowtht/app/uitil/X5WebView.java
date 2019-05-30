@@ -2,20 +2,26 @@ package com.caregrowtht.app.uitil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.caregrowtht.app.activity.MainActivity;
+import com.caregrowtht.app.user.ToUIEvent;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class X5WebView extends WebView {
 
     private ProgressBar mProgressBar;
+    private Context mContext;
 
     public X5WebView(Context arg0) {
         super(arg0);
@@ -25,6 +31,7 @@ public class X5WebView extends WebView {
     @SuppressLint("SetJavaScriptEnabled")
     public X5WebView(Context context, AttributeSet arg1) {
         super(context, arg1);
+        this.mContext = context;
         this.setWebViewClient(client);
         this.setWebChromeClient(chromeClient);
         initWebViewSettings(context);
@@ -73,7 +80,12 @@ public class X5WebView extends WebView {
          * 防止加载网页时调起系统浏览器
          */
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+            if (url.contains("success")) {// 调查问卷填写成功
+                mContext.startActivity(new Intent(mContext, MainActivity.class));
+                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER_HOME));
+            } else {
+                view.loadUrl(url);
+            }
             return true;
         }
     };
@@ -99,6 +111,7 @@ public class X5WebView extends WebView {
             }
             Log.d("进度 ", i + "");
         }
+
     };
 
 }

@@ -101,7 +101,9 @@ public class StudentCardAdapter extends CommonAdapter {
         if (courseEntity != null) {//学员情况
             if (!TextUtils.isEmpty(lessonId) && !TextUtils.isEmpty(orgId)) {
                 rlStuFront.setOnClickListener(view -> {
-                    getChildLesLog(stuData);
+                    activity.startActivity(new Intent(activity, StudentDetailsActivity.class)
+                            .putExtra("StudentEntity", stuData));
+//                    getChildLesLog(stuData);
                 });
             } else {//家庭共用学员
                 checkCard(viewHolder, position, rlStuFront);

@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_init_data"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_size_6"
-    android:layout_marginRight="@dimen/margin_size_6"
     android:layout_marginTop="@dimen/margin_size_5"
-    android:background="@mipmap/ic_init_data_bg">
+    android:layout_marginRight="@dimen/margin_size_6"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_size_5"
+        android:layout_marginEnd="@dimen/margin_size_6"
+        android:background="@mipmap/ic_init_status_false"
+        android:gravity="center"
+        android:text="无数据"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_13" />
 
     <ImageView
         android:id="@+id/iv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="@dimen/margin_size_10"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_16"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_add_teacher" />
 
@@ -21,23 +34,42 @@
         android:id="@+id/tv_add_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/margin_size_80"
-        android:layout_marginTop="@dimen/margin_size_15"
+        android:layout_marginStart="@dimen/margin_size_8"
+        android:layout_marginTop="@dimen/margin_size_12"
+        android:layout_toEndOf="@id/iv_type"
         android:text="添加教师"
         android:textColor="@color/color_6"
-        android:textSize="@dimen/text_size_22" />
+        android:textSize="@dimen/text_size_18" />
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/margin_size_3"
-        android:background="@mipmap/ic_complet"
+    <Button
+        android:id="@+id/btn_add_single"
+        android:layout_width="99dp"
+        android:layout_height="29dp"
+        android:layout_below="@id/tv_add_teacher"
+        android:layout_marginTop="@dimen/margin_size_25"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:layout_toStartOf="@id/btn_add_batch"
+        android:background="@mipmap/all_bg_unselect"
         android:gravity="center"
-        android:text="无数据"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_13" />
+        android:text="单个添加"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
+    <Button
+        android:id="@+id/btn_add_batch"
+        android:layout_width="99dp"
+        android:layout_height="29dp"
+        android:layout_below="@id/tv_add_teacher"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/margin_size_25"
+        android:layout_marginEnd="@dimen/margin_size_15"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:background="@mipmap/all_bg_unselect"
+        android:gravity="center"
+        android:text="批量添加"
+        android:textColor="@color/color_6"
+        android:textSize="@dimen/text_size_15" />
+
 
 </RelativeLayout>

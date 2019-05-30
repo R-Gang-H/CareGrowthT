@@ -55,6 +55,8 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import androidx.appcompat.app.AlertDialog;
 import butterknife.Setter;
@@ -217,7 +219,7 @@ public class UserManager {
     public void autoLogin(final Activity context, String uid, String token) {
         if (uid != null && token != null) {
             HttpManager.getInstance().doAutoLogin(context.getClass().getName(),
-                    uid, token, new HttpCallBack<BaseDataModel<UserEntity>>() {
+                    uid, token, U.getVersionName(), new HttpCallBack<BaseDataModel<UserEntity>>() {
 
                         @Override
                         public void onSuccess(BaseDataModel<UserEntity> data) {
@@ -676,9 +678,11 @@ public class UserManager {
         if (roleDatas != null && roleDatas.size() > 0) {//解决空指针异常
             for (RoleEntity entity : roleDatas) {
                 boolean isExc = false;// 默认不存在权限中
-                for (RoleEntity entity1 : roleEntityList) {
+                for (int i = 0; i < roleEntityList.size(); i++) {
+                    RoleEntity entity1 = roleEntityList.get(i);
                     if (entity.getPowerId().equals(entity1.getPowerId())) {// 已存在列表中
                         isExc = true;
+                        roleEntityList.set(i, entity);
                         break;
                     }
                 }
@@ -693,9 +697,11 @@ public class UserManager {
     public List<OrgEntity> getOrgEntityList(OrgEntity orgEntity) {
         boolean isExc = false;// 默认不存在机构中
         if (orgEntity != null) {//解决空指针异常
-            for (OrgEntity entity : orgEntityList) {
+            for (int i = 0; i < orgEntityList.size(); i++) {
+                OrgEntity entity = orgEntityList.get(i);
                 if (entity.getOrgId().equals(orgEntity.getOrgId())) {// 已存在列表中
                     isExc = true;
+                    orgEntityList.set(i, orgEntity);
                 }
             }
             if (!isExc) {
@@ -714,5 +720,21 @@ public class UserManager {
 
     public List<CourseEntity> getCardStuList() {
         return cardStuList;
+    }
+
+    /**
+     * 根据 年月日 时间戳 去重
+     *
+     * @param orderList
+     * @return
+     * @author haoruigang
+     */
+    public ArrayList<String> removeDuplicateOrder(List<String> orderList) {
+        Set<String> set = new TreeSet<>((a, b) -> {
+            // 字符串则按照asicc码升序排列
+            return a.split(" ")[0].compareTo(b.split(" ")[0]);
+        });
+        set.addAll(orderList);
+        return new ArrayList<>(set);
     }
 }

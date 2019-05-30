@@ -1,57 +1,76 @@
 package com.caregrowtht.app.adapter;
 
-import android.app.Activity;
+import android.content.Context;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.library.view.MyGridView;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.user.MultipleItem;
-import com.caregrowtht.app.model.StudentEntity;
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
+import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
+import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * Created by haoruigang on 2018/5/4 14:35.
  * 筛选条件适配器
  */
 
-public class ScreenAdapter extends BaseMultiItemQuickAdapter<MultipleItem, BaseViewHolder> {
+public class ScreenAdapter extends XrecyclerAdapter {
 
-    private Activity activity;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
 
-    private StudentEntity studentList;
+    // 用来控制CheckBox的选中状况
+    private HashMap<Integer, Boolean> isSelected = new HashMap<>();
 
-    public ScreenAdapter(Activity mActivity, List<MultipleItem> data, StudentEntity studentList) {
-        super(data);
-        this.activity = mActivity;
-        this.studentList = studentList;
-        addItemType(MultipleItem.TYPE_ORIGIN, R.layout.item_screen);
-        addItemType(MultipleItem.TYPE_STATUS, R.layout.item_screen);
+    public ScreenAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
+        super(datas, context, onItemClick1);
+        // 初始化数据
+        initDate();
+        notifyDataSetChanged();
+    }
+
+    // 初始化isSelected的数据
+    private void initDate() {
+        if (datas.size() > 0) {
+            for (int i = 0; i < datas.size(); i++) {
+                getIsSelected().put(i, false);
+            }
+        }
+    }
+
+
+    @Override
+    public void convert(XrecyclerViewHolder holder, int position, Context context) {
+        tvTime.setText(datas.get(position).toString());
+        // 根据isSelected来设置checkbox的选中状况
+        tvTime.setSelected(getIsSelected().get(position));
+    }
+
+
+    public void getSelect(int position) {
+        if (datas.size() > 0) {
+            for (int i = 0; i < datas.size(); i++) {
+                if (i == position) {
+                    getIsSelected().put(i, true);// 同时修改map的值保存状态
+                } else {
+                    getIsSelected().put(i, false);// 同时修改map的值保存状态
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    public HashMap<Integer, Boolean> getIsSelected() {
+        return isSelected;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MultipleItem item) {
-        if (studentList == null || studentList.getOriginList().size() == 0 || studentList.getStatusList().size() == 0) {
-            return;
-        }
-        TextView tvTitle = helper.getView(R.id.tv_title_name);
-        MyGridView myGridView = helper.getView(R.id.gv_tch);
-        switch (helper.getItemViewType()) {
-            case MultipleItem.TYPE_ORIGIN:
-                tvTitle.setText("来源");
-                myGridView.setAdapter(new OriginAdapter(activity, R.layout.item_screen_son, studentList.getOriginList()));
-                break;
-            case MultipleItem.TYPE_STATUS:
-                tvTitle.setText("当前状态");
-                myGridView.setAdapter(new StatusAdapter(activity, R.layout.item_screen_son, studentList.getStatusList()));
-                break;
-        }
-    }
-
-    public void setData(StudentEntity studentList) {
-        this.studentList = studentList;
-        notifyDataSetChanged();
+    public int getLayoutResId() {
+        return R.layout.item_time_frame;
     }
 }

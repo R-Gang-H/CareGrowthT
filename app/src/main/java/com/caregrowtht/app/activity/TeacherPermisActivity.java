@@ -1,6 +1,5 @@
 package com.caregrowtht.app.activity;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -69,6 +69,7 @@ public class TeacherPermisActivity extends BaseActivity {
     public void initData() {
         auditEntity = (StudentEntity) getIntent().getSerializableExtra("auditEntity");
         orgId = UserManager.getInstance().getOrgId();
+        permisAdapter.powerId = auditEntity.getPowerId();// 上次选中的教师身份
         getIdentity();
     }
 

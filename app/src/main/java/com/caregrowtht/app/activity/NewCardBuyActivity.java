@@ -89,7 +89,7 @@ public class NewCardBuyActivity extends BaseActivity implements ViewOnItemClick 
                 }
                 mListCard.add(stuDetails.getCourseCards().get(i));
             }
-            mCardsAdapter.update(mListCard, null);
+            mCardsAdapter.update(mListCard);
         } else { // 2：购买新卡 4,5
             getOrgExistCard();//31.获取机构现有的课时卡
         }
@@ -109,7 +109,7 @@ public class NewCardBuyActivity extends BaseActivity implements ViewOnItemClick 
                         mListCard.clear();
                         mListCard.addAll(data.getData());
                         setData();//@TODO 制造测试数据
-                        mCardsAdapter.update(mListCard, null);
+                        mCardsAdapter.update(mListCard);
                     }
 
                     @Override

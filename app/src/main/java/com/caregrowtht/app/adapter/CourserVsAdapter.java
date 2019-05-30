@@ -2,8 +2,6 @@ package com.caregrowtht.app.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.cardview.widget.CardView;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,6 +18,7 @@ import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHold
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 
 /**
@@ -95,7 +94,8 @@ public class CourserVsAdapter extends XrecyclerAdapter {
                 if (TextUtils.equals(courseEntity.getCourseId(), courseVs.getId())) {
                     if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {
                         String singleTimes = courseVs.getSingleTimes();
-                        if (!TextUtils.equals(singleTimes, "0")) {
+//                        if (!TextUtils.equals(singleTimes, "0")) {
+                        if (!TextUtils.isEmpty(singleTimes) && !TextUtils.isEmpty(courseVs.getCourseId())) {
                             return singleTimes;
                         } else {
                             return null;
@@ -108,7 +108,8 @@ public class CourserVsAdapter extends XrecyclerAdapter {
                         }
                     } else {
                         String singleMoney = courseVs.getSingleMoney();
-                        if (!TextUtils.equals(singleMoney, "0")) {
+//                        if (!TextUtils.equals(singleMoney, "0")) {
+                        if (!TextUtils.isEmpty(singleMoney) && !TextUtils.isEmpty(courseVs.getCourseId())) {
                             return String.valueOf(Integer.parseInt(singleMoney) / 100);
                         } else {
                             return null;
@@ -163,6 +164,14 @@ public class CourserVsAdapter extends XrecyclerAdapter {
                 courseEntity = courseVsList.get(i);
                 if (TextUtils.equals(courseCardEntity.getCardType(), "3")) {
                     if (!isSelected) {// 取消关联,课程id为空
+                        courseId = null;
+                    }
+                } else if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {// 次卡
+                    if (TextUtils.isEmpty(count)) {// 次数为空,课程id为空
+                        courseId = null;
+                    }
+                } else {
+                    if (TextUtils.isEmpty(prict)) {// 金额为空,课程id为空
                         courseId = null;
                     }
                 }

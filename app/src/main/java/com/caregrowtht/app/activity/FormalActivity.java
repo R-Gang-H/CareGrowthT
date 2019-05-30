@@ -399,10 +399,10 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
 
             @Override
             public void onFail(int statusCode, String errorMsg) {
-                if (statusCode == 1070) {
-                    UserManager.getInstance().showSuccessDialog(FormalActivity.this
-                            , getString(R.string.version_limit));
-                }
+//                if (statusCode == 1070) {
+//                    UserManager.getInstance().showSuccessDialog(FormalActivity.this
+//                            , getString(R.string.version_limit));
+//                }
             }
 
             @Override

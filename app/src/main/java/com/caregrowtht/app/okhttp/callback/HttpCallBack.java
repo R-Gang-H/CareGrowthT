@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.okhttp.progress.MyProgressDialog;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.google.gson.Gson;
@@ -78,16 +79,17 @@ public abstract class HttpCallBack<T> extends AbsCallback implements IHttpCallBa
     @Override
     public void onSuccess(Object o, Call call, Response response) {
 
-        String data = response.toString();
-        Log.e("lt---", "response" + data);
-
-        Logger.e("接口返回数据 " + o.toString());
-        Logger.json(o.toString());
+        if (Constant.isTest) {
+            String data = response.toString();
+            LogUtils.e("lt---", data);
+            Logger.e("接口返回数据 " + o.toString());
+            Logger.json(o.toString());
+        }
 
         try {
             JSONObject jsonObject = new JSONObject(o.toString());
             statusCode = jsonObject.getInt("status");
-//            data = jsonObject.getString("data");
+            data = jsonObject.getString("data");
             errorMsg = jsonObject.getString("errorMsg");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,6 +99,13 @@ public abstract class HttpCallBack<T> extends AbsCallback implements IHttpCallBa
 
             Type gsonType = getTType(this.getClass());
             if (statusCode == 0 && !TextUtils.isEmpty(o.toString())) {
+                if ("class java.lang.String".equals(gsonType.toString())) {
+                    onSuccess((T) o.toString());
+                } else {
+                    T o1 = new Gson().fromJson(o.toString(), gsonType);
+                    onSuccess(o1);
+                }
+            } else if (!TextUtils.isEmpty(o.toString()) && o.toString().contains("conflict")) {// 排课有冲突
                 if ("class java.lang.String".equals(gsonType.toString())) {
                     onSuccess((T) o.toString());
                 } else {

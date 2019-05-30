@@ -46,7 +46,6 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
 
     ArrayList<NotifyCardEntity> addTypeCards = new ArrayList<>();
 
-    private String[] addType = new String[]{"1", "2", "3"};//学员添加新卡的类型 1：充值缴费 2：购买新卡 3：与家人共用
     private int[] addImage = new int[]{R.mipmap.ic_renew, R.mipmap.ic_newcard, R.mipmap.ic_family_share};
     private String[] addName = new String[]{"充值缴费", "购买新卡", "与家人共用"};//学员添加新卡的类型 1：充值缴费 2：购买新卡 3：与家人共用
 
@@ -81,7 +80,7 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
         recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
         addTypeCards.clear();
         for (int i = 0; i < length; i++) {
-            addTypeCards.add(new NotifyCardEntity(addType[i], addImage[i], addName[i]));
+            addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
         recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
@@ -110,9 +109,9 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         int length;
                         if (data.getData().size() > 0) {// 是否有与家人共用的学员（>0 有）
-                            length = addType.length;// 默认全部显示
+                            length = addImage.length;// 默认全部显示
                         } else {
-                            length = addType.length - 1;// 不显示与家人共用
+                            length = addImage.length - 1;// 不显示与家人共用
                         }
                         setupRecyclerView(length);
                         runLayoutAnimation(recyclerView, R.anim.grid_layout_animation_from_bottom);
@@ -144,7 +143,7 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
             } else {
                 startActivity(new Intent(this, NewCardBuyActivity.class)
                         .putExtra("stuDetails", stuDetails)
-                        .putExtra("addType", addType[postion]));
+                        .putExtra("addType", String.valueOf(postion + 1)));
             }
         } else if (postion == 2) {//3：与家人共用
             startActivity(new Intent(this, FamilyShareActivity.class)

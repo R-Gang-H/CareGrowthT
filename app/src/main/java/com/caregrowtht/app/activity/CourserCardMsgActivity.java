@@ -167,7 +167,7 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         mListCard.clear();
                         mListCard.addAll(data.getData());
-                        mCardsAdapter.update(mListCard, status);
+                        mCardsAdapter.updateStatus(mListCard, status);
                         if (data.getData().size() > 0) {
                             loadView.delayShowContainer(true);
                         } else {

@@ -67,7 +67,7 @@ public class TimeCardNewActivity extends BaseActivity implements ViewOnItemClick
         mListCard.clear();
         setData();//@TODO 制造测试数据
 //        mListCard.addAll(data.getCourseCards());
-        mCardsAdapter.update(mListCard, null);
+        mCardsAdapter.update(mListCard);
 
     }
 

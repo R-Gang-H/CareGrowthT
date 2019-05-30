@@ -49,6 +49,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
+import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
 /**
  * 学员课时卡/选择购买新卡/缴费充值
@@ -127,6 +128,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
     @Override
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
         final TextView tvName = holder.itemView.findViewById(R.id.tv_name);
+        final LinearLayout llFamily = holder.itemView.findViewById(R.id.ll_family);
 
         final CourseEntity entity = cardsList.get(position);
 
@@ -490,7 +492,31 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         UserManager.getInstance().getCardStuList().size());
             });
         }
-
+        llFamily.removeAllViews();
+        String shareImgs = cardsList.get(position).getShareImg();
+        String shareNames = cardsList.get(position).getShareName();
+        if (!TextUtils.isEmpty(shareImgs) && !TextUtils.isEmpty(shareNames)) {
+            String[] shareImg = shareImgs.split(",");
+            String[] shareName = shareNames.split(",");
+            for (int i = 0; i < shareName.length; i++) {// 第一个是自己
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                View view = LayoutInflater.from(mContext).inflate(R.layout.header_item, null);
+                AvatarImageView images = view.findViewById(R.id.iv_avatar);
+                TextView tvname = view.findViewById(R.id.tv_name);
+                tvname.setVisibility(View.GONE);
+//            params.setMargins(0, 0, -6, 0);
+                images.setImageResource(R.mipmap.ic_avatar_default);
+                String childName = shareName[i];
+                images.setTextAndColor(TextUtils.isEmpty(childName) ? "" :
+                        childName.substring(0, 1), mContext.getResources().getColor(R.color.b0b2b6));
+                String headImage = shareImg[i];
+                GlideUtils.setGlideImg(mContext, headImage, 0, images);
+                // 设置id，方便后面删除
+                view.setTag(shareName);
+                llFamily.addView(view, params);
+            }
+        }
     }
 
     private void checkCardStatus(CourseEntity entity) {
@@ -696,7 +722,15 @@ public class NewCardsAdapter extends XrecyclerAdapter {
         return R.layout.recycle_stu_card_item;
     }
 
-    public void update(List<CourseEntity> pdata, String status) {
+    public void update(List<CourseEntity> pdata) {
+        this.cardsList.clear();
+        this.cardsList.addAll(pdata);
+        // 初始化数据
+        initDate();
+        notifyDataSetChanged();
+    }
+
+    public void updateStatus(List<CourseEntity> pdata, String status) {
         this.cardsList.clear();
         this.cardsList.addAll(pdata);
         this.status = status;

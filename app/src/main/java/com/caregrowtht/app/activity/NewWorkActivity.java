@@ -61,8 +61,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
-import static com.caregrowtht.app.Constant.sexWeekly;
-
 /**
  * haoruigang on 2018-8-20 16:46:17
  * 新建排课
@@ -168,6 +166,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     private boolean isEtCourseSel = false;// 是否编辑过课程名称
     private String planView = "1";// 排课条件 1：教师 2：教室
     private MessageEntity msgEntity;
+    private String ifEditStu = "1";// 默认为2, 1未修改，2已修改
 
     @Override
     public int getLayoutId() {
@@ -315,6 +314,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         }
         classTimeAdapter.notifyDataSetChanged();
 
+        String[] sexWeekly;
+        if (UserManager.getInstance().removeDuplicateOrder(
+                classTimeAdapter.classTimes).size() > 1) {// 两个时间段，去掉每天
+            sexWeekly = Constant.sexWeekly0;
+        } else {
+            sexWeekly = Constant.sexWeekly;
+        }
         int repeat = Integer.valueOf(courseData.getRepeat()) - 1;//从1开始的所以减去1
         if (repeat < sexWeekly.length) {
             getRepeat(sexWeekly[repeat], repeat);
@@ -584,13 +590,15 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         classRoomList.clear();
                         classRoomList.addAll(data.getData());
 
-                        //教室
-                        classroomId = courseData.getClassroomId();
-                        for (CourseEntity classRoom : classRoomList) {
-                            if (TextUtils.equals(classRoom.getClassroomId(), classroomId)) {
-                                classroomId = classRoom.getClassroomId();
-                                tvClassRoom.setText(classRoom.getClassroomName());
-                                break;
+                        if (updateAll) {
+                            //教室
+                            classroomId = courseData.getClassroomId();
+                            for (CourseEntity classRoom : classRoomList) {
+                                if (TextUtils.equals(classRoom.getId(), classroomId)) {
+                                    classroomId = classRoom.getId();
+                                    tvClassRoom.setText(classRoom.getClassroomName());
+                                    break;
+                                }
                             }
                         }
                     }
@@ -696,6 +704,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                         orgCardIds = orgCardId.toString();
                     }
                 } else { // 修改今后所有排课
+                    ifEditStu = "2";
                     orgCardIds = courseData.getOrgCardIds();
                 }
                 startActivityForResult(new Intent(this, FastenStudentActivity.class)
@@ -723,7 +732,9 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                 btnDereactCourse.setEnabled(false);
                 if (updateAll) {
                     if (classTimeAdapter.isTimeEdit.equals("1")) {// 修改了排课的时间， 要严重提示一下
-                        showWorkTimeDialog();
+                        showWorkTimeDialog(getResources().getString(R.string.text_update_time_rule));
+//                    } else if (classTimeAdapter.isTimeEdit.equals("0") && ifEditStu.equals("2")) {// 没有改时间，改了学员
+//                        showWorkTimeDialog(getResources().getString(R.string.stu_ifeditstu));
                     } else {
                         // 修改今后所有排课
                         editALes("2");
@@ -738,12 +749,12 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     /**
      * 重要提示
      */
-    private void showWorkTimeDialog() {
+    private void showWorkTimeDialog(String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
         final AlertDialog dialog = builder.create();
         View view = View.inflate(this, R.layout.dialog_prompt_org, null);
         TextView tvDesc = view.findViewById(R.id.tv_desc);
-        tvDesc.setText(R.string.text_update_work_time);
+        tvDesc.setText(text);
         TextView tv_ok = view.findViewById(R.id.tv_ok);
         TextView tv_cancel = view.findViewById(R.id.tv_cancel);
         tv_ok.setOnClickListener(v -> {
@@ -840,7 +851,8 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         HttpManager.getInstance().doEditALesV2("NewWorkActivity", check, orgId, isOrder,
                 courseName, courseTime.toString(), repeat, repeatCount, isShowOfTime,
                 repeatEver, mainTeacher, subTeachers.toString(), students.toString(), classroomId,
-                classNum, stuNum, tryPrice, cards, classifyId, classTimeAdapter.isTimeEdit, planId, courseId,
+                classNum, stuNum, tryPrice, cards, classifyId, classTimeAdapter.isTimeEdit, planId,
+                courseId, ifEditStu,
                 new HttpCallBack<BaseDataModel<CourseEntity>>(this) {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
@@ -912,11 +924,15 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                 for (int i = 0; i < mCourseModels.size(); i++) {
                     WorkClassEntity workEntity = new WorkClassEntity();
                     workEntity.setOrgCardId(mCourseModels.get(i).getOrgCardId());
-                    if (!TextUtils.isEmpty(mCount.get(i).getCourseCount())) {
+                    if (!TextUtils.isEmpty(mCount.get(i).getCourseCount())
+                            || mCourseModels.get(i).getCardType().equals("3")) {
                         if (TextUtils.equals(mCourseModels.get(i).getCardType(), "1")) {
                             workEntity.setCount(mCount.get(i).getCourseCount());
                             workEntity.setPrice("");
                         } else {
+                            if (mCourseModels.get(i).getCardType().equals("3")) {// 非年卡
+                                mCount.get(i).setCourseCount("0");
+                            }
                             workEntity.setCount("");
                             workEntity.setPrice(String.valueOf((Integer.valueOf(mCount.get(i).getCourseCount()) * 100)));
                         }
@@ -1075,6 +1091,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     boolean isShowAfter = true;//首次是否显示几次后结束
 
     private void selectRepeat() {
+        String[] sexWeekly;
+        if (UserManager.getInstance().removeDuplicateOrder(
+                classTimeAdapter.classTimes).size() > 1) {// 两个时间段，去掉每天
+            sexWeekly = Constant.sexWeekly0;
+        } else {
+            sexWeekly = Constant.sexWeekly;
+        }
         WheelPopup pop = new WheelPopup(this, sexWeekly);
         pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -1111,7 +1134,12 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                     break;
                 }
         }
-        repeat = position + 1 + "";
+        if (UserManager.getInstance().removeDuplicateOrder(
+                classTimeAdapter.classTimes).size() > 1) {// 两个时间段，去掉每天
+            repeat = position + 2 + "";
+        } else {
+            repeat = position + 1 + "";
+        }
         tvWeekly.setText(argValue);
     }
 
@@ -1241,8 +1269,8 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             pop.showAtLocation(View.inflate(this, R.layout.item_color_course, null), Gravity
                     .BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
             pop.setSelectListener((argValue, position) -> {
-                if (!TextUtils.isEmpty(argValue) && !TextUtils.isEmpty(classRoomList.get(position).getClassroomId())) {
-                    classroomId = classRoomList.get(position).getClassroomId();
+                if (!TextUtils.isEmpty(argValue) && !TextUtils.isEmpty(classRoomList.get(position).getId())) {
+                    classroomId = classRoomList.get(position).getId();
                     tvClassRoom.setText(argValue);
                 }
                 return null;
@@ -1291,7 +1319,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             dialog.dismiss();
             if (updateAll) {
                 if (classTimeAdapter.isTimeEdit.equals("1")) {// 修改了排课的时间， 要严重提示一下
-                    showWorkTimeDialog();
+                    showWorkTimeDialog(getResources().getString(R.string.text_update_time_rule));
                 } else {
                     // 修改今后所有排课
                     editALes("2");

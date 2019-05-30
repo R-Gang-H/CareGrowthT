@@ -42,6 +42,7 @@ public class StudentEntity implements Serializable {
     private List<RelativeEntity> relativeList;
     private List<OriginList> originList;
     private List<StatusList> statusList;
+    private List<UserEntity> family;
     private List<CourseEntity> courseCards;
 
     private String phone;
@@ -246,6 +247,14 @@ public class StudentEntity implements Serializable {
 
     public void setStatusList(List<StatusList> statusList) {
         this.statusList = statusList;
+    }
+
+    public List<UserEntity> getFamily() {
+        return family;
+    }
+
+    public void setFamily(List<UserEntity> family) {
+        this.family = family;
     }
 
     public static class OriginList {

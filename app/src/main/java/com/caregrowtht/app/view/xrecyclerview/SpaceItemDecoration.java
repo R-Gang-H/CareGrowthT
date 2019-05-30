@@ -2,14 +2,15 @@ package com.caregrowtht.app.view.xrecyclerview;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import androidx.annotation.IntDef;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * good programmer.
@@ -214,7 +215,7 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         int surplusCount = totalCount % layoutManager.getSpanCount();
         int childPosition = parent.getChildAdapterPosition(view);
         //竖直方向的
-        if (layoutManager.getOrientation() == GridLayoutManager.VERTICAL) {
+        if (layoutManager.getOrientation() == RecyclerView.VERTICAL) {
             if (surplusCount == 0 && childPosition > totalCount - layoutManager.getSpanCount() - 1) {
                 //后面几项需要bottom
                 outRect.bottom = topBottom;

@@ -11,7 +11,7 @@
 
     <string name="attendance">出勤人数:\t12</string>
     <string name="course_count">消课总数:\t24节</string>
-    <string name="rationale_call_phone">这个应用程序需要访问你的电话，这样你就可以发短信了。</string>
+    <string name="rationale_call_phone">这个应用程序需要访问你的电话，这样你就可以发消息了。</string>
     <string name="network_load_error">网络不太顺畅</string>
     <string name="refresh_try">重新加载</string>
     <string name="no_content">暂无内容</string>
@@ -26,14 +26,25 @@
     <string name="course_time_tips">创建一张新卡</string>
     <string name="text_dialog_prompt_org">1、如果机构已经在电脑或IPAD爱成长机构端被创建成功过,请不要重复创建机构,只需加入即可\n2、创建新机构后,您将成为机构创建者,系统默认您的权限为机构超级管理员;我们建议使用<font color='#539FE0'>机构所有者的手机号登陆并创建机构</font>,担任超级管理员角色,方便以后的管理工作</string>
     <string name="text_dialog_prompt_unbind">执行该操作， 这张课时卡的剩余次数（金额或时间）将清0， 且不能复原， 是否执行该操作？</string>
-    <string name="text_prompt_conflict">通过以下方式可以激活学员：\n<font color='#69ACE5'>①</font>为学员购买新卡，\t<font color='#69ACE5'>②</font>选定某张课时卡延长有效期\n<font color='#69ACE5'>③</font>选定某张课时卡延长有效期</string>
+    <string name="text_prompt_conflict">通过以下方式可以激活学员：\n<font color='#69ACE5'>①</font>为学员购买新卡，\t<font color='#69ACE5'>②</font>选定某张课时卡延长有效期\n<font color='#69ACE5'>③</font>选定某张课时卡充值续费</string>
     <string name="ilovegrowth_cn">爱成长机构端拥有更多丰富功能，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作：</string>
     <string name="text_teacher_permission">如您需要新增或者修改权限，请您使用当前帐户，在电脑或IPAD上登陆https://admin.ilovegrowth.cn进行操作。</string>
     <string name="text_update_work_time">您修改了排课的时间，系统会将这节课之后所有的课删除，再重新添加。请您谨慎操作!</string>
     <string name="text_update_time_rule">您修改了排课时间或排课重复规则。\n排课时间不可以早于当前时间。</string>
     <string name="text_update_rule">排课时间不可以早于当前时间。</string>
+    <string name="stu_ifeditstu">您修改了学员,之后的排课的学员数据会重新替换。是否继续?</string>
     <!--您没有此操作的权限-->
     <string name="text_role">您没有此操作的权限\n如需重新分配权限&#8212;>请机构管理员在“教师管理”里进行设置\n如需修改权限范围&#8212;>请机构管理员登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>的"设置"&#8212;>“权限管理”进行处理\n权限重置后,需要您退出并重新登陆</string>
     <string name="function_limit">该功能请您登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>进行处理</string>
     <string name="version_limit">免费试用版最多支持20名学员\n如需管理更多学员，请登陆<font color='#69ACE5'>https://admin.ilovegrowth.cn</font>的“我的爱成长”进行升级操作</string>
+    <string name="string_create_org_hint">创建新机构者默认为超级管理员；我们建议使用<font color='#69ACE5'>机构所有者的手机号</font>登录并创建机构</string>
+    <string name="string_app_spot_fct">固定课预约课随心排\n\"抢课补位\"功能，黄金时段绝不浪费\n各类型收费机制可混合使用(次数卡/年卡/储值卡)\n智能提示待办工作\n支持家庭成员共享课时卡\n欠费学员人工消课\n带回执的通知\n多家机构并行管理</string>
+    <string name="string_xcx_spot_fct">成长记录自动保存保护隐私\n家人分享让亲友实时分享学员成长\n同时管理多学员方便多子女家庭</string>
+    <string name="string_unpaid">机构尚未付费或未续费。\n需要尽快续费</string>
+
+    <string name="permission_granted">支付宝 SDK 所需的权限已经正常获取</string>
+    <string name="auth_success">授权成功:</string>
+    <string name="auth_failed">授权失败:</string>
+    <string name="todo">TODO</string>
+    <string name="string_title">标题</string>
 </resources>

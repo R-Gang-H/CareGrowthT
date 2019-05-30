@@ -36,6 +36,16 @@ public class MessageEntity implements Serializable {
     private String count;
     private String orgChainName;
 
+    private String showName;
+    private String showHeadImage;
+    private String courseStartAt;
+    private String courseName;
+    private String read;
+    private String teacherName;
+    private String totalLes;
+
+    private String createAt;
+
     public String getEventId() {
         return eventId;
     }
@@ -242,5 +252,69 @@ public class MessageEntity implements Serializable {
 
     public void setCircleCourseName(String circleCourseName) {
         this.circleCourseName = circleCourseName;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
+    }
+
+    public String getShowHeadImage() {
+        return showHeadImage;
+    }
+
+    public void setShowHeadImage(String showHeadImage) {
+        this.showHeadImage = showHeadImage;
+    }
+
+    public String getCourseStartAt() {
+        return courseStartAt;
+    }
+
+    public void setCourseStartAt(String courseStartAt) {
+        this.courseStartAt = courseStartAt;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getRead() {
+        return read;
+    }
+
+    public void setRead(String read) {
+        this.read = read;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getTotalLes() {
+        return totalLes;
+    }
+
+    public void setTotalLes(String totalLes) {
+        this.totalLes = totalLes;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
     }
 }

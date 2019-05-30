@@ -5,8 +5,6 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.activity.ScreenActivity;
-import com.caregrowtht.app.activity.TeacherPermisActivity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by haoruigang on 2018-10-22 15:13:21
@@ -78,7 +75,7 @@ public class TeacherPermisAdapter extends XrecyclerAdapter {
 
     @Override
     public int getLayoutResId() {
-        return R.layout.item_screen_son;
+        return R.layout.item_teacher_permis;
     }
 
 }

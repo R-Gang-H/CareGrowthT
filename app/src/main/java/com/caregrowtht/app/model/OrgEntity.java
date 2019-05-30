@@ -38,6 +38,10 @@ public class OrgEntity implements Serializable {
     private String aname;
     private String address;
     private String orgPhone;
+    private String maxStudent;
+    private String scale;
+    private String coupon;
+    private String recommend_mobile;
     private String imageList;
     private String tag;
     private String orgAddress;
@@ -83,6 +87,9 @@ public class OrgEntity implements Serializable {
 
     private String powerId;
     private String plan_view;
+
+    private String end_at;
+    private String version;
 
 
     public String getOrgId() {
@@ -260,6 +267,38 @@ public class OrgEntity implements Serializable {
 
     public void setOrgPhone(String orgPhone) {
         this.orgPhone = orgPhone;
+    }
+
+    public String getMaxStudent() {
+        return maxStudent;
+    }
+
+    public void setMaxStudent(String maxStudent) {
+        this.maxStudent = maxStudent;
+    }
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
+
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+
+    public String getRecommend_mobile() {
+        return recommend_mobile;
+    }
+
+    public void setRecommend_mobile(String recommend_mobile) {
+        this.recommend_mobile = recommend_mobile;
     }
 
     public String getImageList() {
@@ -588,5 +627,21 @@ public class OrgEntity implements Serializable {
 
     public void setPlan_view(String plan_view) {
         this.plan_view = plan_view;
+    }
+
+    public String getEnd_at() {
+        return end_at;
+    }
+
+    public void setEnd_at(String end_at) {
+        this.end_at = end_at;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

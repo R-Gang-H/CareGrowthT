@@ -212,7 +212,28 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    getCount().put(position, s.toString().trim());
+                    String num = s.toString().trim();
+                    if (TextUtils.isEmpty(num)) {
+                        return;
+                    }
+//                    int inputNum = 0;
+//                    // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
+//                    switch (entity.getCardType()) {
+//                        case "1":
+//                            inputNum = Integer.valueOf(entity.getTotalCount());
+//                            break;
+//                        case "2":
+//                        case "4":
+//                            inputNum = Integer.parseInt(entity.getRealityPrice()) / 100;
+//                            break;
+//                    }
+//                    if (Integer.valueOf(num) > inputNum) {
+//                        U.showToast("超出消课范围");
+//                        getCount().put(position, "");
+//                    etCancelCount.setText("");
+//                        return;
+//                    }
+                    getCount().put(position, num);
                 }
             };
             //编辑之前是否选中
@@ -293,8 +314,8 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
                 case 2://学期卡
                 case 3://年卡 不显示消课多少元
                     rlSelect.setVisibility(View.GONE);
-                    getCount().put(position, "0");// 年卡默认情况都为0
-                    getIsCourseCardEntity().put(position, entity);
+                    getCount().put(position, "");// 年卡默认情况都为0
+                    getIsCourseCardEntity().put(position, tvSelectCard.isSelected() ? entity : null);
                     break;
                 case 4://折扣卡
                 default:

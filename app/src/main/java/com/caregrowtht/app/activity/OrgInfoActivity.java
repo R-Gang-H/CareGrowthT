@@ -95,7 +95,7 @@ public class OrgInfoActivity extends BaseActivity {
                 } else {
                     Intent intent = new Intent(this, UserTermActivity.class);
                     intent.setData(Uri.parse(BASE_ORG_URL + UserManager.getInstance().getOrgId()));
-                    intent.putExtra("openType", "3");// 用户协议
+                    intent.putExtra("openType", "3");// 机构主页
                     startActivity(intent);
                 }
                 break;

@@ -152,7 +152,8 @@ public class WorkClassActivity extends BaseActivity implements ViewOnItemClick {
                         if (TextUtils.isEmpty(searchText)) {
                             courseDatas.addAll(removeDuplicateOrder(courseDatas));//筛选有几种课程分类
                         }
-                        Collections.sort(courseDatas, (o1, o2) -> o1.getClassifyId().compareToIgnoreCase(o2.getClassifyId()));
+                        Collections.sort(courseDatas, (o1, o2) ->
+                                o1.getClassifyId().compareToIgnoreCase(o2.getClassifyId()));
                         mAdapter.setData(courseDatas, searchText, cardType);// searchText 通过搜索显示
                         tvAllSelect.setVisibility(TextUtils.isEmpty(searchText) ? View.VISIBLE : View.GONE);//隐藏全选
                     }

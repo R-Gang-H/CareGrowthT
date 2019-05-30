@@ -318,13 +318,24 @@ public class AddFormalStuActivity extends BaseActivity {
                 cardBind.setLeftTruePrice(cardPrice);
             }
             String endAt;
-            if (cardStu.getValidMonth().equals("0")) {
-                endAt = cardStu.getValidMonth();
+            if (!TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 5、选择 绑定已有课时卡
+                if (cardStu.getPassMonth().equals("0")) {
+                    endAt = cardStu.getPassMonth();
+                } else {
+                    String validData = TimeUtils.getMonthAgo(new Date(Calendar.getInstance().getTimeInMillis()),
+                            Integer.parseInt(cardStu.getPassMonth()), "yyyy/MM/dd");// 有效期转化为日期
+                    cardBind.setEnd_at(String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd")));
+                    endAt = String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd"));
+                }
             } else {
-                String validData = TimeUtils.getMonthAgo(new Date(Calendar.getInstance().getTimeInMillis()),
-                        Integer.parseInt(cardStu.getValidMonth()), "yyyy/MM/dd");// 有效期转化为日期
-                cardBind.setEnd_at(String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd")));
-                endAt = String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd"));
+                if (cardStu.getValidMonth().equals("0")) {
+                    endAt = cardStu.getValidMonth();
+                } else {
+                    String validData = TimeUtils.getMonthAgo(new Date(Calendar.getInstance().getTimeInMillis()),
+                            Integer.parseInt(cardStu.getValidMonth()), "yyyy/MM/dd");// 有效期转化为日期
+                    cardBind.setEnd_at(String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd")));
+                    endAt = String.valueOf(DateUtil.getStringToDate(validData, "yyyy/MM/dd"));
+                }
             }
             cardBind.setEnd_at(endAt);
             if (TextUtils.isEmpty(cardStu.getCourseCardId())) {// 等于空添加 cards
@@ -410,12 +421,12 @@ public class AddFormalStuActivity extends BaseActivity {
         if (event.getWhat() == ToUIEvent.REFERSH_STU_CARDS) {
             CourseEntity entity = (CourseEntity) event.getObj();
             UserManager.getInstance().getCardStuList().add(entity);
-            mCardsAdapter.update(UserManager.getInstance().getCardStuList(), null);
+            mCardsAdapter.update(UserManager.getInstance().getCardStuList());
         } else if (event.getWhat() == ToUIEvent.REFERSH_SHARE_CARDS) {
             CourseEntity entity = (CourseEntity) event.getObj();
             UserManager.getInstance().getCardStuList().add(entity);
             courseCards.append(entity.getCourseCardId()).append(",");
-            mCardsAdapter.update(UserManager.getInstance().getCardStuList(), null);
+            mCardsAdapter.update(UserManager.getInstance().getCardStuList());
         }
     }
 }
