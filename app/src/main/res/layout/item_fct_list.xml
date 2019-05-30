@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_teacher_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_teacher_app"
+        android:gravity="center"
+        android:text="机构教师APP端"
+        android:textColor="@color/white"
+        android:textSize="@dimen/margin_size_14" />
+
+    <com.caregrowtht.app.view.DrawableCenterTextView
+        android:id="@+id/tv_spot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_teacher_app"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_17"
+        android:drawableStart="@mipmap/ic_app_spot"
+        android:drawablePadding="@dimen/margin_size_10"
+        android:text="亮点功能"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_18" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_below="@id/tv_spot"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:background="@color/color_e6" />
+
+    <TextView
+        android:id="@+id/tv_spot_fct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_line"
+        android:layout_marginStart="@dimen/margin_size_20"
+        android:layout_marginEnd="@dimen/margin_size_20"
+        android:lineSpacingExtra="@dimen/margin_size_9"
+        android:text="@string/string_app_spot_fct"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+    <com.caregrowtht.app.view.DrawableCenterTextView
+        android:id="@+id/tv_rule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_spot_fct"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_25"
+        android:drawableStart="@mipmap/ic_app_rule"
+        android:drawablePadding="@dimen/margin_size_10"
+        android:text="常规功能"
+        android:textColor="@color/blueLight"
+        android:textSize="@dimen/text_size_18" />
+
+    <View
+        android:id="@+id/v_line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_below="@id/tv_rule"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:layout_marginBottom="@dimen/margin_size_15"
+        android:background="@color/color_e6" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_line1"
+        android:layout_marginStart="@dimen/margin_size_20"
+        android:layout_marginEnd="@dimen/margin_size_20" />
+
+    <TextView
+        android:id="@+id/tv_rule_fct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_view"
+        android:layout_marginStart="@dimen/margin_size_20"
+        android:layout_marginEnd="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_10"
+        android:lineSpacingExtra="@dimen/margin_size_10"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_15" />
+
+</RelativeLayout>

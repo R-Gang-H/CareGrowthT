@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_read_aicz"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_size_10"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_state" />
+    <!--icon_originator-->
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_icon"
+        android:layout_marginStart="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_10"
+        android:text="3分钟快速了解爱成长"
+        android:textColor="@color/color_3"
+        android:textSize="@dimen/text_size_16" />
+
+</RelativeLayout>

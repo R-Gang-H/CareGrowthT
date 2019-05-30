@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.BuyActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rl_trial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_trial_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_25"
+                    android:text="试用期:30天"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tv_stu_num_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_trial_1"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:text="学员人数：不限"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <View
+                    android:id="@+id/v_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_1"
+                    android:layout_below="@id/tv_stu_num_1"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:layout_marginEnd="@dimen/margin_size_15"
+                    android:background="@color/color_e6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_20"
+                    android:text="免费"
+                    android:textColor="@color/col_409"
+                    android:textSize="@dimen/margin_size_30" />
+
+                <Button
+                    android:id="@+id/btn_questionnaire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/margin_size_5"
+                    android:background="@drawable/selector_small_btn_click"
+                    android:gravity="center"
+                    android:text="填写调查问卷  "
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18" />
+
+                <View
+                    android:id="@+id/v_line_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_10"
+                    android:layout_below="@id/btn_questionnaire"
+                    android:background="@color/color_f4" />
+
+                <TextView
+                    android:id="@+id/tv_trial_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line_1"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_25"
+                    android:text="试用期:30天"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tv_stu_num_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_trial_2"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:text="学员人数：不限"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <View
+                    android:id="@+id/v_line_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_1"
+                    android:layout_below="@id/tv_stu_num_2"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:layout_marginEnd="@dimen/margin_size_15"
+                    android:background="@color/color_e6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line_2"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_20"
+                    android:text="¥99"
+                    android:textColor="@color/col_409"
+                    android:textSize="@dimen/margin_size_30" />
+
+                <Button
+                    android:id="@+id/btn_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_line_2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/margin_size_5"
+                    android:background="@drawable/selector_small_btn_click"
+                    android:gravity="center"
+                    android:text="支付"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_version_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_trial"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_txt_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_25"
+                    android:text="当前版本"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/tv_ver_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_txt_version"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:text="基础管理版"
+                    android:textColor="@color/col_409"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/tv_stu_num_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_ver_msg"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_40"
+                    android:text="342"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_24" />
+
+                <TextView
+                    android:id="@+id/tv_txt_stu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_ver_msg"
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    android:layout_marginTop="@dimen/margin_size_50"
+                    android:layout_toEndOf="@id/tv_stu_num_msg"
+                    android:text="活跃学员"
+                    android:textColor="@color/color_9"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_stu_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_ver_msg"
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    android:layout_marginTop="@dimen/margin_size_40"
+                    android:layout_toEndOf="@id/tv_txt_stu"
+                    android:text="/500"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_24" />
+
+                <TextView
+                    android:id="@+id/tv_txt_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_ver_msg"
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    android:layout_marginTop="@dimen/margin_size_50"
+                    android:layout_toEndOf="@id/tv_stu_volume"
+                    android:text="容量"
+                    android:textColor="@color/color_9"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/tv_validity_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_stu_volume"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_20"
+                    android:layout_marginBottom="@dimen/margin_size_15"
+                    android:text="有效期至:\t2020年5月1日"
+                    android:textColor="@color/color_6"
+                    android:textSize="@dimen/text_size_18" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_line_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_10"
+                android:layout_below="@id/rl_version_info"
+                android:background="@color/color_f4" />
+
+            <TextView
+                android:id="@+id/tv_base_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line_3"
+                android:layout_marginStart="@dimen/margin_size_15"
+                android:layout_marginTop="@dimen/margin_size_25"
+                android:text="基础管理版"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/tv_view_fct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line_3"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_25"
+                android:layout_marginEnd="@dimen/margin_size_15"
+                android:drawableEnd="@mipmap/ic_right_arrow"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:text="查看功能"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_15" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_base_msg"
+                android:layout_margin="@dimen/margin_size_5" />
+
+            <TextView
+                android:id="@+id/tv_sel_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recycler_view"
+                android:layout_marginStart="@dimen/margin_size_15"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="选择时间"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_18" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_sel_time"
+                android:layout_margin="@dimen/margin_size_15" />
+
+            <View
+                android:id="@+id/v_line_4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_size_1"
+                android:layout_below="@id/recycler_view_time"
+                android:layout_marginStart="@dimen/margin_size_15"
+                android:layout_marginEnd="@dimen/margin_size_15"
+                android:background="@color/color_e6" />
+
+            <TextView
+                android:id="@+id/tv_stu_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line_4"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_11"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:text="学员人数：20人"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_validity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_stu_num"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_11"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:text="有效期至 2020年5月1日"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_validity"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_11"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:text="价格:￥1500元"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_left_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_old_price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_11"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:text="剩余折扣:\t-\t800元"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_left_price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_size_10"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:text="¥1,500"
+                android:textColor="@color/col_409"
+                android:textSize="@dimen/text_size_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_left_price"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:layout_marginEnd="@dimen/margin_size_11"
+                android:layout_toStartOf="@id/tv_price"
+                android:text="支付金额"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <Button
+                android:id="@+id/btn_pay_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/margin_size_5"
+                android:background="@drawable/selector_small_btn_click"
+                android:gravity="center"
+                android:text="支付"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18" />
+
+        </RelativeLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+</RelativeLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_14"
+            android:layout_marginTop="@dimen/margin_size_19"
+            android:layout_marginBottom="@dimen/margin_size_12"
+            android:text="7天内"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_16" />
+
+        <ImageView
+            android:id="@+id/cv_radius"
+            android:layout_width="@dimen/margin_size_10"
+            android:layout_height="@dimen/margin_size_10"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_25"
+            android:layout_toEndOf="@id/tv_day"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_time_line" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_marginTop="@dimen/margin_size_30"
+            android:layout_toEndOf="@id/cv_radius"
+            android:background="@color/greenLight" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_day"
+        android:layout_marginStart="@dimen/margin_size_10"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        android:background="@drawable/shape_shadow_bg">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_edf6ff_bg"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="3"
+            android:padding="@dimen/margin_size_8"
+            android:text="4月18日  星期三  9:00 \n刘晓霞  舞蹈课周四9:00班"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_stu_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:text="学员 4人 | 签到 0人  | 请假 0人 | 待处理 4人"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_stu_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_stu_detail"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_20"
+            android:text="学员3人"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+        <RelativeLayout
+            android:id="@+id/rl_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_stu_num"
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_levae_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:layout_marginBottom="@dimen/margin_size_20"
+                android:text="3人请假"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_levae_num"
+                tools:listitem="@layout/item_leave_stu" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

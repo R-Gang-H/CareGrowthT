@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.FCTListActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_app"
+                android:layout_width="0dp"
+                android:layout_height="39dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_navigation"
+                android:text="机构教师APP端"
+                android:textColor="@drawable/selector_color_white_black"
+                android:textSize="@dimen/text_size_15" />
+
+            <Button
+                android:id="@+id/btn_pc"
+                android:layout_width="0dp"
+                android:layout_height="39dp"
+                android:layout_marginLeft="@dimen/margin_size_0.5"
+                android:layout_weight="1"
+                android:background="@drawable/selector_navigation"
+                android:text="机构教师PC端"
+                android:textColor="@drawable/selector_color_white_black"
+                android:textSize="@dimen/text_size_14" />
+
+            <Button
+                android:id="@+id/btn_xcx"
+                android:layout_width="0dp"
+                android:layout_height="39dp"
+                android:layout_marginLeft="@dimen/margin_size_0.5"
+                android:layout_weight="1"
+                android:background="@drawable/selector_navigation"
+                android:text="学员端小程序"
+                android:textColor="@drawable/selector_color_white_black"
+                android:textSize="@dimen/text_size_15" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/col_e8" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_tab_bar"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+</RelativeLayout>

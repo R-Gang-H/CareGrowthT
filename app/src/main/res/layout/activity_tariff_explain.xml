@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.caregrowtht.app.activity.TariffExplainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_20">
+
+            <RelativeLayout
+                android:id="@+id/rl_base"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_base_mgt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_size_10"
+                    android:layout_marginTop="@dimen/margin_size_20"
+                    android:text="基础管理版"
+                    android:textColor="@color/color_3"
+                    android:textSize="@dimen/text_size_18" />
+
+                <LinearLayout
+                    android:id="@+id/ll_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_size_60"
+                    android:layout_below="@id/tv_base_mgt"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginTop="@dimen/margin_size_15"
+                    android:layout_marginEnd="@dimen/margin_size_15"
+                    android:background="@color/color_d3e">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/text_size_10"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="学员数量"
+                        android:textColor="@color/col_3a9"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/text_size_10"
+                            android:gravity="center_horizontal"
+                            android:text="人均单价"
+                            android:textColor="@color/col_3a9"
+                            android:textSize="@dimen/text_size_15" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_size_3"
+                            android:gravity="center_horizontal"
+                            android:text="学员/年" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/text_size_10"
+                            android:gravity="center_horizontal"
+                            android:text="年费"
+                            android:textColor="@color/col_3a9"
+                            android:textSize="@dimen/text_size_15" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_size_3"
+                            android:gravity="center_horizontal"
+                            android:text="机构/年" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll_title"
+                    android:layout_marginStart="@dimen/margin_size_15"
+                    android:layout_marginEnd="@dimen/margin_size_15" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_about_trial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_base"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:text="关于试用"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/tv_way_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_about_trial"
+                android:layout_marginStart="@dimen/margin_size_15"
+                android:layout_marginTop="@dimen/margin_size_22"
+                android:background="@mipmap/ic_way"
+                android:gravity="center_horizontal"
+                android:text="方式一"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_way_content_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_about_trial"
+                android:layout_marginStart="@dimen/margin_size_8"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_way_1"
+                android:text="填写调查问卷免费试用30天，学员人数不限"
+                android:textColor="@color/color_6"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_way_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_way_1"
+                android:layout_marginStart="@dimen/margin_size_15"
+                android:layout_marginTop="@dimen/margin_size_14"
+                android:background="@mipmap/ic_way"
+                android:gravity="center_horizontal"
+                android:text="方式二"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_way_content_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_way_content_1"
+                android:layout_marginStart="@dimen/margin_size_8"
+                android:layout_marginTop="@dimen/margin_size_12"
+                android:layout_toEndOf="@id/tv_way_2"
+                android:text="99元购买试用30天 ，学员人数不限"
+                android:textColor="@color/color_6"
+                android:textSize="@dimen/text_size_15" />
+
+        </RelativeLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+</RelativeLayout>

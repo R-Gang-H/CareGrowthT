@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    tools:context="com.caregrowtht.app.activity.AddBacthActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_f2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_bacth_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_17"
+            android:layout_marginTop="@dimen/margin_size_25"
+            android:text="批量添加老师"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_18" />
+
+        <TextView
+            android:id="@+id/tv_add_bacth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:drawableStart="@mipmap/icon_init_word"
+            android:drawablePadding="@dimen/margin_size_10"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="批量导入教师模版.xls"
+            android:textColor="@color/color_3"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_add_bacth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_20"
+            android:layout_marginTop="@dimen/margin_size_20">
+
+            <TextView
+                android:id="@+id/tv_num_toll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/selector_all_check"
+                android:drawablePadding="@dimen/margin_size_7"
+                android:text="次数收费机制"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_num_module"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_num_toll"
+                android:layout_marginStart="@dimen/margin_size_20"
+                android:layout_marginTop="@dimen/margin_size_12"
+                android:text="批量导入学员模版.xls"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_money_toll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_num_module"
+                android:layout_marginTop="@dimen/margin_size_18"
+                android:drawableStart="@drawable/selector_all_check"
+                android:drawablePadding="@dimen/margin_size_7"
+                android:text="金额收费机制"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_money_module"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_money_toll"
+                android:layout_marginStart="@dimen/margin_size_20"
+                android:layout_marginTop="@dimen/margin_size_12"
+                android:text="批量导入学员模版.xls"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_time_toll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_money_module"
+                android:layout_marginTop="@dimen/margin_size_18"
+                android:drawableStart="@drawable/selector_all_check"
+                android:drawablePadding="@dimen/margin_size_7"
+                android:text="时间段收费机制"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_time_module"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_time_toll"
+                android:layout_marginStart="@dimen/margin_size_20"
+                android:layout_marginTop="@dimen/margin_size_12"
+                android:text="批量导入学员模版.xls"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="@dimen/margin_size_30"
+            android:background="@color/color_d0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_17"
+            android:layout_marginEnd="@dimen/margin_size_5"
+            android:layout_marginBottom="@dimen/margin_size_17"
+            android:textColor="@color/color_3"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="取消"
+        android:textColor="@color/color_3"
+        android:textSize="18sp" />
+
+</LinearLayout>
