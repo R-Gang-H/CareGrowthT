@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.StuOrdersActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <com.caregrowtht.app.view.ReboundScrollView
+        android:id="@+id/rs_course_table"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/iv_last_week"
+                        android:layout_width="20dp"
+                        android:layout_height="50dp"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_left_arrow_true" />
+
+                    <TextView
+                        android:id="@+id/tv_tswk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_size_8"
+                        android:textColor="@color/color_3"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_calendar" />
+
+                    <ImageView
+                        android:id="@+id/iv_next_week"
+                        android:layout_width="20dp"
+                        android:layout_height="50dp"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_right_arrow_true" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_course"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+        </LinearLayout>
+    </com.caregrowtht.app.view.ReboundScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rs_course_table" />
+
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rs_course_table" />
+
+</RelativeLayout>

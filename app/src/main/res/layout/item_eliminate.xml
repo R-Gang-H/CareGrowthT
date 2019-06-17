@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_14"
+            android:layout_marginTop="@dimen/margin_size_19"
+            android:layout_marginBottom="@dimen/margin_size_12"
+            android:text="7天内"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_22"
+            android:layout_toEndOf="@id/tv_day"
+            android:text="3月24日周三-3月31日周二"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/textSize_12"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/cv_radius"
+            android:layout_width="@dimen/margin_size_10"
+            android:layout_height="@dimen/margin_size_10"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_25"
+            android:layout_toEndOf="@id/tv_time"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_time_line" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_marginTop="@dimen/margin_size_30"
+            android:layout_toEndOf="@id/cv_radius"
+            android:background="@color/greenLight" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_day"
+        android:layout_marginStart="@dimen/margin_size_10"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        android:background="@drawable/shape_shadow_bg">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_edf6ff_bg"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="3"
+            android:padding="@dimen/margin_size_8"
+            android:text="4月18日  星期三  9:00 \n刘晓霞  舞蹈课周四9:00班"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            tools:ignore="HardcodedText" />
+
+        <RelativeLayout
+            android:id="@+id/rl_stu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_10"
+            android:layout_marginBottom="@dimen/margin_size_15">
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/iv_levae_author_avatar"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_per_avatar_default" />
+
+            <TextView
+                android:id="@+id/tv_leave_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_levae_author_avatar"
+                android:layout_marginStart="@dimen/margin_size_5"
+                android:layout_marginTop="@dimen/margin_size_5"
+                android:text="姓名"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_eliminate_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/rl_stu"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:layout_toEndOf="@id/rl_stu"
+            android:text="自动消课失败"
+            android:textColor="@color/f34b4b"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_eliminate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/rl_stu"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_size_18"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:background="@mipmap/ic_btn_green_bg"
+            android:gravity="center"
+            android:text="人工消课"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_12" />
+
+        <TextView
+            android:id="@+id/tv_check_detial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/rl_stu"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:gravity="end"
+            android:paddingTop="@dimen/margin_size_10"
+            android:paddingBottom="@dimen/margin_size_10"
+            android:text="查看消课情况"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

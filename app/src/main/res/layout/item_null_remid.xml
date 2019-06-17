@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:layout_marginEnd="@dimen/margin_size_10"
+        android:background="@drawable/shape_shadow_bg">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_edf6ff_bg"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="3"
+            android:padding="@dimen/margin_size_8"
+            android:text="4月18日  星期三  9:00 \n刘晓霞  舞蹈课周四9:00班"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_stu_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:text="空位：2人"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

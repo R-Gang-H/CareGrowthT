@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.EliminateWorkActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/ll_tob"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_38"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_size_14"
+        android:background="@drawable/shape_state_bg"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_pending"
+            android:layout_width="@dimen/margin_size_100"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_blue_levae"
+            android:gravity="center"
+            android:text="待处理"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_complete"
+            android:layout_width="@dimen/margin_size_100"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="已完成"
+            android:textColor="@color/blueLight"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_tob"
+        android:fadeScrollbars="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:listitem="@layout/item_stu_leave" />
+
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar" />
+
+</RelativeLayout>
