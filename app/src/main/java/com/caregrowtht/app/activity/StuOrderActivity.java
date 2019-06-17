@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.BaseModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.MessageEntity;

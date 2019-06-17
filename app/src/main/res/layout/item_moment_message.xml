@@ -8,9 +8,4 @@
         android:id="@+id/item_moment"
         layout="@layout/item_moment" />
 
-    <include
-        android:id="@+id/item_activity"
-        layout="@layout/item_org_action"
-        android:visibility="gone" />
-
 </LinearLayout>

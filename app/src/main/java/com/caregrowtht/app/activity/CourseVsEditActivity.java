@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
+
 import com.android.library.utils.DensityUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
@@ -24,8 +27,6 @@ import com.caregrowtht.app.user.UserManager;
 
 import org.greenrobot.eventbus.EventBus;
 
-import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -74,6 +75,7 @@ public class CourseVsEditActivity extends BaseActivity {
         } else if (TextUtils.equals(courseCardEntity.getCardType(), "3")) {
             setVisibilityView(false, false, true);
             tvSelectCourse.setSelected(isSelectCourse);
+            tvSelectCourse.setChecked(isSelectCourse);
             if (!isSelectCourse) {
                 type = "2";// 取消关联
             } else {

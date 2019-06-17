@@ -26,6 +26,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -104,12 +105,12 @@ public class NoClassStuActivity extends BaseActivity implements ViewOnItemClick 
                 new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
-                        mFormalAdapter.update(data.getData(), status);//每次重置数据
                         if (isClear) {
                             mFormalList.clear();
                         }
                         mFormalList.addAll(data.getData());
-                        if (data.getData().size() > 0) {
+                        mFormalAdapter.update(mFormalList, status);//每次重置数据
+                        if (mFormalList.size() > 0) {
                             loadView.delayShowContainer(true);
                         } else {
                             if (isClear) {
@@ -118,9 +119,11 @@ public class NoClassStuActivity extends BaseActivity implements ViewOnItemClick 
                                 loadView.delayShowContainer(true);
                             }
                         }
-                        mFormalAdapter.update(mFormalList, status);
-                        xrvStudent.refreshComplete();
-                        xrvStudent.loadMoreComplete();
+                        if (isClear) {
+                            xrvStudent.refreshComplete();
+                        } else {
+                            xrvStudent.loadMoreComplete();
+                        }
                     }
 
                     @Override
@@ -131,12 +134,14 @@ public class NoClassStuActivity extends BaseActivity implements ViewOnItemClick 
                             HttpManager.getInstance().dologout(NoClassStuActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getStudent(isClear, status));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.tag(" throwable " + throwable);
+                        loadView.setErrorShown(true, v -> getStudent(isClear, status));
                     }
                 });
     }

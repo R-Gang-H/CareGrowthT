@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -106,7 +107,7 @@ public class InitDataActivity extends BaseActivity implements ViewOnItemClick {
             orgId = msgEntity.getOrgId();
             UserManager.getInstance().setOrgId(orgId);
         } else {
-            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+            orgId = UserManager.getInstance().getOrgId();
         }
         getOrgTeachers("1");// 48.获取机构的教师
     }

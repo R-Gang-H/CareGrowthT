@@ -1,7 +1,6 @@
 package com.caregrowtht.app.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,13 +10,16 @@ import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.BuyActivity;
 import com.caregrowtht.app.activity.FormalActivity;
-import com.caregrowtht.app.activity.MainActivity;
 import com.caregrowtht.app.activity.MoreActivity;
 import com.caregrowtht.app.activity.NewWorkActivity;
 import com.caregrowtht.app.activity.OrgInfoActivity;
@@ -38,14 +40,10 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.OnClick;

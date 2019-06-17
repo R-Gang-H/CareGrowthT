@@ -33,6 +33,8 @@ public class OrgNotifyEntity implements Serializable {
     private String content;
     private String senderName;
     private String time;
+    private String receipt;
+    private String updateAt;
     private List<CoursesBean> courses;
 
     private String identity;
@@ -119,6 +121,22 @@ public class OrgNotifyEntity implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
     }
 
     public List<CoursesBean> getCoursesBean() {

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -162,13 +163,13 @@ public class TimeCardSelectActivity extends BaseActivity implements ViewOnItemCl
     }
 
     @Override
-    public void setOnItemClickListener(View view, int postion) {
-        if (postion == (mListCard.size() - 1)) {
+    public void setOnItemClickListener(View view, int position) {
+        if (position == (mListCard.size() - 1)) {
             //新建课时卡
             startActivity(new Intent(this, TimeCardNewActivity.class)
                     .putExtra("cardOperaType", "2"));//cardOperaType 1:选择购买新卡 2:选择课时卡
         } else {
-            mCardsAdapter.getSelect(postion,
+            mCardsAdapter.getSelect(position,
                     view.findViewById(R.id.tv_select_card),
                     view.findViewById(R.id.rl_select));
         }

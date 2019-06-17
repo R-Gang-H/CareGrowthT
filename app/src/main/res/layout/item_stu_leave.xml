@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -108,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_size_5"
                 android:layout_marginBottom="@dimen/margin_size_20"
+                android:lineSpacingExtra="@dimen/margin_size_11"
                 android:text="3人请假"
                 android:textColor="@color/color_3"
                 android:textSize="@dimen/text_size_15" />

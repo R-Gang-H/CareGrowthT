@@ -70,6 +70,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -166,8 +167,6 @@ public class CourserActivity extends BaseActivity {
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_see_stu);
 
-        //解决NetworkOnMainThreadException异常
-        ImgLabelUtils.getInstance().struct();
         mOssClient = new AliYunOss(this);
 
         courseId = getIntent().getStringExtra("courseId");
@@ -922,7 +921,7 @@ public class CourserActivity extends BaseActivity {
         }
         Log.e("------------", "SubmitComment");
 
-        HttpManager.getInstance().doComment("MomentFragment", CircleId, s, mReplyCommentId,
+        HttpManager.getInstance().doComment("MomentActivity", CircleId, s, mReplyCommentId,
                 new HttpCallBack<BaseDataModel<MomentCommentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<MomentCommentEntity> data) {

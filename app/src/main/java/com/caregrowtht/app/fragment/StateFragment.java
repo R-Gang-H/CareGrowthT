@@ -16,9 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.BaseActivity;
 import com.caregrowtht.app.activity.CourserActivity;
 import com.caregrowtht.app.activity.QRCodeActivity;
 import com.caregrowtht.app.activity.SettingActivity;
@@ -34,7 +37,6 @@ import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
-import com.caregrowtht.app.view.xrecyclerview.SpaceItemDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -46,8 +48,8 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -104,7 +106,7 @@ public class StateFragment extends BaseFragment {
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_scan);
 
-        initRecyclerView(recyclerView, true);
+        ((BaseActivity) Objects.requireNonNull(getActivity())).initRecyclerView(recyclerView, true);
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
         recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(5));
@@ -204,6 +206,11 @@ public class StateFragment extends BaseFragment {
                                 }
                             }
                         }
+                        if (isClear) {
+                            refreshLayout.finishRefresh();
+                        } else {
+                            refreshLayout.finishLoadmore();
+                        }
                     }
 
                     @Override
@@ -223,9 +230,6 @@ public class StateFragment extends BaseFragment {
                         loadView.setErrorShown(true, v -> MyMessageV2(isClear, status));
                     }
                 });
-
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadmore();
     }
 
     private void getUnfinishMessage() {

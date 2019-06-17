@@ -107,12 +107,13 @@ public class ClassMsgActivity extends BaseActivity {
                             HttpManager.getInstance().dologout(ClassMsgActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getClassroom());
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-
+                        loadView.setErrorShown(true, v -> getClassroom());
                     }
                 });
     }

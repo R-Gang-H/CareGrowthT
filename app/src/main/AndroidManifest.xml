@@ -9,12 +9,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permissINTERNETion.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -25,9 +24,7 @@
     <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -40,9 +37,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.StatisReportActivity"></activity>
-        <activity android:name=".activity.StuLevaeActivity" />
-        <activity android:name=".activity.BuyActivity" />
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -143,12 +137,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.AdvertInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ActionInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.LeaveActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -160,18 +148,8 @@
             android:name=".activity.ScreenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PotentStuInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.MyFollowActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.StudyCourseInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ActionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
         <activity
             android:name=".activity.ReportActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -183,10 +161,6 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activity.JoinInfoActionActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".activity.MarkActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
@@ -406,10 +380,48 @@
         <activity
             android:name=".activity.AddBacthActivity"
             android:theme="@style/ssionDialog" />
-        <activity android:name=".activity.OrgNoSettingActivity" />
-        <activity android:name=".activity.TariffExplainActivity" />
-        <activity android:name=".activity.FCTListActivity" />
-        <activity android:name=".activity.CreateOrgHintActivity" />
+        <activity
+            android:name=".activity.OrgNoSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TariffExplainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FCTListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateOrgHintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EliminateWorkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NullRemindActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CourseNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ArtificialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StatisReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StuLevaeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BuyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StuOrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderTableActivity"
+            android:theme="@style/courserTab" />
+        <activity
+            android:name=".activity.MomentActivity"
+            android:theme="@style/courserTab" />
 
         <meta-data
             android:name="android.max_aspect"

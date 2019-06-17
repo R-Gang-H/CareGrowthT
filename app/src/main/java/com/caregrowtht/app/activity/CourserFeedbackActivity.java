@@ -210,8 +210,11 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
             }
         }
         if (xRecyclerView != null) {
-            xRecyclerView.refreshComplete();
-            xRecyclerView.loadMoreComplete();
+            if (pageIndex == 1) {
+                xRecyclerView.refreshComplete();
+            } else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     }
 
@@ -331,7 +334,7 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
         }
         Log.e("------------", "SubmitComment");
 
-        HttpManager.getInstance().doComment("MomentFragment",
+        HttpManager.getInstance().doComment("MomentActivity",
                 mArrDatas.get(position1).getCircleId(), s, mReplyCommentId,
                 new HttpCallBack<BaseDataModel<MomentCommentEntity>>() {
                     @Override

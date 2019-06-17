@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -124,11 +125,6 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
 //                // 我的爱成长（续费）
                 startActivity(new Intent(this, BuyActivity.class)
                         .putExtra("renew", true));
-                break;
-            default:
-                //活动
-                startActivity(new Intent(this, ActionActivity.class).putExtra(
-                        "orgId", UserManager.getInstance().getOrgId()));
                 break;
         }
     }

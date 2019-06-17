@@ -225,9 +225,11 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
                                 }
                             }
                         }
-
-                        refreshLayout.finishRefresh();
-                        refreshLayout.finishLoadmore();
+                        if (isClear) {
+                            refreshLayout.finishRefresh();
+                        } else {
+                            refreshLayout.finishLoadmore();
+                        }
                     }
 
                     @Override
@@ -238,12 +240,14 @@ public class FormalActivity extends BaseActivity implements ViewOnItemClick {
                             HttpManager.getInstance().dologout(FormalActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getStudent(true, status));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.tag(" throwable " + throwable);
+                        loadView.setErrorShown(true, v -> getStudent(true, status));
                     }
                 });
     }

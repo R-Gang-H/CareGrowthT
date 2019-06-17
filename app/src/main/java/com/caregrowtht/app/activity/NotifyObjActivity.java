@@ -21,6 +21,7 @@ import com.caregrowtht.app.uitil.ResourcesUtils;
 import com.caregrowtht.app.user.MultipleItem;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
+import com.caregrowtht.app.view.LoadingFrameView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -57,6 +59,8 @@ public class NotifyObjActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.btn_send)
     Button btnSend;
+    @BindView(R.id.load_view)
+    LoadingFrameView loadView;
 
     private ArrayList<OrgNotifyEntity> orgNotifyList = new ArrayList<>();
     private OrgNotifyEntity notifyEntity;
@@ -103,6 +107,12 @@ public class NotifyObjActivity extends BaseActivity {
                         orgNotifyList.clear();
                         orgNotifyList.addAll(data.getData());
                         notifyObjAdapter.setData(data.getData(), type);
+
+                        if (orgNotifyList.size() > 0) {
+                            loadView.delayShowContainer(true);
+                        } else {
+                            loadView.setNoShown(true);
+                        }
                     }
 
                     @Override
@@ -112,6 +122,7 @@ public class NotifyObjActivity extends BaseActivity {
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(NotifyObjActivity.this);
                         } else {
+                            loadView.setErrorShown(true, v -> getNotifyObj(type));
                             U.showToast(errorMsg);
                         }
                     }
@@ -119,6 +130,7 @@ public class NotifyObjActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("NotifyObjActivity onError", throwable.getMessage());
+                        loadView.setErrorShown(true, v -> getNotifyObj(type));
                     }
                 });
         refreshLayout.finishLoadmore();

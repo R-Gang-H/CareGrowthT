@@ -6,7 +6,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.CourserTableActivity;
+import com.caregrowtht.app.activity.OrderTableActivity;
 import com.caregrowtht.app.activity.SchoolWorkLeagueActivity;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class CourseItemAdapter extends BaseAdapter {
 
     private Activity mActivity;
     private final ArrayList<CourseEntity> listData;
-    private int cardType = 1;//判断课程卡点击跳转 1:点击课表放大 2:选择排课班级里的成员
+    private int cardType = 1;//判断课程卡点击跳转 1:点击课表放大 2:选择排课班级里的成员 3:预约课提醒
     private int type = 1;//1：我的课表 2：机构课表 3：跨机构课表
 
     CourseItemAdapter(Activity mActivity, ArrayList<CourseEntity> listData, int cardType, int type) {
@@ -63,16 +66,17 @@ public class CourseItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_course, parent, false);
-        final CourseEntity userModel = listData.get(position);
+        final CourseEntity courseModel = listData.get(position);
         RelativeLayout rlCardFront = convertView.findViewById(R.id.rl_card_front);
         ImageView ivStatus = convertView.findViewById(R.id.check_course);
         TextView tvCourseName = convertView.findViewById(R.id.tv_course_name);
+        ImageView ivBlueG = convertView.findViewById(R.id.iv_blue_g);
         TextView tvStartTime = convertView.findViewById(R.id.tv_start_time);
         TextView tvEndTime = convertView.findViewById(R.id.tv_end_time);
         TextView tvOrgName = convertView.findViewById(R.id.tv_org_name);
 
-        rlCardFront.setBackgroundColor(Color.parseColor(userModel.getColor3()));
-        ivStatus.setBackgroundColor(Color.parseColor(userModel.getColor()));
+        rlCardFront.setBackgroundColor(Color.parseColor(courseModel.getColor3()));
+        ivStatus.setBackgroundColor(Color.parseColor(courseModel.getColor()));
 
         convertView.setOnClickListener(v -> {
             //点击课表放大
@@ -81,25 +85,40 @@ public class CourseItemAdapter extends BaseAdapter {
             if (cardType == 1) {
                 //点击课表放大
                 mActivity.startActivity(new Intent(mActivity, CourserTableActivity.class)
-                        .putExtra("userModel", userModel), options.toBundle());
+                        .putExtra("courseModel", courseModel), options.toBundle());
             } else if (cardType == 2) {
                 //选择排课班级成员
                 mActivity.startActivity(new Intent(mActivity, SchoolWorkLeagueActivity.class)
-                        .putExtra("userModel", userModel), options.toBundle());
+                        .putExtra("courseModel", courseModel), options.toBundle());
+            } else if (cardType == 3) {
+                //预约课提醒
+                mActivity.startActivity(new Intent(mActivity, OrderTableActivity.class)
+                        .putExtra("courseModel", courseModel), options.toBundle());
             }
 
         });
-        tvCourseName.setText(userModel.getCourseName());
-        long startTime = Long.parseLong(userModel.getStartAt());
-        long endTime = Long.parseLong(userModel.getEndAt());
+        tvCourseName.setText(courseModel.getCourseName());
+        long startTime = Long.parseLong(courseModel.getStartAt());
+        long endTime = Long.parseLong(courseModel.getEndAt());
         tvStartTime.setText(TimeUtils.getDateToString(startTime, "HH:mm"));
         tvEndTime.setText(TimeUtils.getDateToString(endTime, "HH:mm"));
-        if (type == 1 || type == 2) {
-            tvOrgName.setText(!TextUtils.isEmpty(userModel.getStudent()) ?
-                    String.format("%s..等", userModel.getStudent()) : "");
+
+        String isOrder = courseModel.getIsOrder();//1：该节课可以预约 2：该节课不可以预约
+
+        if (type == 3) {// 跨机构课表
+            tvOrgName.setText(courseModel.getOrgName());
+        } else if (type == 0) {// 预约课提醒
+            tvOrgName.setText(courseModel.getTeacher());
+            ivBlueG.setVisibility(isOrder.equals("1") ? View.VISIBLE : View.GONE);
         } else {
-            tvOrgName.setText(userModel.getOrgName());
+            tvOrgName.setText(!TextUtils.isEmpty(courseModel.getStudent()) ?
+                    String.format("%s..等", courseModel.getStudent()) : "");
         }
+        if (StrUtils.isNotEmpty(isOrder)) {
+            rlCardFront.setBackgroundColor(Color.parseColor(isOrder.equals("1") ? courseModel.getColor3() : courseModel.getColor4()));
+            ivStatus.setBackgroundColor(Color.parseColor(isOrder.equals("1") ? courseModel.getTintColor() : courseModel.getColor()));
+        }
+
         return convertView;
     }
 }

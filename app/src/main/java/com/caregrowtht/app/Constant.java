@@ -7,7 +7,6 @@ package com.caregrowtht.app;
  */
 public class Constant {
 
-
     // uid token
     public static String UID_TOKEN = "";
 
@@ -44,10 +43,10 @@ public class Constant {
     // 用户协议
     public static final String USER_AGREEMENT = "https://trialadmin.ilovegrowth.cn/index.php?s=/Home/user/agreement";
     // 调查问卷
-    public static final String BASE_QUEST = isTest ? "http://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
+    private static final String BASE_QUEST = isTest ? "http://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
     public static final String QUESTIONNAIRE = BASE_QUEST + "index.php?s=/Home/OtherInfo/answer/lftkc/%s/jke/%s/isApp/%s/isAndroid/%s.html";// orgid = lftkc /  uid = jke
     // 版本更新 Apk 地址
-    public static final String BASE_VERSION = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/";
+    private static final String BASE_VERSION = "https://raw.githubusercontent.com/1373939387/MobilePlay/master/";
     public static final String VERSION_PATH = BASE_VERSION + (isTest ? "version_test_update.txt" : "version_update.txt");
 
 
@@ -71,12 +70,6 @@ public class Constant {
     public static String MY_ACTIVITY = BASE_API + "myActivity";
     // 23.获取活动报名详情
     public static String GET_JOININFOACTIVITY = BASE_API + "activityJoinInfo";
-    // 24.获取leads管理页筛选条件
-    public static String GET_LEADSTYPE = BASE_API + "leadsType";
-    // 26.获取潜在学生（临时学生）详情
-    public static String GET_LEADSINFO = BASE_API + "leadsInfo";
-    // 27.添加备注
-    public static String GET_ADDLEADSLOG = BASE_API + "AddleadsLog";
     // 28.二维码界面中添加试听信息
     public static String GET_ADDLEADS = BASE_API + "Addleads";
     // 33. 获取兴趣圈轮播图
@@ -99,8 +92,6 @@ public class Constant {
     public static String GET_ACTION_INFO = BASE_API + "getActivityInfo";
     // 48. 获取送过花的兴趣圈id
     public static String MY_STAR_CIRCLE_ID = BASE_API + "myStarCircleId";
-    // 49. 获取收藏过的兴趣圈id
-    public static String MY_COLLECT_CIRCLE_ID = BASE_API + "myCollectCircleId";
     // 51 给App提反馈
     public static String APP_FEEDBACK = BASE_API + "appfeedback";
     // 53.关注或者取消关注活动
@@ -145,10 +136,6 @@ public class Constant {
     public static String GETSTUCOURSEFEEDBACK_V2 = BASE_API + "getStuCourseFeedback_v2";
     // 16.获取课时统计 / 29.获取课程记录列表 courseStat
     public static String GET_COURSESTAT = BASE_API + "getRecord_v2";
-    // 17. 获取兴趣圈列表
-    public static String GETCHILDCIRCLE_V2 = BASE_API + "getchildCircle_v2";
-    // 18.获取leads管理页学生列表 / 25.获取leads管理页学生列表
-    public static String GET_LEADSLIST = BASE_API + "leadsList";
     // 19.发布内容
     public static String ADDPERFOM_V2 = BASE_API + "addPerfom_v2";
     // 20.标星/取消标星学员
@@ -244,7 +231,7 @@ public class Constant {
     // 64.给已有的排课增加课程 (加课) 用76.加课
     // 65.获取某节课，某个孩子的课程日志
     public static String GETCHILDLESLOG = BASE_API + "getChildLesLog";
-    // 67. 人工消课
+    // 67. 人工消课| 96.人工消课
     public static String PEOPLECOSTLES = BASE_API + "peopleCostLes";
     // 68. 删除教室
     public static String DELCLASSROOM = BASE_API + "delClassroom";
@@ -272,17 +259,17 @@ public class Constant {
     public static String GETORGROLE = BASE_API + "getOrgRole";
     // 上传签到课时表
     public static String UPLOADSIGNSHEETIMG = BASE_API + "uploadSignSheetImg";
-    // 25. 激活/确认非活跃/审核不通过
+    // 25. 激活/确认非活跃/审核不通过(机构端接口)
     public static String CHANGESTUDENTSTATUS = BASE_API + "changeStudentStatus";
     // 搜索机构
     public static String SEARCHORG = BASE_API + "searchOrg";
     // 80.删除某节课的签到表
     public static String DELLESSIGNSHEET = BASE_API + "delLesSignSheet";
-    // 获取机构设置
+    // 82.获取机构端系统配置
     public static String GETORGSETTING = BASE_API + "getOrgSetting";
     // 检查学员是否已达上限
     public static String CHECKSTUDENTNUM = BASE_API + "checkStudentNum";
-    // 删除课程反馈
+    // 83.删除课程反馈
     public static String DELCIRCLE = BASE_API + "delCircle";
     // 产品价格列表
     public static String GETPRODUCTS = BASE_API + "getProducts";
@@ -302,19 +289,26 @@ public class Constant {
     public static String GETLEAVELIST = BASE_API + "getLeaveList";
     // 88.获取机构 日报列表
     public static String GETDAILY = BASE_API + "getDaily";
+    // 89.获取机构 出现空位的课程列表
+    public static String GETVACANCY = BASE_API + "getVacancy";
+    // 90.获取机构 开课人数小于最小开课人数的课程列表
+    public static String GETINSUFFICIENT = BASE_API + "getInsufficient";
+    // 91.获取机构 【人工消课提醒】列表
+    public static String GETORGMANUALLIST = BASE_API + "getOrgManualList";
+    // 92.查看某节课某个学员的消课情况
+    public static String GETLESSONCARDLOG = BASE_API + "getLessonCardLog";
+    // 93. 获取机构课预约的课程
+    public static String GETCOURSETIMETABLE = BASE_API + "getCourseTimetable";
+    // 94. 设置某节课是否可约
+    public static String SETCOURSECONFIRMED = BASE_API + "setCourseConfirmed";
+    // 95.获取学员能消某节课的课时卡
+    public static String GETSTUDENTCOURSECARD = BASE_API + "getStudentCourseCard";
+    // 97.获取机构所有的课程反馈
+    public static String GETORGCIRCLE = BASE_API + "getOrgCircle";
 
     // 获取支付宝订单信息
-    public static String BASE_THERINOF = isTest ? "https://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
+    private static String BASE_THERINOF = isTest ? "https://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
     public static String GETOTHERINFO = BASE_THERINOF + "index.php?s=/Home/OtherInfo/appSetOrder";
-
-    // origin array
-    public static String[] originArray = {"老学员推荐", "课程顾问招生", "爱成长引流", "进店咨询", "地推传单", "资源互换", "有偿获取", "其他"};
-
-    // status array
-    public static String[] statusArray = {"新建立", "从未联系上", "建立联系", "待试课", "已试课", "已经拒绝", "已办卡"};
-
-    // call array
-    public static String[] callArray = {"微信", "Email", "面谈", "电话", "其他"};
 
     // week array
     public static String[] weekArr = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};

@@ -1,5 +1,7 @@
 package com.caregrowtht.app.uitil;
 
+import com.android.library.utils.DateUtil;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -141,6 +143,66 @@ public class TimeUtils {
     }
 
     /**
+     * Get what day of week.
+     * 得到星期几
+     *
+     * @param date 时间 yyyy-MM-dd
+     * @return
+     */
+    private int getDayOfWeek(String date) {
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return cal.get(Calendar.DAY_OF_WEEK) - 1 == 0 ? 7 : cal.get(Calendar.DAY_OF_WEEK) - 1;
+    }
+
+    /**
+     * Get what day of week.
+     *
+     * @param timeStamp 时间戳 1520000000
+     * @return
+     */
+    public static int getDayOfWeek(Long timeStamp) {
+
+        String date = DateUtil.getDate(timeStamp, "yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return cal.get(Calendar.DAY_OF_WEEK) - 1 == 0 ? 7 : cal.get(Calendar.DAY_OF_WEEK) - 1;
+    }
+
+    /**
+     * Get what day of the week is the selected day.
+     *
+     * @param type  时间格式
+     * @param which 1开始 which-1
+     * @return 一周中的哪一天是被选中的一天 时间
+     */
+    public static String getDayOfWeek(String type, int which, String today) {
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int d;
+        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
+            d = -6;
+        } else {
+            d = 2 - cal.get(Calendar.DAY_OF_WEEK);
+        }
+        cal.add(Calendar.DAY_OF_WEEK, d);
+        cal.add(Calendar.DAY_OF_WEEK, which - 1);
+        return new SimpleDateFormat(type).format(cal.getTime());
+    }
+
+    /**
      * <pre>
      * 根据指定的日期字符串获取星期几
      * </pre>
@@ -187,6 +249,32 @@ public class TimeUtils {
                 break;
         }
         return week;
+    }
+
+    /**
+     * 获取开始-结束时间范围内的时间戳
+     */
+    public static class GetStartEndTime {
+        private long withinDay;
+        private long yesTerday;
+
+        public long getWithinDay() {
+            return withinDay;
+        }
+
+        public long getYesTerday() {
+            return yesTerday;
+        }
+
+        public GetStartEndTime invoke(int start, int end) {
+            withinDay = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                    DateUtil.getDate(getCurTimeLong() / 1000, "yyyy-MM-dd 00:00")
+                    , start, "yyyy-MM-dd 00:00"), "yyyy-MM-dd 00:00");
+            yesTerday = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                    DateUtil.getDate(getCurTimeLong() / 1000, "yyyy-MM-dd 24:00")
+                    , end, "yyyy-MM-dd 24:00"), "yyyy-MM-dd 24:00");
+            return this;
+        }
     }
 
     /**

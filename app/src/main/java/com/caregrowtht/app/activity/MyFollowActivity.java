@@ -120,11 +120,11 @@ public class MyFollowActivity extends BaseActivity implements ViewOnItemClick {
     private void setData(BaseDataModel<OrgEntity> model, boolean isClear) {
         if (isClear) {
             mAdapter.setData(model.getData(), true);
+            mRecyclerView.refreshComplete();
         } else {
             mAdapter.setData(model.getData(), false);
+            mRecyclerView.loadMoreComplete();
         }
-        mRecyclerView.refreshComplete();
-        mRecyclerView.loadMoreComplete();
     }
 
 

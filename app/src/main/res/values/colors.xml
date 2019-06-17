@@ -10,6 +10,7 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#ff0000</color>
     <color name="reddel">#ff493f</color>
+    <color name="f34b4b">#F34B4B</color>
     <color name="red_pressed">#FF6666</color>
     <color name="transparent">#00000000</color>
     <color name="transparent95">#95000000</color>
@@ -73,6 +74,7 @@
     <color name="col_c9">#c9c9c9</color>
     <color name="color_3">#333333</color>
     <color name="color_5">#555555</color>
+    <color name="color_a5">#A5A5A5</color>
     <color name="col_e0">#e0e0e0</color>
     <color name="color_9">#999999</color>
     <color name="color_8">#888888</color>

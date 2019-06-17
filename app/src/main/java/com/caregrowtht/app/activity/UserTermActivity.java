@@ -158,6 +158,7 @@ public class UserTermActivity extends BaseActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         if (intent == null || mWebView == null || intent.getData() == null)
             return;
         mWebView.loadUrl(intent.getData().toString());

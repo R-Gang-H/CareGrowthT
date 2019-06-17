@@ -41,8 +41,6 @@ public class OrgIntroFragment extends BaseFragment {
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
-        //解决NetworkOnMainThreadException异常
-        ImgLabelUtils.getInstance().struct();
     }
 
     @Override

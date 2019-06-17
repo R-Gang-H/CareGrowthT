@@ -145,12 +145,14 @@ public class CourseVsActivity extends BaseActivity implements ViewOnItemClick {
                             HttpManager.getInstance().dologout(CourseVsActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getOrgExistCard(status));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.tag(" throwable " + throwable.getMessage());
+                        loadView.setErrorShown(true, v -> getOrgExistCard(status));
                     }
                 });
     }

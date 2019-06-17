@@ -225,7 +225,7 @@ dependencies {
     //jg包
     implementation 'com.tencent.jg:jg:1.1'
     //wup包
-//    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+    implementation 'com.tencent.wup:wup:1.0.0.E-Release'
     //mid包，minSdkVersion 14
     implementation 'com.tencent.mid:mid:4.0.7-Release'
 

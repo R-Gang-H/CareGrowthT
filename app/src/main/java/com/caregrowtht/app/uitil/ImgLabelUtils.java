@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.text.Html;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.caregrowtht.app.MyApplication;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -142,22 +140,6 @@ public class ImgLabelUtils {
             Log.i("RG", "url---?>>>" + url);
             return drawable;
         }
-    }
-
-    //解决NetworkOnMainThreadException异常
-    public void struct() {
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork() // or
-                // .detectAll()
-                // for
-                // all
-                // detectable
-                // problems
-                .penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
-                .penaltyLog() // 打印logcat
-                .penaltyDeath().build());
     }
 
     /**

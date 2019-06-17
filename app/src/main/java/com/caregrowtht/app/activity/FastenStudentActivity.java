@@ -174,8 +174,8 @@ public class FastenStudentActivity extends BaseActivity implements ContactsAdapt
                             HttpManager.getInstance().dologout(FastenStudentActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getCardChild());
                         }
-                        loadView.setErrorShown(true, v -> getCardChild());
                     }
 
                     @Override

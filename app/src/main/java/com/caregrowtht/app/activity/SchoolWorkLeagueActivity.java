@@ -2,18 +2,18 @@ package com.caregrowtht.app.activity;
 
 import android.content.Intent;
 import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GradientUtils;
@@ -60,11 +60,14 @@ public class SchoolWorkLeagueActivity extends BaseActivity {
     @Override
     public void initView() {
         GradientUtils.setColor(this, R.drawable.mine_title_bg, true);
+        //实现震动
+        Vibrator vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
+        vibrator.vibrate(60);
     }
 
     @Override
     public void initData() {
-        userModel = (CourseEntity) getIntent().getSerializableExtra("userModel");
+        userModel = (CourseEntity) getIntent().getSerializableExtra("courseModel");
         getLessonHuman();
     }
 
@@ -108,7 +111,7 @@ public class SchoolWorkLeagueActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable throwable) {
-
+                        LogUtils.d("SchoolWorkActivity onFail", throwable.getMessage());
                     }
                 });
     }

@@ -10,6 +10,7 @@ import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.MessageEntity;
+import com.caregrowtht.app.model.OrgNotifyEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.ImgLabelUtils;
@@ -46,6 +47,7 @@ public class NotifityInfoActivity extends BaseActivity {
 
     private MessageEntity msgEntity;
     private String orgId;
+    private OrgNotifyEntity notifyEntity;
 
     @Override
     public int getLayoutId() {
@@ -54,29 +56,46 @@ public class NotifityInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        tvTitle.setText("动态详情");
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        notifyEntity = (OrgNotifyEntity) getIntent().getSerializableExtra("notifyEntity");
         if (msgEntity != null) {
             orgId = msgEntity.getOrgId();
             UserManager.getInstance().setOrgId(orgId);
+            boolean isReceipt, isShowOrg, isShowNotify = false, isReceipt1;
+            String orgName = msgEntity.getOrgName(), time, content;
+            if (notifyEntity != null) {
+                //15：我的机构通知/是否需要回执 1：不需要回执 2：待回执 3：已经回执
+                isReceipt = TextUtils.equals(notifyEntity.getReceipt(), "2");
+                isShowOrg = msgEntity.getType().equals("15") && isReceipt;
+                isReceipt1 = TextUtils.equals(notifyEntity.getReceipt(), "3");
+
+                time = notifyEntity.getUpdateAt();
+                content = notifyEntity.getContent();
+
+            } else {
+                //4,5：机构和系统发出的通知/是否需要回执 1：不需要回执 2：待回执 3：已经回执
+                isReceipt = TextUtils.equals(msgEntity.getReceipt(), "2");
+                isShowOrg = msgEntity.getType().equals("4") && isReceipt;
+                isShowNotify = msgEntity.getType().equals("5") && isReceipt;
+                isReceipt1 = TextUtils.equals(msgEntity.getReceipt(), "3");
+
+                time = msgEntity.getTime();
+                content = msgEntity.getContent();
+            }
+            tvReceipt.setVisibility(isReceipt1 ? View.VISIBLE : View.GONE);// 已经回执
+            btnSend.setVisibility((isShowOrg || isShowNotify) ? View.VISIBLE : View.GONE);
+
+            tvOrgName.setText(orgName);
+            tvPublishTime.setText(TimeUtils.GetFriendlyTime(time));
+            tvNotifityDetail.setText(content);
         } else {
-            orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
+            orgId = UserManager.getInstance().getOrgId();
         }
-        tvTitle.setText("动态详情");
-        //4,5：机构和系统发出的通知/是否需要回执 1：不需要回执 2：待回执 3：已经回执
-        boolean isReceipt = TextUtils.equals(msgEntity.getReceipt(), "2");
-        boolean isShowOrg = msgEntity.getType().equals("4") && isReceipt;
-        boolean isShowNotify = msgEntity.getType().equals("5") && isReceipt;
-        boolean isReceipt1 = TextUtils.equals(msgEntity.getReceipt(), "3");
-        tvReceipt.setVisibility(isReceipt1 ? View.VISIBLE : View.GONE);// 已经回执
-        btnSend.setVisibility((isShowOrg || isShowNotify) ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void initData() {
-        //解决NetworkOnMainThreadException异常
-        ImgLabelUtils.getInstance().struct();
-
-        setData(msgEntity);
     }
 
     @OnClick({R.id.rl_back_button, R.id.btn_send})
@@ -120,15 +139,4 @@ public class NotifityInfoActivity extends BaseActivity {
                 });
     }
 
-    /**
-     * 通知详情 数据处理
-     * haoruigang on 2018-12-5 17:46:42
-     *
-     * @param data
-     */
-    public void setData(MessageEntity data) {
-        tvOrgName.setText(data.getOrgName());
-        tvPublishTime.setText(TimeUtils.GetFriendlyTime(data.getTime()));
-        tvNotifityDetail.setText(data.getContent());
-    }
 }

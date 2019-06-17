@@ -46,6 +46,9 @@ public class MessageEntity implements Serializable {
 
     private String createAt;
 
+    private String childNum;
+    private String minCount;
+
     public String getEventId() {
         return eventId;
     }
@@ -316,5 +319,21 @@ public class MessageEntity implements Serializable {
 
     public void setCreateAt(String createAt) {
         this.createAt = createAt;
+    }
+
+    public String getChildNum() {
+        return childNum;
+    }
+
+    public void setChildNum(String childNum) {
+        this.childNum = childNum;
+    }
+
+    public String getMinCount() {
+        return minCount;
+    }
+
+    public void setMinCount(String minCount) {
+        this.minCount = minCount;
     }
 }

@@ -16,4 +16,10 @@
         android:layout_below="@id/toolbar"
         tools:listitem="@layout/item_audit" />
 
+    <com.caregrowtht.app.view.LoadingFrameView
+        android:id="@+id/load_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar" />
+
 </RelativeLayout>

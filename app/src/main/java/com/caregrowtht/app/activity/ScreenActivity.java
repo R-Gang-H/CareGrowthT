@@ -57,7 +57,6 @@ public class ScreenActivity extends BaseActivity implements ViewOnItemClick {
     private String[] timeFrame = {"今天", "7天", "30天", "90天"};
     private ScreenAdapter screenAdapter;
 
-    private long todayTime;// 今天的时间戳
     private String isMy = "1";// 1 我的课程 2机构课程
     private String today = DateUtil.getNetTime("yyyy-MM-dd");
     private String selectDay = DateUtil.getNetTime("yyyy-MM-dd");
@@ -76,20 +75,21 @@ public class ScreenActivity extends BaseActivity implements ViewOnItemClick {
         screenAdapter = new ScreenAdapter(Arrays.asList(timeFrame), this, this);
         rvTimeFrame.setAdapter(screenAdapter);
         tvMyCourse.setSelected(true);
-        screenAdapter.getSelect(0);
     }
 
     @Override
     public void initData() {
         showType = getIntent().getStringExtra("type");
         status = getIntent().getStringExtra("status");
-        if (showType.equals("9")) {// 9：有学员请假汇总动态
+        if (showType.equals("9") || showType.equals("11")) {// 9：有学员请假汇总动态| 11：每日日报汇总动态
             rlTimeFrame.setVisibility(View.GONE);
+            timeFrame = new String[]{"今天", "7天", "14天", "30天"};
+            screenAdapter.setData(Arrays.asList(timeFrame));
         } else {
             tvMonth.setVisibility(View.GONE);
         }
         orgId = UserManager.getInstance().getOrgId();
-        todayTime = TimeUtils.getCurTimeLong() / 1000;
+        screenAdapter.getSelect(0);
         getTodayTime();
     }
 
@@ -181,39 +181,47 @@ public class ScreenActivity extends BaseActivity implements ViewOnItemClick {
     @Override
     public void setOnItemClickListener(View view, int position) {
         screenAdapter.getSelect(position);
-        if (showType.equals("9")) {// 9：有学员请假汇总动态
+        if (showType.equals("9") || showType.equals("11")) {// 9：有学员请假汇总动态| 11：每日日报汇总动态
             rlTimeFrame.setVisibility(View.GONE);
         } else {
             tvMonth.setVisibility(View.GONE);
         }
-        GetStartEndTime getStartEndTime;
+        TimeUtils.GetStartEndTime getStartEndTime;
         switch (position) {
             case 0:
                 getTodayTime();
                 break;
             case 1:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new GetStartEndTime().invoke(1, 7);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(1, 7);
                 } else {
-                    getStartEndTime = new GetStartEndTime().invoke(-7, -1);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-7, -1);
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();
                 break;
             case 2:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new GetStartEndTime().invoke(1, 30);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(1, 14);
                 } else {
-                    getStartEndTime = new GetStartEndTime().invoke(-30, -1);
+                    if (showType.equals("9") || showType.equals("11")) {// 9：有学员请假汇总动态| 11：每日日报汇总动态
+                        getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-14, -1);
+                    } else {
+                        getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-30, -1);
+                    }
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();
                 break;
             case 3:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new GetStartEndTime().invoke(1, 90);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(1, 30);
                 } else {
-                    getStartEndTime = new GetStartEndTime().invoke(-90, -1);
+                    if (showType.equals("9") || showType.equals("11")) {// 9：有学员请假汇总动态| 11：每日日报汇总动态
+                        getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-30, -1);
+                    } else {
+                        getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-90, -1);
+                    }
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();
@@ -226,26 +234,4 @@ public class ScreenActivity extends BaseActivity implements ViewOnItemClick {
         endTime = DateUtil.getStringToDate(TimeUtils.getCurTimeLong("yyyy-MM-dd 24:00"), "yyyy-MM-dd HH:mm");
     }
 
-    private class GetStartEndTime {
-        private long withinDay;
-        private long yesTerday;
-
-        long getWithinDay() {
-            return withinDay;
-        }
-
-        long getYesTerday() {
-            return yesTerday;
-        }
-
-        GetStartEndTime invoke(int start, int end) {
-            withinDay = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                    DateUtil.getDate(todayTime, "yyyy-MM-dd 00:00")
-                    , start, "yyyy-MM-dd 00:00"), "yyyy-MM-dd 00:00");
-            yesTerday = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                    DateUtil.getDate(todayTime, "yyyy-MM-dd 24:00")
-                    , end, "yyyy-MM-dd 24:00"), "yyyy-MM-dd 24:00");
-            return this;
-        }
-    }
 }

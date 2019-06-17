@@ -1,14 +1,16 @@
 package com.caregrowtht.app.activity;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.AuditAdapter;
 import com.caregrowtht.app.model.StudentEntity;
+import com.caregrowtht.app.view.LoadingFrameView;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,8 @@ public class AuditActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.load_view)
+    LoadingFrameView loadView;
 
     private ArrayList<StudentEntity> auditData = new ArrayList<>();
     private AuditAdapter auditAdapter;
@@ -54,6 +58,11 @@ public class AuditActivity extends BaseActivity {
     public void initData() {
         auditData = (ArrayList<StudentEntity>) getIntent().getSerializableExtra("auditData");
         auditAdapter.setData(auditData);
+        if (auditData.size() > 0) {
+            loadView.delayShowContainer(true);
+        } else {
+            loadView.setNoShown(true);
+        }
     }
 
     @OnClick(R.id.rl_back_button)

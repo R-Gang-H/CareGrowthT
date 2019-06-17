@@ -9,11 +9,43 @@
         android:id="@+id/toolbar"
         layout="@layout/base_title_bar" />
 
+    <LinearLayout
+        android:id="@+id/ll_tob"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_38"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_size_14"
+        android:background="@drawable/shape_state_bg"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_my_relase"
+            android:layout_width="@dimen/margin_size_100"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_blue_levae"
+            android:gravity="center"
+            android:text="我发布的通知"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="@dimen/margin_size_100"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@color/blueLight"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/ll_tob">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,8 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_size_10"
-                android:layout_marginRight="@dimen/margin_size_10"
                 android:layout_marginTop="@dimen/margin_size_10"
+                android:layout_marginRight="@dimen/margin_size_10"
                 android:paddingBottom="@dimen/margin_size_15"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,15 +78,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawablePadding="8dp"
                     android:drawableTop="@mipmap/ic_empty"
+                    android:drawablePadding="8dp"
                     android:gravity="center" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@id/iv_empty"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/margin_size_60"
                     android:src="@mipmap/ic_line" />
 
@@ -66,10 +98,10 @@
         android:id="@+id/iv_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/margin_size_25"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_25"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_add_more" />
 

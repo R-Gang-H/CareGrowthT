@@ -25,7 +25,6 @@ import butterknife.BindView;
  * Created by haoruigang on 2018/4/26 18:02.
  * 学员情况
  */
-
 public class StudentSituatAdapter extends XrecyclerAdapter {
 
     @BindView(R.id.tv_title)

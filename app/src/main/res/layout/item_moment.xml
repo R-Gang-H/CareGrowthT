@@ -89,11 +89,11 @@
                 android:id="@+id/tv_child_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_size_10"
                 android:layout_marginTop="@dimen/margin_size_10"
                 android:text="郝瀚瀚"
                 android:textColor="@color/blueLight"
                 android:textSize="@dimen/text_size_16"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -107,14 +107,16 @@
                 android:text="今天练琴练的还不错。持续了15分钟。"
                 android:textColor="@color/gray2"
                 android:textSize="@dimen/text_size_15"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_child_name" />
 
             <LinearLayout
                 android:id="@+id/ll_atter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_size_10"
+                android:layout_marginStart="@dimen/margin_size_10"
                 android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
             <com.caregrowtht.app.view.ninegrid.NineGridTestLayout
@@ -135,7 +137,7 @@
                     android:layout_width="27dp"
                     android:layout_height="27dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_size_10"
+                    android:layout_marginStart="@dimen/margin_size_10"
                     android:src="@mipmap/ic_per_avatar_default"
                     android:visibility="gone" />
 
@@ -143,8 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_size_10"
-                    android:layout_toRightOf="@id/iv_author_avatar"
+                    android:layout_marginStart="@dimen/margin_size_10"
+                    android:layout_toEndOf="@id/iv_author_avatar"
                     android:orientation="vertical">
 
                     <TextView

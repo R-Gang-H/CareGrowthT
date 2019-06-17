@@ -16,13 +16,11 @@ import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.view.LoadingFrameView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -123,8 +121,8 @@ public class CourseRecordActivity extends BaseActivity {
     private void getCourseStat(int pageIndex, boolean isClear) {
         loadView.setProgressShown(true);
         //haoruigang on 2018-4-24 18:45:58 获取课程记录
-        String startDate = getDayOfWeek("yyyy-MM-dd", 1);
-        String endDate = getDayOfWeek("yyyy-MM-dd", 7);
+        String startDate = TimeUtils.getDayOfWeek("yyyy-MM-dd", 1, selectDay);
+        String endDate = TimeUtils.getDayOfWeek("yyyy-MM-dd", 7, selectDay);
         //haoruigang on 2018-4-24 19:04:15 课程记录
         HttpManager.getInstance().doCourseStat("CourseRecordActivity", orgId, startDate, endDate, pageIndex, 20,
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {
@@ -144,9 +142,11 @@ public class CourseRecordActivity extends BaseActivity {
                                 loadView.delayShowContainer(true);
                             }
                         }
-
-                        recyclerView.loadMoreComplete();
-                        recyclerView.refreshComplete();
+                        if (isClear) {
+                            recyclerView.refreshComplete();
+                        } else {
+                            recyclerView.loadMoreComplete();
+                        }
                     }
 
                     @Override
@@ -165,33 +165,6 @@ public class CourseRecordActivity extends BaseActivity {
                         loadView.setErrorShown(true, v -> getCourseStat(1, true));
                     }
                 });
-    }
-
-    /**
-     * Get what day of the week is the selected day.
-     * 一周中的哪一天是被选中的一天
-     *
-     * @param type
-     * @param which
-     * @return
-     */
-    private String getDayOfWeek(String type, int which) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(selectDay));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        int d = 0;
-        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
-            d = -6;
-        } else {
-            d = 2 - cal.get(Calendar.DAY_OF_WEEK);
-        }
-        cal.add(Calendar.DAY_OF_WEEK, d);
-        cal.add(Calendar.DAY_OF_WEEK, which - 1);
-        String day = new SimpleDateFormat(type).format(cal.getTime());
-        return day;
     }
 
     @Override

@@ -31,11 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:drawablePadding="2dp"
             android:drawableTop="@drawable/selector_btn_state"
+            android:drawablePadding="2dp"
             android:gravity="center"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:text="动态"
             android:textColor="@drawable/selector_color_main_btn"
             android:textSize="@dimen/text_size_11" />
@@ -46,29 +46,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:drawablePadding="2dp"
             android:drawableTop="@drawable/selector_btn_home"
+            android:drawablePadding="2dp"
             android:gravity="center"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:text="工作"
             android:textColor="@drawable/selector_color_main_btn"
             android:textSize="@dimen/text_size_11" />
-
-        <TextView
-            android:id="@+id/ll_moment_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/selector_btn_moment"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
-            android:text="兴趣圈"
-            android:textColor="@drawable/selector_color_main_btn"
-            android:textSize="@dimen/text_size_11"
-            android:visibility="gone" />
 
     </LinearLayout>
 

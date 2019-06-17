@@ -6,26 +6,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.BaseActivity;
 import com.caregrowtht.app.activity.CourseRecordActivity;
 import com.caregrowtht.app.adapter.CourseAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
+import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -61,11 +63,11 @@ public class MyCourseFragment extends BaseFragment {
     @Override
     public void initView(View view, Bundle savedInstanceState) {
 
-        String mondayOfWeek = getDayOfWeek("MM月dd日", 1);
-        String sundayOfWeek = getDayOfWeek("MM月dd日", 7);
+        String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
+        String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
         tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
 
-        initRecyclerView(rvCourse, false);
+        ((BaseActivity) Objects.requireNonNull(getActivity())).initRecyclerView(rvCourse, false);
         //禁用滑动事件
         rvCourse.setNestedScrollingEnabled(false);
         //添加Android自带的分割线
@@ -82,7 +84,6 @@ public class MyCourseFragment extends BaseFragment {
         }
         mAdapter = new CourseAdapter(getActivity(), R.layout.item_course_list, strings, today, cardType);
         rvCourse.setAdapter(mAdapter);
-        scroll2Today();
     }
 
     @Override
@@ -97,56 +98,6 @@ public class MyCourseFragment extends BaseFragment {
         getWeekCourseTable();
     }
 
-    /**
-     * The horizontal recyclerView should be scroll to today.
-     */
-    private void scroll2Today() {
-        rvCourse.scrollToPosition(getDayOfWeek(selectDay) - 1);
-    }
-
-    /**
-     * Get what day of week.
-     * 得到星期几
-     *
-     * @param date
-     * @return
-     */
-    private int getDayOfWeek(String date) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return cal.get(Calendar.DAY_OF_WEEK) - 1 == 0 ? 7 : cal.get(Calendar.DAY_OF_WEEK) - 1;
-    }
-
-    /**
-     * Get what day of the week is the selected day.
-     * 一周中的哪一天是被选中的一天
-     *
-     * @param type
-     * @param which
-     * @return
-     */
-    private String getDayOfWeek(String type, int which) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(selectDay));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        int d;
-        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
-            d = -6;
-        } else {
-            d = 2 - cal.get(Calendar.DAY_OF_WEEK);
-        }
-        cal.add(Calendar.DAY_OF_WEEK, d);
-        cal.add(Calendar.DAY_OF_WEEK, which - 1);
-        return new SimpleDateFormat(type).format(cal.getTime());
-    }
-
     @OnClick({R.id.tv_tswk, R.id.iv_last_week, R.id.iv_next_week, R.id.iv_magnifier})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -154,16 +105,16 @@ public class MyCourseFragment extends BaseFragment {
                 selectDate();
                 break;
             case R.id.iv_last_week:
-                selectDay = getDayOfWeek("yyyy-MM-dd", 0);
-                String mondayOfWeek = getDayOfWeek("MM月dd日", 1);
-                String sundayOfWeek = getDayOfWeek("MM月dd日", 7);
+                selectDay = TimeUtils.getDayOfWeek("yyyy-MM-dd", 0, selectDay);
+                String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
+                String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
                 tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
                 getWeekCourseTable();
                 break;
             case R.id.iv_next_week:
-                selectDay = getDayOfWeek("yyyy-MM-dd", 8);
-                String monday = getDayOfWeek("MM月dd日", 1);
-                String sunday = getDayOfWeek("MM月dd日", 7);
+                selectDay = TimeUtils.getDayOfWeek("yyyy-MM-dd", 8, selectDay);
+                String monday = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
+                String sunday = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
                 tvTswk.setText(String.format("%s-%s", monday, sunday));
                 getWeekCourseTable();
                 break;
@@ -184,8 +135,8 @@ public class MyCourseFragment extends BaseFragment {
         new TimePickerBuilder(mContext, (date, v) -> {
             selectDay = DateUtil.getDate(date.getTime() / 1000, "yyyy-MM-dd");
 
-            String mondayOfWeek = getDayOfWeek("MM月dd日", 1);
-            String sundayOfWeek = getDayOfWeek("MM月dd日", 7);
+            String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
+            String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
             tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
             getWeekCourseTable();
         })
@@ -197,8 +148,8 @@ public class MyCourseFragment extends BaseFragment {
 
     private void getWeekCourseTable() {
         orgId = UserManager.getInstance().getOrgId();
-        String startDate = getDayOfWeek("yyyy-MM-dd 00:00", 1);
-        String endDate = getDayOfWeek("yyyy-MM-dd 24:00", 7);
+        String startDate = TimeUtils.getDayOfWeek("yyyy-MM-dd 00:00", 1, selectDay);
+        String endDate = TimeUtils.getDayOfWeek("yyyy-MM-dd 24:00", 7, selectDay);
         //haoruigang on 2018-4-23 17:40:26 获取首页课程表
         HttpManager.getInstance().doTeacherLessonTable("MyCourseFragment", startDate, endDate, type, orgId,
                 new HttpCallBack<BaseDataModel<CourseEntity>>() {

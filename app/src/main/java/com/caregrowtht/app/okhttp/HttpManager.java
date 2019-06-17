@@ -299,15 +299,6 @@ public class HttpManager {
     }
 
     /**
-     * zhoujie on 2018-4-9 17:27:04
-     * 49. 获取收藏过的兴趣圈id
-     */
-    public void getMyCollectCircleId(String tag, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.MY_COLLECT_CIRCLE_ID, map, httpCallBack);
-    }
-
-    /**
      * haoruigang on 2018-4-4 17:19:46
      * 获取机构活动
      *
@@ -325,55 +316,6 @@ public class HttpManager {
         map.put("pageIndex", pageIndex);
         map.put("pageSize", pageSize);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.ORG_ACTION, map, httpCallBack);
-    }
-
-    /**
-     * haoruigang on 2018-5-4 10:52:13
-     * 24.获取leads管理页筛选条件
-     *
-     * @param tag
-     * @param orgId
-     * @param httpCallBack
-     */
-    public void doLeadsType(String tag, String orgId, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("orgId", orgId);
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_LEADSTYPE, map, httpCallBack);
-    }
-
-    /**
-     * haoruigang on 2018-5-4 10:53:26
-     * 25.获取leads管理页学生列表
-     *
-     * @param tag
-     * @param orgId
-     * @param sortWay
-     * @param originId
-     * @param statusId
-     * @param httpCallBack
-     */
-    public void doLeadsList(String tag, String orgId, String sortWay, String originId, String statusId, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("orgId", orgId);
-        map.put("sortWay", sortWay);
-        map.put("originId", originId);
-        map.put("statusId", statusId);
-        map.put("counselor", "");
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_LEADSLIST, map, httpCallBack);
-    }
-
-    /**
-     * haoruigang on 2018-5-4 18:41:23
-     * 26.获取潜在学生（临时学生）详情
-     *
-     * @param tag
-     * @param stuId
-     * @param httpCallBack
-     */
-    public void doLeadsInfo(String tag, String stuId, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("stuId", stuId);
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_LEADSINFO, map, httpCallBack);
     }
 
     /**
@@ -435,26 +377,6 @@ public class HttpManager {
     public void doGetReportType(String tag, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_REPORTTYPE, map, httpCallBack);
-    }
-
-    /**
-     * haoruigang on 2018-5-21 19:33:04
-     * 27.添加备注
-     *
-     * @param tag
-     * @param stuId
-     * @param mark
-     * @param commWay
-     * @param status
-     * @param httpCallBack
-     */
-    public void doAddleadsLog(String tag, String stuId, String mark, int commWay, int status, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("stuId", stuId);
-        map.put("mark", mark + "");
-        map.put("commWay", commWay + "");
-        map.put("status", status + "");
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_ADDLEADSLOG, map, httpCallBack);
     }
 
     /**
@@ -715,8 +637,6 @@ public class HttpManager {
     public void doGetCardLog(String tag, String cardId, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("cardId", cardId);
-//        map.put("page", page);
-//        map.put("pageSize", "20");
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.CARDLOG, map, httpCallBack);
     }
 
@@ -756,21 +676,6 @@ public class HttpManager {
         map.put("page", page + "");
         map.put("pageSize", pageSize + "");
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_COURSESTAT, map, httpCallBack);
-    }
-
-    /**
-     * haoruigang on 2018-4-18 14:40:36
-     * 17. 获取兴趣圈列表
-     *
-     * @param tag
-     * @param pageIndex
-     * @param httpCallBack
-     */
-    public void doCircleList(String tag, int pageIndex, HttpCallBack httpCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("page", pageIndex + "");
-        map.put("pageSize", "20");
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETCHILDCIRCLE_V2, map, httpCallBack);
     }
 
     /**
@@ -839,12 +744,14 @@ public class HttpManager {
      *
      * @param tag
      * @param orgId
+     * @param type
      * @param page
      * @param httpCallBack
      */
-    public void doGetNoticeList(String tag, String orgId, int page, HttpCallBack httpCallBack) {
+    public void doGetNoticeList(String tag, String orgId, String type, int page, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("orgId", orgId);
+        map.put("type", type);
         map.put("page", page + "");
         map.put("pageSize", "20");
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GET_NOTICELIST, map, httpCallBack);
@@ -1950,7 +1857,7 @@ public class HttpManager {
     }
 
     /**
-     * 获取机构设置
+     * 82.获取机构端系统配置
      *
      * @param tag
      * @param orgId
@@ -1976,7 +1883,7 @@ public class HttpManager {
     }
 
     /**
-     * 删除课程反馈
+     * 83.删除课程反馈
      *
      * @param tag
      * @param circleId
@@ -2085,6 +1992,7 @@ public class HttpManager {
      * 85.获取机构 未发布课程反馈的课程列表
      * 86.获取机构 需要处理出勤的课程列表
      * 87.获取机构 有学员请假的课程列表
+     * 91.获取机构 【人工消课提醒】列表
      *
      * @param tag
      * @param orgId
@@ -2130,6 +2038,134 @@ public class HttpManager {
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETDAILY, map, httpCallBack);
     }
 
+    /**
+     * 89.获取机构 出现空位的课程列表
+     *
+     * @param tag
+     * @param orgId
+     * @param httpCallBack
+     */
+    public void doGetVacancy(String tag, String orgId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETVACANCY, map, httpCallBack);
+    }
+
+    /**
+     * 90.获取机构 开课人数小于最小开课人数的课程列表
+     *
+     * @param tag
+     * @param orgId
+     * @param httpCallBack
+     */
+    public void doGetInsufficient(String tag, String orgId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETINSUFFICIENT, map, httpCallBack);
+    }
+
+    /**
+     * 92.查看某节课某个学员的消课情况
+     *
+     * @param tag
+     * @param orgId
+     * @param courseId
+     * @param studentId
+     * @param httpCallBack
+     */
+    public void doGetLessonCardLog(String tag, String orgId, String courseId, String studentId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("courseId", courseId);
+        map.put("studentId", studentId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETLESSONCARDLOG, map, httpCallBack);
+    }
+
+    /**
+     * 93. 获取机构课预约的课程
+     *
+     * @param tag
+     * @param startDate
+     * @param endDate
+     * @param orgId
+     * @param isOrder
+     * @param callBack
+     */
+    public void doGetCourseTimetable(String tag, String startDate, String endDate, String orgId, String isOrder, HttpCallBack callBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("start_at", DateUtil.getStringToDate(startDate, "yyyy-MM-dd HH:mm") + "");
+        map.put("end_at", DateUtil.getStringToDate(endDate, "yyyy-MM-dd HH:mm") + "");
+        map.put("orgId", orgId);
+        map.put("isOrder", isOrder);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETCOURSETIMETABLE, map, callBack);
+    }
+
+    /**
+     * 94. 设置某节课是否可约
+     *
+     * @param tag
+     * @param courseId
+     * @param orgId
+     * @param isOrder
+     * @param callBack
+     */
+    public void doSetCourseConfirmed(String tag, String courseId, String orgId, String isOrder, HttpCallBack callBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("courseId", courseId);
+        map.put("orgId", orgId);
+        map.put("isOrder", isOrder);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.SETCOURSECONFIRMED, map, callBack);
+    }
+
+    /**
+     * 95.获取学员能消某节课的课时卡
+     *
+     * @param tag
+     * @param orgId
+     * @param courseId
+     * @param stuId
+     * @param httpCallBack
+     */
+    public void doGetStuCard(String tag, String orgId, String courseId, String stuId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("courseId", courseId);
+        map.put("stuId", stuId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETSTUDENTCOURSECARD, map, httpCallBack);
+    }
+
+    /**
+     * 96.人工消课
+     *
+     * @param tag
+     * @param orgId
+     * @param courseId
+     * @param cardInfo
+     * @param httpCallBack
+     */
+    public void doPeopleCostLes(String tag, String orgId, String courseId, String cardInfo, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("courseId", courseId);
+        map.put("cardInfo", cardInfo);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.PEOPLECOSTLES, new HashMap<>(), map, httpCallBack);
+    }
+
+    /**
+     * haoruigang on 2018-4-18 14:40:36
+     * 97.获取机构所有的课程反馈
+     *
+     * @param tag
+     * @param pageIndex
+     * @param httpCallBack
+     */
+    public void doCircleList(String tag, String orgId, int pageIndex, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("page", pageIndex + "");
+        map.put("pageSize", "10");
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETORGCIRCLE, map, httpCallBack);
+    }
 
 }
 

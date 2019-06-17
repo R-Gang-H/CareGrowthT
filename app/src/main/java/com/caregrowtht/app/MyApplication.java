@@ -1,6 +1,10 @@
 package com.caregrowtht.app;
 
+import android.os.Build;
+import android.os.StrictMode;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.bulong.rudeness.RudenessScreenHelper;
 import com.caregrowtht.app.uitil.LogUtils;
@@ -37,6 +41,7 @@ public class MyApplication extends com.android.library.MyApplication {
         return mApplication;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -124,5 +129,26 @@ public class MyApplication extends com.android.library.MyApplication {
                 .trackAllFragments()
                 .setChannel("XXX应用商店")
         );
+
+        struct();
+
     }
+
+
+    //解决NetworkOnMainThreadException异常
+    public void struct() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork() // or
+                // .detectAll()
+                // for
+                // all
+                // detectable
+                // problems
+                .penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
+                .penaltyLog() // 打印logcat
+                .penaltyDeath().build());
+    }
+
 }

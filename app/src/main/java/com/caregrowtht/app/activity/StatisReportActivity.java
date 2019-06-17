@@ -8,18 +8,17 @@ import android.widget.TextView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.adapter.SignLevaeCourseAdapter;
 import com.caregrowtht.app.adapter.StatisReportAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
-import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
+import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
-import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -65,7 +64,11 @@ public class StatisReportActivity extends BaseActivity {
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_screen_right);
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
-        showType = msgEntity.getType();
+        if (StrUtils.isNotEmpty(msgEntity)) {
+            showType = msgEntity.getType();
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        }
         iniXrecyclerView(recyclerView);
         recyclerView.setPullRefreshEnabled(true);
         recyclerView.setLoadingMoreEnabled(!showType.equals("9"));
@@ -88,9 +91,11 @@ public class StatisReportActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        orgId = msgEntity.getOrgId();
         todayTime = TimeUtils.getCurTimeLong() / 1000;
-        endAt = String.valueOf(todayTime);
+        // 默认显示7天之内的
+        TimeUtils.GetStartEndTime getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-8, 0);
+        beginAt = String.valueOf(getStartEndTime.getWithinDay());
+        endAt = String.valueOf(getStartEndTime.getYesTerday());
         getDaily(true);
     }
 
@@ -113,9 +118,11 @@ public class StatisReportActivity extends BaseActivity {
                                 loadView.delayShowContainer(true);
                             }
                         }
-
-                        recyclerView.loadMoreComplete();
-                        recyclerView.refreshComplete();
+                        if (isClear) {
+                            recyclerView.refreshComplete();
+                        } else {
+                            recyclerView.loadMoreComplete();
+                        }
                     }
 
                     @Override
@@ -124,12 +131,15 @@ public class StatisReportActivity extends BaseActivity {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(StatisReportActivity.this);
+                        } else {
+                            loadView.setErrorShown(true, v -> getDaily(true));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("StatisReportActivity onError", throwable.getMessage());
+                        loadView.setErrorShown(true, v -> getDaily(true));
                     }
                 });
     }
@@ -141,7 +151,9 @@ public class StatisReportActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_next_button:
-                startActivity(new Intent(this, ScreenActivity.class));
+                startActivity(new Intent(this, ScreenActivity.class)
+                        .putExtra("type", showType)
+                        .putExtra("status", 0));
                 break;
         }
     }

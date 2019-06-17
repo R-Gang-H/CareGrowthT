@@ -10,12 +10,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.AppManager;
 import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.fragment.HomeFragment;
-import com.caregrowtht.app.fragment.MomentFragment;
 import com.caregrowtht.app.fragment.StateFragment;
 import com.caregrowtht.app.uitil.GradientUtils;
 import com.caregrowtht.app.uitil.LogUtils;
@@ -27,12 +30,10 @@ import com.caregrowtht.app.view.version.UpdateCallback;
 import com.vector.update_app.UpdateAppManager;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindViews;
 import butterknife.Setter;
 
@@ -42,16 +43,13 @@ import static com.caregrowtht.app.Constant.VERSION_PATH;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @BindViews({R.id.ll_state_btn, R.id.ll_home_btn, R.id.ll_moment_btn})
+    @BindViews({R.id.ll_state_btn, R.id.ll_home_btn})
     List<TextView> radioButtons;
 
     private int position;
 
     private StateFragment stateFragment;
     private HomeFragment homeFragment;
-    private MomentFragment momentFragment;
-
-    private String OrgId = "";// 保存上次离开工作页时停留在那个机构
 
     @Override
     public int getLayoutId() {
@@ -99,13 +97,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         CheckisNew();
         radioButtons.get(0).setOnClickListener(this);
         radioButtons.get(1).setOnClickListener(this);
-        radioButtons.get(2).setOnClickListener(this);
         setChioceItem(position);
     }
 
     private void CheckisNew() {
         String name = UserManager.getInstance().userData.getName();// 空是新用户,不为空是旧用户
-        String isNew = UserManager.getInstance().userData.getIsNew();//是否是新用户 0：不是 1：是
+//        String isNew = UserManager.getInstance().userData.getIsNew();//是否是新用户 0：不是 1：是
         if (TextUtils.isEmpty(name)) {
 //            if (!TextUtils.isEmpty(isNew) && isNew.equals("1")) {
             Intent pIntent = new Intent(this, SetInfoActivity.class);
@@ -129,7 +126,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         //记录当前的position
         super.onSaveInstanceState(outState);
         outState.putInt("position", position);
@@ -161,15 +158,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     ft.show(homeFragment);
                 }
                 break;
-            case 2:
-                // 兴趣圈
-                if (null == momentFragment) {
-                    momentFragment = new MomentFragment();
-                    ft.add(R.id.ll_content, momentFragment);
-                } else {
-                    ft.show(momentFragment);
-                }
-                break;
         }
         ft.commitAllowingStateLoss();
     }
@@ -179,12 +167,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             ft.hide(stateFragment);
         if (null != homeFragment)
             ft.hide(homeFragment);
-        if (null != momentFragment)
-            ft.hide(momentFragment);
     }
 
     //控制normal 状态的当前View 隐藏，其它空间仍然为显示
     final Setter<TextView, TextView> TABSPEC = (view, value, index) -> {
+        assert value != null;
         if (view.getId() == value.getId()) {
             view.setSelected(true);
             view.setBackgroundColor(getResources().getColor(R.color.greenLight));
@@ -202,9 +189,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.ll_home_btn:
                 setChioceItem(1);
-                break;
-            case R.id.ll_moment_btn:
-                setChioceItem(2);
                 break;
         }
     }

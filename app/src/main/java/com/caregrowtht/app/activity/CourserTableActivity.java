@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
@@ -27,10 +32,6 @@ import com.caregrowtht.app.user.UserManager;
 
 import org.greenrobot.eventbus.EventBus;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -68,7 +69,7 @@ public class CourserTableActivity extends BaseActivity {
     @BindView(R.id.cv_bg)
     CardView cvBg;
 
-    private CourseEntity userModel;//上页值
+    private CourseEntity courseModel;//上页值
     private CourseEntity<String, String, String> courseData;//
 
 
@@ -87,22 +88,19 @@ public class CourserTableActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        userModel = (CourseEntity) getIntent().getSerializableExtra("userModel");
+        courseModel = (CourseEntity) getIntent().getSerializableExtra("courseModel");
 
-        int statusBg = Color.parseColor(userModel.getColor());
-        int opertBg = Color.parseColor(userModel.getTintColor());
-        int cardFront = Color.parseColor(userModel.getColor3());
+        int statusBg = Color.parseColor(courseModel.getColor());
+        int opertBg = Color.parseColor(courseModel.getTintColor());
+        int cardFront = Color.parseColor(courseModel.getColor3());
 
         rlCardFront.setBackgroundColor(cardFront);
         ivStatus.setBackgroundColor(statusBg);
         tvOrgName.setTextColor(statusBg);
         cvBg.setCardBackgroundColor(statusBg);
         btnUpdate.setBackgroundColor(statusBg);
-//        btnUpdate.setTextColor(opertBg);
         btnAddCourse.setBackgroundColor(statusBg);
-//        btnAddCourse.setTextColor(opertBg);
         btnDelete.setBackgroundColor(statusBg);
-//        btnDelete.setTextColor(opertBg);
 
         teacherLessonDetail();
 
@@ -111,7 +109,7 @@ public class CourserTableActivity extends BaseActivity {
     private void teacherLessonDetail() {
         //haoruigang on 2018-7-6 17:23:39 4. 获取课程的基本信息
         HttpManager.getInstance().doTeacherLessonDetail("CourserTableActivity"
-                , userModel.getCourseId(), new HttpCallBack<BaseDataModel<CourseEntity<String, String, String>>>() {
+                , courseModel.getCourseId(), new HttpCallBack<BaseDataModel<CourseEntity<String, String, String>>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity<String, String, String>> data) {
                         courseData = data.getData().get(0);
@@ -201,7 +199,7 @@ public class CourserTableActivity extends BaseActivity {
     }
 
     private boolean getCourseEnd() {
-        long endTime = Long.parseLong(userModel.getEndAt());
+        long endTime = Long.parseLong(courseModel.getEndAt());
         long nowTime = System.currentTimeMillis() / 1000;
         boolean isToday = TimeUtils.IsToday(DateUtil.getDate(endTime, "yyyy-MM-dd"));// 是否为今天
         if (!isToday) {

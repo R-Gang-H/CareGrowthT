@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.Constant;
@@ -32,7 +37,6 @@ import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
 import com.caregrowtht.app.uitil.StrUtils;
-import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.CommentPopup;
@@ -46,11 +50,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -101,19 +100,8 @@ public class MomentAdapter extends RecyclerView.Adapter {
     @BindView(R.id.commentary)
     TextView commentary;
 
-    @BindView(R.id.iv_logo)
-    ImageView ivLogo;
-    @BindView(R.id.tv_actName)
-    TextView tvActName;
-    @BindView(R.id.tv_actTime)
-    TextView tvActTime;
-    @BindView(R.id.tv_enrolment_num)
-    TextView tvEnrolmentNum;
-
     @BindView(R.id.item_moment)
     LinearLayout mMomentItem;
-    @BindView(R.id.item_activity)
-    ConstraintLayout mActivityItem;
     @BindView(R.id.iv_line)
     ImageView ivLine;
 
@@ -175,273 +163,225 @@ public class MomentAdapter extends RecyclerView.Adapter {
     public void convert(RecyclerView.ViewHolder holder, int position, Context context) {
         //设置textView显示内容为list里的对应项
         MomentMessageEntity pData = listModel.get(position);
-//        GridPreviewView mGridPreviewView = (GridPreviewView) holder.getView(R.id.gpv_image_video);
         Log.e("------------------", "position=" + position);
         if (pData == null) {
             return;
         }
-        Long pPublishTime = Long.parseLong(pData.getTime());
-        Log.e("------------------", "pData=" + pData.toString());
-        if (TextUtils.equals(imputType, "2")) {//从动态进入添加默认值
-            pData.setType("");
+        if (type.equals("1")) {//兴趣圈
+            mMomentItem.setVisibility(View.VISIBLE);
+            String headImage = "";
+            if (TextUtils.equals(imputType, "1")) {//学员详情进入的课程反馈
+                headImage = pData.getParentHeadImage();
+            } else if (TextUtils.equals(imputType, "2")) {//从动态进入添加默认值
+                headImage = pData.getAuthorAvatar();
+            }
+            if (pData.getAuthorNickname() != null) {
+                ivChildAvatar.setTextAndColor(TextUtils.isEmpty(pData.getAuthorNickname()) ? ""
+                                : pData.getAuthorNickname().substring(0, 1),
+                        mActivity.getResources().getColor(R.color.b0b2b6));
+            }
+            GlideUtils.setGlideImg(mActivity, headImage, 0, ivChildAvatar);
+            tvChildName.setText(pData.getAuthorNickname());
+        } else if (type.equals("2")) {//课程反馈
+            String childName = pData.getChildName();
+            String[] childNames = childName.split("#");//集体学员
+            String childNe = childName.replace("#", ",");
+            if (childNames.length == 1) {//单个
+                if (imputType.equals("2")) {// 2:动态进入的记录详情
+                    tvStuInfo.setVisibility(View.VISIBLE);
+                    tvChildName.setVisibility(View.VISIBLE);
+                    tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
+                    tvChildName.setText(String.format("(%s\t学员)", childName));
+                } else {// 1:学员详情进入的课程反馈
+                    tvChildName.setVisibility(View.GONE);
+                    if (position == 0 || !listModel.get(position - 1).getChildId().equals(pData.getChildId())) {
+                        constraint.setVisibility(View.VISIBLE);
+                    } else {
+                        constraint.setVisibility(View.GONE);
+                    }
+                    ivAvatar.setTextAndColor(TextUtils.isEmpty(childName) ? ""
+                                    : childName.substring(0, 1),
+                            mActivity.getResources().getColor(R.color.b0b2b6));
+                    GlideUtils.setGlideImg(mActivity, pData.getChildImage(), 0, ivAvatar);
+                    tvRelative.setText(childName);
+                }
+            } else if (childNames.length > 1) {//集体
+                if (imputType.equals("2")) {// 2:动态进入的记录详情
+                    tvStuInfo.setVisibility(View.VISIBLE);
+                } else {// 1:学员详情进入的课程反馈
+                    if (position == 0) {
+                        constraint.setVisibility(View.VISIBLE);
+                    }
+                }
+                tvChildName.setVisibility(View.VISIBLE);
+                tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
+                tvChildName.setText(String.format("(%s,%s名学员相关)", childNe, childNames.length));
+            }
+            tvStuInfo.setText(String.format("%s\t\t%s",
+                    DateUtil.getDate(Long.valueOf(pData.getTime()),
+                            "yyyy/MM/dd"), pData.getCourseName()));
+
+            ivChildAvatar.setVisibility(View.GONE);
+            ivAuthorAvatar.setVisibility(View.VISIBLE);
+            tvAuthorName.setVisibility(View.VISIBLE);
+
+            if (pData.getAuthorNickname() != null) {
+                ivAuthorAvatar.setTextAndColor(TextUtils.isEmpty(pData.getAuthorNickname()) ? ""
+                        : pData.getAuthorNickname().substring(0, 1), mActivity.getResources().getColor(R.color.b0b2b6));
+            }
+            String authorAvatar;
+            if (imputType.equals("2")) {// 2:动态进入的记录详情
+                authorAvatar = pData.getAuthorAvatar();
+            } else {// 1:学员详情进入的课程反馈
+                authorAvatar = pData.getParentHeadImage();
+            }
+            GlideUtils.setGlideImg(mActivity, authorAvatar, 0, ivAuthorAvatar);
+            tvAuthorName.setText(String.format("%s\t%s", pData.getAuthorRelative(), pData.getAuthorNickname()));
         }
-        if (pData.getType() != null) {
-            //类型：1家长提交作业 2家长打卡 3教师反馈 4家长自定义 5机构广告 6机构活动
-            switch (pData.getType()) {
-                case "1":
-                case "2":
-                case "3":
-                case "4":
-                default: {
-                    if (type.equals("1")) {//兴趣圈
-                        mMomentItem.setVisibility(View.VISIBLE);
-                        mActivityItem.setVisibility(View.GONE);
-                        String headImage = "";
-                        if (TextUtils.equals(imputType, "1")) {//学员详情进入的课程反馈
-                            headImage = pData.getParentHeadImage();
-                        } else if (TextUtils.equals(imputType, "2")) {//从动态进入添加默认值
-                            headImage = pData.getAuthorAvatar();
-                        }
-                        if (pData.getAuthorNickname() != null) {
-                            ivChildAvatar.setTextAndColor(TextUtils.isEmpty(pData.getAuthorNickname()) ? ""
-                                            : pData.getAuthorNickname().substring(0, 1),
-                                    mActivity.getResources().getColor(R.color.b0b2b6));
-                        }
-                        GlideUtils.setGlideImg(mActivity, headImage, 0, ivChildAvatar);
-                        tvChildName.setText(pData.getAuthorNickname());
 
-                    } else if (type.equals("2")) {//课程反馈
-                        String childName = pData.getChildName();
-                        String[] childNames = childName.split("#");//集体学员
-                        String childNe = childName.replace("#", ",");
-                        if (childNames.length == 1) {//单个
-                            if (imputType.equals("2")) {// 2:动态进入的记录详情
-                                tvStuInfo.setVisibility(View.VISIBLE);
-                                tvChildName.setVisibility(View.VISIBLE);
-                                tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
-                                tvChildName.setText(String.format("(%s\t学员)", childName));
-                            } else {// 1:学员详情进入的课程反馈
-                                tvChildName.setVisibility(View.GONE);
-                                if (position == 0 || !listModel.get(position - 1).getChildId().equals(pData.getChildId())) {
-                                    constraint.setVisibility(View.VISIBLE);
-                                } else {
-                                    constraint.setVisibility(View.GONE);
+        ivLine.setVisibility((listModel.size() - 1) == position ? View.GONE : View.VISIBLE);//最后一个横线隐藏
+        tvContent.setText(TextUtils.isEmpty(pData.getContent()) ? "" : pData.getContent().replace("\\n", "\n"));
+        final LinearLayout llAtter = holder.itemView.findViewById(R.id.ll_atter);
+        llAtter.setVisibility(TextUtils.isEmpty(pData.getAccessory()) ? View.GONE : View.VISIBLE);
+        if (llAtter.getVisibility() == View.VISIBLE) {
+            //必须先清空上次add的View
+            ViewParent parent = llAtter.getParent();
+            if (parent != null) {
+                llAtter.removeAllViews();
+            }
+            String accessoryPath = pData.getAccessory();
+            String[] accessory = accessoryPath.split("#");
+            for (String filePath : accessory) {
+                @SuppressLint("InflateParams") final View view = LayoutInflater.from(context).inflate(R.layout.item_atter_text, null);
+                final TextView tvAtter = view.findViewById(R.id.tv_atter);
+                tvAtter.setGravity(Gravity.START);
+                tvAtter.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
+                tvAtter.setOnClickListener(v -> {
+                    //动态权限申请
+                    mActivity.requestPermission(Constant.REQUEST_CODE_WRITE,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            mActivity.getString(R.string.rationale_file),
+                            new PermissionCallBackM() {
+                                @SuppressLint("MissingPermission")
+                                @Override
+                                public void onPermissionGrantedM(int requestCode, String... perms) {
+                                    String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                                    FileDisplayActivity.actionStart(mActivity, filePath, fileName);
                                 }
-                                if (childName != null) {
-                                    ivAvatar.setTextAndColor(TextUtils.isEmpty(childName) ? ""
-                                                    : childName.substring(0, 1),
-                                            mActivity.getResources().getColor(R.color.b0b2b6));
+
+                                @Override
+                                public void onPermissionDeniedM(int requestCode, String... perms) {
+                                    LogUtils.e(mActivity, "TODO: WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT);
                                 }
-                                GlideUtils.setGlideImg(mActivity, pData.getChildImage(), 0, ivAvatar);
-                                tvRelative.setText(childName);
-                            }
-                        } else if (childNames.length > 1) {//集体
-                            if (imputType.equals("2")) {// 2:动态进入的记录详情
-                                tvStuInfo.setVisibility(View.VISIBLE);
-                            } else {// 1:学员详情进入的课程反馈
-                                if (position == 0) {
-                                    constraint.setVisibility(View.VISIBLE);
-                                }
-                            }
-                            tvChildName.setVisibility(View.VISIBLE);
-                            tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
-                            tvChildName.setText(String.format("(%s,%s名学员相关)", childNe, childNames.length));
-                        }
-                        tvStuInfo.setText(String.format("%s\t\t%s",
-                                DateUtil.getDate(Long.valueOf(pData.getTime()),
-                                        "yyyy/MM/dd"), pData.getCourseName()));
-
-                        ivChildAvatar.setVisibility(View.GONE);
-                        ivAuthorAvatar.setVisibility(View.VISIBLE);
-                        tvAuthorName.setVisibility(View.VISIBLE);
-
-                        if (pData.getAuthorNickname() != null) {
-                            ivAuthorAvatar.setTextAndColor(TextUtils.isEmpty(pData.getAuthorNickname()) ? ""
-                                    : pData.getAuthorNickname().substring(0, 1), mActivity.getResources().getColor(R.color.b0b2b6));
-                        }
-                        String authorAvatar;
-                        if (imputType.equals("2")) {// 2:动态进入的记录详情
-                            authorAvatar = pData.getAuthorAvatar();
-                        } else {// 1:学员详情进入的课程反馈
-                            authorAvatar = pData.getParentHeadImage();
-                        }
-                        GlideUtils.setGlideImg(mActivity, authorAvatar, 0, ivAuthorAvatar);
-                        tvAuthorName.setText(String.format("%s\t%s", pData.getAuthorRelative(), pData.getAuthorNickname()));
-                    }
-
-                    ivLine.setVisibility((listModel.size() - 1) == position ? View.GONE : View.VISIBLE);//最后一个横线隐藏
-                    tvContent.setText(TextUtils.isEmpty(pData.getContent()) ? "" : pData.getContent().replace("\\n", "\n"));
-                    final LinearLayout llAtter = holder.itemView.findViewById(R.id.ll_atter);
-                    llAtter.setVisibility(TextUtils.isEmpty(pData.getAccessory()) ? View.GONE : View.VISIBLE);
-                    if (llAtter.getVisibility() == View.VISIBLE) {
-                        //必须先清空上次add的View
-                        ViewParent parent = llAtter.getParent();
-                        if (parent != null) {
-                            llAtter.removeAllViews();
-                        }
-                        String accessoryPath = pData.getAccessory();
-                        String[] accessory = accessoryPath.split("#");
-                        for (String filePath : accessory) {
-                            @SuppressLint("InflateParams") final View view = LayoutInflater.from(context).inflate(R.layout.item_atter_text, null);
-                            final TextView tvAtter = view.findViewById(R.id.tv_atter);
-                            tvAtter.setGravity(Gravity.START);
-                            tvAtter.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
-                            tvAtter.setOnClickListener(v -> {
-                                //动态权限申请
-                                mActivity.requestPermission(Constant.REQUEST_CODE_WRITE,
-                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                        mActivity.getString(R.string.rationale_file),
-                                        new PermissionCallBackM() {
-                                            @SuppressLint("MissingPermission")
-                                            @Override
-                                            public void onPermissionGrantedM(int requestCode, String... perms) {
-                                                String fileName = filePath.toString().substring(filePath.lastIndexOf("/") + 1);
-                                                FileDisplayActivity.actionStart(mActivity, filePath, fileName);
-                                            }
-
-                                            @Override
-                                            public void onPermissionDeniedM(int requestCode, String... perms) {
-                                                LogUtils.e(mActivity, "TODO: WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT);
-                                            }
-                                        });
                             });
-                            llAtter.addView(tvAtter);
-                        }
-                    }
-
-                    String[] mUrls = layoutNineGrid.ShowImageOrVideo(pData.getPngOravis());
-                    NineGridTestModel model = new NineGridTestModel();
-                    if (!TextUtils.isEmpty(pData.getPngOravis())) {
-                        Collections.addAll(model.urlList, mUrls);
-                        model.isShowAll = false;
-                        layoutNineGrid.setIsShowAll(false);
-                    }
-                    //设置图片 //九宫格点击事件，跳转封装在控件内了
-                    layoutNineGrid.setUrlList(model.urlList);
-
-                    tvAuthorDate.setText(DateUtil.convertTime(Long.valueOf(pData.getTime())));
-                    if (pData.getAuthorId() != null) {
-                        tvDelMoment.setVisibility(pData.getAuthorId().equals(
-                                UserManager.getInstance().userData.getUid())
-                                ? View.VISIBLE : View.GONE);
-                    }
-                    if (!TextUtils.isEmpty(pData.getLike()) || pData.getComments().size() > 0) {
-                        llComment.setVisibility(View.VISIBLE);
-                        if (TextUtils.isEmpty(pData.getLike())) {
-                            llLike.setVisibility(View.GONE);
-                        } else {
-                            llLike.setVisibility(View.VISIBLE);
-                            commentary.setText(pData.getLike());
-                        }
-                        if (pData.getComments().size() > 0) {
-                            replyLine.setVisibility(View.VISIBLE);
-                            rvReply.setVisibility(View.VISIBLE);
-                            LinearLayoutManager manager = new LinearLayoutManager(mActivity);
-                            manager.setOrientation(RecyclerView.VERTICAL);
-                            rvReply.setLayoutManager(manager);
-                            CommonsAdapter commentAdapter = new CommonsAdapter(pData.getComments(), mActivity, (view, position1) -> {
-                                // 评论点
-                                if (mCommentListener != null) {
-                                    mCommentListener.onComment(view, holder.getAdapterPosition(), position, position1);
-                                }
-                            }, null);
-                            rvReply.setAdapter(commentAdapter);
-                        } else {
-                            replyLine.setVisibility(View.GONE);
-                            rvReply.setVisibility(View.GONE);
-                        }
-                    } else {
-                        llComment.setVisibility(View.GONE);
-                    }
-                    //是否点赞
-                    if (UserManager.getInstance().CheckIsCircles(pData.getCircleId())) {
-                        getIsSelected().put(position, true);// 同时修改map的值保存状态
-                    } else {
-                        getIsSelected().put(position, false);// 同时修改map的值保存状态
-                    }
-
-                    mCommentPopup.setOnCommentPopupClickListener(new CommentPopup.OnCommentPopupClickListener() {
-
-                        @Override
-                        public void onLikeClick(View v, TextView likeText) {
-                            //U.showToast(getPosition() + "like");
-                            //是否点赞
-                            v.setTag(getIsSelected().get(getPosition()) ? 0 : 1);
-                            switch ((int) v.getTag()) {
-                                case 0:
-                                    v.setTag(1);
-                                    likeText.setText("取消");
-
-                                    getSelect(likeText, getPosition());
-                                    AddStar(listModel.get(getPosition()), 1);//取消
-                                    break;
-                                case 1:
-                                    v.setTag(0);
-                                    likeText.setText("赞\t");
-
-                                    getSelect(likeText, getPosition());
-                                    AddStar(listModel.get(getPosition()), 2);//点赞
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onCommentClick(View v) {
-//                                U.showToast(getPosition() + "comment");
-                            if (mCommentListener != null) {
-                                // 评论点 这里将整个 itemView 传递过去，position 没用到，留着没什么影响 :)
-                                mCommentListener.onComment(v, holder.getAdapterPosition(), getPosition(), -1);
-                            }
-                        }
-                    });
-                    ivMilestone.setOnClickListener(v -> {
-                        setPosition(position);
-//                        U.showToast(position + "ivMilestone");
-                        if (mCommentPopup.getmOnPopupClickListener() != null) {
-                            mCommentPopup.getmOnPopupClickListener().onLikeClick(getIsSelected().get(getPosition()) ? "取消" : "赞\t");
-                        }
-                        mCommentPopup.showPopupWindow(v);
-                    });
-                    mMomentItem.setOnLongClickListener(v -> {
-                        mActivity.startActivity(new Intent(mActivity, ReportPupoWindow.class).putExtra("mCircleId", pData.getCircleId()));
-                        mActivity.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
-                        return false;
-                    });
-                    tvDelMoment.setOnClickListener(v -> {
-                        if (momentListener != null) {
-                            momentListener.delMoment(pData, position);
-                        }
-                    });
-                    break;
-                }
-                case "5"://广告
-                {
-                    mMomentItem.setVisibility(View.GONE);
-                    mActivityItem.setVisibility(View.VISIBLE);
-
-                    tvActName.setText(pData.getContent());
-                    GlideUtils.getBitmap(context, pData.getPngOravis(), R.mipmap.ic_org_action, ivLogo);
-
-                    tvActTime.setText(TimeUtils.getDateToString(pPublishTime, "yyyy-MM-dd HH:mm"));
-
-                    tvEnrolmentNum.setVisibility(View.GONE);
-                    break;
-                }
-                case "6"://活动
-                {
-                    mMomentItem.setVisibility(View.GONE);
-                    mActivityItem.setVisibility(View.VISIBLE);
-
-                    tvActName.setText(pData.getContent());
-                    GlideUtils.getBitmap(context, pData.getPngOravis(), R.mipmap.ic_org_action, ivLogo);
-
-                    tvActTime.setText(TimeUtils.getDateToString(pPublishTime, "yyyy-MM-dd HH:mm"));
-//                    tvEnrolmentNum.setText(pData.getJoinerCount() + "已报名");
-                    tvEnrolmentNum.setVisibility(View.GONE);
-                    break;
-                }
+                });
+                llAtter.addView(tvAtter);
             }
         }
+
+        String[] mUrls = layoutNineGrid.ShowImageOrVideo(pData.getPngOravis());
+        NineGridTestModel model = new NineGridTestModel();
+        if (!TextUtils.isEmpty(pData.getPngOravis())) {
+            Collections.addAll(model.urlList, mUrls);
+            model.isShowAll = false;
+            layoutNineGrid.setIsShowAll(false);
+        }
+        //设置图片 //九宫格点击事件，跳转封装在控件内了
+        layoutNineGrid.setUrlList(model.urlList);
+
+        tvAuthorDate.setText(DateUtil.convertTime(Long.valueOf(pData.getTime())));
+        if (pData.getAuthorId() != null) {
+            tvDelMoment.setVisibility(pData.getAuthorId().equals(
+                    UserManager.getInstance().userData.getUid())
+                    ? View.VISIBLE : View.GONE);
+        }
+        if (!TextUtils.isEmpty(pData.getLike()) || pData.getComments().size() > 0) {
+            llComment.setVisibility(View.VISIBLE);
+            if (TextUtils.isEmpty(pData.getLike())) {
+                llLike.setVisibility(View.GONE);
+            } else {
+                llLike.setVisibility(View.VISIBLE);
+                commentary.setText(pData.getLike());
+            }
+            if (pData.getComments().size() > 0) {
+                replyLine.setVisibility(View.VISIBLE);
+                rvReply.setVisibility(View.VISIBLE);
+                LinearLayoutManager manager = new LinearLayoutManager(mActivity);
+                manager.setOrientation(RecyclerView.VERTICAL);
+                rvReply.setLayoutManager(manager);
+                CommonsAdapter commentAdapter = new CommonsAdapter(pData.getComments(), mActivity, (view, position1) -> {
+                    // 评论点
+                    if (mCommentListener != null) {
+                        mCommentListener.onComment(view, holder.getAdapterPosition(), position, position1);
+                    }
+                }, null);
+                rvReply.setAdapter(commentAdapter);
+            } else {
+                replyLine.setVisibility(View.GONE);
+                rvReply.setVisibility(View.GONE);
+            }
+        } else {
+            llComment.setVisibility(View.GONE);
+        }
+        //是否点赞
+        if (UserManager.getInstance().CheckIsCircles(pData.getCircleId())) {
+            getIsSelected().put(position, true);// 同时修改map的值保存状态
+        } else {
+            getIsSelected().put(position, false);// 同时修改map的值保存状态
+        }
+
+        mCommentPopup.setOnCommentPopupClickListener(new CommentPopup.OnCommentPopupClickListener() {
+
+            @Override
+            public void onLikeClick(View v, TextView likeText) {
+                //U.showToast(getPosition() + "like");
+                //是否点赞
+                v.setTag(getIsSelected().get(getPosition()) ? 0 : 1);
+                switch ((int) v.getTag()) {
+                    case 0:
+                        v.setTag(1);
+                        likeText.setText("取消");
+
+                        getSelect(likeText, getPosition());
+                        AddStar(listModel.get(getPosition()), 1);//取消
+                        break;
+                    case 1:
+                        v.setTag(0);
+                        likeText.setText("赞\t");
+
+                        getSelect(likeText, getPosition());
+                        AddStar(listModel.get(getPosition()), 2);//点赞
+                        break;
+                }
+            }
+
+            @Override
+            public void onCommentClick(View v) {
+//                                U.showToast(getPosition() + "comment");
+                if (mCommentListener != null) {
+                    // 评论点 这里将整个 itemView 传递过去，position 没用到，留着没什么影响 :)
+                    mCommentListener.onComment(v, holder.getAdapterPosition(), getPosition(), -1);
+                }
+            }
+        });
+        ivMilestone.setOnClickListener(v -> {
+            setPosition(position);
+//                        U.showToast(position + "ivMilestone");
+            if (mCommentPopup.getmOnPopupClickListener() != null) {
+                mCommentPopup.getmOnPopupClickListener().onLikeClick(getIsSelected().get(getPosition()) ? "取消" : "赞\t");
+            }
+            mCommentPopup.showPopupWindow(v);
+        });
+        mMomentItem.setOnLongClickListener(v -> {
+            mActivity.startActivity(new Intent(mActivity, ReportPupoWindow.class).putExtra("mCircleId", pData.getCircleId()));
+            mActivity.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+            return false;
+        });
+        tvDelMoment.setOnClickListener(v -> {
+            if (momentListener != null) {
+                momentListener.delMoment(pData, position);
+            }
+        });
     }
 
     public void setData(ArrayList<MomentMessageEntity> argList, Boolean isClear) {

@@ -50,9 +50,6 @@ public class CarouseInfoActivity extends BaseActivity {
         tvTitle.setText("轮播图详情");
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_share);
-
-        //解决NetworkOnMainThreadException异常
-        ImgLabelUtils.getInstance().struct();
     }
 
     @Override

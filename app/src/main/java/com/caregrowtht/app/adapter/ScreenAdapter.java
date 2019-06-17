@@ -1,7 +1,6 @@
 package com.caregrowtht.app.adapter;
 
 import android.content.Context;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.caregrowtht.app.R;
@@ -30,6 +29,13 @@ public class ScreenAdapter extends XrecyclerAdapter {
     public ScreenAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
         super(datas, context, onItemClick1);
         // 初始化数据
+        initDate();
+        notifyDataSetChanged();
+    }
+
+    public void setData(List datas) {
+        this.datas.clear();
+        this.datas.addAll(datas);
         initDate();
         notifyDataSetChanged();
     }

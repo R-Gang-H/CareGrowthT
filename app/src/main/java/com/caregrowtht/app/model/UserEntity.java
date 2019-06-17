@@ -1,7 +1,5 @@
 package com.caregrowtht.app.model;
 
-import com.nanchen.wavesidebar.FirstLetterUtil;
-
 import java.io.Serializable;
 
 /**
@@ -25,7 +23,7 @@ public class UserEntity implements Serializable {
 
     private String uid;
     private String token;
-    private String nickname, name;
+    private String nickname, name, lessonId;
     private String mobile;
     private String headImage;
     private String isNew;//是否是新用户 0：不是 1：是
@@ -61,6 +59,14 @@ public class UserEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(String lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getChildIds() {

@@ -275,12 +275,14 @@ public class ContactsActivity extends BaseActivity implements ContactsAdapter.On
                             HttpManager.getInstance().dologout(ContactsActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getNoticeHuman());
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("ContactsActivity onFail", throwable.getMessage());
+                        loadView.setErrorShown(true, v -> getNoticeHuman());
                     }
                 });
     }
@@ -303,12 +305,14 @@ public class ContactsActivity extends BaseActivity implements ContactsAdapter.On
                             HttpManager.getInstance().dologout(ContactsActivity.this);
                         } else {
                             U.showToast(errorMsg);
+                            loadView.setErrorShown(true, v -> getStudent(status));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.tag("CustomActivity onError " + throwable);
+                        loadView.setErrorShown(true, v -> getStudent(status));
                     }
                 });
     }

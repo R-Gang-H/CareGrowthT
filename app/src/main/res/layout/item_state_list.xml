@@ -40,10 +40,11 @@
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_size_5"
-            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_height="25dp"
+            android:layout_marginStart="@dimen/margin_size_5"
+            android:layout_marginTop="@dimen/margin_size_10"
             android:text="7月4日  17:50"
+            android:gravity="center"
             android:textColor="@color/color_6"
             android:textSize="@dimen/text_size_12"
             app:layout_constraintLeft_toRightOf="@id/tv_title"
@@ -78,6 +79,24 @@
             app:layout_constraintTop_toBottomOf="@id/iv_type" />
 
         <TextView
+            android:id="@+id/tv_course_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_12"
+            android:background="@drawable/shape_state_edf6ff_bg"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="3"
+            android:padding="@dimen/margin_size_8"
+            android:text="4月18日  星期三  9:00 \n刘晓霞  舞蹈课周四9:00班"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+
+        <TextView
             android:id="@+id/tv_title_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +106,7 @@
             android:textColor="@color/color_3"
             android:textSize="@dimen/text_size_15"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+            app:layout_constraintTop_toBottomOf="@id/tv_course_info" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_message"
@@ -169,7 +188,7 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_below="@id/tv_atter"
-                android:layout_marginLeft="@dimen/margin_size_13"
+                android:layout_marginStart="@dimen/margin_size_13"
                 android:layout_marginTop="@dimen/margin_size_8"
                 android:background="@mipmap/ic_media_default"
                 android:scaleType="centerCrop"

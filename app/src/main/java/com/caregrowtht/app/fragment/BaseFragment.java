@@ -73,7 +73,6 @@ public abstract class BaseFragment extends BasePermissionFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //   View view = View.inflate(mActivity, getLayoutId(), null);
         View view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, view);
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -108,47 +107,6 @@ public abstract class BaseFragment extends BasePermissionFragment {
      * 初始化数据
      */
     public abstract void initData();
-
-    public void initRecyclerView(RecyclerView recyclerView, boolean isVertical) {
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        manager.setOrientation(isVertical ? RecyclerView.VERTICAL : LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(manager);
-    }
-
-    //    初始化 RecyclerView的配置
-    public LinearLayoutManager iniXrecyclerView(XRecyclerView xRecyclerView) {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        xRecyclerView.setLayoutManager(layoutManager);
-        // xRecyclerView.setRefreshHeader(new CustomArrowHeader(this));
-        xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        xRecyclerView.setArrowImageView(R.mipmap.ic_recycler_view_arrow);
-        xRecyclerView.setLoadingMoreEnabled(false);
-        xRecyclerView.getDefaultRefreshHeaderView().setRefreshTimeVisible(true);
-        xRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
-        return layoutManager;
-    }
-
-    public void iniXrecyclerGrid(XRecyclerView xRecyclerView, int span) {
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), span);
-        manager.setOrientation(RecyclerView.VERTICAL);
-        xRecyclerView.setLayoutManager(manager);
-        xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        xRecyclerView.setArrowImageView(R.mipmap.ic_recycler_view_arrow);
-        xRecyclerView.setLoadingMoreEnabled(false);
-        xRecyclerView.getDefaultRefreshHeaderView().setRefreshTimeVisible(true);
-        xRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
-    }
-
-    public void showLoadingDialog() {
-        U.showLoadingDialog(MyApplication.getAppContext(), "正在加载");
-    }
-
-    public void dismissLoadingDialog() {
-        U.dismissLoadingDialog();
-    }
 
     @Override
     public void onDestroy() {

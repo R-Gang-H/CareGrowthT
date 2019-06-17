@@ -106,12 +106,12 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
                         }
                         stuData.addAll(data.getData());
                         allotAdapter.update(stuData, isClear);
-                        refresh();
+                        refresh(isClear);
                     }
 
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
-                        refresh();
+                        refresh(isClear);
                         LogUtils.d("AllotActivity onFail", statusCode + ":" + errorMsg);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
@@ -128,9 +128,12 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
                 });
     }
 
-    private void refresh() {
-        xRecyclerView.loadMoreComplete();
-        xRecyclerView.refreshComplete();
+    private void refresh(boolean isClear) {
+        if (isClear) {
+            xRecyclerView.refreshComplete();
+        } else {
+            xRecyclerView.loadMoreComplete();
+        }
     }
 
     @OnClick({R.id.rl_back_button, R.id.btn_submit})

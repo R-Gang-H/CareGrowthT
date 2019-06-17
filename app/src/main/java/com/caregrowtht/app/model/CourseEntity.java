@@ -180,6 +180,13 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String waitCount;
     private String type;// 1.今天 2.7天内 3.7天之前
 
+    private String minStuCount, maxStuCount;
+
+    private String studentIcon;
+    private String studentId;
+    private String studentName;
+    private String teacher;
+
     public boolean isFront() {
         return isFront;
     }
@@ -1374,5 +1381,53 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getMinStuCount() {
+        return minStuCount;
+    }
+
+    public void setMinStuCount(String minStuCount) {
+        minStuCount = minStuCount;
+    }
+
+    public String getMaxStuCount() {
+        return maxStuCount;
+    }
+
+    public void setMaxStuCount(String maxStuCount) {
+        this.maxStuCount = maxStuCount;
+    }
+
+    public String getStudentIcon() {
+        return studentIcon;
+    }
+
+    public void setStudentIcon(String studentIcon) {
+        this.studentIcon = studentIcon;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -102,6 +103,7 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("OrgSearchActivity throwable", throwable.getMessage());
+                        loadView.setErrorShown(true, v -> searchOrg());
                     }
                 });
     }

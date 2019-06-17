@@ -10,11 +10,13 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.ArtificialActivity;
 import com.caregrowtht.app.activity.StudentDetailsActivity;
-import com.caregrowtht.app.activity.TimeCardSelectActivity;
 import com.caregrowtht.app.model.BaseModel;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -30,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
 /**
@@ -108,7 +109,7 @@ public class StudentCardAdapter extends CommonAdapter {
             } else {//家庭共用学员
                 checkCard(viewHolder, position, rlStuFront);
             }
-        } else if (courseEntity == null) {//选择要发送的学员
+        } else {//选择要发送的学员
             checkCard(viewHolder, position, rlStuFront);
         }
     }
@@ -211,8 +212,7 @@ public class StudentCardAdapter extends CommonAdapter {
             tvCourseCanel.setVisibility(View.VISIBLE);
         }
         tvCourseCanel.setOnClickListener(v -> {
-            activity.startActivity(new Intent(mContext, TimeCardSelectActivity.class));
-            activity.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+            activity.startActivity(new Intent(mContext, ArtificialActivity.class));//人工消课
             dialog.dismiss();
         });
         ImageButton ib_colse = view.findViewById(R.id.ib_colse);

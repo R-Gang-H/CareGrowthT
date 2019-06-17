@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_size_10"
-    android:layout_marginRight="@dimen/margin_size_10"
     android:layout_marginTop="@dimen/margin_size_10"
+    android:layout_marginRight="@dimen/margin_size_10"
     android:background="@drawable/shape_shadow_bg"
     android:paddingBottom="@dimen/margin_size_8">
 
@@ -34,6 +34,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/iv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_size_3"
+        android:background="@mipmap/ic_pending"
+        android:gravity="center"
+        android:text="待回执"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_13"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tv_title_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,29 +58,40 @@
         android:text="喜报:我机构**学员在希望杯英语大赛中荣获一等奖,恭喜!"
         android:textColor="@color/color_3"
         android:textSize="@dimen/text_size_15"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_type" />
+
+    <ImageView
+        android:id="@+id/iv_line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_0.5"
+        android:layout_marginStart="@dimen/margin_size_15"
+        android:layout_marginTop="@dimen/margin_size_8"
+        android:layout_marginEnd="@dimen/margin_size_15"
+        android:background="@color/col_e1"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
 
     <TextView
         android:id="@+id/tv_handlerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_size_12"
+        android:layout_marginTop="@dimen/margin_size_3"
         android:layout_marginRight="@dimen/margin_size_12"
-        android:layout_marginTop="@dimen/margin_size_8"
-        android:background="@drawable/shape_state_handler_bg"
         android:gravity="left"
-        android:padding="@dimen/margin_size_10"
+        android:paddingTop="@dimen/margin_size_10"
+        android:paddingBottom="@dimen/margin_size_8"
         android:text="郝瑞刚  2018-7-4 18:19  发送"
         android:textColor="@color/color_6"
         android:textSize="@dimen/text_size_11"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+        app:layout_constraintTop_toBottomOf="@id/iv_line1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_isReceipt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_13"
+        android:layout_marginTop="@dimen/margin_size_3"
         app:layout_constraintTop_toBottomOf="@id/tv_handlerName">
 
         <ImageView
@@ -106,9 +131,9 @@
             android:id="@+id/tv_send_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_size_4"
-            android:layout_marginRight="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_4"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:layout_marginBottom="@dimen/margin_size_4"
             android:background="@mipmap/ic_btn_green_bg"
             android:gravity="center"
             android:text="再次发送"

@@ -30,6 +30,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -169,12 +170,12 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
                         mListCard.addAll(data.getData());
                         mCardsAdapter.updateStatus(mListCard, status);
                         if (data.getData().size() > 0) {
+                            refreshLayout.finishRefresh();
                             loadView.delayShowContainer(true);
                         } else {
+                            refreshLayout.finishLoadmore();
                             loadView.setNoShown(true);
                         }
-                        refreshLayout.finishRefresh();
-                        refreshLayout.finishLoadmore();
                     }
 
                     @Override

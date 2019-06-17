@@ -5,17 +5,24 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.OrgNotifyAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgNotifyEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
@@ -26,7 +33,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -38,6 +44,14 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.ll_tob)
+    LinearLayout llTob;
+    @BindView(R.id.tv_my_relase)
+    TextView tvMyRelase;
+    @BindView(R.id.tv_all)
+    TextView tvAll;
+    @BindView(R.id.iv_add)
+    ImageView ivAll;
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.recycler_view)
@@ -53,6 +67,8 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
     private OrgNotifyAdapter notifyAdapter;
     private String OrgId;
     private int position;
+    private MessageEntity msgEntity;
+    private String type;// 1 我发布的通知 2我收到的通知 3全部
 
     @Override
     public int getLayoutId() {
@@ -83,12 +99,27 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void initData() {
-        position = getIntent().getIntExtra("position", 0);
-        OrgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (StrUtils.isNotEmpty(msgEntity)) {
+            OrgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(OrgId);
+            if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
+                llTob.setVisibility(View.VISIBLE);
+                type = "1"; //1 我发布的通知
+            } else {// 15：|83：我的机构通知
+                ivAll.setVisibility(View.GONE);
+                type = "2"; //2我收到的通知
+            }
+        } else {
+            llTob.setVisibility(View.VISIBLE);
+            type = "1"; //1 我发布的通知
+            position = getIntent().getIntExtra("position", 0);
+            OrgId = UserManager.getInstance().getOrgId();
+        }
         OrgNotify(true);
     }
 
-    @OnClick({R.id.rl_back_button, R.id.iv_add})
+    @OnClick({R.id.rl_back_button, R.id.iv_add, R.id.tv_my_relase, R.id.tv_all})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back_button:
@@ -107,12 +138,30 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
                     overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
                 }
                 break;
+            case R.id.tv_my_relase:
+                pageIndex = 1;
+                type = "1";
+                tvMyRelase.setBackgroundResource(R.mipmap.ic_blue_levae);
+                tvMyRelase.setTextColor(ResourcesUtils.getColor(R.color.white));
+                tvAll.setBackground(null);
+                tvAll.setTextColor(ResourcesUtils.getColor(R.color.blueLight));
+                OrgNotify(true);
+                break;
+            case R.id.tv_all:
+                pageIndex = 1;
+                type = "3";
+                tvMyRelase.setBackground(null);
+                tvMyRelase.setTextColor(ResourcesUtils.getColor(R.color.blueLight));
+                tvAll.setBackgroundResource(R.mipmap.ic_blue_levae);
+                tvAll.setTextColor(ResourcesUtils.getColor(R.color.white));
+                OrgNotify(true);
+                break;
         }
     }
 
     private void OrgNotify(boolean isClear) {
         HttpManager.getInstance().doGetNoticeList("OrgNotifyActivity",
-                OrgId, pageIndex, new HttpCallBack<BaseDataModel<OrgNotifyEntity>>() {
+                OrgId, type, pageIndex, new HttpCallBack<BaseDataModel<OrgNotifyEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<OrgNotifyEntity> data) {
                         if (isClear) {
@@ -126,7 +175,7 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
                             orgNotifyList.clear();
                         }
                         orgNotifyList.addAll(data.getData());
-                        notifyAdapter.setData(orgNotifyList, isClear);
+                        notifyAdapter.setData(orgNotifyList, StrUtils.isNotEmpty(msgEntity) ? msgEntity.getType() : "");
                     }
 
                     @Override
@@ -151,8 +200,14 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void setOnItemClickListener(View view, int postion) {
-        startActivity(new Intent(this, NotifyObjActivity.class)
-                .putExtra("notifyEntity", orgNotifyList.get(postion)));
+        if (StrUtils.isNotEmpty(msgEntity) && msgEntity.getType().equals("15")) {// 15：|83：我的机构通知
+            startActivity(new Intent(this, NotifityInfoActivity.class)
+                    .putExtra("msgEntity", msgEntity)
+                    .putExtra("notifyEntity", orgNotifyList.get(postion)));
+        } else {
+            startActivity(new Intent(this, NotifyObjActivity.class)
+                    .putExtra("notifyEntity", orgNotifyList.get(postion)));
+        }
         overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
     }
 

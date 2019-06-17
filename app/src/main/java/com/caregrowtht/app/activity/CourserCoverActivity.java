@@ -18,6 +18,7 @@ import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 
@@ -60,6 +61,7 @@ public class CourserCoverActivity extends BaseActivity {
 
     private String courseId;
     private CourseEntity courInfoData = new CourseEntity();
+    private CourseEntity courseEntity;
 
     @Override
     public int getLayoutId() {
@@ -74,7 +76,12 @@ public class CourserCoverActivity extends BaseActivity {
     @Override
     public void initData() {
         MessageEntity msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
-        courseId = msgEntity.getTargetId();
+        courseEntity = (CourseEntity) getIntent().getSerializableExtra("courseEntity");
+        if (StrUtils.isNotEmpty(msgEntity)) {
+            courseId = msgEntity.getTargetId();
+        } else if (StrUtils.isNotEmpty(courseEntity)) {
+            courseId = courseEntity.getCourseId();
+        }
         teacherLessonDetail();
     }
 

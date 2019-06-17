@@ -19,8 +19,10 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
+import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -62,6 +64,8 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
     private List<CourseEntity> courseData = new ArrayList<>();
     private String status = "1";// 1未开始的课程 2已结束的课程
     private String showType;
+    private boolean isLoading = false;// 是否刷新了
+
 
     @Override
     public int getLayoutId() {
@@ -73,7 +77,11 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_screen_right);
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
-        showType = msgEntity.getType();
+        if (StrUtils.isNotEmpty(msgEntity)) {
+            showType = msgEntity.getType();
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        }
         iniXrecyclerView(recyclerView);
         recyclerView.setPullRefreshEnabled(true);
         recyclerView.setLoadingMoreEnabled(!showType.equals("9"));
@@ -83,12 +91,14 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
             @Override
             public void onRefresh() {
                 pageIndex = 1;
+                isLoading = true;
                 getCourseList(true);
             }
 
             @Override
             public void onLoadMore() {
                 pageIndex++;
+                isLoading = true;
                 getCourseList(false);
             }
         });
@@ -96,7 +106,6 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void initData() {
-        orgId = msgEntity.getOrgId();
         todayTime = TimeUtils.getCurTimeLong() / 1000;
         endAt = String.valueOf(todayTime);
         if (showType.equals("9")) {// 9：有学员请假汇总动态
@@ -133,7 +142,7 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
                             List<CourseEntity> todayData = new ArrayList<>();// 今天的
                             List<CourseEntity> withinData = new ArrayList<>();// 7天内
                             List<CourseEntity> beforeData = new ArrayList<>();// 7天之前
-                            for (int i = 0; i < list.size(); i++) {// 筛选今天的
+                            for (int i = 0; i < list.size(); i++) {// 筛选
                                 CourseEntity entity = list.get(i);
                                 long begingAt = Long.valueOf(entity.getCourseBeginAt());
                                 boolean isToday = TimeUtils.IsToday(DateUtil.getDate(begingAt
@@ -170,9 +179,13 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
                                 loadView.delayShowContainer(true);
                             }
                         }
-
-                        recyclerView.loadMoreComplete();
-                        recyclerView.refreshComplete();
+                        if (isLoading) {
+                            if (isClear) {
+                                recyclerView.refreshComplete();
+                            } else {
+                                recyclerView.loadMoreComplete();
+                            }
+                        }
                     }
 
                     @Override
@@ -181,12 +194,15 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(StuLevaeActivity.this);
+                        } else {
+                            loadView.setErrorShown(true, v -> getCourseList(true));
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("StuLevaeActivity onError", throwable.getMessage());
+                        loadView.setErrorShown(true, v -> getCourseList(true));
                     }
                 });
     }
