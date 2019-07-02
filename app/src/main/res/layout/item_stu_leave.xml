@@ -16,7 +16,7 @@
             android:layout_marginStart="@dimen/margin_size_14"
             android:layout_marginTop="@dimen/margin_size_19"
             android:layout_marginBottom="@dimen/margin_size_12"
-            android:text="7天内"
+            android:text="过去7天"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_16" />
 

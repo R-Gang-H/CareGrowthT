@@ -71,7 +71,7 @@ public class MomentActivity extends BaseActivity implements MomentAdapter.OnComm
         iniXrecyclerView(mGrowthHistoryRecyclerView);
         mGrowthHistoryRecyclerView.setPullRefreshEnabled(true);
         mGrowthHistoryRecyclerView.setLoadingMoreEnabled(true);
-        mAdapter = new MomentAdapter(mArrDatas, this, null, null, "1", "2");
+        mAdapter = new MomentAdapter(mArrDatas, this, null, null, "2", "2");
         mGrowthHistoryRecyclerView.setAdapter(mAdapter);
         mGrowthHistoryRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -86,7 +86,6 @@ public class MomentActivity extends BaseActivity implements MomentAdapter.OnComm
                 RequestMomentList(pageIndex);//34. 获取兴趣圈列表
             }
         });
-        mGrowthHistoryRecyclerView.setLoadingMoreEnabled(true);
         mAdapter.setCommentListener(MomentActivity.this);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(this::handleWindowChange);
     }

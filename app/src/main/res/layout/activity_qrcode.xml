@@ -12,6 +12,7 @@
         android:theme="@style/ToolbarTheme"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="enterAlways|snap|scroll"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextAppearance="@style/Toolbar.TitleText">
@@ -42,8 +43,8 @@
                 android:layout_marginEnd="@dimen/margin_size_15"
                 android:layout_toEndOf="@id/rl_back_button"
                 android:background="@drawable/add_circle_corner_transparent_bg"
-                android:drawablePadding="@dimen/margin_size_10"
                 android:drawableStart="@mipmap/ic_search"
+                android:drawablePadding="@dimen/margin_size_10"
                 android:ellipsize="end"
                 android:gravity="center|left"
                 android:hint="请输入机构名称"

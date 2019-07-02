@@ -76,10 +76,16 @@ public class EliminateWorkAdapter extends XrecyclerAdapter {
                     typeContent = "今天";
                     break;
                 case "2":
-                    typeContent = "7天内";
+                    typeContent = "过去7天";
                     break;
                 case "3":
                     typeContent = "7天之前";
+                    break;
+                case "4":
+                    typeContent = "未来7天";
+                    break;
+                case "5":
+                    typeContent = "7天之后";
                     break;
             }
             tvDay.setText(typeContent);

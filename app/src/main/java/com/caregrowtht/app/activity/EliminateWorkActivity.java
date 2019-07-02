@@ -60,10 +60,12 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
     private String orgId;
     private String isMy = "1";// 1 我的课程 2机构课程
     private String beginAt = "0", endAt = "0";
-    private long todayTime;// 今天的时间戳
+    private long endTime;// 今天结束的时间戳
     private String Url;
     private String status = "1";// 1：待处理 2：已完成
     private String showType;
+    private boolean roleType = false;// true 有 ,false 没有
+    private int index = -1;
 
     @Override
     public int getLayoutId() {
@@ -98,15 +100,20 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
     @Override
     public void initData() {
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        endTime = DateUtil.getStringToDate(TimeUtils.getCurTimeLong("yyyy-MM-dd 24:00"), "yyyy-MM-dd HH:mm");
+        Url = Constant.GETORGMANUALLIST;
         if (StrUtils.isNotEmpty(msgEntity)) {
             orgId = msgEntity.getOrgId();
             showType = msgEntity.getType();
             UserManager.getInstance().setOrgId(orgId);
+            UserManager.getInstance().isTxRole("tx_rc_8", isRole1 -> {
+                roleType = isRole1;
+                if (isRole1) {// 有机构权限
+                    isMy = "2";// 1 我的课程 2机构课程
+                }
+                getOrgManualList(true);
+            });
         }
-        todayTime = TimeUtils.getCurTimeLong() / 1000;
-        endAt = String.valueOf(todayTime);
-        Url = Constant.GETORGMANUALLIST;
-        getOrgManualList(true);
     }
 
     private void getOrgManualList(boolean isClear) {
@@ -122,32 +129,49 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
                         if (list.size() > 0) {
                             // 筛选 条件 start
                             List<CourseEntity> todayData = new ArrayList<>();// 今天的
-                            List<CourseEntity> withinData = new ArrayList<>();// 7天内
+                            List<CourseEntity> withinData = new ArrayList<>();// 过去7天
                             List<CourseEntity> beforeData = new ArrayList<>();// 7天之前
+                            List<CourseEntity> toMorrowData = new ArrayList<>();// 未来7天
+                            List<CourseEntity> futureData = new ArrayList<>();// 7天之后
                             for (int i = 0; i < list.size(); i++) {// 筛选今天的
                                 CourseEntity entity = list.get(i);
-                                long begingAt = Long.valueOf(entity.getCourseBeginAt());
+                                long begingAt = DateUtil.getStringToDate(DateUtil.getDate(Long.valueOf(
+                                        entity.getCourseBeginAt()), "yyyy-MM-dd"), "yyyy-MM-dd");
                                 boolean isToday = TimeUtils.IsToday(DateUtil.getDate(begingAt
                                         , "yyyy-MM-dd"));// 是否为今天
                                 long yesTerday = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                                        DateUtil.getDate(todayTime, "yyyy-MM-dd")
+                                        DateUtil.getDate(endTime, "yyyy-MM-dd")
                                         , -1, "yyyy-MM-dd"), "yyyy-MM-dd");// 昨天
                                 long withinDay = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                                        DateUtil.getDate(todayTime, "yyyy-MM-dd")
-                                        , -7, "yyyy-MM-dd"), "yyyy-MM-dd");// 7天内的时间
-                                if (isToday) {
+                                        DateUtil.getDate(endTime, "yyyy-MM-dd")
+                                        , -7, "yyyy-MM-dd"), "yyyy-MM-dd");// 过去7天的时间
+                                long toMorrow = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                                        DateUtil.getDate(endTime, "yyyy-MM-dd")
+                                        , 1, "yyyy-MM-dd"), "yyyy-MM-dd");// 明天
+                                long future = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                                        DateUtil.getDate(endTime, "yyyy-MM-dd")
+                                        , 7, "yyyy-MM-dd"), "yyyy-MM-dd");// 未来7天的时间
+                                if (isToday) {// 今天
                                     entity.setType("1");
                                     todayData.add(entity);
-                                } else if (begingAt <= yesTerday && begingAt >= withinDay) {
+                                } else if (begingAt <= yesTerday && begingAt >= withinDay) {// 过去7天
                                     entity.setType("2");
                                     withinData.add(entity);
-                                } else {
+                                } else if (begingAt < withinDay) {// 7天之前
                                     entity.setType("3");
                                     beforeData.add(entity);
+                                } else if (begingAt >= toMorrow && begingAt <= future) {// 未来7天
+                                    entity.setType("4");
+                                    toMorrowData.add(entity);
+                                } else if (begingAt > future) {// 7天之后
+                                    entity.setType("5");
+                                    futureData.add(entity);
                                 }
                             }
                             // 筛选 条件 end
                             courseData.addAll(todayData);
+                            courseData.addAll(futureData);
+                            courseData.addAll(toMorrowData);
                             courseData.addAll(withinData);
                             courseData.addAll(beforeData);
                         }
@@ -195,8 +219,11 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
                 break;
             case R.id.rl_next_button:
                 startActivity(new Intent(this, ScreenActivity.class)
+                        .putExtra("role_type", roleType)
                         .putExtra("type", showType)
-                        .putExtra("status", status));
+                        .putExtra("status", status)
+                        .putExtra("isMy", isMy)
+                        .putExtra("index", index));
                 break;
             case R.id.tv_pending:
                 pageIndex = 1;
@@ -221,7 +248,9 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
 
     @Override
     public void setOnItemClickListener(View view, int position) {
-
+        startActivity(new Intent(this, CourserActivity.class)
+                .putExtra("msgEntity", msgEntity)
+                .putExtra("courseId", courseData.get(position - 1).getCourseId()));
     }
 
     @Override
@@ -232,6 +261,7 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
                 isMy = (String) event.getObj();
                 beginAt = String.valueOf((long) event.getObj1());
                 endAt = String.valueOf((long) event.getObj2());
+                index = (int) event.getObj3();
                 getOrgManualList(true);
                 break;
             case ToUIEvent.REFERSH_ELIMINATE:

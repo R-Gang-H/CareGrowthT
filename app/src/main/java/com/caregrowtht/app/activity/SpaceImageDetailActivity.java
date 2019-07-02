@@ -2,10 +2,11 @@ package com.caregrowtht.app.activity;
 
 import android.graphics.Color;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.RequiresApi;
+import androidx.viewpager.widget.ViewPager;
 
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.BigImagePagerAdapter;

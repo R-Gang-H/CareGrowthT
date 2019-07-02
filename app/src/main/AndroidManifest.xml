@@ -421,7 +421,7 @@
             android:theme="@style/courserTab" />
         <activity
             android:name=".activity.MomentActivity"
-            android:theme="@style/courserTab" />
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="android.max_aspect"

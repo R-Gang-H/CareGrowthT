@@ -77,7 +77,6 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void initView() {
-        tvTitle.setText("机构通知");
         String str = "<font color='#333333'>这是能够查看回执的通知</font><br/><br/><font color='#666666'><small>赶快发一条试试吧</small></font>";
         ivEmpty.setText(Html.fromHtml(str));
         initRecyclerView(recyclerView, true);
@@ -104,9 +103,11 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
             OrgId = msgEntity.getOrgId();
             UserManager.getInstance().setOrgId(OrgId);
             if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
+                tvTitle.setText("通知管理");
                 llTob.setVisibility(View.VISIBLE);
                 type = "1"; //1 我发布的通知
             } else {// 15：|83：我的机构通知
+                tvTitle.setText("机构通知");
                 ivAll.setVisibility(View.GONE);
                 type = "2"; //2我收到的通知
             }

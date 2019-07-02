@@ -360,6 +360,9 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
             radioButtons.get(0).setText(finalCourseType.get(position));//选择的选项内容展示
             type = position + 1;//1：我的课表 2：机构课表 3：跨机构课表
 
+            UserManager.getInstance().setOrgId(
+                    String.valueOf(U.getPreferences("orgId", "")));
+
             setChioceItem(0);
             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
 

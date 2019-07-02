@@ -102,7 +102,7 @@ public class StateFragment extends BaseFragment {
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
-        tvTitle.setText("动态");
+        tvTitle.setText("我的助理");
         rlNextButton.setVisibility(View.VISIBLE);
         ivTitleRight.setImageResource(R.mipmap.ic_scan);
 
@@ -244,7 +244,13 @@ public class StateFragment extends BaseFragment {
                         } else {
                             llAll.setVisibility(View.GONE);
                         }
-                        tvTitleAll.setText(String.format("查看未完成待办（%s）条", count));
+                        if (TextUtils.equals(status, "1")) {
+                            //1.全部动态
+                            tvTitleAll.setText(String.format("查看未完成待办（%s）条", count));
+                        } else if (TextUtils.equals(status, "2")) {
+                            // 2.未完成待办的动态
+                            tvTitleAll.setText("查看全部");
+                        }
                     }
 
                     @Override
@@ -342,13 +348,26 @@ public class StateFragment extends BaseFragment {
      * haoruigang on 2018-8-6 16:00:48
      */
     private void delMessage(final int adapterPosition) {
-        HttpManager.getInstance().doDelMessage("StateFragment", messageAllList.get(adapterPosition).getEventId(),
+        String eventId = "";
+        if (TextUtils.equals(status, "1")) {
+            //1.全部动态
+            eventId = messageAllList.get(adapterPosition).getEventId();
+        } else if (TextUtils.equals(status, "2")) {
+            // 2.未完成待办的动态
+            eventId = messageNeedList.get(adapterPosition).getEventId();
+        }
+        HttpManager.getInstance().doDelMessage("StateFragment", eventId,
                 new HttpCallBack<BaseDataModel<MessageEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<MessageEntity> data) {
-//                Toast.makeText(getActivity(), "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
                         //移除
-                        messageAllList.remove(adapterPosition);
+                        if (TextUtils.equals(status, "1")) {
+                            //1.全部动态
+                            messageAllList.remove(adapterPosition);
+                        } else if (TextUtils.equals(status, "2")) {
+                            // 2.未完成待办的动态
+                            messageNeedList.remove(adapterPosition);
+                        }
                         stateAdapter.messageAllList.remove(adapterPosition);
                         stateAdapter.notifyItemRemoved(adapterPosition);
                         stateAdapter.notifyItemRangeChanged(adapterPosition, messageAllList.size());

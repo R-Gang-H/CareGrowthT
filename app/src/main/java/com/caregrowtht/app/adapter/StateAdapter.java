@@ -185,6 +185,18 @@ public class StateAdapter extends XrecyclerAdapter {
     TextView tvInTime;
     @BindView(R.id.cl_rb)
     RelativeLayout clRb;
+    @BindView(R.id.ll_select_all)
+    LinearLayout llSelectAll;
+    @BindView(R.id.tv_select_detial)
+    TextView tvSelectDetial;
+    @BindView(R.id.tv_select_all)
+    TextView tvSelectAll;
+    @BindView(R.id.ll_check_all)
+    LinearLayout llCheckAll;
+    @BindView(R.id.tv_check_detial)
+    TextView tvCheckDetial;
+    @BindView(R.id.tv_check_all)
+    TextView tvCheckAll;
     @BindView(R.id.tv_day_xk_monery)
     TextView tvDayXkMonery;
     @BindView(R.id.tv_day_xz_monery)
@@ -211,8 +223,6 @@ public class StateAdapter extends XrecyclerAdapter {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
-        // 强行关闭复用
-        holder.setIsRecyclable(false);
         MessageEntity msgEntity = messageAllList.get(position);
         switch (msgEntity.getType()) {
             case "1":// 1：课程代办
@@ -245,22 +255,35 @@ public class StateAdapter extends XrecyclerAdapter {
                 break;
             case "9":// 9：有学员请假汇总动态
             case "10":// 10：签到提醒汇总动态
-            case "11":// 11：每日日报汇总动态
             case "12":// 12：未发布课程反馈提醒汇总动态
             case "13":// 13：最小开课人数提醒
             case "14":// 14：空位提醒
+            case "19":// 19：人工消课提醒
+            case "20":// 20：学员预约提醒
+                ivSignLeaveType.setImageResource(R.mipmap.ic_type_course);
+                setVisibilitys(false, false, false, true);
+                break;
+            case "11":// 11：每日日报汇总动态
+                ivSignLeaveType.setImageResource(R.mipmap.ic_work_daily);
+                setVisibilitys(false, false, false, true);
+                break;
             case "15":// 15：我的机构通知
+                ivSignLeaveType.setImageResource(R.mipmap.ic_type_noti);
+                setVisibilitys(false, false, false, true);
+                break;
             case "16":// 16：通知管理
             case "17":// 17：审核教师提醒
             case "18":// 18：审核学员提醒
-            case "19":// 19：人工消课提醒
-            case "20":// 20：学员预约提醒
             case "21":// 21：非活跃学员提醒
             case "22":// 22：学员续费提醒
+            case "27":// 27：未出勤学员提醒
+                ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
+                setVisibilitys(false, false, false, true);
+                break;
             case "23":// 23：机构主页未设置提醒
             case "24":// 24：初始化提醒
             case "25":// 25：排课提醒
-            case "27":// 27：未出勤学员提醒
+                ivSignLeaveType.setImageResource(R.mipmap.ic_type_feedback);
                 setVisibilitys(false, false, false, true);
                 break;
         }
@@ -272,6 +295,7 @@ public class StateAdapter extends XrecyclerAdapter {
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
+        String rbMonthTime = TimeUtils.getDateToString(Long.parseLong(msgEntity.getUpdateTime()), "yyyy年MM月dd日 HH:mm");
         UserManager instance = UserManager.getInstance();
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
             tvTitle.setVisibility(View.VISIBLE);
@@ -343,18 +367,6 @@ public class StateAdapter extends XrecyclerAdapter {
                 ivIcon.setImageResource(R.mipmap.icon_state);
                 tvText.setText("3分钟快速了解爱成长");
             }
-            tvAddTime.setText(DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm"));
-            // 1待处理 2已处理 3不需要处理
-            switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
-                case "1"://1：待处理
-                    ivAddStatus.setText("待处理");
-                    ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_pending));
-                    break;
-                case "2"://2：已完成(已处理)
-                    ivAddStatus.setText("已完成");
-                    ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_complet));
-                    break;
-            }
         } else if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10")
                 || msgEntity.getType().equals("11") || msgEntity.getType().equals("12")
                 || msgEntity.getType().equals("13") || msgEntity.getType().equals("14")
@@ -362,8 +374,8 @@ public class StateAdapter extends XrecyclerAdapter {
                 || msgEntity.getType().equals("17") || msgEntity.getType().equals("18")
                 || msgEntity.getType().equals("19") || msgEntity.getType().equals("20")
                 || msgEntity.getType().equals("21") || msgEntity.getType().equals("22")
-                || msgEntity.getType().equals("23")
-                || msgEntity.getType().equals("27")) {
+                || msgEntity.getType().equals("23") || msgEntity.getType().equals("24")
+                || msgEntity.getType().equals("25") || msgEntity.getType().equals("27")) {
             tvOrgName.setText(msgEntity.getOrgName());
             long courseStartAt = Long.valueOf(msgEntity.getCourseStartAt());
             String Month = TimeUtils.getDateToString(courseStartAt, "MM月dd日");
@@ -372,52 +384,49 @@ public class StateAdapter extends XrecyclerAdapter {
             String time = TimeUtils.getDateToString(courseStartAt, "HH:mm");
             String teacherName = msgEntity.getTeacherName();
             String courseName = msgEntity.getCourseName();
+            tvSignLeaveContent.setVisibility(View.VISIBLE);
             tvSignLeaveContent.setText(String.format("%s\t\t%s\t\t%s\n%s\t\t%s",
                     Month, week, time, teacherName, courseName));
-            ivSignLeaveStatus.setVisibility(msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
-            tvSignLeaveTime.setText(String.format("%s\t\t%s", DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm")
-                    , msgEntity.getRead().equals("0") ? "更新" : ""));
+            rlSign.setVisibility(View.VISIBLE);
+            tvStuDetail.setVisibility(View.VISIBLE);
+            clRb.setVisibility(View.GONE);
+            llCheckAll.setVisibility(View.GONE);
+            Vline1.setVisibility(View.VISIBLE);
+            tvSignLeaveTime.setVisibility(View.VISIBLE);
+            tvSignLeaveTime.setText(String.format("%s\t\t%s", rbMonthTime, msgEntity.getRead().equals("0") ? "更新" : ""));
             if (msgEntity.getType().equals("9") || msgEntity.getType().equals("17")
                     || msgEntity.getType().equals("18") || msgEntity.getType().equals("19")) {
-                if (msgEntity.getType().equals("9")) {// 9：有学员请假汇总动态
-                    tvSignLeaveTitle.setText("学员请假");
-                } else if (msgEntity.getType().equals("17")) {// 17：审核教师提醒
-                    tvSignLeaveTitle.setText("审核教师提醒");
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
-                    ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                    ivSignLeaveStatus.setText("待处理");
-                    tvSignLeaveContent.setVisibility(View.GONE);
-                } else if (msgEntity.getType().equals("18")) {// 18：审核学员提醒
-                    tvSignLeaveTitle.setText("审核学员提醒");
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
-                    ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                    ivSignLeaveStatus.setText("待处理");
-                    tvSignLeaveContent.setVisibility(View.GONE);
-                } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
-                    tvSignLeaveTitle.setText("人工消课提醒");
-                    ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                    ivSignLeaveStatus.setText("待处理");
-                }
-                rlSign.setVisibility(View.VISIBLE);
                 tvStuDetail.setVisibility(View.GONE);
-                clRb.setVisibility(View.GONE);
                 ivLevaeAuthorAvatar.setTextAndColor(TextUtils.isEmpty(msgEntity.getShowName()) ? ""
                         : msgEntity.getShowName().substring(0, 1), mContext.getResources().getColor(R.color.b0b2b6));
                 GlideUtils.setGlideImg(mContext, msgEntity.getShowHeadImage(), 0, ivLevaeAuthorAvatar);
                 tvLevaeAuthorName.setText(String.format("%s(等)", msgEntity.getShowName()));
+                if (msgEntity.getType().equals("9")) {// 9：有学员请假汇总动态
+                    tvSignLeaveTitle.setText("学员请假");
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
+                } else if (msgEntity.getType().equals("17")) {// 17：审核教师提醒
+                    tvSignLeaveTitle.setText("审核教师提醒");
+                    tvSignLeaveContent.setVisibility(View.GONE);
+                } else if (msgEntity.getType().equals("18")) {// 18：审核学员提醒
+                    tvSignLeaveTitle.setText("审核学员提醒");
+                    tvSignLeaveContent.setVisibility(View.GONE);
+                } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+                    tvSignLeaveTitle.setText("人工消课提醒");
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
+                    tvLevaeAuthorName.setText(Html.fromHtml(String.format("%s\t\t<font color='#F34B4B'>%s</font>"
+                            , tvLevaeAuthorName.getText(), "自动消课失败")));
+                }
             } else if (msgEntity.getType().equals("10") || msgEntity.getType().equals("13")
                     || msgEntity.getType().equals("14") || msgEntity.getType().equals("15")
                     || msgEntity.getType().equals("16") || msgEntity.getType().equals("20")
                     || msgEntity.getType().equals("21") || msgEntity.getType().equals("22")
                     || msgEntity.getType().equals("23") || msgEntity.getType().equals("24")
-                    || msgEntity.getType().equals("27")) {
+                    || msgEntity.getType().equals("25") || msgEntity.getType().equals("27")) {
                 rlSign.setVisibility(View.GONE);
-                tvStuDetail.setVisibility(View.VISIBLE);
-                clRb.setVisibility(View.GONE);
                 if (msgEntity.getType().equals("10")) {// 10：签到提醒汇总动态
                     tvSignLeaveTitle.setText("签到提醒");
-                    ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                    ivSignLeaveStatus.setText("待处理");
                     try {
                         JSONObject jsonObject = new JSONObject(msgEntity.getContent());
                         String childNum = instance.getJsonString(jsonObject, "childNum");
@@ -429,60 +438,57 @@ public class StateAdapter extends XrecyclerAdapter {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
                     tvSignLeaveTitle.setText("开课人数提醒");
                     tvStuDetail.setText(String.format("学员\t%s人\t\t|\t\t开课人数\t%s人"
                             , msgEntity.getChildNum(), msgEntity.getMinCount()));
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
                     tvSignLeaveTitle.setText("空位提醒");
-                    ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                    ivSignLeaveStatus.setText("待处理");
                     tvStuDetail.setText(String.format("空位\t%s人", msgEntity.getChildNum()));
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("15")) {// 15：|83：我的机构通知
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_noti);
                     setTitleDetail(context, "机构通知", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
                     setTitleDetail(context, "通知管理", false,
                             String.format("已发送通知\n%s\n点击查看通知对象情况", msgEntity.getContent()));
                 } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
                     tvSignLeaveTitle.setText("学员预约提醒");
                     tvStuDetail.setText(String.format("学员\t%s位", msgEntity.getChildNum()));
+                    llCheckAll.setVisibility(View.VISIBLE);
+                    Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("21")) {// 21：非活跃学员提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
                     setTitleDetail(context, "非活跃学员提醒", false,
                             String.format("非活跃学员:%s位", msgEntity.getChildNum()));
                 } else if (msgEntity.getType().equals("22")) {// 22：学员续费提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
                     setTitleDetail(context, "学员续费提醒", false,
                             String.format("续费提醒学员:%s位", msgEntity.getChildNum()));
                 } else if (msgEntity.getType().equals("23")) {// 23：机构主页未设置提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_feedback);
                     setTitleDetail(context, "机构主页", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("24")) {// 24：初始化提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_feedback);
                     setTitleDetail(context, "初始化提醒", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("25")) {// 25：排课提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_feedback);
                     setTitleDetail(context, "排课提醒", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("27")) {// 27：未出勤学员提醒
-                    ivSignLeaveType.setImageResource(R.mipmap.ic_type_org);
                     setTitleDetail(context, "未出勤学员提醒", false,
                             String.format("超过一个月未上课的学员:%s位", msgEntity.getChildNum()));
                 }
             } else if (msgEntity.getType().equals("12")) {// 12：未发布课程反馈提醒汇总动态
                 tvSignLeaveTitle.setText("未发布课程反馈提醒");
-                ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
-                ivSignLeaveStatus.setText("待处理");
                 rlSign.setVisibility(View.GONE);
                 tvStuDetail.setVisibility(View.GONE);
-                clRb.setVisibility(View.GONE);
+                llCheckAll.setVisibility(View.VISIBLE);
+                Vline1.setVisibility(View.GONE);
             } else if (msgEntity.getType().equals("11")) {// 11：每日日报汇总动态
-                ivSignLeaveType.setImageResource(R.mipmap.ic_work_daily);
                 tvSignLeaveTitle.setText("每日日报");
                 tvSignLeaveContent.setVisibility(View.GONE);
                 rlSign.setVisibility(View.GONE);
                 tvStuDetail.setVisibility(View.GONE);
+                clRb.setVisibility(View.VISIBLE);
                 Vline1.setVisibility(View.GONE);
                 tvSignLeaveTime.setVisibility(View.GONE);
                 long updateTime = Long.valueOf(msgEntity.getUpdateTime());
@@ -509,21 +515,7 @@ public class StateAdapter extends XrecyclerAdapter {
                 }
             }
         } else {
-            tvTime.setText(DateUtil.getDate(Long.parseLong(msgEntity.getUpdateTime()), "MM月dd日 HH:mm"));
-            switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
-                case "1"://1：待处理
-                    ivStatus.setVisibility(View.VISIBLE);
-                    ivStatus.setText("待处理");
-                    ivStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_pending));
-                    break;
-                case "2"://2：已完成(已处理)
-                    ivStatus.setVisibility(View.VISIBLE);
-                    tvHandlerName.setVisibility(View.VISIBLE);
-                    ivStatus.setText("已完成");
-                    ivStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_complet));
-                    tvHandlerName.setText(String.format("%s\t\t%s\t\t完成", msgEntity.getHandlerName(), DateUtil.getDate(Long.parseLong(msgEntity.getHandleTime()), "MM月dd日 HH:mm")));
-                    break;
-            }
+            tvTime.setText(TimeUtils.getDateToString(Long.parseLong(msgEntity.getTime()), "MM月dd日 HH:mm"));
             //表示机构发出的通知是否需要回执type=5的时候该字段有值，其余类型该字段没有值
             if (msgEntity.getType().equals("4") || msgEntity.getType().equals("5")) {//4,5：机构和系统发出的通知
                 switch (msgEntity.getReceipt()) {
@@ -585,6 +577,7 @@ public class StateAdapter extends XrecyclerAdapter {
                 tvTime.setTextSize(18);
                 tvTitleContent.setText(msgEntity.getOrgName());
                 tvCourseInfo.setVisibility(View.VISIBLE);
+                llSelectAll.setVisibility(View.VISIBLE);
                 long courseStartAt = Long.valueOf(msgEntity.getCircleCourseBeginTime());
                 String Month = TimeUtils.getDateToString(courseStartAt, "MM月dd日");
                 String data = DateUtil.getDate(courseStartAt, "yyyy年MM月dd日");
@@ -620,16 +613,55 @@ public class StateAdapter extends XrecyclerAdapter {
             String circleAccessory = msgEntity.getCircleAccessory();
             tvAtter.setVisibility(TextUtils.isEmpty(circleAccessory) ? View.GONE : View.VISIBLE);
         }
+
+        ivSignLeaveStatus.setText("有更新");
+        ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_y_update);
+        // 1待处理 2已处理 3不需要处理
+        switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
+            case "1"://1：待处理
+                ivAddStatus.setText("待处理");
+                ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_pending));
+
+                ivSignLeaveStatus.setVisibility(View.VISIBLE);
+                ivSignLeaveStatus.setText("待处理");
+                ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_pending);
+
+                ivStatus.setVisibility(View.VISIBLE);
+                ivStatus.setText("待处理");
+                ivStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_pending));
+                break;
+            case "2"://2：已完成(已处理)
+                ivAddStatus.setVisibility(View.VISIBLE);
+                ivAddStatus.setText("已完成");
+                ivAddStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_complet));
+
+                ivSignLeaveStatus.setVisibility(View.VISIBLE);
+                ivSignLeaveStatus.setText("已处理");
+                ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_complet);
+
+                ivStatus.setVisibility(View.VISIBLE);
+                ivStatus.setText("已完成");
+                ivStatus.setBackground(ResourcesUtils.getDrawable(R.mipmap.ic_complet));
+                String handleTime = msgEntity.getHandleTime();
+                if (!handleTime.equals("0")) {
+                    tvHandlerName.setVisibility(View.VISIBLE);
+                    tvHandlerName.setText(String.format("%s\t\t%s\t\t完成", msgEntity.getHandlerName(),
+                            TimeUtils.getDateToString(Long.parseLong(msgEntity.getHandleTime()), "MM月dd日 HH:mm")));
+                }
+                break;
+            case "3"://3：不需要处理
+
+                ivSignLeaveStatus.setVisibility(msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
+
+                tvAddTime.setText(rbMonthTime);
+                break;
+        }
 //        tvAtter.setText(circleAccessory);
         clItem.setOnClickListener(v -> {
             if (msgEntity.getType().equals("6")) {
                 return;
             }
-            UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
-            if (!UserManager.getInstance().CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
-                U.showToast("已离职");
-                return;
-            }
+            setRead(msgEntity);
             if (TextUtils.equals(msgEntity.getType(), "1")) {
                 // tpye2 1：请假签到 3：空位出现  4：教师审核 19：有学员预约了课程
                 switch (msgEntity.getType2()) {
@@ -765,6 +797,7 @@ public class StateAdapter extends XrecyclerAdapter {
             }
         });
         rlReadAicz.setOnClickListener(v -> {
+            setRead(msgEntity);
             if (msgEntity.getType2().equals("74")) {// 来自创始人的信
                 mContext.startActivity(new Intent(mContext, UserTermActivity.class)
                         .setData(Uri.parse(msgEntity.getContent()))
@@ -778,12 +811,58 @@ public class StateAdapter extends XrecyclerAdapter {
             }
         });
         btnAddOrg.setOnClickListener(v -> {
+            setRead(msgEntity);
             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ADD_ORG));
         });
         btnCreateOrg.setOnClickListener(v -> {
+            setRead(msgEntity);
             mContext.startActivity(new Intent(mContext, CreateOrgHintActivity.class));
         });
+        tvSelectDetial.setOnClickListener(v -> {
+            setRead(msgEntity);
+            if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
+                mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
+                        .putExtra("imputType", "2")
+                        .putExtra("msgEntity", msgEntity)
+                        .putExtra("circleId", msgEntity.getCircleId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+            }
+        });
+        tvCheckAll.setOnClickListener(v -> {
+            setRead(msgEntity);
+            if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
+                startActivity(msgEntity, MomentActivity.class);
+            }
+        });
+        tvCheckDetial.setOnClickListener(v -> {
+            setRead(msgEntity);
+            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+                startActivity(msgEntity, CourserActivity.class);
+            } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
+                startActivity(msgEntity, CourserActivity.class);
+            } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
+                startActivity(msgEntity, CourserCoverActivity.class);
+            } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+                startActivity(msgEntity, CourserActivity.class);
+            } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
+                startActivity(msgEntity, CourserActivity.class);
+            }
+        });
+        tvCheckAll.setOnClickListener(v -> {
+            setRead(msgEntity);
+            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+                startActivity(msgEntity, StuLevaeActivity.class);
+            } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
+                startActivity(msgEntity, CourseNumActivity.class);
+            } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
+                startActivity(msgEntity, NullRemindActivity.class);
+            } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+                startActivity(msgEntity, EliminateWorkActivity.class);
+            } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
+                startActivity(msgEntity, StuOrdersActivity.class);
+            }
+        });
         rlSignLevae.setOnClickListener(v -> {
+            setRead(msgEntity);
             if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
                 startActivity(msgEntity, StuLevaeActivity.class);
             } else if (msgEntity.getType().equals("11")) {
@@ -828,6 +907,15 @@ public class StateAdapter extends XrecyclerAdapter {
             }
         });
 
+    }
+
+    private void setRead(MessageEntity msgEntity) {
+        UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
+        if (!UserManager.getInstance().CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
+            U.showToast("已离职");
+            return;
+        }
+        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
     }
 
     private void setTitleDetail(Context context, String orgName, boolean isShow, String content) {

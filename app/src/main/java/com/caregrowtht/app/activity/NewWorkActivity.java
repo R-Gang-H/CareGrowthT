@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.WheelPopup;
@@ -54,9 +58,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -806,9 +807,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                             }
                         } else {
                             btnDereactCourse.setEnabled(true);
-                            U.showToast("新建排课成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, msgEntity != null));// 获取离开主页时保存的OrgId ture 动态进入 , false 机构课表进入
-                            finish();
+                            if (data != null && data.getData().size() > 0) {// 排课名称相同提示
+                                showConflictDialog(data.getData().get(0));
+                            } else {
+                                U.showToast("新建排课成功");
+                                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, msgEntity != null));// 获取离开主页时保存的OrgId ture 动态进入 , false 机构课表进入
+                                finish();
+                            }
                         }
                     }
 
@@ -836,6 +841,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
         CheckValadata checkValadata = new CheckValadata(check).invoke();
         if (checkValadata.is()) {
             btnCheckConflict.setEnabled(true);
+            btnDereactCourse.setEnabled(true);
             return;
         }
         StringBuilder courseTime = checkValadata.getCourseTime();
@@ -865,9 +871,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                             }
                         } else {
                             btnDereactCourse.setEnabled(true);
-                            U.showToast("修改成功");
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
-                            finish();
+                            if (data != null && data.getData().size() > 0) {// 排课名称相同提示
+                                showConflictDialog(data.getData().get(0));
+                            } else {
+                                U.showToast("修改成功");
+                                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_REFERSH, false));
+                                finish();
+                            }
                         }
                     }
 
@@ -1306,9 +1316,16 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
             if (!TextUtils.isEmpty(endAt)) {
                 endDate = DateUtil.getDate(Long.valueOf(endAt), "HH:mm");
             }
-            tvDesc.setText(Html.fromHtml(String.format("系统发现排课%s与本机构%s的%s有冲突。" +
-                            "<br/>冲突原因：%s<br/><font color='#AAAAAA'>（冲突课程可能不限于此）</font>",
-                    courseName, startDate + endDate, data.getCourseName(), data.getConflict())));
+            if (!TextUtils.isEmpty(startAt) && !TextUtils.isEmpty(endAt)) {
+                tvDesc.setText(Html.fromHtml(String.format("系统发现排课%s与本机构%s的%s有冲突。" +
+                                "<br/>冲突原因：%s<br/><font color='#AAAAAA'>（冲突课程可能不限于此）</font>",
+                        courseName, startDate + endDate, data.getCourseName(), data.getConflict())));
+            } else {
+                tv_ok.setVisibility(View.GONE);
+                tvDesc.setText(Html.fromHtml(String.format("系统发现排课%s有冲突。" +
+                                "<br/>冲突原因：%s<br/><font color='#AAAAAA'>（冲突课程可能不限于此）</font>",
+                        courseName, data.getConflict())));
+            }
             tv_cancel.setText("修改排课");
             tv_ok.setText("忽略冲突排入课表");
         } else {

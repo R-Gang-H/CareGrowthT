@@ -58,7 +58,7 @@ public class CourseNumActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void initView() {
-        tvTitle.setText("学员人数提醒");
+        tvTitle.setText("开课人数提醒");
         msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
         if (StrUtils.isNotEmpty(msgEntity)) {
             orgId = msgEntity.getOrgId();
@@ -89,11 +89,14 @@ public class CourseNumActivity extends BaseActivity implements ViewOnItemClick {
                         if (list.size() > 0) {
                             // 筛选 条件 start
                             List<CourseEntity> todayData = new ArrayList<>();// 今天的
-                            List<CourseEntity> withinData = new ArrayList<>();// 7天内
+                            List<CourseEntity> withinData = new ArrayList<>();// 过去7天
                             List<CourseEntity> beforeData = new ArrayList<>();// 7天之前
+                            List<CourseEntity> toMorrowData = new ArrayList<>();// 未来7天
+                            List<CourseEntity> futureData = new ArrayList<>();// 7天之后
                             for (int i = 0; i < list.size(); i++) {// 筛选今天的
                                 CourseEntity entity = list.get(i);
-                                long begingAt = Long.valueOf(entity.getCourseBeginAt());
+                                long begingAt = DateUtil.getStringToDate(DateUtil.getDate(Long.valueOf(
+                                        entity.getCourseBeginAt()), "yyyy-MM-dd"), "yyyy-MM-dd");
                                 boolean isToday = TimeUtils.IsToday(DateUtil.getDate(begingAt
                                         , "yyyy-MM-dd"));// 是否为今天
                                 long yesTerday = DateUtil.getStringToDate(TimeUtils.dateTiem(
@@ -101,20 +104,34 @@ public class CourseNumActivity extends BaseActivity implements ViewOnItemClick {
                                         , -1, "yyyy-MM-dd"), "yyyy-MM-dd");// 昨天
                                 long withinDay = DateUtil.getStringToDate(TimeUtils.dateTiem(
                                         DateUtil.getDate(todayTime, "yyyy-MM-dd")
-                                        , -7, "yyyy-MM-dd"), "yyyy-MM-dd");// 7天内的时间
-                                if (isToday) {
+                                        , -7, "yyyy-MM-dd"), "yyyy-MM-dd");// 过去7天的时间
+                                long toMorrow = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                                        DateUtil.getDate(todayTime, "yyyy-MM-dd")
+                                        , 1, "yyyy-MM-dd"), "yyyy-MM-dd");// 明天
+                                long future = DateUtil.getStringToDate(TimeUtils.dateTiem(
+                                        DateUtil.getDate(todayTime, "yyyy-MM-dd")
+                                        , 7, "yyyy-MM-dd"), "yyyy-MM-dd");// 未来7天的时间
+                                if (isToday) {// 今天
                                     entity.setType("1");
                                     todayData.add(entity);
-                                } else if (begingAt <= yesTerday && begingAt >= withinDay) {
+                                } else if (begingAt <= yesTerday && begingAt >= withinDay) {// 过去7天
                                     entity.setType("2");
                                     withinData.add(entity);
-                                } else {
+                                } else if (begingAt < withinDay) {// 7天之前
                                     entity.setType("3");
                                     beforeData.add(entity);
+                                } else if (begingAt >= toMorrow && begingAt <= future) {// 未来7天
+                                    entity.setType("4");
+                                    toMorrowData.add(entity);
+                                } else if (begingAt > future) {// 7天之后
+                                    entity.setType("5");
+                                    futureData.add(entity);
                                 }
                             }
                             // 筛选 条件 end
                             courseData.addAll(todayData);
+                            courseData.addAll(toMorrowData);
+                            courseData.addAll(futureData);
                             courseData.addAll(withinData);
                             courseData.addAll(beforeData);
                         }

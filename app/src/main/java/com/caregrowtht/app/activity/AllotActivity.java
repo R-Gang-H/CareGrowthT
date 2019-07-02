@@ -174,6 +174,7 @@ public class AllotActivity extends BaseActivity implements ViewOnItemClick {
                     @Override
                     public void onSuccess(CourseEntity data) {
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ALLOT));
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                         finish();
                     }
 

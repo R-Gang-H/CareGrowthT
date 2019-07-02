@@ -186,7 +186,7 @@
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_20"
             android:layout_toEndOf="@id/v_line4"
-            android:text="本月消课"
+            android:text="本月新增"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_13" />
 
@@ -221,7 +221,7 @@
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_20"
             android:layout_toEndOf="@id/v_line5"
-            android:text="今日退费"
+            android:text="今日支出"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_13" />
 
@@ -256,7 +256,7 @@
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_20"
             android:layout_toEndOf="@id/v_line5"
-            android:text="本月消课"
+            android:text="本月支出"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_13" />
 

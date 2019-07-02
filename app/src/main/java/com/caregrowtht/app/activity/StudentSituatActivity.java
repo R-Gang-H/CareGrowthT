@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.StudentSituatAdapter;
@@ -12,6 +14,7 @@ import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
+import com.caregrowtht.app.view.LoadingFrameView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
@@ -20,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -39,6 +41,8 @@ public class StudentSituatActivity extends BaseActivity {
     RelativeLayout rlBackButton;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.load_view)
+    LoadingFrameView loadView;
 
     private String lessonId;
 
@@ -54,10 +58,10 @@ public class StudentSituatActivity extends BaseActivity {
     @Override
     public void initView() {
         courseData = (CourseEntity) getIntent().getSerializableExtra("courseData");
-
-        lessonId = courseData.getCourseId();
-        tvTitle.setText(courseData.getCourseName());
-
+        if (courseData != null) {
+            lessonId = courseData.getCourseId();
+            tvTitle.setText(courseData.getCourseName());
+        }
         initRecyclerView(recyclerView, true);
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setOnRefreshListener(refreshlayout -> getLessonDetail3());
@@ -80,6 +84,11 @@ public class StudentSituatActivity extends BaseActivity {
                         studentEntities.addAll(data.getData());
                         List<StudentEntity> stuStatus = removeDuplicateOrder(studentEntities);//筛选学员请假状态
                         studentSitAdapter.setData(stuStatus, studentEntities);
+                        if (studentEntities.size() > 0) {
+                            loadView.delayShowContainer(true);
+                        } else {
+                            loadView.setNoShown(true);
+                        }
                         refreshLayout.finishLoadmore();
                         refreshLayout.finishRefresh();
                     }
@@ -89,14 +98,14 @@ public class StudentSituatActivity extends BaseActivity {
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");
                             HttpManager.getInstance().dologout(StudentSituatActivity.this);
-                        } else {
-//                    U.showToast(errorMsg);//不能打开
+                            return;
                         }
+                        loadView.setErrorShown(true, v -> getLessonDetail3());
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-
+                        loadView.setErrorShown(true, v -> getLessonDetail3());
                     }
                 });
     }

@@ -22,6 +22,8 @@ import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -132,12 +134,14 @@ public class CourserCoverActivity extends BaseActivity {
         tvEqui.setText(Html.fromHtml(String.format("等位学员:\t<font color='#69ace5'>%s</font>\t个", courseData.getWait())));
         ArrayList<CourseEntity<String, String, String>.Handle> handle = courseData.getHandle();
         if (handle.size() > 0) {// 有操作记录
+            if (Integer.valueOf(courseData.getKongwei()) == 0) {// 没有空位按钮隐藏（覆盖）
+                llHandle.removeAllViews();
+            }
             setHandle(handle);
         }
     }
 
     private void setHandle(ArrayList<CourseEntity<String, String, String>.Handle> handle) {
-        llHandle.removeAllViews();
         llHandle.setOrientation(LinearLayout.VERTICAL);
         llHandle.setGravity(Gravity.CENTER_HORIZONTAL);
         for (int i = 0; i < handle.size(); i++) {
@@ -179,6 +183,7 @@ public class CourserCoverActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         U.showToast("抢位成功");
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                     }
 
                     @Override

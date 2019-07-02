@@ -42,7 +42,7 @@ public class SignLevaeCourseAdapter extends XrecyclerAdapter {
     RelativeLayout rlSign;
 
     List<CourseEntity> courseData = new ArrayList<>();
-    private String showType;
+    private String showType, status;
 
     public SignLevaeCourseAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
         super(datas, context, onItemClick1);
@@ -61,10 +61,16 @@ public class SignLevaeCourseAdapter extends XrecyclerAdapter {
                     typeContent = "今天";
                     break;
                 case "2":
-                    typeContent = "7天内";
+                    typeContent = "过去7天";
                     break;
                 case "3":
                     typeContent = "7天之前";
+                    break;
+                case "4":
+                    typeContent = "未来7天";
+                    break;
+                case "5":
+                    typeContent = "7天之后";
                     break;
             }
             tvDay.setText(typeContent);
@@ -107,10 +113,11 @@ public class SignLevaeCourseAdapter extends XrecyclerAdapter {
         tvLevaeNum.setText(String.format("%s人请假", courseEntity.getLeaveCount()));
     }
 
-    public void setData(List<CourseEntity> courseData, String showType) {
+    public void setData(List<CourseEntity> courseData, String showType, String status) {
         this.courseData.clear();
         this.courseData.addAll(courseData);
         this.showType = showType;
+        this.status = status;
         notifyDataSetChanged();
     }
 

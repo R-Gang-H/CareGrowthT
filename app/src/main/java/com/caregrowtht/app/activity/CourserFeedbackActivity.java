@@ -158,7 +158,9 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
     }
 
     private void getStuCourseFeedback(int argPage) {
-        loadView.setProgressShown(true);
+        runOnUiThread(() -> {
+            loadView.setProgressShown(true);
+        });
         pageIndex = argPage;
         if (mAdapter.getItemCount() < 20) {
             pageIndex = 1;

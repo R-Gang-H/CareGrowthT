@@ -6,9 +6,9 @@
     android:fitsSystemWindows="true">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_big_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:id="@+id/vp_big_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/page_control"

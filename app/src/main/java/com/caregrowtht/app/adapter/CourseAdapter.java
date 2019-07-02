@@ -84,7 +84,7 @@ public class CourseAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     public void update(String theDay, ArrayList<CourseEntity> listData, int type) {
         this.listData = listData;
-        selectDay = theDay;
+        this.selectDay = theDay;
         this.type = type;
         notifyDataSetChanged();
     }

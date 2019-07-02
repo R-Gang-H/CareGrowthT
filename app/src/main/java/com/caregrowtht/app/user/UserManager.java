@@ -21,6 +21,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.AppManager;
 import com.caregrowtht.app.Constant;
@@ -58,7 +60,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import androidx.appcompat.app.AlertDialog;
 import butterknife.Setter;
 import zlc.season.rxdownload3.core.Succeed;
 
@@ -588,7 +589,27 @@ public class UserManager {
         if (powers != null && powers.size() > 0) {
             for (PowersEntity funcation : powers) {
                 if (funcation.getFunctionId().equals(roleText)) {// 添加排课 权限
-                    if (funcation.getIsHave().equals("2")) {//是否有此权限 1：有 2：没有
+                    if (funcation.getIsHave().equals("2")) {//是否有此权限 1：有 2：没有 提醒权限(2：我的课（隐藏机构课） 3：机构课)
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 权限匹配
+     * return true 有 ,false 没有
+     */
+    private boolean getIsTxRole(RoleEntity roleEntity, String roleText) {
+        List<PowersEntity> powers = roleEntity.getPowers2();
+        if (powers != null && powers.size() > 0) {
+            for (PowersEntity funcation : powers) {
+                if (funcation.getFunctionId().equals(roleText)) {// 添加排课 权限
+                    if (funcation.getIsHave().equals("2")) {//是否有此提醒权限 (2：我的课 没有（隐藏机构课） 3：机构课 有)
                         return false;
                     } else {
                         return true;
@@ -645,7 +666,7 @@ public class UserManager {
         if (orgEntity != null) {
             powerId = orgEntity.getPowerId();
         }
-        if (!TextUtils.isEmpty(powerId) && powerId.equals("99999")) {// 超级管理员
+        if (StrUtils.isNotEmpty(powerId) && powerId.equals("99999")) {// 超级管理员
             isZy = true;
         } else {
             // 当前 机构的权限配置 数据
@@ -655,6 +676,31 @@ public class UserManager {
             }
         }
         return isZy;
+    }
+
+    /**
+     * 获取当前操作是否可以查看机构课程
+     *
+     * @return true:有权限 false:没权限
+     */
+    public void isTxRole(String functionId, Role role) {
+        boolean isZy = false;
+        String orgId = UserManager.getInstance().getOrgId();
+        OrgEntity orgEntity = getSqlIsOrgEntity(orgId);
+        String powerId = null;
+        if (orgEntity != null) {
+            powerId = orgEntity.getPowerId();
+        }
+        if (StrUtils.isNotEmpty(powerId) && powerId.equals("99999")) {// 超级管理员
+            isZy = true;
+        } else {
+            // 当前 机构的权限配置 数据
+            RoleEntity roleEntity = getSqlIsRoleEntity(powerId);
+            if (roleEntity != null) {
+                isZy = getIsTxRole(roleEntity, functionId);
+            }
+        }
+        role.isRole(isZy);
     }
 
     public View getCourVsview() {
@@ -737,4 +783,9 @@ public class UserManager {
         set.addAll(orderList);
         return new ArrayList<>(set);
     }
+
+    public interface Role {
+        void isRole(boolean isRole);
+    }
+
 }

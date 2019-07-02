@@ -188,7 +188,15 @@ public class MomentAdapter extends RecyclerView.Adapter {
             String childNe = childName.replace("#", ",");
             if (childNames.length == 1) {//单个
                 if (imputType.equals("2")) {// 2:动态进入的记录详情
-                    tvStuInfo.setVisibility(View.VISIBLE);
+                    if (StrUtils.isNotEmpty(pData.getLessonId())) {
+                        if (position == 0 || !listModel.get(position - 1).getLessonId().equals(pData.getLessonId())) {
+                            tvStuInfo.setVisibility(View.VISIBLE);
+                        } else {
+                            tvStuInfo.setVisibility(View.GONE);
+                        }
+                    } else {
+                        tvStuInfo.setVisibility(View.VISIBLE);
+                    }
                     tvChildName.setVisibility(View.VISIBLE);
                     tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
                     tvChildName.setText(String.format("(%s\t学员)", childName));
@@ -217,8 +225,14 @@ public class MomentAdapter extends RecyclerView.Adapter {
                 tvChildName.setTextColor(ResourcesUtils.getColor(R.color.color_9));
                 tvChildName.setText(String.format("(%s,%s名学员相关)", childNe, childNames.length));
             }
+            String tDate;
+            if (StrUtils.isNotEmpty(pData.getStartAt())) {// 2:动态进入的记录详情
+                tDate = pData.getStartAt();
+            } else {
+                tDate = pData.getTime();
+            }
             tvStuInfo.setText(String.format("%s\t\t%s",
-                    DateUtil.getDate(Long.valueOf(pData.getTime()),
+                    DateUtil.getDate(Long.valueOf(tDate),
                             "yyyy/MM/dd"), pData.getCourseName()));
 
             ivChildAvatar.setVisibility(View.GONE);
@@ -293,6 +307,7 @@ public class MomentAdapter extends RecyclerView.Adapter {
         if (pData.getAuthorId() != null) {
             tvDelMoment.setVisibility(pData.getAuthorId().equals(
                     UserManager.getInstance().userData.getUid())
+                    || pData.getAuthorId().equals("1")// authorId = 1 我发布的可以删除 0 不可以删除
                     ? View.VISIBLE : View.GONE);
         }
         if (!TextUtils.isEmpty(pData.getLike()) || pData.getComments().size() > 0) {

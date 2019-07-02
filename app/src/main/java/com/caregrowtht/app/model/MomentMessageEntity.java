@@ -32,7 +32,9 @@ public class MomentMessageEntity implements Serializable {
     String shareNums;       //分享数
     String enrollment;      //活动报名人数
 
+    String lessonId;
     String courseName;
+    String startAt;
 
     public String getCircleId() {
         return circleId;
@@ -274,11 +276,27 @@ public class MomentMessageEntity implements Serializable {
         this.activityId = activityId;
     }
 
+    public String getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(String lessonId) {
+        this.lessonId = lessonId;
+    }
+
     public String getCourseName() {
         return courseName;
     }
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(String startAt) {
+        this.startAt = startAt;
     }
 }

@@ -44,7 +44,7 @@ public class NullRemindAdapter extends XrecyclerAdapter {
         String courseName = entity.getCourseName();
         tvContent.setText(String.format("%s\t\t%s\t\t%s\n%s\t\t%s",
                 Month, week, time, teacherName, courseName));
-        tvStuDetail.setText(String.format("空位：%s\t人", entity.getKongwei()));
+        tvStuDetail.setText(String.format("空位：%s\t人", entity.getKongweiCount()));
     }
 
     public void setData(List<CourseEntity> listDatas) {

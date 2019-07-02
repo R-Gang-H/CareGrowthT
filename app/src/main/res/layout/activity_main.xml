@@ -32,11 +32,11 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_btn_state"
-            android:drawablePadding="2dp"
+            android:drawablePadding="3dp"
             android:gravity="center"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:text="动态"
+            android:text="我的助理"
             android:textColor="@drawable/selector_color_main_btn"
             android:textSize="@dimen/text_size_11" />
 
@@ -47,11 +47,11 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_btn_home"
-            android:drawablePadding="2dp"
+            android:drawablePadding="3dp"
             android:gravity="center"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:text="工作"
+            android:text="我的机构"
             android:textColor="@drawable/selector_color_main_btn"
             android:textSize="@dimen/text_size_11" />
 

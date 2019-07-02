@@ -1,5 +1,6 @@
 package com.caregrowtht.app.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -233,7 +234,9 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
 
     @Override
     public void setOnItemClickListener(View view, int position) {
-
+        startActivity(new Intent(this, CourserActivity.class)
+                .putExtra("msgEntity", msgEntity)
+                .putExtra("courseId", listData.get(position).getCourseId()));
     }
 
 }

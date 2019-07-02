@@ -105,20 +105,22 @@ public class CourseItemAdapter extends BaseAdapter {
 
         String isOrder = courseModel.getIsOrder();//1：该节课可以预约 2：该节课不可以预约
 
-        if (type == 3) {// 跨机构课表
+        if (type == 1) {// 我的课程
+            tvOrgName.setText(!TextUtils.isEmpty(courseModel.getStudent()) ?
+                    String.format("%s..等", courseModel.getStudent()) : "");
+        } else if (type == 2) {// 机构课程
+            tvOrgName.setText(!TextUtils.isEmpty(courseModel.getTeacher()) ?
+                    String.format("%s", courseModel.getTeacher()) : "");
+        } else if (type == 3) {// 跨机构课表
             tvOrgName.setText(courseModel.getOrgName());
         } else if (type == 0) {// 预约课提醒
             tvOrgName.setText(courseModel.getTeacher());
             ivBlueG.setVisibility(isOrder.equals("1") ? View.VISIBLE : View.GONE);
-        } else {
-            tvOrgName.setText(!TextUtils.isEmpty(courseModel.getStudent()) ?
-                    String.format("%s..等", courseModel.getStudent()) : "");
         }
         if (StrUtils.isNotEmpty(isOrder)) {
             rlCardFront.setBackgroundColor(Color.parseColor(isOrder.equals("1") ? courseModel.getColor3() : courseModel.getColor4()));
             ivStatus.setBackgroundColor(Color.parseColor(isOrder.equals("1") ? courseModel.getTintColor() : courseModel.getColor()));
         }
-
         return convertView;
     }
 }

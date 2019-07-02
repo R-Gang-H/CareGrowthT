@@ -17,7 +17,7 @@
             android:id="@+id/iv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_size_12"
+            android:layout_marginStart="@dimen/margin_size_12"
             android:layout_marginTop="@dimen/margin_size_10"
             android:scaleType="center"
             android:src="@mipmap/ic_type_course"
@@ -28,7 +28,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_13"
             android:text="每日工作汇报"
             android:textColor="@color/col_t9"
@@ -43,8 +43,8 @@
             android:layout_height="25dp"
             android:layout_marginStart="@dimen/margin_size_5"
             android:layout_marginTop="@dimen/margin_size_10"
-            android:text="7月4日  17:50"
             android:gravity="center"
+            android:text="7月4日  17:50"
             android:textColor="@color/color_6"
             android:textSize="@dimen/text_size_12"
             app:layout_constraintLeft_toRightOf="@id/tv_title"
@@ -54,7 +54,7 @@
             android:id="@+id/iv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_size_3"
+            android:layout_marginEnd="@dimen/margin_size_3"
             android:background="@mipmap/ic_pending"
             android:gravity="center"
             android:text="待处理"
@@ -118,9 +118,9 @@
                 android:id="@+id/tv_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_size_11"
+                android:layout_marginStart="@dimen/margin_size_11"
                 android:layout_marginTop="@dimen/margin_size_14"
-                android:drawableLeft="@mipmap/ic_follow_no1"
+                android:drawableStart="@mipmap/ic_follow_no1"
                 android:drawablePadding="@dimen/margin_size_7"
                 android:text="56"
                 android:textColor="@color/color_3"
@@ -132,9 +132,9 @@
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_size_13"
+                android:layout_marginStart="@dimen/margin_size_13"
                 android:layout_marginTop="@dimen/margin_size_14"
-                android:drawableLeft="@mipmap/ic_comm_num"
+                android:drawableStart="@mipmap/ic_comm_num"
                 android:drawablePadding="@dimen/margin_size_7"
                 android:text="12"
                 android:textColor="@color/color_3"
@@ -175,8 +175,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_content"
-                android:layout_marginLeft="@dimen/margin_size_10"
-                android:drawableLeft="@mipmap/ic_atter"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:drawableStart="@mipmap/ic_atter"
                 android:drawablePadding="@dimen/margin_size_5"
                 android:gravity="center"
                 android:text="内含附件"
@@ -218,6 +218,43 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_select_all"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_40"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/cl_event">
+
+            <TextView
+                android:id="@+id/tv_select_detial"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_size_6"
+                android:layout_weight="1"
+                android:background="@drawable/add_circle_corner_transparent_bg"
+                android:gravity="center"
+                android:text="查看详情"
+                android:textColor="@color/color_6"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tv_select_all"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_size_6"
+                android:layout_weight="1"
+                android:background="@drawable/shape_round_corner_green"
+                android:gravity="center"
+                android:text="查看全部"
+                android:textColor="@color/greenLight"
+                android:textSize="@dimen/text_size_15" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_handlerName"
             android:layout_width="match_parent"
@@ -232,7 +269,7 @@
             android:textColor="@color/color_6"
             android:textSize="@dimen/text_size_11"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_event" />
+            app:layout_constraintTop_toBottomOf="@id/ll_select_all" />
 
         <LinearLayout
             android:id="@+id/ll_work_daily"

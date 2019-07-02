@@ -267,12 +267,14 @@ public class TimeUtils {
         }
 
         public GetStartEndTime invoke(int start, int end) {
+            long startTime = DateUtil.getStringToDate(TimeUtils.getCurTimeLong("yyyy-MM-dd 00:00"), "yyyy-MM-dd HH:mm");
+            long endTime = DateUtil.getStringToDate(TimeUtils.getCurTimeLong("yyyy-MM-dd 24:00"), "yyyy-MM-dd HH:mm");
             withinDay = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                    DateUtil.getDate(getCurTimeLong() / 1000, "yyyy-MM-dd 00:00")
-                    , start, "yyyy-MM-dd 00:00"), "yyyy-MM-dd 00:00");
+                    DateUtil.getDate(startTime, "yyyy-MM-dd HH:mm")
+                    , start, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
             yesTerday = DateUtil.getStringToDate(TimeUtils.dateTiem(
-                    DateUtil.getDate(getCurTimeLong() / 1000, "yyyy-MM-dd 24:00")
-                    , end, "yyyy-MM-dd 24:00"), "yyyy-MM-dd 24:00");
+                    DateUtil.getDate(endTime, "yyyy-MM-dd HH:mm")
+                    , end, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
             return this;
         }
     }

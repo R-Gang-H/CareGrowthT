@@ -1,7 +1,6 @@
 package com.caregrowtht.app.adapter;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import com.android.library.utils.DateUtil;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.activity.BaseActivity;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
@@ -55,10 +53,16 @@ public class CourseNumAdapter extends XrecyclerAdapter {
                     typeContent = "今天";
                     break;
                 case "2":
-                    typeContent = "7天内";
+                    typeContent = "过去7天";
                     break;
                 case "3":
                     typeContent = "7天之前";
+                    break;
+                case "4":
+                    typeContent = "未来7天";
+                    break;
+                case "5":
+                    typeContent = "未来7—14天";
                     break;
             }
             tvDay.setText(typeContent);

@@ -105,6 +105,7 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     private String vacancy;
     private String kongwei;
+    private String kongweiCount;
     private String etc;
     private String wait;
 
@@ -178,7 +179,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String signCount;
     private String leaveCount;
     private String waitCount;
-    private String type;// 1.今天 2.7天内 3.7天之前
+    private String type;// 1.今天 2.过去7天 3.7天之前
 
     private String minStuCount, maxStuCount;
 
@@ -959,6 +960,14 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public void setKongwei(String kongwei) {
         this.kongwei = kongwei;
+    }
+
+    public String getKongweiCount() {
+        return kongweiCount;
+    }
+
+    public void setKongweiCount(String kongweiCount) {
+        this.kongweiCount = kongweiCount;
     }
 
     public String getWait() {

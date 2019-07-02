@@ -190,11 +190,8 @@ public class CourserActivity extends BaseActivity {
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(CourserActivity.this));
         refreshLayout.setOnRefreshListener(refreshlayout -> {
-            teacherLessonDetail();
-            getLessonV2();//获取课程反馈详情
             isRefesh = false;
-            refreshLayout.finishLoadmore();
-            refreshLayout.finishRefresh();
+            teacherLessonDetail();
         });
         mutileAdapter.setCommentListener((view, adapterPosition, position1, position2) -> {
             showInputDialog(view, adapterPosition, position1, position2, 2);//集体
@@ -330,11 +327,12 @@ public class CourserActivity extends BaseActivity {
             tvCourseTask.setVisibility(TextUtils.isEmpty(courseData.getCourseThemeContent()) ? View.GONE : View.VISIBLE);
             ImgLabelUtils.getInstance().htmlThree(tvCourseTask, courseData.getCourseThemeContent());//加载Html富文本及图片
         }
-
         getLessonV2();//获取课程反馈详情
         if (isRefesh) {
             lessonChild();//待处理的学员
         }
+        refreshLayout.finishLoadmore();
+        refreshLayout.finishRefresh();
     }
 
     private void setSignSheet(String signSheet) {

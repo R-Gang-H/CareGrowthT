@@ -15,7 +15,6 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.StrUtils;
-import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
@@ -46,7 +45,7 @@ public class StatisReportActivity extends BaseActivity {
     private MessageEntity msgEntity;
     private String orgId;
     private String beginAt = "0", endAt = "0";
-    private long todayTime;// 今天的时间戳
+    private int index = -1;
 
     private String showType;
 
@@ -91,11 +90,6 @@ public class StatisReportActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        todayTime = TimeUtils.getCurTimeLong() / 1000;
-        // 默认显示7天之内的
-        TimeUtils.GetStartEndTime getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-8, 0);
-        beginAt = String.valueOf(getStartEndTime.getWithinDay());
-        endAt = String.valueOf(getStartEndTime.getYesTerday());
         getDaily(true);
     }
 
@@ -153,7 +147,9 @@ public class StatisReportActivity extends BaseActivity {
             case R.id.rl_next_button:
                 startActivity(new Intent(this, ScreenActivity.class)
                         .putExtra("type", showType)
-                        .putExtra("status", 0));
+                        .putExtra("status", 0)
+                        .putExtra("isMy", "1")
+                        .putExtra("index", index));
                 break;
         }
     }
@@ -164,6 +160,7 @@ public class StatisReportActivity extends BaseActivity {
             case ToUIEvent.SET_SCREEN_LES:
                 beginAt = String.valueOf((long) event.getObj1());
                 endAt = String.valueOf((long) event.getObj2());
+                index = (int) event.getObj3();
                 pageIndex = 1;
                 getDaily(true);
                 break;

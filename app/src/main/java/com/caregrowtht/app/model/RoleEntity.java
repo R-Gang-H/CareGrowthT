@@ -17,7 +17,9 @@ public class RoleEntity implements Serializable {
     private String powerId;
     private String powerName;
     private String rulepc;
+    private String rulemo;
     private List<PowersEntity> powers = new ArrayList<>();
+    private List<PowersEntity> powers2 = new ArrayList<>();
 
     public String getOrgId() {
         return orgId;
@@ -59,5 +61,19 @@ public class RoleEntity implements Serializable {
         this.powers = powers;
     }
 
+    public String getRulemo() {
+        return rulemo;
+    }
 
+    public void setRulemo(String rulemo) {
+        this.rulemo = rulemo;
+    }
+
+    public List<PowersEntity> getPowers2() {
+        return powers2;
+    }
+
+    public void setPowers2(List<PowersEntity> powers2) {
+        this.powers2 = powers2;
+    }
 }
