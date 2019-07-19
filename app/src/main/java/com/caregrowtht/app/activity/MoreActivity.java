@@ -7,17 +7,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.adapter.MoreAdapter;
 import com.caregrowtht.app.adapter.NotifyCardAdapter;
 import com.caregrowtht.app.model.NotifyCardEntity;
-import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,22 +29,15 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
     TextView tvTitle;
     @BindView(R.id.rv_more)
     RecyclerView rvMore;
-    @BindView(R.id.rv_more_item)
-    RecyclerView rvMoreItem;
 
     ArrayList<NotifyCardEntity> moreCards = new ArrayList<>();
     //更多管理的类型 1：机构信息 2：教师管理 3：课程管理 4：课时卡管理 5：教室管理 6：课时卡VS排课 7：通知管理
     private int[] moreImage = new int[]{R.mipmap.ic_org_info, R.mipmap.ic_teacher_msg,
             R.mipmap.ic_course_msg, R.mipmap.ic_course_time_msg, R.mipmap.ic_class_msg,
-            R.mipmap.ic_course_vs, R.mipmap.ic_my_aicz};
+            R.mipmap.ic_course_vs, R.mipmap.ic_my_aicz, R.mipmap.ic_app_pc};
     private String[] moreName = new String[]{"机构信息", "教师管理", "课程管理", "课时卡管理",
-            "教室管理", "课时卡VS排课", "我的爱成长"};
+            "教室管理", "课时卡VS排课", "我的爱成长", "PC端"};
     //更多管理的类型 1：机构信息 2：教师管理 3：课程管理 4：课时卡管理 5：教室管理 6：课时卡VS排课 7：通知管理
-
-    private String[] moreFunct = new String[]{
-            "课表具备更多视图和功能", "给学员批量请假", "集中处理当日出勤", "设置教学大纲库",
-            "设置机构主页", "更全面的数据统计分析", "批量导入学员", "批量导入教师",
-            "新增和修改权限", "教师离职", "激活非活跃学员"};
 
     private int position;
 
@@ -61,8 +51,6 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
         tvTitle.setText("更多");
 
         setupRecyclerView();
-        initRecyclerView(rvMoreItem, true);
-        rvMoreItem.setAdapter(new MoreAdapter(Arrays.asList(moreFunct), this));
     }
 
     @Override
@@ -122,9 +110,13 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
                 startActivity(new Intent(this, CourseVsActivity.class));
                 break;
             case "7":
-//                // 我的爱成长（续费）
+                // 我的爱成长（续费）
                 startActivity(new Intent(this, BuyActivity.class)
                         .putExtra("renew", true));
+                break;
+            case "8":
+                // PC端
+                startActivity(new Intent(this, AppPCActivity.class));
                 break;
         }
     }

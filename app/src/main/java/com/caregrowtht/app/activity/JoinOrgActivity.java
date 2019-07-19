@@ -105,7 +105,7 @@ public class JoinOrgActivity extends BaseActivity {
                     if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS
                             && !StrUtils.isEmpty(invitationCode)) {
                         orgId = invitationCode;
-                        UserManager.getInstance().getOrgInfo(orgId, this, "1");
+                        UserManager.getInstance().getOrgInfo(orgId, this, "1", null);
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                         U.showToast("未识别二维码!");
                     }

@@ -57,7 +57,7 @@ public class StuOrderAdapter extends XrecyclerAdapter {
 
         tvStuDetail.setVisibility(View.GONE);
         tvStuNum.setVisibility(View.GONE);
-        ((BaseActivity) mContext).initRecyclerView(recyclerView, false);
+        ((BaseActivity) mContext).initRecyclerGrid(recyclerView, 6);
         recyclerView.setAdapter(new LeaveStuAdapter((List) courseEntity.getStudents(), mContext));
 
         long startAt = Long.valueOf(courseEntity.getStartAt());
@@ -75,8 +75,8 @@ public class StuOrderAdapter extends XrecyclerAdapter {
                 courseData.get(position - 1).getStartAt()))) {
             rlDay.setVisibility(View.VISIBLE);
             tvDay.setText(String.format("%s\t%s\t\t%s", Month, Constant.weekArr[dayOfWeek - 1],
-                    TextUtils.equals(today, TimeUtils.getDayOfWeek("yyyy-MM-dd", dayOfWeek,
-                            courseEntity.getStartAt())) ? "今天" : ""));
+                    TextUtils.equals(today, TimeUtils.getDateToString(Long.valueOf(courseEntity.getStartAt())
+                            , "yyyy-MM-dd")) ? "今天" : ""));
         } else {
             rlDay.setVisibility(View.GONE);
         }

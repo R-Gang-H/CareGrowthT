@@ -10,6 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.util.Util;
@@ -18,6 +26,7 @@ import com.caregrowtht.app.CrashHandler;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.uitil.permissions.BasePermissionActivity;
 import com.caregrowtht.app.user.ToUIEvent;
+import com.caregrowtht.app.user.UserManager;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -28,14 +37,6 @@ import com.umeng.socialize.UMShareAPI;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.PermissionChecker;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -98,9 +99,11 @@ public abstract class BaseActivity extends BasePermissionActivity {
         XGPushClickedResult click = XGPushManager.onActivityStarted(this);
         // click.getCustomContent()
         if (click != null) { // 判断是否来自信鸽的打开方式
+            String uid = (String) U.getPreferences("uid", "");
+            String token = (String) U.getPreferences("token", "");
+            UserManager.getInstance().autoLogin(this, uid, token);
             Log.d("TPush", "onResumeXGPushClickedResult:" + click.toString());
             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 0));
-            startActivity(new Intent(this, MainActivity.class));
         }
     }
 

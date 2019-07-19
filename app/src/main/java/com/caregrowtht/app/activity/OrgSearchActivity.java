@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.OrgSearchAdapter;
@@ -18,8 +20,6 @@ import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -120,6 +120,6 @@ public class OrgSearchActivity extends BaseActivity implements ViewOnItemClick {
     @Override
     public void setOnItemClickListener(View view, int postion) {
         UserManager.getInstance().getOrgInfo(orgDatas.get(postion).getOrgId(),
-                OrgSearchActivity.this, "1");
+                OrgSearchActivity.this, "1", null);
     }
 }

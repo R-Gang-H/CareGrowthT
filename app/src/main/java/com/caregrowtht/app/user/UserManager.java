@@ -97,12 +97,6 @@ public class UserManager {
     public void save(Context context, UserEntity user) {
         userData = user;
         Log.e("-----", "userData=" + userData.toString());
-        //设置orgId
-        String orgIds = UserManager.getInstance().userData.getOrgIds();
-        if (!TextUtils.isEmpty(orgIds)) {
-            String[] teacherOrgs = orgIds.split(",");//分隔教师机构id
-            setOrgId(teacherOrgs[0]);//默认第一个
-        }
         U.savePreferences("uid", userData.getUid());
         U.savePreferences("token", U.MD5(UserManager.getInstance().userData.getToken() + "_" + Constant.API_KEY));
         Constant.UID_TOKEN = "/uid/" + userData.getUid() + "/token/" + userData.getToken();
@@ -185,11 +179,15 @@ public class UserManager {
      * @param orgShortName
      */
     public void getOrgShortName(TextView tvName, String orgShortName) {
-        if (orgShortName.length() == 4) {
-            tvName.setText(String.format("%s\n%s", orgShortName.substring(0, 2),
-                    orgShortName.substring(2, 4)));
-        } else if (orgShortName.length() < 4) {
-            tvName.setText(orgShortName);
+        if (StrUtils.isNotEmpty(orgShortName)) {
+            if (orgShortName.length() == 4) {
+                tvName.setText(String.format("%s\n%s", orgShortName.substring(0, 2),
+                        orgShortName.substring(2, 4)));
+            } else if (orgShortName.length() < 4) {
+                tvName.setText(orgShortName);
+            } else {
+                tvName.setText(orgShortName);
+            }
         }
     }
 
@@ -351,7 +349,7 @@ public class UserManager {
      * @param argActivity 上下文
      * @param type        1:添加机构 2:获取权限
      */
-    public void getOrgInfo(String orgId, Activity argActivity, String type) {
+    public void getOrgInfo(String orgId, Activity argActivity, String type, Role role) {
         if (StrUtils.isEmpty(orgId)) {
             U.showToast("请输入机构代码");
             return;
@@ -372,7 +370,7 @@ public class UserManager {
                             if (orgEntity != null) {
 
                                 // 79.获取机构权限配置
-                                UserManager.getInstance().getOrgRole(argActivity, orgEntity);
+                                UserManager.getInstance().getOrgRole(argActivity, orgEntity, role);
 
                                 UserManager.getInstance().getOrgEntityList(orgEntity);
                             }
@@ -398,18 +396,20 @@ public class UserManager {
     }
 
     // 79.获取机构权限配置
-    public void getOrgRole(Context mContext, OrgEntity orgEntity) {
+    public void getOrgRole(Context mContext, OrgEntity orgEntity, Role role) {
         String orgId = orgEntity.getOrgId();
         HttpManager.getInstance().doGetOrgRole("TeacherHomeFragment", orgId,
                 new HttpCallBack<BaseDataModel<RoleEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<RoleEntity> data) {
+                        role.isRole(true);
                         ArrayList<RoleEntity> roleDatas = data.getData();
                         UserManager.getInstance().getRoleEntityList(roleDatas);// 保存当前 机构的权限配置 数据
                     }
 
                     @Override
                     public void onFail(int statusCode, String errorMsg) {
+                        role.isRole(false);
                         LogUtils.d("TeacherHomeFragment onFail", statusCode + ":" + errorMsg);
                         if (statusCode == 1002 || statusCode == 1011) {//异地登录
                             U.showToast("该账户在异地登录!");

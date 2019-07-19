@@ -131,14 +131,14 @@
                     android:layout_below="@id/tv_teach_lib"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="@dimen/margin_size_10"
-                    android:layout_marginRight="@dimen/margin_size_10"
                     android:layout_marginTop="@dimen/margin_size_10"
+                    android:layout_marginRight="@dimen/margin_size_10"
                     android:background="#e1eefa"
                     android:lineSpacingExtra="@dimen/margin_size_5"
-                    android:paddingBottom="@dimen/margin_size_10"
                     android:paddingLeft="@dimen/margin_size_15"
-                    android:paddingRight="@dimen/margin_size_15"
                     android:paddingTop="@dimen/margin_size_10"
+                    android:paddingRight="@dimen/margin_size_15"
+                    android:paddingBottom="@dimen/margin_size_10"
                     android:text="熟悉上课环境， 和全英文对话环境。熟悉A， B，C的发音和身体操。"
                     android:textColor="@color/color_6"
                     android:textSize="@dimen/text_size_13"
@@ -185,17 +185,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/margin_size_100"
-                        android:drawablePadding="8dp"
                         android:drawableTop="@mipmap/ic_empty"
+                        android:drawablePadding="8dp"
                         android:gravity="center" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_below="@id/iv_empty"
-                        android:layout_marginEnd="@dimen/margin_size_60"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/margin_size_8"
+                        android:layout_marginEnd="@dimen/margin_size_60"
                         android:src="@mipmap/ic_line" />
 
                 </RelativeLayout>
@@ -208,10 +208,10 @@
         android:id="@+id/iv_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_20"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_add_more" />
 

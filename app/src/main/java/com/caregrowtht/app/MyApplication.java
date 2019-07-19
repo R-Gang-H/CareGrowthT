@@ -144,6 +144,7 @@ public class MyApplication extends com.android.library.MyApplication {
                 // all
                 // detectable
                 // problems
+                .permitAll()
                 .penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .detectLeakedSqlLiteObjects() // 探测SQLite数据库操作

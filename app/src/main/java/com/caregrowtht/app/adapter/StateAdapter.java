@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
+import com.caregrowtht.app.activity.ArtificialActivity;
 import com.caregrowtht.app.activity.AuditActivity;
 import com.caregrowtht.app.activity.CourseNumActivity;
 import com.caregrowtht.app.activity.CourserActivity;
@@ -27,6 +28,7 @@ import com.caregrowtht.app.activity.CourserCardMsgActivity;
 import com.caregrowtht.app.activity.CourserCoverActivity;
 import com.caregrowtht.app.activity.CourserFeedbackActivity;
 import com.caregrowtht.app.activity.CreateOrgHintActivity;
+import com.caregrowtht.app.activity.EliminateDetailActivity;
 import com.caregrowtht.app.activity.EliminateWorkActivity;
 import com.caregrowtht.app.activity.FormalActivity;
 import com.caregrowtht.app.activity.InitDataActivity;
@@ -43,6 +45,7 @@ import com.caregrowtht.app.activity.StuOrderActivity;
 import com.caregrowtht.app.activity.StuOrdersActivity;
 import com.caregrowtht.app.activity.UserTermActivity;
 import com.caregrowtht.app.model.BaseDataModel;
+import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.OrgNotifyEntity;
 import com.caregrowtht.app.model.StudentEntity;
@@ -51,6 +54,7 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
@@ -73,9 +77,11 @@ import cn.carbs.android.avatarimageview.library.AvatarImageView;
  * haoruigang on 2018-7-4 16:03:37
  * 动态适配器
  */
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class StateAdapter extends XrecyclerAdapter {
 
     private Context mContext;
+    private final UserManager instance;
 
     public List<MessageEntity> messageAllList = new ArrayList<>();
 
@@ -185,6 +191,8 @@ public class StateAdapter extends XrecyclerAdapter {
     TextView tvInTime;
     @BindView(R.id.cl_rb)
     RelativeLayout clRb;
+    @BindView(R.id.tv_isDel)
+    TextView tvIsDel;
     @BindView(R.id.ll_select_all)
     LinearLayout llSelectAll;
     @BindView(R.id.tv_select_detial)
@@ -218,9 +226,9 @@ public class StateAdapter extends XrecyclerAdapter {
     public StateAdapter(List datas, Context context) {
         super(datas, context);
         this.mContext = context;
+        instance = UserManager.getInstance();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
         MessageEntity msgEntity = messageAllList.get(position);
@@ -292,11 +300,13 @@ public class StateAdapter extends XrecyclerAdapter {
         tvHandlerName.setVisibility(View.GONE);
         tvTitle.setVisibility(View.GONE);
         tvTitleEnd.setVisibility(View.GONE);
+        tvCourseInfo.setVisibility(View.GONE);
+        llSelectAll.setVisibility(View.GONE);
         clMessage.setVisibility(!TextUtils.isEmpty(msgEntity.getCircleLikeCount())
                 || !TextUtils.isEmpty(msgEntity.getCircleCommentCount()) ? View.VISIBLE : View.GONE);
         clEvent.setVisibility(TextUtils.equals(msgEntity.getCircleId(), "0") ? View.GONE : View.VISIBLE);
         String rbMonthTime = TimeUtils.getDateToString(Long.parseLong(msgEntity.getUpdateTime()), "yyyy年MM月dd日 HH:mm");
-        UserManager instance = UserManager.getInstance();
+        tvTitleContent.setTextColor(ResourcesUtils.getColor(R.color.color_3));
         if (msgEntity.getType().equals("6")) {// 6：每日工作日报
             tvTitle.setVisibility(View.VISIBLE);
             llWorkDaily.setVisibility(View.VISIBLE);
@@ -389,6 +399,9 @@ public class StateAdapter extends XrecyclerAdapter {
                     Month, week, time, teacherName, courseName));
             rlSign.setVisibility(View.VISIBLE);
             tvStuDetail.setVisibility(View.VISIBLE);
+            tvStuDetail.setBackgroundResource(0);
+            tvStuDetail.setPadding(0, 0, 0, 0);
+            tvStuDetail.setTextColor(mContext.getResources().getColor(R.color.color_9));
             clRb.setVisibility(View.GONE);
             llCheckAll.setVisibility(View.GONE);
             Vline1.setVisibility(View.VISIBLE);
@@ -433,8 +446,9 @@ public class StateAdapter extends XrecyclerAdapter {
                         String sign = instance.getJsonString(jsonObject, "sign");
                         String leav = instance.getJsonString(jsonObject, "leav");
                         String noTake = instance.getJsonString(jsonObject, "noTake");
-                        tvStuDetail.setText(String.format("学员\t%s人\t\t|\t\t签到\t%s人\t\t|\t\t请假\t%s人\t\t|\t\t待处理\t%s人",
-                                childNum, sign, leav, noTake));
+                        tvStuDetail.setText(Html.fromHtml(String.format(
+                                "学员\t%s人\t\t|\t\t签到\t%s人\t\t|\t\t请假\t%s人\t\t|\t\t待处理\t" +
+                                        "<font color='#F54949'>%s</font>人", childNum, sign, leav, noTake)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -442,40 +456,46 @@ public class StateAdapter extends XrecyclerAdapter {
                     Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
                     tvSignLeaveTitle.setText("开课人数提醒");
-                    tvStuDetail.setText(String.format("学员\t%s人\t\t|\t\t开课人数\t%s人"
+                    tvStuDetail.setText(String.format("学员:\t\t%s人\t\t|\t\t开课人数:\t\t%s人"
                             , msgEntity.getChildNum(), msgEntity.getMinCount()));
                     llCheckAll.setVisibility(View.VISIBLE);
                     Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
                     tvSignLeaveTitle.setText("空位提醒");
-                    tvStuDetail.setText(String.format("空位\t%s人", msgEntity.getChildNum()));
+                    tvStuDetail.setText(String.format("空位:\t\t%s人", msgEntity.getChildNum()));
                     llCheckAll.setVisibility(View.VISIBLE);
                     Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("15")) {// 15：|83：我的机构通知
                     setTitleDetail(context, "机构通知", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
+                    tvStuDetail.setBackgroundResource(R.drawable.shape_state_handler_bg);
+                    tvStuDetail.setPadding(15, 15, 15, 15);
+                    tvOrgName.setText(Html.fromHtml(String.format("%s<br/>%s", msgEntity.getOrgName(),
+                            "<font color='#333333'>已发送通知</font>")));
                     setTitleDetail(context, "通知管理", false,
-                            String.format("已发送通知\n%s\n点击查看通知对象情况", msgEntity.getContent()));
+                            String.format("%s", msgEntity.getContent()));
                 } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
                     tvSignLeaveTitle.setText("学员预约提醒");
-                    tvStuDetail.setText(String.format("学员\t%s位", msgEntity.getChildNum()));
+                    tvStuDetail.setText(String.format("学员:\t\t%s人", msgEntity.getChildNum()));
                     llCheckAll.setVisibility(View.VISIBLE);
                     Vline1.setVisibility(View.GONE);
                 } else if (msgEntity.getType().equals("21")) {// 21：非活跃学员提醒
                     setTitleDetail(context, "非活跃学员提醒", false,
-                            String.format("非活跃学员:%s位", msgEntity.getChildNum()));
+                            String.format("非活跃学员:\t\t%s人", msgEntity.getChildNum()));
                 } else if (msgEntity.getType().equals("22")) {// 22：学员续费提醒
                     setTitleDetail(context, "学员续费提醒", false,
-                            String.format("续费提醒学员:%s位", msgEntity.getChildNum()));
+                            String.format("续费提醒学员:\t\t%s人", msgEntity.getChildNum()));
                 } else if (msgEntity.getType().equals("23")) {// 23：机构主页未设置提醒
                     setTitleDetail(context, "机构主页", false, msgEntity.getContent());
                 } else if (msgEntity.getType().equals("24")) {// 24：初始化提醒
-                    setTitleDetail(context, "初始化提醒", false, msgEntity.getContent());
+                    setTitleDetail(context, "初始化提醒", false,
+                            "您机构课时卡未设置/您机构学员未设置");
                 } else if (msgEntity.getType().equals("25")) {// 25：排课提醒
-                    setTitleDetail(context, "排课提醒", false, msgEntity.getContent());
+                    setTitleDetail(context, "排课提醒", false,
+                            "您的机构还没有排课/请您排课");
                 } else if (msgEntity.getType().equals("27")) {// 27：未出勤学员提醒
                     setTitleDetail(context, "未出勤学员提醒", false,
-                            String.format("超过一个月未上课的学员:%s位", msgEntity.getChildNum()));
+                            String.format("超过一个月未上课的学员:\t\t%s人", msgEntity.getChildNum()));
                 }
             } else if (msgEntity.getType().equals("12")) {// 12：未发布课程反馈提醒汇总动态
                 tvSignLeaveTitle.setText("未发布课程反馈提醒");
@@ -491,7 +511,7 @@ public class StateAdapter extends XrecyclerAdapter {
                 clRb.setVisibility(View.VISIBLE);
                 Vline1.setVisibility(View.GONE);
                 tvSignLeaveTime.setVisibility(View.GONE);
-                long updateTime = Long.valueOf(msgEntity.getUpdateTime());
+                long updateTime = Long.valueOf(msgEntity.getTime());
                 String rbMonth = TimeUtils.getDateToString(updateTime, "MM月dd日");
                 String rbData = DateUtil.getDate(updateTime, "yyyy年MM月dd日");
                 String rbWeek = TimeUtils.getWeekByDateStr(rbData);//获取周几
@@ -572,13 +592,15 @@ public class StateAdapter extends XrecyclerAdapter {
                 orgContent = String.format("%s\n%s", msgEntity.getOrgName(), msgEntity.getContent());
             }
             if (msgEntity.getType().equals("26")) {// 26:课程反馈
-                tvTime.setText("课程反馈");
+                tvTime.setText("课程反馈提醒");
                 tvTime.setTextColor(context.getResources().getColor(R.color.col_t9));
                 tvTime.setTextSize(18);
+                tvTitleContent.setTextColor(ResourcesUtils.getColor(R.color.color_9));
                 tvTitleContent.setText(msgEntity.getOrgName());
                 tvCourseInfo.setVisibility(View.VISIBLE);
                 llSelectAll.setVisibility(View.VISIBLE);
-                long courseStartAt = Long.valueOf(msgEntity.getCircleCourseBeginTime());
+                tvIsDel.setVisibility(msgEntity.getCircleId().equals("0") ? View.VISIBLE : View.GONE);// 该课程反馈已删除
+                long courseStartAt = Long.valueOf(msgEntity.getCourseStartAt());
                 String Month = TimeUtils.getDateToString(courseStartAt, "MM月dd日");
                 String data = DateUtil.getDate(courseStartAt, "yyyy年MM月dd日");
                 String week = TimeUtils.getWeekByDateStr(data);//获取周几
@@ -587,6 +609,8 @@ public class StateAdapter extends XrecyclerAdapter {
                 String courseName = msgEntity.getCourseName();
                 tvCourseInfo.setText(String.format("%s\t\t%s\t\t%s\n%s\t\t%s",
                         Month, week, time, teacherName, courseName));
+                tvHandlerName.setVisibility(View.VISIBLE);
+                tvHandlerName.setText(String.format("%s\t\t%s", rbMonthTime, msgEntity.getRead().equals("0") ? "更新" : ""));
             } else {
                 tvTitleContent.setText(TextUtils.isEmpty(orgContent) ? "" : orgContent.replace("\\n", "\n"));
                 tvTitleEnd.setVisibility(View.VISIBLE);
@@ -616,6 +640,8 @@ public class StateAdapter extends XrecyclerAdapter {
 
         ivSignLeaveStatus.setText("有更新");
         ivSignLeaveStatus.setBackgroundResource(R.mipmap.ic_y_update);
+        ivStatus.setText("有更新");
+        ivStatus.setBackgroundResource(R.mipmap.ic_y_update);
         // 1待处理 2已处理 3不需要处理
         switch (msgEntity.getStatus()) {//动态的状态 不需要处理的动态该字段没有值
             case "1"://1：待处理
@@ -651,153 +677,161 @@ public class StateAdapter extends XrecyclerAdapter {
                 break;
             case "3"://3：不需要处理
 
-                ivSignLeaveStatus.setVisibility(msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
+                ivStatus.setVisibility(StrUtils.isNotEmpty(msgEntity.getRead()) &&
+                        msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
+                ivSignLeaveStatus.setVisibility(StrUtils.isNotEmpty(msgEntity.getRead()) &&
+                        msgEntity.getRead().equals("0") ? View.VISIBLE : View.GONE);
 
                 tvAddTime.setText(rbMonthTime);
                 break;
         }
 //        tvAtter.setText(circleAccessory);
         clItem.setOnClickListener(v -> {
-            if (msgEntity.getType().equals("6")) {
+            if (msgEntity.getType().equals("6") || msgEntity.getType().equals("26")) {// 26：课程反馈提醒
                 return;
             }
-            setRead(msgEntity);
-            if (TextUtils.equals(msgEntity.getType(), "1")) {
-                // tpye2 1：请假签到 3：空位出现  4：教师审核 19：有学员预约了课程
-                switch (msgEntity.getType2()) {
-                    case "1": // 1：请假签到
-                        startActivity(msgEntity, CourserActivity.class);
-                        break;
-                    case "3": // 3：空位出现
-                        startActivity(msgEntity, CourserCoverActivity.class);
-                        break;
-                    case "21":// 21,27,28消课失败,手动消课
-                    case "27":
-                    case "28":
-                        UserManager.getInstance().showSuccessDialog((Activity) mContext
-                                , mContext.getString(R.string.function_limit));
-                        break;
-                    case "50":
-                        startActivity(msgEntity, CourserActivity.class);
-                        break;
-                    default:
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                }
-            } else if (TextUtils.equals(msgEntity.getType(), "2")) {
-                // tpye2 23：课程反馈
-                switch (msgEntity.getType2()) {
-                    case "22": // 22：课程反馈
-                        startActivity(msgEntity, CourserActivity.class);
-                        break;
-                    case "23": // 23：课程反馈记录
-                        mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
-                                .putExtra("imputType", "2")
-                                .putExtra("msgEntity", msgEntity)
-                                .putExtra("circleId", msgEntity.getTargetId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
-                        break;
-                    default:
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                }
-            } else if (TextUtils.equals(msgEntity.getType(), "3")) {
-                switch (msgEntity.getType2()) {
-                    case "4": // 4：教师审核
-                        getOrgTeachers(msgEntity.getOrgId());
-                        break;
-                    case "6": // 6：学员审核
-                        getAudit(msgEntity.getOrgId());
-                        break;
-                    case "7": // 7：完善机构信息
-                        UserManager.getInstance().showSuccessDialog((Activity) mContext
-                                , mContext.getString(R.string.function_limit));
-                        break;
-                    case "8":// 8：导入课时卡信息
-                        startActivity(msgEntity, CourserCardMsgActivity.class);
-                        break;
-                    case "9": // 9：活跃学员
-                        mContext.startActivity(new Intent(mContext, FormalActivity.class)
-                                .putExtra("msgEntity", msgEntity));
-                        break;
-                    case "10":// 10：新建排课
-                        mContext.startActivity(new Intent(mContext, NewWorkActivity.class)
-                                .putExtra("msgEntity", msgEntity));
-                        ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
-                        break;
-                    case "25":// 25：机构初始化工作
-                        startActivity(msgEntity, InitDataActivity.class);
-                        break;
-                    case "72":// 72：课程详情
-                        startActivity(msgEntity, CourserActivity.class);
-                        break;
-                    default:
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                }
-            } else if (TextUtils.equals(msgEntity.getType(), "4")) {
-                switch (msgEntity.getType2()) {
-                    case "13":// 13：与机构解除绑定
-                        U.showToast("已离职");
-                        break;
-                    case "20":// 20：查看通知回执的状态
-                        if (msgEntity.getReceipt().equals("1") || msgEntity.getReceipt().equals("2")) {// 不需要回执/ 待回执
-                            startActivity(msgEntity, NotifityInfoActivity.class);
-                        } else {
-                            OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
-                            notifyEntity.setIsReceipt("1");// 如果点击跳转通知对象,默认值是1需要回执
-                            notifyEntity.setNotifiId(msgEntity.getTargetId());
-                            mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
-                                    .putExtra("msgEntity", msgEntity)
-                                    .putExtra("notifyEntity", notifyEntity));
-                            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                // 79.获取机构权限配置
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+                        if (TextUtils.equals(msgEntity.getType(), "1")) {
+                            // tpye2 1：请假签到 3：空位出现  4：教师审核 19：有学员预约了课程
+                            switch (msgEntity.getType2()) {
+                                case "1": // 1：请假签到
+                                    startActivity(msgEntity, CourserActivity.class);
+                                    break;
+                                case "3": // 3：空位出现
+                                    startActivity(msgEntity, CourserCoverActivity.class);
+                                    break;
+                                case "21":// 21,27,28消课失败,手动消课
+                                case "27":
+                                case "28":
+                                    instance.showSuccessDialog((Activity) mContext
+                                            , mContext.getString(R.string.function_limit));
+                                    break;
+                                case "50":
+                                    startActivity(msgEntity, CourserActivity.class);
+                                    break;
+                                default:
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                            }
+                        } else if (TextUtils.equals(msgEntity.getType(), "2")) {
+                            // tpye2 23：课程反馈
+                            switch (msgEntity.getType2()) {
+                                case "22": // 22：课程反馈
+                                    startActivity(msgEntity, CourserActivity.class);
+                                    break;
+                                case "23": // 23：课程反馈记录
+                                    mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
+                                            .putExtra("imputType", "2")
+                                            .putExtra("msgEntity", msgEntity)
+                                            .putExtra("circleId", msgEntity.getTargetId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+                                    break;
+                                default:
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                            }
+                        } else if (TextUtils.equals(msgEntity.getType(), "3")) {
+                            switch (msgEntity.getType2()) {
+                                case "4": // 4：教师审核
+                                    getOrgTeachers(msgEntity.getOrgId(), "2", "1");
+                                    break;
+                                case "6": // 6：学员审核
+                                    getAudit(msgEntity.getOrgId());
+                                    break;
+                                case "7": // 7：完善机构信息
+                                    instance.showSuccessDialog((Activity) mContext
+                                            , mContext.getString(R.string.function_limit));
+                                    break;
+                                case "8": // 8：导入课时卡信息
+                                    startActivity(msgEntity, CourserCardMsgActivity.class);
+                                    break;
+                                case "9": // 9：活跃学员
+                                    mContext.startActivity(new Intent(mContext, FormalActivity.class)
+                                            .putExtra("msgEntity", msgEntity));
+                                    break;
+                                case "10":// 10：新建排课
+                                    mContext.startActivity(new Intent(mContext, NewWorkActivity.class)
+                                            .putExtra("msgEntity", msgEntity));
+                                    ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                                    break;
+                                case "25":// 25：机构初始化工作
+                                    startActivity(msgEntity, InitDataActivity.class);
+                                    break;
+                                case "72":// 72：课程详情
+                                    startActivity(msgEntity, CourserActivity.class);
+                                    break;
+                                default:
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                            }
+                        } else if (TextUtils.equals(msgEntity.getType(), "4")) {
+                            switch (msgEntity.getType2()) {
+                                case "13":// 13：与机构解除绑定
+                                    U.showToast("已离职");
+                                    break;
+                                case "20":// 20：查看通知回执的状态
+                                    if (msgEntity.getReceipt().equals("1") || msgEntity.getReceipt().equals("2")) {// 不需要回执/ 待回执
+                                        startActivity(msgEntity, NotifityInfoActivity.class);
+                                    } else {
+                                        OrgNotifyEntity notifyEntity = new OrgNotifyEntity();
+                                        notifyEntity.setIsReceipt("1");// 如果点击跳转通知对象,默认值是1需要回执
+                                        notifyEntity.setNotifiId(msgEntity.getTargetId());
+                                        mContext.startActivity(new Intent(mContext, NotifyObjActivity.class)
+                                                .putExtra("msgEntity", msgEntity)
+                                                .putExtra("notifyEntity", notifyEntity));
+                                        ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                                    }
+                                    break;
+                                case "24":
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                                default:
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                            }
+                        } else if (TextUtils.equals(msgEntity.getType(), "5")) {
+                            switch (msgEntity.getType2()) {
+                                case "5": // 5,12,14：查看消息详情
+                                case "12":
+                                case "14":
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                                case "11":// 11:有学员近一个月没有来上课请您查看
+                                    mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                            .putExtra("msgEntity", msgEntity)
+                                            .putExtra("key", "6"));
+                                    break;
+                                case "16":// 16：有学员课时卡需要续费
+                                    mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                            .putExtra("msgEntity", msgEntity)
+                                            .putExtra("key", "4"));
+                                    break;
+                                case "17":// 17,18：排课修改了教师点击查看教师课表
+                                case "18":
+                                    EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 1));
+                                    break;
+                                case "19":// 19：有学员预约了课程
+                                    startActivity(msgEntity, StuOrderActivity.class);
+                                    break;
+                                case "29":// 29：有学员被系统置为非活跃
+                                    mContext.startActivity(new Intent(mContext, FormalActivity.class)
+                                            .putExtra("msgEntity", msgEntity)
+                                            .putExtra("status", "3"));// 3：非活跃待确认
+                                    break;
+                                default:
+                                    startActivity(msgEntity, NotifityInfoActivity.class);
+                                    break;
+                            }
+//                        } else if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
+//                            startActivity(msgEntity, MomentActivity.class);
                         }
-                        break;
-                    case "24":
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                    default:
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                }
-            } else if (TextUtils.equals(msgEntity.getType(), "5")) {
-                switch (msgEntity.getType2()) {
-                    case "5": // 5,12,14：查看消息详情
-                    case "12":
-                    case "14":
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                    case "11":// 11:有学员近一个月没有来上课请您查看
-                        mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                                .putExtra("msgEntity", msgEntity)
-                                .putExtra("key", "6"));
-                        break;
-                    case "16":// 16：有学员课时卡需要续费
-                        mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                                .putExtra("msgEntity", msgEntity)
-                                .putExtra("key", "4"));
-                        break;
-                    case "17":// 17,18：排课修改了教师点击查看教师课表
-                    case "18":
-                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 1));
-                        break;
-                    case "19":// 19：有学员预约了课程
-                        startActivity(msgEntity, StuOrderActivity.class);
-                        break;
-                    case "29":// 29：有学员被系统置为非活跃
-                        mContext.startActivity(new Intent(mContext, FormalActivity.class)
-                                .putExtra("msgEntity", msgEntity)
-                                .putExtra("status", "3"));// 3：非活跃待确认
-                        break;
-                    default:
-                        startActivity(msgEntity, NotifityInfoActivity.class);
-                        break;
-                }
-            } else if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
-                startActivity(msgEntity, MomentActivity.class);
+                    }
+                });
             }
         });
         rlReadAicz.setOnClickListener(v -> {
-            setRead(msgEntity);
             if (msgEntity.getType2().equals("74")) {// 来自创始人的信
                 mContext.startActivity(new Intent(mContext, UserTermActivity.class)
                         .setData(Uri.parse(msgEntity.getContent()))
@@ -811,111 +845,170 @@ public class StateAdapter extends XrecyclerAdapter {
             }
         });
         btnAddOrg.setOnClickListener(v -> {
-            setRead(msgEntity);
             EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_ADD_ORG));
         });
         btnCreateOrg.setOnClickListener(v -> {
-            setRead(msgEntity);
             mContext.startActivity(new Intent(mContext, CreateOrgHintActivity.class));
         });
         tvSelectDetial.setOnClickListener(v -> {
-            setRead(msgEntity);
-            if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
-                mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
-                        .putExtra("imputType", "2")
-                        .putExtra("msgEntity", msgEntity)
-                        .putExtra("circleId", msgEntity.getCircleId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+                        setDynamicRead(msgEntity);
+                        if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
+                            mContext.startActivity(new Intent(mContext, CourserFeedbackActivity.class)
+                                    .putExtra("imputType", "2")
+                                    .putExtra("msgEntity", msgEntity)
+                                    .putExtra("circleId", msgEntity.getCircleId()));// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+                        }
+                    }
+                });
             }
         });
-        tvCheckAll.setOnClickListener(v -> {
-            setRead(msgEntity);
-            if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
-                startActivity(msgEntity, MomentActivity.class);
+        tvSelectAll.setOnClickListener(v -> {
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+                        if (msgEntity.getType().equals("26")) {// 26：课程反馈提醒
+                            startActivity(msgEntity, MomentActivity.class);
+                        }
+                    }
+                });
             }
         });
         tvCheckDetial.setOnClickListener(v -> {
-            setRead(msgEntity);
-            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
-                startActivity(msgEntity, CourserActivity.class);
-            } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
-                startActivity(msgEntity, CourserActivity.class);
-            } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
-                startActivity(msgEntity, CourserCoverActivity.class);
-            } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
-                startActivity(msgEntity, CourserActivity.class);
-            } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
-                startActivity(msgEntity, CourserActivity.class);
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+                        setDynamicRead(msgEntity);
+                        if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+                            startActivity(msgEntity, CourserActivity.class);
+                        } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
+                            startActivity(msgEntity, CourserActivity.class);
+                        } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
+                            startActivity(msgEntity, CourserCoverActivity.class);
+                        } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+                            childSignStatus(msgEntity);
+                        } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
+                            startActivity(msgEntity, CourserActivity.class);
+                        }
+                    }
+                });
             }
         });
         tvCheckAll.setOnClickListener(v -> {
-            setRead(msgEntity);
-            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
-                startActivity(msgEntity, StuLevaeActivity.class);
-            } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
-                startActivity(msgEntity, CourseNumActivity.class);
-            } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
-                startActivity(msgEntity, NullRemindActivity.class);
-            } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
-                startActivity(msgEntity, EliminateWorkActivity.class);
-            } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
-                startActivity(msgEntity, StuOrdersActivity.class);
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+                        if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+                            startActivity(msgEntity, StuLevaeActivity.class);
+                        } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
+                            startActivity(msgEntity, CourseNumActivity.class);
+                        } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
+                            startActivity(msgEntity, NullRemindActivity.class);
+                        } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+                            startActivity(msgEntity, EliminateWorkActivity.class);
+                        } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
+                            startActivity(msgEntity, StuOrdersActivity.class);
+                        }
+                    }
+                });
             }
         });
         rlSignLevae.setOnClickListener(v -> {
-            setRead(msgEntity);
-            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
-                startActivity(msgEntity, StuLevaeActivity.class);
-            } else if (msgEntity.getType().equals("11")) {
-                startActivity(msgEntity, StatisReportActivity.class);
-            } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
-                startActivity(msgEntity, CourseNumActivity.class);
-            } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
-                startActivity(msgEntity, NullRemindActivity.class);
-            } else if (msgEntity.getType().equals("15")) {// 15：|83：我的机构通知
-                startActivity(msgEntity, OrgNotifyActivity.class);
-            } else if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
-                startActivity(msgEntity, OrgNotifyActivity.class);
-            } else if (msgEntity.getType().equals("17")) {// 17：审核教师提醒
-                getOrgTeachers(msgEntity.getOrgId());
-            } else if (msgEntity.getType().equals("18")) {// 18：审核学员提醒
-                getAudit(msgEntity.getOrgId());
-            } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
-                startActivity(msgEntity, EliminateWorkActivity.class);
-            } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
-                startActivity(msgEntity, StuOrdersActivity.class);
-            } else if (msgEntity.getType().equals("21")) {// 21：非活跃学员提醒
-                mContext.startActivity(new Intent(mContext, FormalActivity.class)
-                        .putExtra("msgEntity", msgEntity)
-                        .putExtra("status", "3"));// 3：非活跃待确认
-            } else if (msgEntity.getType().equals("22")) {// 22：学员续费提醒
-                mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                        .putExtra("msgEntity", msgEntity)
-                        .putExtra("key", "4"));
-            } else if (msgEntity.getType().equals("23")) {// 23：机构主页未设置提醒
-                UserManager.getInstance().showSuccessDialog((Activity) mContext
-                        , mContext.getString(R.string.function_limit));
-            } else if (msgEntity.getType().equals("24")) {// 24：初始化提醒
-                startActivity(msgEntity, InitDataActivity.class);
-            } else if (msgEntity.getType().equals("25")) {// 25：排课提醒
-                mContext.startActivity(new Intent(mContext, NewWorkActivity.class)
-                        .putExtra("msgEntity", msgEntity));
-                ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
-            } else if (msgEntity.getType().equals("27")) {// 27：未出勤学员提醒
-                mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
-                        .putExtra("msgEntity", msgEntity)
-                        .putExtra("key", "6"));
+            if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")
+                    || msgEntity.getType().equals("13") || msgEntity.getType().equals("14")
+                    || msgEntity.getType().equals("19") || msgEntity.getType().equals("20")) {
+                return;
+            }
+            if (setRead(msgEntity)) {// 非离职&获取权限配置成功
+                instance.getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2", isRole -> {
+                    if (isRole) {// 获取权限配置成功
+//                        if (msgEntity.getType().equals("9") || msgEntity.getType().equals("10") || msgEntity.getType().equals("12")) {
+//                            startActivity(msgEntity, StuLevaeActivity.class);
+//                        } else
+                        if (msgEntity.getType().equals("11")) {
+                            startActivity(msgEntity, StatisReportActivity.class);
+//                        } else if (msgEntity.getType().equals("13")) {// 13.开课人数提醒
+//                            startActivity(msgEntity, CourseNumActivity.class);
+//                        } else if (msgEntity.getType().equals("14")) {// 14：|82：空位提醒
+//                            startActivity(msgEntity, NullRemindActivity.class);
+                        } else if (msgEntity.getType().equals("15")) {// 15：|83：我的机构通知
+                            startActivity(msgEntity, OrgNotifyActivity.class);
+                        } else if (msgEntity.getType().equals("16")) {// 16：|84：通知管理
+                            setDynamicRead(msgEntity);// 动态更新已读
+                            startActivity(msgEntity, OrgNotifyActivity.class);
+                        } else if (msgEntity.getType().equals("17")) {// 17：审核教师提醒
+                            getOrgTeachers(msgEntity.getOrgId(), "2", "1");
+                        } else if (msgEntity.getType().equals("18")) {// 18：审核学员提醒
+                            getAudit(msgEntity.getOrgId());
+//                        } else if (msgEntity.getType().equals("19")) {// 19：人工消课提醒
+//                            startActivity(msgEntity, EliminateWorkActivity.class);
+//                        } else if (msgEntity.getType().equals("20")) {// 20：学员预约提醒
+//                            startActivity(msgEntity, StuOrdersActivity.class);
+                        } else if (msgEntity.getType().equals("21")) {// 21：非活跃学员提醒
+                            mContext.startActivity(new Intent(mContext, FormalActivity.class)
+                                    .putExtra("msgEntity", msgEntity)
+                                    .putExtra("status", "3"));// 3：非活跃待确认
+                        } else if (msgEntity.getType().equals("22")) {// 22：学员续费提醒
+                            mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                    .putExtra("msgEntity", msgEntity)
+                                    .putExtra("key", "4"));
+                        } else if (msgEntity.getType().equals("23")) {// 23：机构主页未设置提醒
+                            instance.showSuccessDialog((Activity) mContext
+                                    , mContext.getString(R.string.function_limit));
+                        } else if (msgEntity.getType().equals("24")) {// 24：初始化提醒
+                            startActivity(msgEntity, InitDataActivity.class);
+                        } else if (msgEntity.getType().equals("25")) {// 25：排课提醒
+                            mContext.startActivity(new Intent(mContext, NewWorkActivity.class)
+                                    .putExtra("msgEntity", msgEntity));
+                            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                        } else if (msgEntity.getType().equals("27")) {// 27：未出勤学员提醒
+                            mContext.startActivity(new Intent(mContext, NoClassStuActivity.class)
+                                    .putExtra("msgEntity", msgEntity)
+                                    .putExtra("key", "6"));
+                        }
+                    }
+                });
             }
         });
 
     }
 
-    private void setRead(MessageEntity msgEntity) {
-        UserManager.getInstance().getOrgInfo(msgEntity.getOrgId(), (Activity) mContext, "2");// 获取权限配置参数
-        if (!UserManager.getInstance().CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
-            U.showToast("已离职");
-            return;
+    private void setDynamicRead(MessageEntity msgEntity) {
+        HttpManager.getInstance().doSetDynamicRead("StateAdapter", msgEntity.getOrgId(), msgEntity.getType()
+                , new HttpCallBack<BaseDataModel<MessageEntity>>() {
+                    @Override
+                    public void onSuccess(BaseDataModel<MessageEntity> data) {
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout((Activity) mContext);
+                        } else {
+                            U.showToast(errorMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+                });
+    }
+
+
+    private boolean setRead(MessageEntity msgEntity) {
+        instance.setOrgId(msgEntity.getOrgId());
+        if (!instance.CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
+            instance.showSuccessDialog((Activity) mContext
+                    , mContext.getString(R.string.string_have_quitted));
+            return false;
         }
-        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
+        return true;
     }
 
     private void setTitleDetail(Context context, String orgName, boolean isShow, String content) {
@@ -932,7 +1025,6 @@ public class StateAdapter extends XrecyclerAdapter {
         rlSignLevae.setVisibility(isSignLevae ? View.VISIBLE : View.GONE);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startActivity(MessageEntity msgEntity, Class activity) {
         mContext.startActivity(new Intent(mContext, activity)
                 .putExtra("msgEntity", msgEntity)
@@ -960,9 +1052,9 @@ public class StateAdapter extends XrecyclerAdapter {
      */
     private ArrayList<StudentEntity> auditData = new ArrayList<>();
 
-    private void getOrgTeachers(String orgId) {
-        HttpManager.getInstance().doGetOrgTeachers("TeacherMsgActivity", orgId, "2", "1",
-                new HttpCallBack<BaseDataModel<StudentEntity>>() {
+    private void getOrgTeachers(String orgId, String status, String leave_status) {
+        HttpManager.getInstance().doGetOrgTeachers("TeacherMsgActivity", orgId, status,
+                leave_status, new HttpCallBack<BaseDataModel<StudentEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         if (TextUtils.equals("2", "2")) {//待审核
@@ -1019,6 +1111,105 @@ public class StateAdapter extends XrecyclerAdapter {
                     @Override
                     public void onError(Throwable throwable) {
                         LogUtils.d("StateAdapter throwable", throwable.getMessage());
+                    }
+                });
+    }
+
+    private void getLessonCardLog(MessageEntity msgEntity) {
+        HttpManager.getInstance().doGetLessonCardLog("EliminateWorkAdapter", msgEntity.getOrgId(),
+                msgEntity.getTargetId(), msgEntity.getChildId(),
+                new HttpCallBack<BaseDataModel<CourseEntity>>((Activity) mContext) {
+                    @Override
+                    public void onSuccess(BaseDataModel<CourseEntity> data) {
+                        // 已人工消课
+                        List<CourseEntity> entity = data.getData();
+                        if (entity.size() > 0) {
+                            msgEntity.setCourseList(entity);
+                            msgEntity.setCount("1");// 不走 无可用课时卡
+                            startActivity(msgEntity, EliminateDetailActivity.class);
+                        } else {
+                            // 没有人工消过课
+                            getStudentCourseCard(msgEntity);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        LogUtils.d("EliminateWorkAdapter onFail", statusCode + ":" + errorMsg);
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout((Activity) mContext);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        LogUtils.d("EliminateWorkAdapter onError", throwable.getMessage());
+                    }
+                });
+    }
+
+    private void getStudentCourseCard(MessageEntity msgEntity) {
+        HttpManager.getInstance().doGetStuCard("EliminateDetailActivity",
+                msgEntity.getOrgId(), msgEntity.getTargetId(), msgEntity.getChildId()
+                , new HttpCallBack<BaseDataModel<CourseEntity>>() {
+                    @Override
+                    public void onSuccess(BaseDataModel<CourseEntity> data) {
+                        ArrayList<Object> mListCard = new ArrayList<>(data.getData());
+                        if (mListCard.size() > 0) {
+                            startActivity(msgEntity, ArtificialActivity.class);
+                        } else {
+                            msgEntity.setCount(mListCard.size() + "");// 无可用课时卡
+                            startActivity(msgEntity, EliminateDetailActivity.class);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        LogUtils.d("EliminateDetailActivity onFail", statusCode + ":" + errorMsg);
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout((Activity) mContext);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        LogUtils.d("EliminateDetailActivity onError", throwable.getMessage());
+                    }
+                });
+    }
+
+    private void childSignStatus(MessageEntity msgEntity) {
+        HttpManager.getInstance().doChildSignStatus("EliminateDetailActivity",
+                msgEntity.getChildId(), msgEntity.getTargetId(),
+                new HttpCallBack<BaseDataModel<MessageEntity>>() {
+                    @Override
+                    public void onSuccess(BaseDataModel<MessageEntity> data) {
+                        // status 1：已签到 2：取消签到
+                        MessageEntity msg = data.getData().get(0);
+                        msgEntity.setStatus(msg.getStatus());
+                        if (msg.getStatus().equals("1")) {
+                            getLessonCardLog(msgEntity);
+                        } else {
+                            msgEntity.setCount("1");// 不走 无可用课时卡
+                            startActivity(msgEntity, EliminateDetailActivity.class);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout((Activity) mContext);
+                        } else {
+                            U.showToast(errorMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
                     }
                 });
     }

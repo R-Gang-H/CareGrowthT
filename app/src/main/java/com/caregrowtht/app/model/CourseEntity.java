@@ -2,6 +2,8 @@ package com.caregrowtht.app.model;
 
 import android.text.TextUtils;
 
+import com.caregrowtht.app.uitil.StrUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +134,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String cardPrice;
     private String realityPrice;
     private String realPrice;//@TODO 重复字段
-    private String balance;
+    private String balance, cardLeftPrice;
     private String orgImage;
     private String isUsed;
     private String orgShortName;
@@ -1046,6 +1048,14 @@ public class CourseEntity<M, A, S> implements Serializable {
         return balance;
     }
 
+    public String getCardLeftPrice() {
+        return cardLeftPrice;
+    }
+
+    public void setCardLeftPrice(String cardLeftPrice) {
+        this.cardLeftPrice = cardLeftPrice;
+    }
+
     public void setBalance(String balance) {
         this.balance = balance;
     }
@@ -1067,6 +1077,9 @@ public class CourseEntity<M, A, S> implements Serializable {
     }
 
     public String getOrgShortName() {
+        if (StrUtils.isEmpty(orgShortName)) {
+            return orgName;
+        }
         return orgShortName;
     }
 

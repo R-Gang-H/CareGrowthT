@@ -1,428 +1,435 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_size_10"
     android:layout_marginTop="@dimen/dp_10"
     android:layout_marginRight="@dimen/margin_size_10"
-    android:background="@drawable/shape_shadow_bg"
-    android:paddingBottom="@dimen/margin_size_10">
-
-    <ImageView
-        android:id="@+id/iv_sign_leave_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_size_12"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:scaleType="center"
-        android:src="@mipmap/ic_type_feedback" />
-
-    <TextView
-        android:id="@+id/tv_sign_leave_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_size_10"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:layout_toEndOf="@id/iv_sign_leave_type"
-        android:text="每日日报"
-        android:textColor="@color/col_t9"
-        android:textSize="@dimen/text_size_18" />
-
-    <TextView
-        android:id="@+id/tv_in_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/iv_sign_leave_type"
-        android:layout_marginStart="@dimen/margin_size_15"
-        android:layout_marginTop="@dimen/margin_size_12"
-        android:layout_marginEnd="@dimen/margin_size_15"
-        android:ellipsize="end"
-        android:lineSpacingExtra="9dp"
-        android:maxLines="4"
-        android:text="4月16日 星期二"
-        android:textColor="@color/color_9"
-        android:textSize="@dimen/text_size_15" />
+    android:fillViewport="true">
 
     <RelativeLayout
-        android:id="@+id/rl_sr_qk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_in_time"
-        android:layout_marginLeft="@dimen/margin_size_11"
-        android:layout_marginTop="@dimen/margin_size_12"
-        android:layout_marginRight="@dimen/margin_size_11"
-        android:background="@drawable/shape_state_handler_bg"
-        android:paddingBottom="@dimen/margin_size_15">
+        android:background="@drawable/shape_shadow_bg"
+        android:fadeScrollbars="true"
+        android:focusableInTouchMode="true">
 
-        <TextView
-            android:id="@+id/tv_in_detail"
+        <ImageView
+            android:id="@+id/iv_sign_leave_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="收入情况"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line1"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_alignBottom="@id/tv_day_xk_monery"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:background="@color/color_C" />
+            android:layout_marginStart="@dimen/margin_size_12"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:scaleType="center"
+            android:src="@mipmap/ic_work_daily" />
 
         <TextView
-            android:id="@+id/tv_day_xk"
+            android:id="@+id/tv_sign_leave_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line1"
-            android:text="今日消课"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_toEndOf="@id/iv_sign_leave_type"
+            android:text="每日日报"
+            android:textColor="@color/col_t9"
+            android:textSize="@dimen/text_size_18" />
 
         <TextView
-            android:id="@+id/tv_day_xk_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_day_xk"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line1"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line2"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/v_line1"
-            android:layout_alignBottom="@id/tv_month_xk_monery"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_month_xk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/v_line1"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line1"
-            android:text="本月消课"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_month_xk_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_month_xk"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line1"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line3"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_alignBottom="@id/tv_day_xz_monery"
-            android:layout_marginStart="@dimen/margin_size_42"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/tv_day_xk"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_day_xz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line3"
-            android:text="今日新增"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_day_xz_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_day_xz"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line3"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line4"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/v_line3"
-            android:layout_alignBottom="@id/tv_month_xz_monery"
-            android:layout_marginStart="@dimen/margin_size_42"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/tv_month_xk"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_month_xz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/v_line3"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line4"
-            android:text="本月新增"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_month_xz_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_month_xz"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line4"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line5"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_alignBottom="@id/tv_day_tf_monery"
-            android:layout_marginStart="@dimen/margin_size_42"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/tv_day_xz"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_day_tf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_in_detail"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line5"
-            android:text="今日支出"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_day_tf_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_day_xz"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line5"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line6"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/v_line5"
-            android:layout_alignBottom="@id/tv_month_tf_monery"
-            android:layout_marginStart="@dimen/margin_size_42"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/tv_month_xz"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_month_tf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/v_line5"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line5"
-            android:text="本月支出"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_month_tf_monery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_month_xz"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line5"
-            android:text="2400元"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_stu_qk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_sr_qk"
-        android:layout_marginLeft="@dimen/margin_size_11"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:layout_marginRight="@dimen/margin_size_11"
-        android:background="@drawable/shape_state_handler_bg"
-        android:paddingBottom="@dimen/margin_size_15">
-
-        <TextView
-            android:id="@+id/tv_stu_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="学员情况"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line7"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_stu_detail"
-            android:layout_alignBottom="@id/tv_day_xz_num"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_day_xz_stu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_stu_detail"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line7"
-            android:text="今日新增学员"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_day_xz_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_day_xz_stu"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line7"
-            android:text="12人"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <View
-            android:id="@+id/v_line8"
-            android:layout_width="@dimen/margin_size_1"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_stu_detail"
-            android:layout_alignBottom="@id/tv_month_xz_num"
-            android:layout_marginStart="@dimen/margin_size_42"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/tv_day_xz_stu"
-            android:background="@color/color_C" />
-
-        <TextView
-            android:id="@+id/tv_month_xz_stu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_stu_detail"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_20"
-            android:layout_toEndOf="@id/v_line8"
-            android:text="本月新增学员"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/text_size_13" />
-
-        <TextView
-            android:id="@+id/tv_month_xz_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_month_xz_stu"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_toEndOf="@id/v_line8"
-            android:text="26人"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_class_time"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_below="@id/rl_stu_qk"
-        android:layout_marginLeft="@dimen/margin_size_11"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:layout_marginRight="@dimen/margin_size_11"
-        android:background="@drawable/shape_state_handler_bg"
-        android:paddingBottom="@dimen/margin_size_15">
-
-        <TextView
-            android:id="@+id/tv_go_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="今日上课时间\t\t2节/2小时40分"
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_15" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
+            android:id="@+id/tv_in_time"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_go_hour" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_work_situa"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:layout_below="@id/rl_class_time"
-        android:layout_marginLeft="@dimen/margin_size_11"
-        android:layout_marginTop="@dimen/margin_size_10"
-        android:layout_marginRight="@dimen/margin_size_11"
-        android:background="@drawable/shape_state_handler_bg"
-        android:paddingBottom="@dimen/margin_size_15">
-
-        <TextView
-            android:id="@+id/tv_teacher_work"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_15"
-            android:text="教师工作完成情况"
-            android:textColor="@color/color_3"
+            android:layout_below="@id/iv_sign_leave_type"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_12"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="4"
+            android:text="4月16日 星期二"
+            android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_15" />
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/barChart"
+        <RelativeLayout
+            android:id="@+id/rl_sr_qk"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_teacher_work"
-            android:layout_marginTop="@dimen/margin_size_3" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_in_time"
+            android:layout_marginLeft="@dimen/margin_size_11"
+            android:layout_marginTop="@dimen/margin_size_12"
+            android:layout_marginRight="@dimen/margin_size_11"
+            android:background="@drawable/shape_state_handler_bg"
+            android:paddingBottom="@dimen/margin_size_15">
+
+            <TextView
+                android:id="@+id/tv_in_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="收入情况"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line1"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_alignBottom="@id/tv_day_xk_monery"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_day_xk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line1"
+                android:text="今日消课"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_day_xk_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day_xk"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line1"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line2"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/v_line1"
+                android:layout_alignBottom="@id/tv_month_xk_monery"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_month_xk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line1"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line1"
+                android:text="本月消课"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_month_xk_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_month_xk"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line1"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line3"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_alignBottom="@id/tv_day_xz_monery"
+                android:layout_marginStart="@dimen/margin_size_42"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_day_xk"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_day_xz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line3"
+                android:text="今日收入"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_day_xz_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day_xz"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line3"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line4"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/v_line3"
+                android:layout_alignBottom="@id/tv_month_xz_monery"
+                android:layout_marginStart="@dimen/margin_size_42"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_month_xk"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_month_xz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line3"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line4"
+                android:text="本月收入"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_month_xz_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_month_xz"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line4"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line5"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_alignBottom="@id/tv_day_tf_monery"
+                android:layout_marginStart="@dimen/margin_size_42"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_day_xz"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_day_tf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_in_detail"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line5"
+                android:text="今日支出"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_day_tf_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day_xz"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line5"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line6"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/v_line5"
+                android:layout_alignBottom="@id/tv_month_tf_monery"
+                android:layout_marginStart="@dimen/margin_size_42"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_month_xz"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_month_tf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_line5"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line5"
+                android:text="本月支出"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_month_tf_monery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_month_xz"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line5"
+                android:text="2400元"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_stu_qk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_sr_qk"
+            android:layout_marginLeft="@dimen/margin_size_11"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_11"
+            android:background="@drawable/shape_state_handler_bg"
+            android:paddingBottom="@dimen/margin_size_15">
+
+            <TextView
+                android:id="@+id/tv_stu_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="学员情况"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line7"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_stu_detail"
+                android:layout_alignBottom="@id/tv_day_xz_num"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_day_xz_stu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_stu_detail"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line7"
+                android:text="今日新增学员"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_day_xz_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day_xz_stu"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line7"
+                android:text="12人"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:id="@+id/v_line8"
+                android:layout_width="@dimen/margin_size_1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_stu_detail"
+                android:layout_alignBottom="@id/tv_month_xz_num"
+                android:layout_marginStart="@dimen/margin_size_42"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/tv_day_xz_stu"
+                android:background="@color/color_C" />
+
+            <TextView
+                android:id="@+id/tv_month_xz_stu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_stu_detail"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_20"
+                android:layout_toEndOf="@id/v_line8"
+                android:text="本月新增学员"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_month_xz_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_month_xz_stu"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_8"
+                android:layout_toEndOf="@id/v_line8"
+                android:text="26人"
+                android:textColor="@color/blueLight"
+                android:textSize="@dimen/text_size_15" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_class_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_stu_qk"
+            android:layout_marginLeft="@dimen/margin_size_11"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_11"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:background="@drawable/shape_state_handler_bg">
+
+            <TextView
+                android:id="@+id/tv_go_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:layout_marginBottom="@dimen/margin_size_10"
+                android:text="今日上课时间\t\t2节/2小时40分"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <com.caregrowtht.app.view.chart.DountChartView
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/tv_go_hour" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_work_situa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_class_time"
+            android:layout_marginLeft="@dimen/margin_size_11"
+            android:layout_marginRight="@dimen/margin_size_11"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:background="@drawable/shape_state_handler_bg">
+
+            <TextView
+                android:id="@+id/tv_teacher_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_size_10"
+                android:layout_marginTop="@dimen/margin_size_15"
+                android:text="教师工作完成情况"
+                android:textColor="@color/color_3"
+                android:textSize="@dimen/text_size_15" />
+
+            <com.caregrowtht.app.view.chart.HorizontalBarChartView
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_teacher_work"
+                android:layout_marginTop="@dimen/margin_size_10" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

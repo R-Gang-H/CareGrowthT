@@ -24,7 +24,6 @@ import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
-import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ import butterknife.OnClick;
 /**
  * 人工消课提醒
  */
-public class EliminateWorkActivity extends BaseActivity implements ViewOnItemClick {
+public class EliminateWorkActivity extends BaseActivity {
 
     @BindView(R.id.rl_next_button)
     RelativeLayout rlNextButton;
@@ -65,7 +64,7 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
     private String status = "1";// 1：待处理 2：已完成
     private String showType;
     private boolean roleType = false;// true 有 ,false 没有
-    private int index = -1;
+    private int index = 0;
 
     @Override
     public int getLayoutId() {
@@ -80,7 +79,7 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
         iniXrecyclerView(recyclerView);
         recyclerView.setLoadingMoreEnabled(true);
         recyclerView.setPullRefreshEnabled(true);
-        adapter = new EliminateWorkAdapter(courseData, this, this);
+        adapter = new EliminateWorkAdapter(courseData, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -244,13 +243,6 @@ public class EliminateWorkActivity extends BaseActivity implements ViewOnItemCli
                 getOrgManualList(true);
                 break;
         }
-    }
-
-    @Override
-    public void setOnItemClickListener(View view, int position) {
-        startActivity(new Intent(this, CourserActivity.class)
-                .putExtra("msgEntity", msgEntity)
-                .putExtra("courseId", courseData.get(position - 1).getCourseId()));
     }
 
     @Override

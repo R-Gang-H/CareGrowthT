@@ -5,45 +5,25 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.library.utils.U;
-import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.okhttp.callback.OkHttpUtils;
 import com.caregrowtht.app.uitil.X5WebView;
-import com.caregrowtht.app.uitil.alicloud.oss.AliYunOss;
-import com.caregrowtht.app.user.UserManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
-import com.tencent.smtt.sdk.TbsReaderView;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.utils.TbsLog;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import zlc.season.rxdownload3.core.Status;
-import zlc.season.rxdownload3.core.Succeed;
-
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 /**
  * haoruigang on 2018-8-30 17:26:22

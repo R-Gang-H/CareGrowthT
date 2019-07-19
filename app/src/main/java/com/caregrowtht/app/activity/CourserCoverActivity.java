@@ -3,7 +3,6 @@ package com.caregrowtht.app.activity;
 import android.content.Intent;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -54,6 +53,8 @@ public class CourserCoverActivity extends BaseActivity {
     TextView tvOpening;
     @BindView(R.id.tv_equi)
     TextView tvEqui;
+    @BindView(R.id.tv_handler)
+    TextView tvHandler;
     @BindView(R.id.ll_handle)
     LinearLayout llHandle;
     @BindView(R.id.btn_allot)
@@ -134,29 +135,29 @@ public class CourserCoverActivity extends BaseActivity {
         tvEqui.setText(Html.fromHtml(String.format("等位学员:\t<font color='#69ace5'>%s</font>\t个", courseData.getWait())));
         ArrayList<CourseEntity<String, String, String>.Handle> handle = courseData.getHandle();
         if (handle.size() > 0) {// 有操作记录
-            if (Integer.valueOf(courseData.getKongwei()) == 0) {// 没有空位按钮隐藏（覆盖）
-                llHandle.removeAllViews();
+            if (Integer.valueOf(courseData.getKongwei()) == 0
+                    || Integer.valueOf(courseData.getWait()) == 0) {// 没有空位 or 等位学员按钮隐藏（覆盖）
+                llHandle.setVisibility(View.GONE);
             }
             setHandle(handle);
         }
     }
 
     private void setHandle(ArrayList<CourseEntity<String, String, String>.Handle> handle) {
-        llHandle.setOrientation(LinearLayout.VERTICAL);
-        llHandle.setGravity(Gravity.CENTER_HORIZONTAL);
+        tvHandler.setVisibility(View.VISIBLE);
+        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < handle.size(); i++) {
             String handleName = handle.get(i).getHandleName();
             String handleType = handle.get(i).getHandleType();
             String handleTime = handle.get(i).getHandleTime();
-            TextView textView = new TextView(this);
-            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            textView.setTextSize(15);
-            textView.setTextColor(getResources().getColor(R.color.color_9));
-            textView.setText(String.format("%s\t\t\t%s\t\t\t%s", handleName,
+            if (i > 0) {
+                sb.append("\n");
+            }
+            sb.append(String.format("%s\t\t\t%s\t\t\t%s", handleName,
                     TimeUtils.getDateToString(Long.parseLong(handleTime), "MM-dd HH:mm")
                     , handleType));
-            llHandle.addView(textView);
         }
+        tvHandler.setText(sb.toString());
     }
 
     @OnClick({R.id.rl_back_button, R.id.btn_allot, R.id.btn_stu_take})

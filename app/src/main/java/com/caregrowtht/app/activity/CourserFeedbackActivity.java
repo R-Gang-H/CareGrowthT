@@ -123,7 +123,7 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
         }
         llBtmEntryFram.setVisibility(View.GONE);
         mAdapter.setCommentListener(this);
-        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(() -> handleWindowChange());
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(this::handleWindowChange);
     }
 
     /**
@@ -150,10 +150,17 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
 
     @Override
     public void initData() {
-        if (TextUtils.equals(imputType, "1")) {// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
-            getStuCourseFeedback(pageIndex);
+        if (msgEntity != null && msgEntity.getCircleId().equals("0")) {// 该课程反馈已删除
+            xRecyclerView.setVisibility(View.GONE);
+            loadView.setNoShown(true);
+            loadView.setNoIcon(R.mipmap.ic_no_setting_org);
+            loadView.setNoInfo("该课程反馈已删除");
         } else {
-            getDetailsByCirId();
+            if (TextUtils.equals(imputType, "1")) {// imputType：1:学员详情进入的课程反馈 2:动态进入的记录详情
+                getStuCourseFeedback(pageIndex);
+            } else {
+                getDetailsByCirId();
+            }
         }
     }
 
@@ -198,11 +205,9 @@ public class CourserFeedbackActivity extends BaseActivity implements MomentAdapt
         if (data != null && data.getData().size() > 0) {
             if (pageIndex == 1) {
                 mArrDatas.clear();
-                mAdapter.setData(data.getData(), true);
-            } else {
-                mAdapter.setData(data.getData(), false);
             }
             mArrDatas.addAll(data.getData());
+            mAdapter.setData(mArrDatas);
             loadView.delayShowContainer(true);
         } else {
             if (pageIndex == 1) {

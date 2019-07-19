@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
@@ -26,6 +29,7 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
@@ -37,8 +41,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -361,7 +363,15 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
                 UserManager.getInstance().showSuccessDialog(this
                         , getString(R.string.text_role));
             } else {
-                showUnBindDialog(mListCard.get(position));
+                String[] shareNames = mListCard.get(position).getShareName().split(",");
+                if (StrUtils.isNotEmpty(shareNames) && StrUtils.isNotEmpty(shareNames[0]) && shareNames.length > 1) {
+                    // 共用学员2个及以上
+                    showUnBindDialog(mListCard.get(position));
+                } else {// 跳转解除绑定课时卡
+                    startActivity(new Intent(this, UnBindCardActivity.class)
+                            .putExtra("CourseCardsEntity", mListCard.get(position))
+                            .putExtra("StudentEntity", stuDetails));
+                }
             }
             dialog.dismiss();
         });
@@ -512,7 +522,8 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
      */
     private void dropChildCard(CourseEntity courseCardsEntity) {
         HttpManager.getInstance().doDropChildCard("StudentDetailsActivity", courseCardsEntity.getCardId(),
-                stuDetails.getStuId(), new HttpCallBack<BaseDataModel<CourseEntity>>() {
+                stuDetails.getStuId(), "", "", "",
+                new HttpCallBack<BaseDataModel<CourseEntity>>() {
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         U.showToast("解绑成功");

@@ -107,6 +107,7 @@
         android:layout_marginStart="@dimen/margin_size_15"
         android:layout_marginEnd="@dimen/margin_size_15"
         android:layout_marginBottom="@dimen/margin_size_8"
+        android:lineSpacingExtra="@dimen/margin_size_6"
         android:text="学员 4人 | 签到 0人  | 请假 0人 | 待处理 4人"
         android:textColor="@color/color_9"
         android:textSize="@dimen/text_size_15" />
@@ -174,7 +175,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line1"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
         <View
@@ -208,7 +209,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line1"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
         <View
@@ -230,7 +231,7 @@
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_20"
             android:layout_toEndOf="@id/v_line3"
-            android:text="今日新增"
+            android:text="今日收入"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_13" />
 
@@ -243,7 +244,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line3"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
         <View
@@ -265,7 +266,7 @@
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_20"
             android:layout_toEndOf="@id/v_line4"
-            android:text="本月新增"
+            android:text="本月收入"
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_13" />
 
@@ -278,7 +279,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line4"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
         <View
@@ -313,7 +314,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line5"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
         <View
@@ -348,7 +349,7 @@
             android:layout_marginTop="@dimen/margin_size_8"
             android:layout_toEndOf="@id/v_line5"
             android:text="2400元"
-            android:textColor="@color/color_3"
+            android:textColor="@color/blueLight"
             android:textSize="@dimen/text_size_15" />
 
     </RelativeLayout>

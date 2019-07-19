@@ -399,10 +399,8 @@ public class MomentAdapter extends RecyclerView.Adapter {
         });
     }
 
-    public void setData(ArrayList<MomentMessageEntity> argList, Boolean isClear) {
-        if (isClear) {
-            listModel.clear();
-        }
+    public void setData(ArrayList<MomentMessageEntity> argList) {
+        listModel.clear();
         listModel.addAll(argList);
         // 初始化数据
         initDate();

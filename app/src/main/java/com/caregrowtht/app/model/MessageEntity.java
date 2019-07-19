@@ -1,6 +1,7 @@
 package com.caregrowtht.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by haoruigang on 2018-5-13 18:24:55.
@@ -47,7 +48,10 @@ public class MessageEntity implements Serializable {
     private String createAt;
 
     private String childNum;
+    private String childId;
     private String minCount;
+
+    private List<CourseEntity> courseList;
 
     public String getEventId() {
         return eventId;
@@ -329,11 +333,27 @@ public class MessageEntity implements Serializable {
         this.childNum = childNum;
     }
 
+    public String getChildId() {
+        return childId;
+    }
+
+    public void setChildId(String childId) {
+        this.childId = childId;
+    }
+
     public String getMinCount() {
         return minCount;
     }
 
     public void setMinCount(String minCount) {
         this.minCount = minCount;
+    }
+
+    public List<CourseEntity> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseEntity> courseList) {
+        this.courseList = courseList;
     }
 }

@@ -125,7 +125,7 @@ public class QRCodeActivity extends BaseActivity {
         } else {
             if (type.equals("1")) {
                 if (!StrUtils.isEmpty(retentStr)) {
-                    UserManager.getInstance().getOrgInfo(retentStr, this, "1");
+                    UserManager.getInstance().getOrgInfo(retentStr, this, "1", null);
                 } else {
                     U.showToast("未识别二维码!");
                 }

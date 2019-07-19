@@ -12,7 +12,7 @@ import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.caregrowtht.app.R;
-import com.caregrowtht.app.adapter.CourseAdapter;
+import com.caregrowtht.app.adapter.OrdersAdapter;
 import com.caregrowtht.app.adapter.StuOrderAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
@@ -58,17 +58,18 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
     @BindView(R.id.load_view)
     LoadingFrameView loadView;
 
-    private CourseAdapter mAdapter;
+    private OrdersAdapter mAdapter;
     private String today = DateUtil.getNetTime("yyyy-MM-dd");
     private String selectDay = DateUtil.getNetTime("yyyy-MM-dd");
 
     private ArrayList<CourseEntity> listData = new ArrayList<>();// 全部(包括可约 不可约)
     private ArrayList<CourseEntity> yesList = new ArrayList<>();// 课程可约
-    private ArrayList<CourseEntity> yesClassList = new ArrayList<>();// 课程可约(分类之后的课)
     private int cardType = 3;//1:点击课表放大 2:选择排课班级里的成员 3:预约课提醒
     private String isOrder = "1";// 1：全部(包括可约 不可约) 2:课程可约 3课程不可约
 
     private StuOrderAdapter stuAdapter;
+    private String startDate, endDate;
+    private String mondayOfWeek, sundayOfWeek;
 
     @Override
     public int getLayoutId() {
@@ -78,10 +79,7 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
     @Override
     public void initView() {
         tvTitle.setText("预约课提醒");
-        String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
-        String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
-        tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
-
+        getStartEndDate(0, 6);
         initRecyclerView(rvCourse, false);
         //禁用滑动事件
         rvCourse.setNestedScrollingEnabled(false);
@@ -93,11 +91,11 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
         for (int i = 0; i < 7; i++) {
             strings.add(i + "");
         }
-        mAdapter = new CourseAdapter(this, R.layout.item_course_list, strings, today, cardType);
+        mAdapter = new OrdersAdapter(this, R.layout.item_course_list, strings, today, cardType);
         rvCourse.setAdapter(mAdapter);
 
         initRecyclerView(recyclerView, true);
-        stuAdapter = new StuOrderAdapter(yesClassList, today, this, this);
+        stuAdapter = new StuOrderAdapter(yesList, today, this, this);
         recyclerView.setAdapter(stuAdapter);
     }
 
@@ -122,17 +120,13 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
                 selectDate();
                 break;
             case R.id.iv_last_week:
-                selectDay = TimeUtils.getDayOfWeek("yyyy-MM-dd", 0, selectDay);
-                String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
-                String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
-                tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
+                selectDay = mondayOfWeek;
+                getStartEndDate(-7, -1);
                 getCourseTimetable();
                 break;
             case R.id.iv_next_week:
-                selectDay = TimeUtils.getDayOfWeek("yyyy-MM-dd", 8, selectDay);
-                String monday = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
-                String sunday = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
-                tvTswk.setText(String.format("%s-%s", monday, sunday));
+                selectDay = sundayOfWeek;
+                getStartEndDate(1, 7);
                 getCourseTimetable();
                 break;
         }
@@ -148,10 +142,7 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
 
         new TimePickerBuilder(this, (date, v) -> {
             selectDay = DateUtil.getDate(date.getTime() / 1000, "yyyy-MM-dd");
-
-            String mondayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 1, selectDay);
-            String sundayOfWeek = TimeUtils.getDayOfWeek("MM月dd日", 7, selectDay);
-            tvTswk.setText(String.format("%s-%s", mondayOfWeek, sundayOfWeek));
+            getStartEndDate(0, 6);
             getCourseTimetable();
         })
                 .setType(new boolean[]{true, true, true, false, false, false})
@@ -162,8 +153,6 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
 
     private void getCourseTimetable() {
         loadView.setProgressShown(true);
-        String startDate = TimeUtils.getDayOfWeek("yyyy-MM-dd 00:00", 1, selectDay);
-        String endDate = TimeUtils.getDayOfWeek("yyyy-MM-dd 24:00", 7, selectDay);
         //haoruigang on 2018-4-23 17:40:26 获取首页课程表
         HttpManager.getInstance().doGetCourseTimetable("StuOrdersActivity", startDate, endDate, orgId, isOrder,
                 new HttpCallBack<BaseDataModel<CourseEntity<Object, Object, List<UserEntity>>>>() {
@@ -171,7 +160,7 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
                     public void onSuccess(BaseDataModel<CourseEntity<Object, Object, List<UserEntity>>> data) {
                         listData.clear();
                         listData.addAll(data.getData());
-                        mAdapter.update(selectDay, listData, 0);
+                        mAdapter.update(startDate, listData, 0);
 
                         // 筛选可预约的课程
                         yesList.clear();
@@ -183,18 +172,18 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
 
                         //筛选分类
                         if (yesList.size() > 0) {
-                            yesClassList.clear();
-                            for (int i = 1; i < 8; i++) {
-                                ArrayList<CourseEntity> yesClass = new ArrayList<>();
-                                for (CourseEntity course : yesList) {
-                                    int dayOfWeek = TimeUtils.getDayOfWeek(Long.valueOf(course.getStartAt()));// 某一周中的周几
-                                    if (dayOfWeek == i) {
-                                        yesClass.add(course);
+                            CourseEntity temp;
+                            for (int i = 0; i < yesList.size() - 1; i++) {
+                                for (int j = 1; j < yesList.size() - i; j++) {
+                                    if (Long.parseLong(yesList.get(j - 1).getStartAt()) > Long.parseLong(yesList.get(j).getStartAt())) {
+                                        // Switch
+                                        temp = yesList.get(j - 1);
+                                        yesList.set((j - 1), listData.get(j));
+                                        yesList.set(j, temp);
                                     }
                                 }
-                                yesClassList.addAll(yesClass);
                             }
-                            stuAdapter.setData(yesClassList);
+                            stuAdapter.setData(yesList);
                         }
 
                         if (listData.size() > 0) {
@@ -221,6 +210,18 @@ public class StuOrdersActivity extends BaseActivity implements ViewOnItemClick {
                         LogUtils.d("StuOrdersActivity onFail", throwable.getMessage());
                     }
                 });
+    }
+
+    private void getStartEndDate(int start, int end) {
+        mondayOfWeek = TimeUtils.dateTiem(selectDay, start, "yyyy-MM-dd");
+        sundayOfWeek = TimeUtils.dateTiem(selectDay, end, "yyyy-MM-dd");
+        String mondayOf = TimeUtils.getDayOfWeek("MM月dd日", TimeUtils.getDayOfWeek(mondayOfWeek), mondayOfWeek);
+        String sundayOf = TimeUtils.getDayOfWeek("MM月dd日", TimeUtils.getDayOfWeek(sundayOfWeek), sundayOfWeek);
+        tvTswk.setText(String.format("%s-%s", mondayOf, sundayOf));
+        long startTime = DateUtil.getStringToDate(mondayOfWeek, "yyyy-MM-dd");
+        long endTime = DateUtil.getStringToDate(sundayOfWeek, "yyyy-MM-dd");
+        startDate = DateUtil.getDate(startTime, "yyyy-MM-dd 00:00");
+        endDate = DateUtil.getDate(endTime, "yyyy-MM-dd 24:00");
     }
 
     @Override

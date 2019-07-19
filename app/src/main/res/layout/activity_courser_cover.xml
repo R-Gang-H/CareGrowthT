@@ -105,21 +105,35 @@
         android:layout_below="@id/tv_opening"
         android:layout_marginLeft="@dimen/margin_size_15"
         android:layout_marginTop="@dimen/margin_size_10"
+        android:layout_marginBottom="@dimen/margin_size_15"
         android:drawableLeft="@mipmap/ic_equi"
         android:drawablePadding="@dimen/margin_size_7"
         android:text="等位学员：12 个"
         android:textColor="@color/color_3"
         android:textSize="@dimen/text_size_15" />
 
+    <TextView
+        android:id="@+id/tv_handler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_equi"
+        android:background="@color/color_f6"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/margin_size_10"
+        android:paddingTop="@dimen/margin_size_20"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_15"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/ll_handle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_equi"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_size_20"
+        android:layout_below="@id/tv_handler"
         android:background="@color/color_f6"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/text_size_20">
 
         <Button
             android:id="@+id/btn_allot"

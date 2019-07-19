@@ -224,7 +224,7 @@ public class HttpManager {
         if (mReplyCommentId != null) {
             map.put("commentId", mReplyCommentId);
         }
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.COMMENT, map, httpCallBack);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.COMMENT, new HashMap<>(), map, httpCallBack);
     }
 
     /**
@@ -980,10 +980,14 @@ public class HttpManager {
      * @param stuId
      * @param httpCallBack
      */
-    public void doDropChildCard(String tag, String cardId, String stuId, HttpCallBack httpCallBack) {
+    public void doDropChildCard(String tag, String cardId, String stuId, String price,
+                                String reason, String remark, HttpCallBack httpCallBack) {
         HashMap<String, String> map = new HashMap<>();
         map.put("cardId", cardId);
         map.put("stuId", stuId);
+        map.put("price", price);
+        map.put("reason", reason);
+        map.put("remark", remark);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.DROPCHILDCARD, map, httpCallBack);
     }
 
@@ -2165,6 +2169,37 @@ public class HttpManager {
         map.put("page", pageIndex + "");
         map.put("pageSize", "10");
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETORGCIRCLE, map, httpCallBack);
+    }
+
+    /**
+     * 设置动态已读
+     * 这个接口用于查看详情时调用
+     *
+     * @param tag
+     * @param orgId
+     * @param type
+     * @param httpCallBack
+     */
+    public void doSetDynamicRead(String tag, String orgId, String type, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("type", type);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.SETDYNAMICREAD, map, httpCallBack);
+    }
+
+    /**
+     * // 查看孩子在班级里的签到状态
+     *
+     * @param tag
+     * @param childId
+     * @param courseId
+     * @param httpCallBack
+     */
+    public void doChildSignStatus(String tag, String childId, String courseId, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("childId", childId);
+        map.put("courseId", courseId);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.CHILDSIGNSTATUS, map, httpCallBack);
     }
 
 }

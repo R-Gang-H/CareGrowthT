@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
@@ -24,10 +25,14 @@ import com.caregrowtht.app.model.MomentCommentEntity;
 import com.caregrowtht.app.model.MomentMessageEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
+import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ThreadPoolManager;
+import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -87,7 +92,74 @@ public class MomentActivity extends BaseActivity implements MomentAdapter.OnComm
             }
         });
         mAdapter.setCommentListener(MomentActivity.this);
+        mAdapter.setMomentListener((pData, position) -> {
+            checkDelDialog(pData.getCircleId(), position);
+        });
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(this::handleWindowChange);
+    }
+
+    /**
+     * 确定删除
+     *
+     * @param circleId
+     * @param position
+     */
+    private void checkDelDialog(String circleId, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        final AlertDialog dialog = builder.create();
+        View view = View.inflate(this, R.layout.dialog_prompt_org, null);
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        tvTitle.setText("确定删除吗?");
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
+        tvDesc.setVisibility(View.GONE);
+        TextView tv_ok = view.findViewById(R.id.tv_ok);
+        TextView tv_cancel = view.findViewById(R.id.tv_cancel);
+        tv_ok.setOnClickListener(v -> {
+            delCircle(circleId, position);
+            dialog.dismiss();
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    /**
+     * 删除课程反馈
+     *
+     * @param circleId
+     * @param position
+     */
+    private void delCircle(String circleId, int position) {
+        HttpManager.getInstance().doDelCircle("MomentActivity", circleId,
+                new HttpCallBack<BaseDataModel>() {
+                    @Override
+                    public void onSuccess(BaseDataModel data) {
+                        //移除
+                        mArrDatas.remove(position);
+                        mAdapter.listModel.remove(position);
+                        mAdapter.notifyItemRemoved(position + 1);
+                        mAdapter.notifyItemRangeChanged(position + 1, mArrDatas.size() - position);
+
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        LogUtils.d("MomentActivity onFail", statusCode + ":" + errorMsg);
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout(MomentActivity.this);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        LogUtils.d("MomentAdapter onError", throwable.getMessage());
+                    }
+                });
     }
 
     /**
@@ -133,11 +205,9 @@ public class MomentActivity extends BaseActivity implements MomentAdapter.OnComm
                         if (data.getData().size() > 0) {
                             if (pageIndex == 1) {
                                 mArrDatas.clear();
-                                mAdapter.setData(data.getData(), true);
-                            } else {
-                                mAdapter.setData(data.getData(), false);
                             }
                             mArrDatas.addAll(data.getData());
+                            mAdapter.setData(mArrDatas);
                             loadView.delayShowContainer(true);
                         } else {
                             if (pageIndex == 1) {

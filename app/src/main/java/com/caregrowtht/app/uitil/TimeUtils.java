@@ -149,7 +149,7 @@ public class TimeUtils {
      * @param date 时间 yyyy-MM-dd
      * @return
      */
-    private int getDayOfWeek(String date) {
+    public static int getDayOfWeek(String date) {
         Calendar cal = Calendar.getInstance();
         try {
             cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));

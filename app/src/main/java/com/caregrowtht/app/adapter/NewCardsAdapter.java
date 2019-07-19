@@ -18,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
@@ -46,8 +49,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
@@ -129,7 +130,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
         final TextView tvName = holder.itemView.findViewById(R.id.tv_name);
         final LinearLayout llFamily = holder.itemView.findViewById(R.id.ll_family);
-
+        llFamily.setVisibility(View.VISIBLE);
         final CourseEntity entity = cardsList.get(position);
 
         final CheckBox tvSelectCard = (CheckBox) holder.getView(R.id.tv_select_card);
@@ -176,21 +177,11 @@ public class NewCardsAdapter extends XrecyclerAdapter {
 
             String validMonth = entity.getValidMonth();
             if (TextUtils.equals(cardType, "3") || TextUtils.equals(addType, "1")) {// 3:学员课时卡 1：充值缴费
-                if (TextUtils.equals(addType, "3") || TextUtils.equals(addType, "1")) {
-                    if (TextUtils.equals(validMonth, "0") || Integer.valueOf(validMonth) < 0) {//卡的有效月数 长期有效返回 字符串 "0"
-                        dataMonth = "长期有效";
-                    } else {
-                        if (!TextUtils.isEmpty(entity.getEndTime())) {
-                            dataMonth = String.format("有效期:\t%s", DateUtil.getDate(Long.parseLong(entity.getEndTime()), "yyyy-MM-dd"));//卡的有效期
-                        }
-                    }
+                if (TextUtils.equals(validMonth, "0")) {//卡的有效月数 长期有效返回 字符串 "0"
+                    dataMonth = "长期有效";
                 } else {
-                    if (TextUtils.equals(validMonth, "0")) {//卡的有效月数 长期有效返回 字符串 "0"
-                        dataMonth = "长期有效";
-                    } else {
-                        if (!TextUtils.isEmpty(entity.getEndTime())) {
-                            dataMonth = String.format("有效期:\t%s", DateUtil.getDate(Long.parseLong(entity.getEndTime()), "yyyy-MM-dd"));//卡的有效期
-                        }
+                    if (!TextUtils.isEmpty(entity.getEndTime())) {
+                        dataMonth = String.format("有效期:\t%s", DateUtil.getDate(Long.parseLong(entity.getEndTime()), "yyyy-MM-dd"));//卡的有效期
                     }
                 }
             } else {
@@ -246,7 +237,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         tvRealityPrice.setVisibility(View.GONE);
                         if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")
                                 && !TextUtils.equals(cardType, "5")) {//1:选择购买新卡
-                            checkCardStatus(entity);
+                            checkCardStatus(llFamily, entity);
                         } else {//状态 1正常 2解除绑定
                             if (isExeit) {
                                 bgRes = R.mipmap.ic_card_num_bg;
@@ -305,7 +296,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         tvRealityPrice.setVisibility(View.VISIBLE);
                         textColor = R.color.color_93ca;
                         if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(entity);
+                            checkCardStatus(llFamily, entity);
                         } else {//状态 1正常 2解除绑定
                             if (isExeit) {
                                 bgRes = R.mipmap.ic_card_save_bg;
@@ -384,7 +375,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         tvRealityPrice.setVisibility(View.GONE);
                         textColor = R.color.color_57a1;
                         if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(entity);
+                            checkCardStatus(llFamily, entity);
                         } else {//状态 1正常 2解除绑定
                             if (isExeit) {
                                 bgRes = R.mipmap.ic_card_year_bg;
@@ -445,7 +436,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         tvRealityPrice.setVisibility(View.VISIBLE);
                         textColor = R.color.color_e38f;
                         if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(entity);
+                            checkCardStatus(llFamily, entity);
                         } else { //状态 1正常 2解除绑定
                             if (isExeit) {
                                 bgRes = R.mipmap.ic_card_dis_bg;
@@ -519,21 +510,23 @@ public class NewCardsAdapter extends XrecyclerAdapter {
         }
     }
 
-    private void checkCardStatus(CourseEntity entity) {
-        unBindCard();
+    private void checkCardStatus(final LinearLayout llFamily, CourseEntity entity) {
+        unBindCard();// 变灰色
         tvNoActiveCard.setVisibility(View.VISIBLE);
         if (TextUtils.equals(cardType, "4")) {
             tvNoActiveCard.setText("非活跃课时卡");
-        } else if (TextUtils.equals(cardType, "3")) {
-            if (System.currentTimeMillis() / 1000 > DateUtil.getStringToDate(entity.getYxq(), "yyyy-MM-dd")) {
-                // 年卡的时候，过期了显示“过期”，变灰色
-                unBindCard();
-                tvNoActiveCard.setVisibility(View.VISIBLE);
-                tvNoActiveCard.setText("过期");
-                tvTime.setText(entity.getYxq());
-            }
+        } else if (TextUtils.equals(cardType, "3") &&
+                DateUtil.getStringToDate(entity.getYxq()
+                        , "yyyy-MM-dd") > 0
+                && System.currentTimeMillis() / 1000 >
+                DateUtil.getStringToDate(entity.getYxq()
+                        , "yyyy-MM-dd")) {
+            // 年卡的时候，过期了显示“过期”，变灰色
+            tvNoActiveCard.setText("过期");
+            tvTime.setText(entity.getYxq());
         } else {
             tvNoActiveCard.setText("已解除绑定");
+            llFamily.setVisibility(View.GONE);
         }
     }
 

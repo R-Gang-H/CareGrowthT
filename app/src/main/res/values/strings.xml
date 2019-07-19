@@ -47,4 +47,5 @@
     <string name="auth_failed">授权失败:</string>
     <string name="todo">TODO</string>
     <string name="string_title">标题</string>
+    <string name="string_have_quitted">系统刚才将您加入该机构/或者您已离职。如果是刚加入机构， 请您退出登录， 然后重新登录可修复此问题。</string>
 </resources>

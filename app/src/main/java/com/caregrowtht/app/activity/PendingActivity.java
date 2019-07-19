@@ -1,6 +1,5 @@
 package com.caregrowtht.app.activity;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -8,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
@@ -30,9 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -156,7 +155,6 @@ public class PendingActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseDataModel<StudentEntity> data) {
                         btnSubmit.setFocusable(true);
-                        U.showToast("批量签到成功!");
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.SIGN_SUCCESS));
                         finish();
                     }

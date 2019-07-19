@@ -20,25 +20,13 @@
             android:textColor="@color/color_9"
             android:textSize="@dimen/text_size_16" />
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_size_10"
-            android:layout_marginTop="@dimen/margin_size_22"
-            android:layout_toEndOf="@id/tv_day"
-            android:text="3月24日周三-3月31日周二"
-            android:textColor="@color/color_9"
-            android:textSize="@dimen/textSize_12"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/cv_radius"
             android:layout_width="@dimen/margin_size_10"
             android:layout_height="@dimen/margin_size_10"
             android:layout_marginStart="@dimen/margin_size_10"
             android:layout_marginTop="@dimen/margin_size_25"
-            android:layout_toEndOf="@id/tv_time"
+            android:layout_toEndOf="@id/tv_day"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_time_line" />
 

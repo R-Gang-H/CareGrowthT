@@ -66,7 +66,7 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
     private String showType;
     private boolean isLoading = false, isFirstIn = true;// 是否刷新了 | 请假首次进入
     private boolean roleType = false;// true 有 ,false 没有
-    private int index = -1;
+    private int index = 0;
 
 
     @Override
@@ -312,27 +312,27 @@ public class StuLevaeActivity extends BaseActivity implements ViewOnItemClick {
                 break;
             case 1:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 7);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 6);
                 } else {
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-7, 0);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-6, 0);
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();
                 break;
             case 2:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 14);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 13);
                 } else {
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-14, 0);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-13, 0);
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();
                 break;
             case 3:
                 if (showType.equals("9") && status.equals("1")) {// 9：有学员请假汇总动态
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 30);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(0, 29);
                 } else {
-                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-30, 0);
+                    getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-29, 0);
                 }
                 startTime = getStartEndTime.getWithinDay();
                 endTime = getStartEndTime.getYesTerday();

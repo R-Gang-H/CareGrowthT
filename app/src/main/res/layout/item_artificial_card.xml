@@ -115,7 +115,7 @@
             android:layout_below="@+id/tv_num"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
-            android:text="余额/实得金额"
+            android:text="余额"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:visibility="gone" />

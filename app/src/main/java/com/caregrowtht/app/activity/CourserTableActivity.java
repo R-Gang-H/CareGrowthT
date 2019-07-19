@@ -26,6 +26,7 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GradientUtils;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
@@ -89,20 +90,22 @@ public class CourserTableActivity extends BaseActivity {
     @Override
     public void initData() {
         courseModel = (CourseEntity) getIntent().getSerializableExtra("courseModel");
+        if (StrUtils.isNotEmpty(courseModel)) {
+            UserManager.getInstance().setOrgId(courseModel.getOrgId());
+            int statusBg = Color.parseColor(courseModel.getColor());
+            int opertBg = Color.parseColor(courseModel.getTintColor());
+            int cardFront = Color.parseColor(courseModel.getColor3());
 
-        int statusBg = Color.parseColor(courseModel.getColor());
-        int opertBg = Color.parseColor(courseModel.getTintColor());
-        int cardFront = Color.parseColor(courseModel.getColor3());
+            rlCardFront.setBackgroundColor(cardFront);
+            ivStatus.setBackgroundColor(statusBg);
+            tvOrgName.setTextColor(statusBg);
+            cvBg.setCardBackgroundColor(statusBg);
+            btnUpdate.setBackgroundColor(statusBg);
+            btnAddCourse.setBackgroundColor(statusBg);
+            btnDelete.setBackgroundColor(statusBg);
 
-        rlCardFront.setBackgroundColor(cardFront);
-        ivStatus.setBackgroundColor(statusBg);
-        tvOrgName.setTextColor(statusBg);
-        cvBg.setCardBackgroundColor(statusBg);
-        btnUpdate.setBackgroundColor(statusBg);
-        btnAddCourse.setBackgroundColor(statusBg);
-        btnDelete.setBackgroundColor(statusBg);
-
-        teacherLessonDetail();
+            teacherLessonDetail();
+        }
 
     }
 

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.library.utils.DateUtil;
+import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.CourseEntity;
@@ -106,9 +107,10 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                     break;
                 case "2":
                     tvCardType.setText("储值卡");
-                    cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
-                    realityPrice = String.format("¥\t%s/\t¥\t%s", Integer.parseInt(entity.getLeftPrice()) / 100
-                            , Integer.parseInt(entity.getRealityPrice()) / 100);
+                    cardPrice = String.format("%s/¥%s", String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100)
+                            , String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100));
+                    realityPrice = String.format("¥\t%s/", Integer.parseInt(entity.getLeftPrice()) / 100);
+                    tvCardPrice.setText("售卡金额/实得金额");
                     tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
                     textColor = R.color.color_93ca;
@@ -144,9 +146,9 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                     break;
                 case "4":
                     tvCardType.setText("折扣卡");
-                    realityPrice = "¥" + Integer.parseInt(entity.getRealityPrice()) / 100 + "元";
-                    tvCardPrice.setVisibility(View.VISIBLE);
                     cardPrice = (Integer.parseInt(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
+                    realityPrice = String.format("¥\t%s", Integer.parseInt(entity.getLeftPrice()) / 100);
+                    tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
                     textColor = R.color.color_e38f;
                     bgRes = R.mipmap.ic_card_dis_bg;
@@ -198,6 +200,23 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                 public void afterTextChanged(Editable s) {
                     String num = s.toString().trim();
                     if (TextUtils.isEmpty(num)) {
+                        return;
+                    }
+                    float inputNum = 0;
+                    // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
+                    switch (entity.getCardType()) {
+                        case "1":
+                            inputNum = Float.valueOf(entity.getLeftCount());
+                            break;
+                        case "2":
+                        case "4":
+                            inputNum = Float.valueOf(entity.getLeftPrice()) / 100;
+                            break;
+                    }
+                    if (Integer.valueOf(num) > inputNum) {
+                        U.showToast("课时卡消耗不能大于课时卡剩余金额或次数");
+                        getCount().put(position, "");
+                        etCancelCount.setText("");
                         return;
                     }
                     getCount().put(position, num);

@@ -13,6 +13,7 @@ import com.caregrowtht.app.adapter.ArtificialAdapter;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CardInfoEntity;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
@@ -53,6 +54,7 @@ public class ArtificialActivity extends BaseActivity implements ViewOnItemClick 
     private CourseEntity courseEntity;
     private String orgId, courseId, stuId;
     ArrayList<CardInfoEntity> cardInfoList = new ArrayList<>();
+    private MessageEntity msgEntity;
 
     @Override
     public int getLayoutId() {
@@ -73,8 +75,15 @@ public class ArtificialActivity extends BaseActivity implements ViewOnItemClick 
         if (StrUtils.isNotEmpty(courseEntity)) {
             courseId = courseEntity.getCourseId();
             stuId = courseEntity.getStudentId();
+            orgId = UserManager.getInstance().getOrgId();
         }
-        orgId = UserManager.getInstance().getOrgId();
+        msgEntity = (MessageEntity) getIntent().getSerializableExtra("msgEntity");
+        if (msgEntity != null) {
+            courseId = msgEntity.getTargetId();
+            stuId = msgEntity.getChildId();
+            orgId = msgEntity.getOrgId();
+            UserManager.getInstance().setOrgId(orgId);
+        }
         getStudentCourseCard();
     }
 
@@ -90,6 +99,9 @@ public class ArtificialActivity extends BaseActivity implements ViewOnItemClick 
                             loadView.delayShowContainer(true);
                         } else {
                             loadView.setNoShown(true);
+                            loadView.setNoInfo("无可用课时卡");
+                            btnCancel.setVisibility(View.GONE);
+                            btnSubmit.setVisibility(View.GONE);
                         }
                     }
 

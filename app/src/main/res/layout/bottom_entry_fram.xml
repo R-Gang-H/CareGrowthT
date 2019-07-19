@@ -15,19 +15,19 @@
         android:id="@+id/ll_comment_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/friends_input"
             android:layout_width="270dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:minHeight="@dimen/margin_size_45"
             android:layout_marginRight="10dp"
             android:background="@drawable/entry_fram_back"
             android:hint="请输入评论内容"
+            android:minHeight="@dimen/margin_size_45"
             android:paddingLeft="@dimen/text_size_10"
             android:textColorHint="@color/color_B"
             android:textSize="@dimen/text_size_15" />
@@ -36,7 +36,7 @@
             android:id="@+id/friends_send"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
             android:layout_marginRight="17dp"
             android:background="@drawable/entry_send_shape"
             android:gravity="center"

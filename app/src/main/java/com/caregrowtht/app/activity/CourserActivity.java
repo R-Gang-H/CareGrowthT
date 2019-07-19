@@ -24,6 +24,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.MyApplication;
 import com.android.library.utils.SystemUtils;
 import com.android.library.utils.U;
@@ -65,11 +70,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -174,6 +174,10 @@ public class CourserActivity extends BaseActivity {
         if (msgEntity != null) {
             orgId = msgEntity.getOrgId();
             UserManager.getInstance().setOrgId(orgId);
+            // 签到提醒、未发布课程反馈 弹出批量签到
+            if (!msgEntity.getType().equals("10") && !msgEntity.getType().equals("12")) {
+                isPend = false;// 动态进来的不弹出批量签到
+            }
         } else {
             orgId = UserManager.getInstance().getOrgId(); //getIntent().getStringExtra("orgId");
         }
@@ -454,8 +458,8 @@ public class CourserActivity extends BaseActivity {
                             }
                         }
 
-                        mutileAdapter.setData(mutileData, true);
-                        singleAdapter.setData(singleData, true);
+                        mutileAdapter.setData(mutileData);
+                        singleAdapter.setData(singleData);
                     }
 
                     @Override

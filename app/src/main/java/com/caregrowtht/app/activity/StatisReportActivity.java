@@ -45,7 +45,7 @@ public class StatisReportActivity extends BaseActivity {
     private MessageEntity msgEntity;
     private String orgId;
     private String beginAt = "0", endAt = "0";
-    private int index = -1;
+    private int index = 0;
 
     private String showType;
 

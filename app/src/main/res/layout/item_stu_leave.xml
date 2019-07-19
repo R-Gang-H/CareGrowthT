@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_size_5"
-                android:layout_marginBottom="@dimen/margin_size_20"
+                android:layout_marginBottom="@dimen/margin_size_15"
                 android:lineSpacingExtra="@dimen/margin_size_11"
                 android:text="3人请假"
                 android:textColor="@color/color_3"

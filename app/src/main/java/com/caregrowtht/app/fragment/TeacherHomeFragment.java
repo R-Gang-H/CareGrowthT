@@ -141,75 +141,76 @@ public class TeacherHomeFragment extends BaseFragment implements View.OnClickLis
                         orgEntity = data.getData().get(0);
                         if (orgEntity != null) {
                             // 79.获取机构权限配置
-                            UserManager.getInstance().getOrgRole(getActivity(), orgEntity);
+                            UserManager.getInstance().getOrgRole(getActivity(), orgEntity, isRole -> {
+                                if (isRole) {
+                                    UserManager.getInstance().getOrgEntityList(orgEntity);
 
-                            UserManager.getInstance().getOrgEntityList(orgEntity);
+                                    // 教务老师和管理者，进去教师端默认是机构课表，教学老师默认是我的课表
+                                    if (orgEntity.getIdentity().contains("教务") || orgEntity.getIdentity().contains("管理")) {
+                                        type = 2;
+                                    }
+                                    EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
 
-                            // 教务老师和管理者，进去教师端默认是机构课表，教学老师默认是我的课表
-                            if (orgEntity.getIdentity().contains("教务") || orgEntity.getIdentity().contains("管理")) {
-                                type = 2;
-                                radioButtons.get(0).setText("机构课表");//选择的选项内容展示
-                            }
-                            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.COURSE_TYPE, type));
+                                    setChioceItem(position);
 
-                            setChioceItem(position);
+                                    tvOrgName.setText(String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
+                                            orgEntity.getOrgName() : orgEntity.getOrgName() + orgEntity.getOrgChainName()));
 
-                            tvOrgName.setText(String.format("%s", TextUtils.isEmpty(orgEntity.getOrgChainName()) ?
-                                    orgEntity.getOrgName() : orgEntity.getOrgName() + orgEntity.getOrgChainName()));
+                                    if (!TextUtils.isEmpty(orgEntity.getOrgImage())) {
+                                        GlideUtils.setGlideImg(getActivity(), orgEntity.getOrgImage(), R.mipmap.ic_logo_default, ivAvatar);
+                                        cvNameBg.setVisibility(View.GONE);
+                                        ivAvatar.setVisibility(View.VISIBLE);
+                                    } else {
+                                        ivAvatar.setVisibility(View.GONE);
+                                        cvNameBg.setVisibility(View.VISIBLE);
+                                        String orgShortName = orgEntity.getOrgShortName();
+                                        UserManager.getInstance().getOrgShortName(tvName, orgShortName);// 设置机构简称
+                                        tvName.setTextColor(mContext.getResources().getColor(R.color.white));
+                                    }
 
-                            if (!TextUtils.isEmpty(orgEntity.getOrgImage())) {
-                                GlideUtils.setGlideImg(getActivity(), orgEntity.getOrgImage(), R.mipmap.ic_logo_default, ivAvatar);
-                                cvNameBg.setVisibility(View.GONE);
-                                ivAvatar.setVisibility(View.VISIBLE);
-                            } else {
-                                ivAvatar.setVisibility(View.GONE);
-                                cvNameBg.setVisibility(View.VISIBLE);
-                                String orgShortName = orgEntity.getOrgShortName();
-                                UserManager.getInstance().getOrgShortName(tvName, orgShortName);// 设置机构简称
-                                tvName.setTextColor(mContext.getResources().getColor(R.color.white));
-                            }
-
-                            if (TextUtils.equals(orgEntity.getStatus(), "1")) {//审核状态 1审核通过 2待审核 3审核不通过
-                                rlNoOrg.setVisibility(View.GONE);
-                                tvAuditing.setText(orgEntity.getIdentity());
-                                refreshLayout.setEnableRefresh(true);
-                                String endAt = orgEntity.getEnd_at();
-                                if (StrUtils.isEmpty(endAt) || endAt.equals("0")
-                                        || Long.parseLong(endAt) <
-                                        TimeUtils.getCurTimeLong() / 1000) {// 未购买或未续费,过期
-                                    tvOrgStatus.setVisibility(View.GONE);
-                                    llYesOrg.setVisibility(View.GONE);
-                                    ivAdd.setVisibility(View.GONE);
-                                    rlNoUnpaid.setVisibility(View.VISIBLE);
-                                } else {
-                                    Long moday = DateUtil.getStringToDate(
-                                            TimeUtils.dateTiem(
-                                                    DateUtil.getDate(Long.parseLong(endAt), "yyyy-MM-dd")
-                                                    , -20, "yyyy-MM-dd"), "yyyy-MM-dd");// 20之前的时间戳
-                                    Long day = TimeUtils.getCurTimeLong() / 1000;// 今天的时间戳
-                                    tvOrgStatus.setVisibility(moday < day ? View.VISIBLE : View.GONE);
-                                    tvOrgStatus.setText(String.format("您的爱成长使用过期时间：%s\t\t请您尽快续费"
-                                            , TimeUtils.getDateToString(Long.parseLong(endAt)
-                                                    , "yyyy/MM/dd")));
-                                    llYesOrg.setVisibility(View.VISIBLE);
-                                    ivAdd.setVisibility(View.VISIBLE);
-                                    rlNoUnpaid.setVisibility(View.GONE);
+                                    if (TextUtils.equals(orgEntity.getStatus(), "1")) {//审核状态 1审核通过 2待审核 3审核不通过
+                                        rlNoOrg.setVisibility(View.GONE);
+                                        tvAuditing.setText(orgEntity.getIdentity());
+                                        refreshLayout.setEnableRefresh(true);
+                                        String endAt = orgEntity.getEnd_at();
+                                        if (StrUtils.isEmpty(endAt) || endAt.equals("0")
+                                                || Long.parseLong(endAt) <
+                                                TimeUtils.getCurTimeLong() / 1000) {// 未购买或未续费,过期
+                                            tvOrgStatus.setVisibility(View.GONE);
+                                            llYesOrg.setVisibility(View.GONE);
+                                            ivAdd.setVisibility(View.GONE);
+                                            rlNoUnpaid.setVisibility(View.VISIBLE);
+                                        } else {
+                                            Long moday = DateUtil.getStringToDate(
+                                                    TimeUtils.dateTiem(
+                                                            DateUtil.getDate(Long.parseLong(endAt), "yyyy-MM-dd")
+                                                            , -20, "yyyy-MM-dd"), "yyyy-MM-dd");// 20之前的时间戳
+                                            Long day = TimeUtils.getCurTimeLong() / 1000;// 今天的时间戳
+                                            tvOrgStatus.setVisibility(moday < day ? View.VISIBLE : View.GONE);
+                                            tvOrgStatus.setText(String.format("您的爱成长使用过期时间：%s\t\t请您尽快续费"
+                                                    , TimeUtils.getDateToString(Long.parseLong(endAt)
+                                                            , "yyyy/MM/dd")));
+                                            llYesOrg.setVisibility(View.VISIBLE);
+                                            ivAdd.setVisibility(View.VISIBLE);
+                                            rlNoUnpaid.setVisibility(View.GONE);
+                                        }
+                                    } else if (TextUtils.equals(orgEntity.getStatus(), "2")) {
+                                        rlNoOrg.setVisibility(View.VISIBLE);
+                                        tvAuditing.setText("待审核");
+                                        tag.setText("等待机构审核通过");
+                                        llYesOrg.setVisibility(View.GONE);
+                                        ivAdd.setVisibility(View.GONE);
+                                        rlNoUnpaid.setVisibility(View.GONE);
+                                        refreshLayout.setEnableRefresh(true);
+                                    } else {
+                                        UserManager.getInstance().isNoPass(orgId);
+                                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
+                                    }
                                 }
-                            } else if (TextUtils.equals(orgEntity.getStatus(), "2")) {
-                                rlNoOrg.setVisibility(View.VISIBLE);
-                                tvAuditing.setText("待审核");
-                                tag.setText("等待机构审核通过");
-                                llYesOrg.setVisibility(View.GONE);
-                                ivAdd.setVisibility(View.GONE);
-                                rlNoUnpaid.setVisibility(View.GONE);
-                                refreshLayout.setEnableRefresh(true);
-                            } else {
-                                UserManager.getInstance().isNoPass(orgId);
-                                EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
-                            }
+                            });
+                            refreshLayout.finishLoadmore();
+                            refreshLayout.finishRefresh();
                         }
-                        refreshLayout.finishLoadmore();
-                        refreshLayout.finishRefresh();
                     }
 
                     @Override

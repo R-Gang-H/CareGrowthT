@@ -21,7 +21,6 @@ import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.UserManager;
-import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
 
@@ -40,8 +39,6 @@ public class EliminateWorkAdapter extends XrecyclerAdapter {
     RelativeLayout rlDay;
     @BindView(R.id.tv_day)
     TextView tvDay;
-    @BindView(R.id.tv_time)
-    TextView tvTime;
     @BindView(R.id.cv_radius)
     ImageView cvRadius;
     @BindView(R.id.tv_content)
@@ -59,8 +56,8 @@ public class EliminateWorkAdapter extends XrecyclerAdapter {
     private String status;// 1：待处理 2：已完成
     private String orgId;
 
-    public EliminateWorkAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
-        super(datas, context, onItemClick1);
+    public EliminateWorkAdapter(List datas, Context context) {
+        super(datas, context);
         orgId = UserManager.getInstance().getOrgId();
     }
 
@@ -105,17 +102,6 @@ public class EliminateWorkAdapter extends XrecyclerAdapter {
                 : courseEntity.getStudentName().substring(0, 1), mContext.getResources().getColor(R.color.b0b2b6));
         GlideUtils.setGlideImg(mContext, courseEntity.getStudentIcon(), 0, ivLevaeAuthorAvatar);
         tvLeaveAuthorName.setText(courseEntity.getStudentName());
-
-        // 显示7天之内的时间
-        TimeUtils.GetStartEndTime getStartEndTime = new TimeUtils.GetStartEndTime().invoke(-7, -1);
-        String beginAtMonth = TimeUtils.getDateToString(getStartEndTime.getWithinDay(), "MM月dd日");
-        String beginAtData = DateUtil.getDate(getStartEndTime.getWithinDay(), "yyyy年MM月dd日");
-        String beginAtWeek = TimeUtils.getWeekByDateStr(beginAtData);//获取周几
-        String endAtMonth = TimeUtils.getDateToString(getStartEndTime.getYesTerday(), "MM月dd日");
-        String endAtData = DateUtil.getDate(getStartEndTime.getYesTerday(), "yyyy年MM月dd日");
-        String endAtWeek = TimeUtils.getWeekByDateStr(endAtData);//获取周几
-        tvTime.setText(String.format("%s%s-%s%s", beginAtMonth, beginAtWeek, endAtMonth, endAtWeek));
-        tvTime.setVisibility(status.equals("1") && courseEntity.getType().equals("2") ? View.VISIBLE : View.GONE);
 
         final TextView tvCheckDetial = holder.itemView.findViewById(R.id.tv_check_detial);
         tvEliminate.setVisibility(status.equals("1") ? View.VISIBLE : View.GONE);

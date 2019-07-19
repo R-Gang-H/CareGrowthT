@@ -8,8 +8,8 @@ android {
         applicationId "com.wsyd.aczjsd"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 24
-        versionName "1.2.4"
+        versionCode 25
+        versionName "1.2.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -221,7 +221,7 @@ dependencies {
 
     //信鸽相关
     //信鸽普通版本jar，不包含厂商通道
-    implementation 'com.tencent.xinge:xinge:4.0.5-release'
+    implementation 'com.tencent.xinge:xinge:4.3.2-release'
     //jg包
     implementation 'com.tencent.jg:jg:1.1'
     //wup包
@@ -246,7 +246,7 @@ dependencies {
     implementation(name: 'alipaySdk-15.6.2-20190416165036', ext: 'aar')
 
     // 图表
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'org.xclcharts:lib:2.4'
 
     // 数据统计
     implementation 'com.growingio.android:vds-android-agent:autotrack-2.7.5@aar'

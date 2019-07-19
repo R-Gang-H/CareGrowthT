@@ -305,6 +305,10 @@ public class Constant {
     public static String GETSTUDENTCOURSECARD = BASE_API + "getStudentCourseCard";
     // 97.获取机构所有的课程反馈
     public static String GETORGCIRCLE = BASE_API + "getOrgCircle";
+    // 这个接口用于查看详情时调用 设置动态已读
+    public static String SETDYNAMICREAD = BASE_API + "setDynamicRead";
+    // 查看孩子在班级里的签到状态
+    public static String CHILDSIGNSTATUS = BASE_API + "childSignStatus";
 
     // 获取支付宝订单信息
     private static String BASE_THERINOF = isTest ? "https://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
@@ -320,6 +324,10 @@ public class Constant {
     public static String[] sexWeekly = {"无", "每天", "每周"};
     public static String[] sexWeekly0 = {"无", "每周"};
     public static String[] sexWeekly1 = {"于", "于日前", "永不"};
+
+    // 退费原因
+    public static String[] reasonContent = {"更换课时卡种类", "转出 - 机构原因",
+            "转出 - 个人原因", "添加时出错"};
 
     // 学员人数
     public static String[] setStuNum = {"0-50人", "50-100人", "100-150人", "150-200人", "200-250人", "250-300人", "300-400人", "400-500人", "500-1000人"};
