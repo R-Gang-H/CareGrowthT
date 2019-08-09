@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.caregrowtht.app.activity.PutOrPayActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/base_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_money_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:gravity="center"
+            android:text="金额*"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <EditText
+            android:id="@+id/et_sum_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:paddingEnd="@dimen/margin_size_30"
+            android:textColor="@color/gray2"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <View
+            android:id="@+id/v_line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_below="@id/et_sum_money"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/col_e8" />
+
+        <TextView
+            android:id="@+id/tv_deal_type"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/v_line1"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:gravity="center_vertical"
+            android:text="交易类型"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_deal_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line1"
+            android:layout_marginStart="120dp"
+            android:drawableEnd="@mipmap/ic_right_arrow"
+            android:drawablePadding="@dimen/margin_size_10"
+            android:gravity="center|right"
+            android:hint="请选择"
+            android:minHeight="48dp"
+            android:paddingEnd="@dimen/margin_size_15"
+            android:text="新购卡"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15" />
+
+        <View
+            android:id="@+id/v_line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_below="@id/tv_deal_date"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/color_f6" />
+
+        <TextView
+            android:id="@+id/tv_operator"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/v_line2"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:gravity="center_vertical"
+            android:text="经办人"
+            android:textColor="@color/col_a"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_teacher_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line2"
+            android:layout_marginStart="120dp"
+            android:drawableEnd="@mipmap/ic_right_arrow"
+            android:drawablePadding="@dimen/margin_size_10"
+            android:gravity="center|right"
+            android:hint="请选择"
+            android:minHeight="48dp"
+            android:paddingEnd="@dimen/margin_size_15"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/text_size_15" />
+
+        <View
+            android:id="@+id/v_line3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_below="@id/tv_teacher_all"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/color_f6" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/v_line3"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:gravity="center"
+            android:text="详情*"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <EditText
+            android:id="@+id/et_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line3"
+            android:layout_toEndOf="@id/tv_remark"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="请输入"
+            android:minHeight="88dp"
+            android:padding="@dimen/margin_size_14"
+            android:textColor="@color/gray2"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <View
+            android:id="@+id/v_line4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_below="@id/et_detail"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/col_e8" />
+
+        <TextView
+            android:id="@+id/tv_voucher"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/v_line4"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:gravity="center"
+            android:text="添加凭证"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_voucher"
+            android:layout_marginLeft="@dimen/margin_size_15"
+            android:layout_marginRight="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:overScrollMode="never" />
+
+        <View
+            android:id="@+id/v_line5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_0.5"
+            android:layout_below="@id/recycler"
+            android:layout_marginLeft="@dimen/margin_size_10"
+            android:layout_marginRight="@dimen/margin_size_10"
+            android:background="@color/color_f6" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/v_line5"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginEnd="@dimen/margin_size_15"
+            android:gravity="center"
+            android:text="备注"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+        <EditText
+            android:id="@+id/et_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line5"
+            android:layout_toEndOf="@id/tv_remark"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="请输入"
+            android:minHeight="88dp"
+            android:padding="@dimen/margin_size_14"
+            android:textColor="@color/gray2"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/text_size_15" />
+
+    </RelativeLayout>
+
+    <com.white.progressview.CircleProgressView
+        android:id="@+id/circle_progress_fill_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:progress="10"
+        android:visibility="gone"
+        app:innerPadding="3dp"
+        app:outerSize="3dp"
+        app:progressReachColor="@android:color/darker_gray"
+        app:progressStyle="FillInnerArc"
+        app:radius="30dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_small_btn_click"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_5"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:background="@drawable/shape_shadow_bg">
+
+        <TextView
+            android:id="@+id/tv_card_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginTop="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:text="新购卡"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_18" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_size_13"
+            android:layout_marginEnd="@dimen/margin_size_20"
+            android:gravity="center"
+            android:text="+¥2.458.00"
+            android:textColor="@color/color_ee8"
+            android:textSize="@dimen/text_size_20" />
+
+        <TextView
+            android:id="@+id/tv_card_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_card_type"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginEnd="@dimen/margin_size_18"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:background="@drawable/shape_state_edf6ff_bg"
+            android:ellipsize="end"
+            android:lineSpacingExtra="9dp"
+            android:maxLines="3"
+            android:padding="@dimen/margin_size_12"
+            android:text="正式学员张小乐  英语20次卡"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_card_content"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:lineSpacingExtra="@dimen/margin_size_6"
+            android:text="经办教师：王瑞欣"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_voucher_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_teacher"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:text="凭证附件:"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+
+        <TextView
+            android:id="@+id/tv_voucher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_teacher"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:layout_toEndOf="@id/tv_voucher_t"
+            android:drawableStart="@mipmap/ic_atter"
+            android:drawablePadding="@dimen/margin_size_3"
+            android:lines="1"
+            android:text="文件名.jpg"
+            android:textColor="@color/blueLight"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_voucher"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:lineSpacingExtra="@dimen/margin_size_6"
+            android:text="备注:无"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size_15" />
+
+        <View
+            android:id="@+id/v_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_1"
+            android:layout_below="@id/tv_remark"
+            android:layout_marginStart="@dimen/margin_size_16"
+            android:layout_marginEnd="@dimen/margin_size_16"
+            android:layout_marginBottom="@dimen/margin_size_10"
+            android:background="@color/color_e6" />
+
+        <TextView
+            android:id="@+id/tv_teacher_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line_1"
+            android:layout_marginStart="@dimen/margin_size_15"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:text="陈沫  2019/05/22  16:42"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
+            android:id="@+id/tv_sys_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line_1"
+            android:layout_marginEnd="@dimen/margin_size_90"
+            android:layout_marginBottom="@dimen/margin_size_15"
+            android:layout_toStartOf="@id/iv_edit_notify"
+            android:text="系统生成"
+            android:textColor="@color/color_9"
+            android:textSize="@dimen/text_size_11" />
+
+        <ImageView
+            android:id="@+id/iv_edit_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_line_1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/margin_size_10"
+            android:layout_marginEnd="@dimen/margin_size_20"
+            android:scaleType="center"
+            android:src="@mipmap/ic_edit_notify" />
+
+        <ImageView
+            android:id="@+id/iv_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_card_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_size_10"
+            android:src="@mipmap/ic_invalid"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_emtity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_size_60"
+        android:layout_below="@id/rl_item"
+        android:visibility="gone" />
+
+</RelativeLayout>

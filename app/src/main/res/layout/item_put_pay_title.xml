@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_put_pay"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_size_98"
+    android:layout_below="@id/line_chart"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_put_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:layout_toStartOf="@id/v_line1"
+        android:gravity="center_horizontal"
+        android:text="今日收入"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_put"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_toStartOf="@id/v_line1"
+        android:gravity="center_horizontal"
+        android:text="¥0.00"
+        android:textColor="@color/color_ee8"
+        android:textSize="@dimen/text_size_24" />
+
+    <View
+        android:id="@+id/v_line1"
+        android:layout_width="@dimen/margin_size_1"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:background="@color/color_D" />
+
+    <TextView
+        android:id="@+id/tv_pay_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:layout_toEndOf="@id/v_line1"
+        android:gravity="center_horizontal"
+        android:text="今日支出"
+        android:textColor="@color/color_9"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_toEndOf="@id/v_line1"
+        android:gravity="center_horizontal"
+        android:text="¥0.00"
+        android:textColor="@color/greenLight"
+        android:textSize="@dimen/text_size_24" />
+
+</RelativeLayout>
