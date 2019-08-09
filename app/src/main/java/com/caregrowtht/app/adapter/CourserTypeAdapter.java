@@ -11,9 +11,12 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
@@ -22,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 
 /**

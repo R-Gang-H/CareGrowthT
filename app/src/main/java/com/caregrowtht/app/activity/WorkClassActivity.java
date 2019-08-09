@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.CourserTypeAdapter;
@@ -24,6 +27,7 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
@@ -36,9 +40,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -191,16 +192,38 @@ public class WorkClassActivity extends BaseActivity implements ViewOnItemClick {
                 HashMap<Integer, CourseEntity> mCount = mAdapter.getCount();
                 for (int j = 0; j < mCourseModels.size(); j++) {
                     CourseEntity courseEntity = mCourseModels.get(j);
-                    CourseEntity count = mCount.get(j);
-                    if (courseEntity != null && count != null) {
-                        if (!TextUtils.isEmpty(courseEntity.getCourseName()) &&
-                                !TextUtils.isEmpty(count.getCourseCount())) {
-                            courseEntityList.add(courseEntity);
-                            countList.add(count);
-                            isValues = false;//有选择班级排课
-                        } else if (!TextUtils.isEmpty(courseEntity.getCourseName()) &&
-                                TextUtils.isEmpty(count.getCourseCount())) {
-                            isValues1 = true;//有消课选项未填写
+                    boolean isNo = true;// 是否已存在
+                    for (int k = 0; k < courseEntityList.size(); k++) {
+                        if (StrUtils.isNotEmpty(courseEntityList.get(k)) && StrUtils.isNotEmpty(courseEntity)
+                                && StrUtils.isNotEmpty(courseEntityList.get(k).getCourseId())
+                                && courseEntity.getCourseId().
+                                equals(courseEntityList.get(k).getCourseId())) {// 已存在
+                            isNo = false;
+                        }
+                    }
+                    if (isNo) {
+                        if (courseEntity != null) {
+                            CourseEntity count = mCount.get(j);
+                            if (!TextUtils.equals(cardType, "3") && count != null) {//不是年卡
+                                if (!TextUtils.isEmpty(courseEntity.getCourseName()) &&
+                                        !TextUtils.isEmpty(count.getCourseCount())) {
+                                    courseEntityList.add(courseEntity);
+                                    countList.add(count);
+                                    isValues = false;//有选择班级排课
+                                } else if (!TextUtils.isEmpty(courseEntity.getCourseName()) &&
+                                        TextUtils.isEmpty(count.getCourseCount())) {
+                                    isValues1 = true;//有消课选项未填写
+                                }
+                            } else {
+                                if (!TextUtils.isEmpty(courseEntity.getCourseName())) {
+                                    courseEntityList.add(courseEntity);
+                                    countList.add(count);
+                                    isValues = false;//有选择班级排课
+                                } else if (!TextUtils.isEmpty(courseEntity.getCourseName()) &&
+                                        TextUtils.isEmpty(count.getCourseCount())) {
+                                    isValues1 = true;//有消课选项未填写
+                                }
+                            }
                         }
                     }
                 }
@@ -268,6 +291,9 @@ public class WorkClassActivity extends BaseActivity implements ViewOnItemClick {
             return a.getClassifyId().compareTo(b.getClassifyId());
         });
         set.addAll(orderList);
+        for (CourseEntity e : set) {
+
+        }
         return new ArrayList<>(set);
     }
 

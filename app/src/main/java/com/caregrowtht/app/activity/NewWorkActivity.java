@@ -100,6 +100,10 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
     TextView etEnd;
     @BindView(R.id.tv_of)
     TextView tvOf;
+    @BindView(R.id.tv_mainTeacher)
+    TextView tvMainTeacher;
+    @BindView(R.id.tv_school)
+    TextView tvSchool;
     @BindView(R.id.rl_mainTeacher)
     RelativeLayout rlMainTeacher;
     @BindView(R.id.iv_avatar)
@@ -228,6 +232,11 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                     @Override
                     public void onSuccess(BaseDataModel<OrgEntity> data) {
                         planView = data.getData().get(0).getPlan_view();
+                        if (planView.equals("1")) {// 排课条件 1：教师 2：教室
+                            tvMainTeacher.setText("主讲教师*");
+                        } else {
+                            tvSchool.setText("教室*");
+                        }
                     }
 
                     @Override
@@ -1454,6 +1463,11 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                 } else {
                     courseName = String.format("%s课%s班", courseC, classB).trim();
                 }
+            }
+            if (TextUtils.isEmpty(courseName)) {
+                U.showToast("请输入排课/班级名称");
+                myResult = true;
+                return this;
             }
             courseTime = new StringBuilder();
             for (int i = 0; i < classTimeAdapter.timeList.size(); i++) {

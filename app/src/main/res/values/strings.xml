@@ -48,4 +48,5 @@
     <string name="todo">TODO</string>
     <string name="string_title">标题</string>
     <string name="string_have_quitted">系统刚才将您加入该机构/或者您已离职。如果是刚加入机构， 请您退出登录， 然后重新登录可修复此问题。</string>
+    <string name="string_have_leave">您已离职。如果您已重新加入，您需要重新登陆教师端APP。</string>
 </resources>

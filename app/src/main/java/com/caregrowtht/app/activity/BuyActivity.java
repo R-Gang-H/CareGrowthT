@@ -32,6 +32,7 @@ import com.caregrowtht.app.uitil.pay.PayUtil;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -103,33 +105,18 @@ public class BuyActivity extends BaseActivity implements ViewOnItemClick {
         initRecyclerGrid(recyclerView, 3);
         baseMsgAdapter = new BaseMsgAdapter(priceData, this, this);
         recyclerView.setAdapter(baseMsgAdapter);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(10));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(10, 10 / 2,
+                0, 10 / 2));
 
         initRecyclerGrid(recyclerViewTime, 3);
         baseMsgTimeAdapter = new BaseMsgTimeAdapter(priceTimeData, this, this);
         recyclerViewTime.setAdapter(baseMsgTimeAdapter);
-        recyclerViewTime.addItemDecoration(new ItemOffsetDecoration(10));
+        recyclerViewTime.addItemDecoration(new ItemOffsetDecoration(10, 10 / 2,
+                0, 10 / 2));
 
         isRenew = getIntent().getBooleanExtra("renew", false);// 是否续费
         tvTitle.setText(isRenew ? "我的爱成长" : "购买");
 
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing, mSpacing / 2,
-                    0, mSpacing / 2);
-        }
     }
 
     @Override

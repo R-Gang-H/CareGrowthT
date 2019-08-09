@@ -36,6 +36,7 @@ public class ToUIEvent {
     public static final int SET_SCREEN_LES = 27;            //设置课程筛选条件
     public static final int REFERSH_ELIMINATE = 28;         //刷新人工消课提醒列表
     public static final int REFERSH_ORDERS = 29;         //刷新预约课提醒列表
+    public static final int REFERSH_PUTPAY = 30;         //刷新收一笔支一笔列表
 
     private int what;
     private Object obj;

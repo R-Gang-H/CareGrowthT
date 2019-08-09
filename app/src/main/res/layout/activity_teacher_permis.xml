@@ -35,7 +35,8 @@
                 android:paddingStart="@dimen/margin_size_15"
                 android:text="基本信息"
                 android:textColor="@color/gray2"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <RelativeLayout
                 android:id="@+id/rl_tea_name"

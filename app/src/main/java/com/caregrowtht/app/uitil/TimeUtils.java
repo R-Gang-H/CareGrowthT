@@ -356,6 +356,81 @@ public class TimeUtils {
         return false;
     }
 
+    /**
+     * 获取指定月的开始日期
+     *
+     * @param currentDate
+     * @return
+     */
+    public static Date getStartDate(String currentDate, String type) {
+        SimpleDateFormat sdf = new SimpleDateFormat(type);
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(currentDate));
+            c.add(Calendar.MONTH, 0);
+            //设置为1号,当前日期既为本月第一天
+            c.set(Calendar.DAY_OF_MONTH, 1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return c.getTime();
+    }
+
+    /**
+     * 获取指定月的结束日期
+     *
+     * @param currentDate
+     * @return
+     */
+    public static Date getEndDate(String currentDate, String type) {
+        SimpleDateFormat sdf = new SimpleDateFormat(type);
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(currentDate));
+            c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+            c.set(Calendar.HOUR_OF_DAY, 23);
+            c.set(Calendar.MINUTE, 59);
+            c.set(Calendar.SECOND, 59);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return c.getTime();
+    }
+
+
+    /**
+     * 获取两个日期相差几个月
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    public static int getMonth(Date start, Date end) {
+        if (start.after(end)) {
+            Date t = start;
+            start = end;
+            end = t;
+        }
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(start);
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(end);
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(end);
+        temp.add(Calendar.DATE, 1);
+        int year = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+        int month = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+        if ((startCalendar.get(Calendar.DATE) == 1) && (temp.get(Calendar.DATE) == 1)) {
+            return year * 12 + month + 1;
+        } else if ((startCalendar.get(Calendar.DATE) != 1) && (temp.get(Calendar.DATE) == 1)) {
+            return year * 12 + month;
+        } else if ((startCalendar.get(Calendar.DATE) == 1) && (temp.get(Calendar.DATE) != 1)) {
+            return year * 12 + month;
+        } else {
+            return (year * 12 + month - 1) < 0 ? 0 : (year * 12 + month);
+        }
+    }
+
     public static SimpleDateFormat getDateFormat() {
         if (null == DateLocal.get()) {
             DateLocal.set(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA));
@@ -364,5 +439,18 @@ public class TimeUtils {
     }
 
     private static ThreadLocal<SimpleDateFormat> DateLocal = new ThreadLocal<>();
+
+    public static void main(String[] args) throws ParseException {
+        String type = "yyyy-MM-dd";//"yyyy-MM-dd HH:mm:ss"
+        SimpleDateFormat sdf = new SimpleDateFormat(type);
+        String startDate = "2018-10-15";
+        String ednDate = "2019-11-10";
+        Date sdate = getStartDate(startDate, type);
+        Date edate = getEndDate(startDate, type);
+        System.out.println("开始时间：" + sdf.format(sdate));
+        System.out.println("结束时间：" + sdf.format(edate));
+        int month = getMonth(sdf.parse(startDate), sdf.parse(ednDate));
+        System.out.println("两者之间相差：" + month);
+    }
 
 }

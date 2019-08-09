@@ -156,6 +156,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     ft.add(R.id.ll_content, homeFragment);
                 } else {
                     ft.show(homeFragment);
+                    EventBus.getDefault().post(new ToUIEvent(ToUIEvent.TEACHER_HOME_EVENT));
                 }
                 break;
         }

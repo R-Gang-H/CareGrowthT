@@ -437,6 +437,19 @@
         <activity
             android:name=".activity.AppPCActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddPutPayActivity"
+            android:theme="@style/ssionDialog" />
+        <activity
+            android:name=".activity.PutPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PutOrPayActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.SelectPutPayActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="android.max_aspect"

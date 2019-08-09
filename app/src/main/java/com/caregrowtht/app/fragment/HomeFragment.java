@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.JoinOrgActivity;
@@ -20,7 +22,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 

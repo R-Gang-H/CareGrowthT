@@ -444,7 +444,8 @@
                     android:id="@+id/rl_work_class"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginStart="@dimen/margin_size_5">
+                    android:layout_marginStart="@dimen/margin_size_5"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tv_work_class"

@@ -1,8 +1,5 @@
 package com.caregrowtht.app.activity;
 
-import android.content.Intent;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Environment;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -12,13 +9,15 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.NotifyCardAdapter;
 import com.caregrowtht.app.model.NotifyCardEntity;
-import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.RecoDialog;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -26,7 +25,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -82,23 +80,7 @@ public class AddBacthActivity extends BaseActivity implements View.OnClickListen
             shareCards.add(new NotifyCardEntity(shareImage[i], shareName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(shareCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing, 0, 0, 0);
-        }
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing, 0, 0, 0));
     }
 
     @Override

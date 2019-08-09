@@ -192,6 +192,8 @@ dependencies {
 
     //动态显示圆形图像或圆形文字的AvatarImageView
     implementation 'cn.carbs.android:AvatarImageView:1.0.4'
+    // 圆角图片
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //Progress
     implementation 'com.white:progressview:latest.release@aar'

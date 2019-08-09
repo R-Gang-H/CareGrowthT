@@ -42,7 +42,7 @@
                 android:layout_height="48dp"
                 android:layout_marginLeft="@dimen/margin_size_15"
                 android:gravity="center_vertical"
-                android:text="排课/班级名称"
+                android:text="排课/班级名称*"
                 android:textColor="@color/col_a"
                 android:textSize="@dimen/text_size_15"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -176,7 +176,7 @@
                     android:layout_marginStart="@dimen/margin_size_15"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="上课时段"
+                    android:text="上课时段*"
                     android:textColor="@color/col_a"
                     android:textSize="@dimen/text_size_15" />
 

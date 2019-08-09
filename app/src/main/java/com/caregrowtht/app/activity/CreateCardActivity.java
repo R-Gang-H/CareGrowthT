@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
@@ -41,8 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -776,7 +777,7 @@ public class CreateCardActivity extends BaseActivity {
                         }
                         //---遍历传递的参数数据--end--
                         courses = newCardList.size() > 0 ? new Gson().toJson(newCardList) : "";
-                        mAdapter.setData(mCourses, mCount, cardsEntity.getCardType(), null);
+                        mAdapter.setData(mCourses, mCount, cardsEntity.getCardType());
                         //课时卡
                     }
 
@@ -824,6 +825,8 @@ public class CreateCardActivity extends BaseActivity {
                             newCardEntity.setCount("");
                             if (!TextUtils.isEmpty(mCount.get(i).getCourseCount())) {
                                 newCardEntity.setPrice(String.valueOf((Double.valueOf(mCount.get(i).getCourseCount()) * 100)));
+                            } else {
+                                newCardEntity.setPrice("");
                             }
                         }
                         newCardList.add(newCardEntity);
@@ -832,7 +835,7 @@ public class CreateCardActivity extends BaseActivity {
                     courses = new Gson().toJson(newCardList);
                     //显示 start
                     //显示 end
-                    mAdapter.setData(mCourseModels, mCount, cardsEntity.getCardType(), null);
+                    mAdapter.setData(mCourseModels, mCount, cardsEntity.getCardType());
                     break;
             }
         }

@@ -1,21 +1,20 @@
 package com.caregrowtht.app.adapter;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.BaseActivity;
-import com.caregrowtht.app.activity.MoreActivity;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
 
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -84,7 +83,7 @@ public class FCTListAdapter extends XrecyclerAdapter {
         adapter = new FCTAdapter(Arrays.asList(appFCT), context);
         recyclerView.setAdapter(adapter);
         final int spacing = context.getResources().getDimensionPixelOffset(R.dimen.margin_size_10);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(0, 0, 0, spacing));
         tvTeacherApp.setBackgroundResource(spotBg);
         tvTeacherApp.setText(datas.get(position).toString());
         tvSpot.setTextColor(spotColor);
@@ -97,22 +96,6 @@ public class FCTListAdapter extends XrecyclerAdapter {
             drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
         }
         tvRule.setCompoundDrawables(drawable1, null, null, null);
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, 0, 0, mSpacing);
-        }
     }
 
     @Override

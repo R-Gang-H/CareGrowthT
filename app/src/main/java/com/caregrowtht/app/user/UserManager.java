@@ -34,6 +34,7 @@ import com.caregrowtht.app.activity.MainActivity;
 import com.caregrowtht.app.activity.SpaceImageDetailActivity;
 import com.caregrowtht.app.model.BaseDataModel;
 import com.caregrowtht.app.model.CourseEntity;
+import com.caregrowtht.app.model.MessageEntity;
 import com.caregrowtht.app.model.MomentMessageEntity;
 import com.caregrowtht.app.model.OrgEntity;
 import com.caregrowtht.app.model.PowersEntity;
@@ -342,6 +343,38 @@ public class UserManager {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         MyApplication.getAppContext().startActivity(intent);
         context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void teacherOrgStrand(Activity mContext, MessageEntity msgEntity, Leave leave) {
+        setOrgId(msgEntity.getOrgId());
+        HttpManager.getInstance().doTeacherOrgStrand("EliminateDetailActivity",
+                new HttpCallBack<BaseDataModel<UserEntity>>() {
+                    @Override
+                    public void onSuccess(BaseDataModel<UserEntity> data) {
+                        userData.setOrgIds(data.getData().get(0).getOrgIds());
+                        userData.setPassOrgIds(data.getData().get(0).getPassOrgIds());
+                        if (!CheckIsLeave(msgEntity.getOrgId())) {// 教师已离职
+                            leave.isLeave(true);
+                        } else {
+                            leave.isLeave(false);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int statusCode, String errorMsg) {
+                        if (statusCode == 1002 || statusCode == 1011) {//异地登录
+                            U.showToast("该账户在异地登录!");
+                            HttpManager.getInstance().dologout((Activity) mContext);
+                        } else {
+                            U.showToast(errorMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+                });
     }
 
     /**
@@ -786,6 +819,10 @@ public class UserManager {
 
     public interface Role {
         void isRole(boolean isRole);
+    }
+
+    public interface Leave {
+        void isLeave(boolean isLeave);
     }
 
 }

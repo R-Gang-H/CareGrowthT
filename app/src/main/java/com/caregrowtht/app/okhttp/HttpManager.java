@@ -2188,7 +2188,18 @@ public class HttpManager {
     }
 
     /**
-     * // 查看孩子在班级里的签到状态
+     * 获取教师离职在职的机构
+     *
+     * @param tag
+     * @param httpCallBack
+     */
+    public void doTeacherOrgStrand(String tag, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.TEACHERORGSTRAND, map, httpCallBack);
+    }
+
+    /**
+     * 查看孩子在班级里的签到状态
      *
      * @param tag
      * @param childId
@@ -2200,6 +2211,98 @@ public class HttpManager {
         map.put("childId", childId);
         map.put("courseId", courseId);
         OkHttpUtils.getOkHttpJsonRequest(tag, Constant.CHILDSIGNSTATUS, map, httpCallBack);
+    }
+
+    /**
+     * 收入支出记录
+     *
+     * @param tag
+     * @param orgId
+     * @param timeType
+     * @param showType
+     * @param pageIndex
+     * @param httpCallBack
+     */
+    public void doGetBillRecordInfo(String tag, String orgId, String timeType, String showType,
+                                    int pageIndex, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("timeType", timeType);
+        map.put("showType", showType);
+        map.put("page", pageIndex + "");
+        map.put("pageSize", "10");
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.GETBILLRECORDINFO, map, httpCallBack);
+    }
+
+    /**
+     * 收一笔支一笔
+     *
+     * @param tag
+     * @param orgId
+     * @param price
+     * @param type
+     * @param agentManId
+     * @param detail
+     * @param voucher
+     * @param remark
+     * @param httpCallBack
+     */
+    public void doSaveBillRecord(String tag, String orgId, String price, String type, String agentManId,
+                                 String detail, String voucher, String remark, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("price", price);
+        map.put("type", type);
+        map.put("agentManId", agentManId);
+        map.put("detail", detail);
+        map.put("voucher", voucher);
+        map.put("remark", remark);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.SAVEBILLRECORD, new HashMap<>(), map, httpCallBack);
+    }
+
+    /**
+     * 编辑收支
+     *
+     * @param tag
+     * @param rechargeId
+     * @param orgId
+     * @param price
+     * @param type
+     * @param agentManId
+     * @param detail
+     * @param voucher
+     * @param remark
+     * @param httpCallBack
+     */
+    public void doEditBillRecordSave(String tag, String rechargeId, String orgId, String price, String type,
+                                     String agentManId, String detail, String voucher, String remark,
+                                     HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("rechargeId", rechargeId);
+        map.put("saleManId", rechargeId);
+        map.put("orgId", orgId);
+        map.put("price", price);
+        map.put("type", type);
+        map.put("agentManId", agentManId);
+        map.put("detail", detail);
+        map.put("voucher", voucher);
+        map.put("remark", remark);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.EDITBILLRECORDSAVE, new HashMap<>(), map, httpCallBack);
+    }
+
+    /**
+     * APP收一笔支一笔折线图
+     *
+     * @param tag
+     * @param orgId
+     * @param timeType
+     * @param httpCallBack
+     */
+    public void doInOutRecords(String tag, String orgId, String timeType, HttpCallBack httpCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orgId", orgId);
+        map.put("timeType", timeType);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.INOUTRECORDS, map, httpCallBack);
     }
 
 }

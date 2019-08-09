@@ -34,7 +34,8 @@
                 android:paddingLeft="@dimen/margin_size_15"
                 android:text="学员基本信息"
                 android:textColor="@color/gray2"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <RelativeLayout
                 android:id="@+id/rl_stu_name"

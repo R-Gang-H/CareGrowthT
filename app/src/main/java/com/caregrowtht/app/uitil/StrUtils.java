@@ -483,7 +483,7 @@ public class StrUtils {
      * @return {@code true}: 为空<br>{@code false}: 不为空
      */
     public static boolean isEmpty(Object obj) {
-        if (obj == null) {
+        if (obj == null || "null".equals(obj)) {
             return true;
         }
         if (obj instanceof String && obj.toString().length() == 0) {

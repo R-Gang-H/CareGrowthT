@@ -18,8 +18,6 @@ public class WorkClassAdapter extends XrecyclerAdapter {
 
     //选中课程的信息
     private List<CourseEntity> mCourseModels = new ArrayList<>();
-    //选中课时卡的信息
-    private List<CourseEntity> mCourseCardModels = new ArrayList<>();
     //选中课程的消课次数
     private List<CourseEntity> mCount = new ArrayList<>();
     private String cardType;
@@ -36,8 +34,8 @@ public class WorkClassAdapter extends XrecyclerAdapter {
     @Override
     public void convert(XrecyclerViewHolder holder, int position, Context context) {
         StringBuilder cardName = new StringBuilder();
-        if (mCourseCardModels != null && mCourseCardModels.size() > 0) {
-            cardType = mCourseCardModels.get(position).getCardType();
+        if (mCourseModels != null && mCourseModels.size() > 0) {
+            cardType = mCourseModels.get(position).getCardType();
         }
         String unit = "次";
         if (!TextUtils.equals(cardType, "1")) {
@@ -51,27 +49,13 @@ public class WorkClassAdapter extends XrecyclerAdapter {
                         mCount.get(position).getCourseCount(), unit));
             }
         }
-        if (mCourseCardModels != null && mCourseCardModels.size() > 0) {
-            cardName.append(String.format("%s\t\t",
-                    mCourseCardModels.get(position).getCardName()));
-            if (!TextUtils.equals(cardType, "3")) {//不是年卡
-                cardName.append(String.format("-%s%s",
-                        mCount.get(position).getCourseCount(), unit));
-            }
-        }
         tvCardName.setText(cardName);
     }
 
-    public void setData(List<CourseEntity> mCourseModels, List<CourseEntity> mCount, String cardType, List<CourseEntity> mCourseCardModels) {
-        if (mCourseModels != null && mCourseModels.size() > 0) {
-            this.mCourseModels.clear();
-            this.mCourseModels.addAll(mCourseModels);
-            this.cardType = cardType;
-        }
-        if (mCourseCardModels != null && mCourseCardModels.size() > 0) {
-            this.mCourseCardModels.clear();
-            this.mCourseCardModels.addAll(mCourseCardModels);
-        }
+    public void setData(List<CourseEntity> mCourseModels, List<CourseEntity> mCount, String cardType) {
+        this.mCourseModels.clear();
+        this.mCourseModels.addAll(mCourseModels);
+        this.cardType = cardType;
         this.mCount.clear();
         this.mCount.addAll(mCount);
         notifyDataSetChanged();
@@ -81,9 +65,6 @@ public class WorkClassAdapter extends XrecyclerAdapter {
     public int getItemCount() {
         if (mCourseModels != null && mCourseModels.size() > 0) {
             return mCourseModels.size();
-        }
-        if (mCourseCardModels != null && mCourseCardModels.size() > 0) {
-            return mCourseCardModels.size();
         }
         return 0;
     }

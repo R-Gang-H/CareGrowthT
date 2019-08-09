@@ -21,6 +21,7 @@ import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -77,31 +78,13 @@ public class CourserCardMsgActivity extends BaseActivity implements ViewOnItemCl
         initRecyclerView(recyclerView, true);
         mCardsAdapter = new NewCardsAdapter(mListCard, this, this, "4", "");//展示页面 1:选择购买新卡 2:新建课时卡种类 3:学员课时卡 4:课时卡管理
         recyclerView.setAdapter(mCardsAdapter);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(20));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(0, 20, 0, 0));
         refreshLayout.setRefreshHeader(new ClassicsHeader(this));
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             pageIndex = 1;
             getOrgExistCard(status);//31.获取机构现有的课时卡
         });
         refreshLayout.setEnableLoadmoreWhenContentNotFull(false);
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            if (parent.getChildLayoutPosition(view) == 0) {//第一个的上外边距
-                outRect.set(0, mSpacing, 0, 0);
-            }
-        }
     }
 
     @Override

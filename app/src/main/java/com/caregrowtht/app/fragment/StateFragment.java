@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.utils.U;
@@ -37,6 +39,7 @@ import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.LoadingFrameView;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -100,6 +103,7 @@ public class StateFragment extends BaseFragment {
         return R.layout.fragment_state;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initView(View view, Bundle savedInstanceState) {
         tvTitle.setText("我的助理");
@@ -109,7 +113,7 @@ public class StateFragment extends BaseFragment {
         ((BaseActivity) Objects.requireNonNull(getActivity())).initRecyclerView(recyclerView, true);
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
         recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(5));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(0, 5, 0, 5));
         stateAdapter = new StateAdapter(messageAllList, getActivity());//@TODO
         recyclerView.setAdapter(stateAdapter);
 
@@ -125,22 +129,6 @@ public class StateFragment extends BaseFragment {
             MyMessageV2(false, status);
         });
         refreshLayout.setEnableLoadmoreWhenContentNotFull(false);
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, mSpacing, 0, mSpacing);
-        }
     }
 
     @Override

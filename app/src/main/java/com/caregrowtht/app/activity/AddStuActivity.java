@@ -2,7 +2,6 @@ package com.caregrowtht.app.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -13,17 +12,19 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.adapter.NotifyCardAdapter;
 import com.caregrowtht.app.model.NotifyCardEntity;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.GridRecyclerView;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -79,7 +80,8 @@ public class AddStuActivity extends BaseActivity implements ViewOnItemClick {
             addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing, spacing / 2,
+                0, spacing / 2));
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView, final int ResourceId) {
@@ -111,24 +113,6 @@ public class AddStuActivity extends BaseActivity implements ViewOnItemClick {
             }
         }
         finish();
-    }
-
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing, mSpacing / 2,
-                    0, mSpacing / 2);
-        }
     }
 
     @OnClick(R.id.ib_colse)

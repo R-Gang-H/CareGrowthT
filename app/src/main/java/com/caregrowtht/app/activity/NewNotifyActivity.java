@@ -22,12 +22,14 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.view.xrecyclerview.GridRecyclerView;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -75,7 +77,7 @@ public class NewNotifyActivity extends BaseActivity implements ViewOnItemClick {
             notifyCards.add(new NotifyCardEntity(notifyImage[i], notifyName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(notifyCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing, spacing, spacing, spacing));
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView, final int ResourceId) {
@@ -146,22 +148,6 @@ public class NewNotifyActivity extends BaseActivity implements ViewOnItemClick {
                         LogUtils.tag("CustomActivity onError " + throwable);
                     }
                 });
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing, mSpacing, mSpacing, mSpacing);
-        }
     }
 
     @Override

@@ -112,6 +112,7 @@ public class OrgNotifyActivity extends BaseActivity implements ViewOnItemClick {
                 type = "2"; //2我收到的通知
             }
         } else {
+            tvTitle.setText("通知管理");
             llTob.setVisibility(View.VISIBLE);
             type = "1"; //1 我发布的通知
             position = getIntent().getIntExtra("position", 0);

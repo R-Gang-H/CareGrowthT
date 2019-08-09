@@ -7,7 +7,6 @@ package com.caregrowtht.app.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +14,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.R;
@@ -28,13 +30,11 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.GridRecyclerView;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -83,7 +83,8 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
             addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing / 2, spacing / 2,
+                0, spacing / 2));
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView, final int ResourceId) {
@@ -152,23 +153,6 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
             overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
         }
         finish();
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent,
-                                   @NonNull RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing / 2, mSpacing / 2,
-                    0, mSpacing / 2);
-        }
     }
 
     @OnClick(R.id.ib_colse)

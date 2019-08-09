@@ -307,8 +307,18 @@ public class Constant {
     public static String GETORGCIRCLE = BASE_API + "getOrgCircle";
     // 这个接口用于查看详情时调用 设置动态已读
     public static String SETDYNAMICREAD = BASE_API + "setDynamicRead";
+    // 获取教师离职在职的机构
+    public static String TEACHERORGSTRAND = BASE_API + "teacherOrgStrand";
     // 查看孩子在班级里的签到状态
     public static String CHILDSIGNSTATUS = BASE_API + "childSignStatus";
+    // 收入支出记录
+    public static String GETBILLRECORDINFO = BASE_API + "getBillRecordInfo";
+    // 收一笔支一笔
+    public static String SAVEBILLRECORD = BASE_API + "saveBillRecord";
+    // 编辑收一笔支一笔
+    public static String EDITBILLRECORDSAVE = BASE_API + "editBillRecordSave";
+    // APP收一笔支一笔折线图
+    public static String INOUTRECORDS = BASE_API + "inOutRecords";
 
     // 获取支付宝订单信息
     private static String BASE_THERINOF = isTest ? "https://newadmin.acz.1bu2bu.com/" : "https://admin.ilovegrowth.cn/";
@@ -319,6 +329,12 @@ public class Constant {
 
     // relation array 妈妈，爸爸，爷爷，奶奶，外公，外婆，哥哥，姐姐，其他亲人，保姆阿姨，司机保镖，其他看护人
     public static String[] relationArray = {"妈妈", "爸爸", "爷爷", "奶奶", "外公", "外婆", "哥哥", "姐姐", "其他亲人", "保姆阿姨", "司机保镖", "本人", "其他看护人"};
+
+    // 1：购买收入2：充值续费收入3：退费支出 4：试听收入 5：商品销售收入6：其他收入 7.采购教学用品支出 8.杂费支出 9.其他支出
+    // 收一笔 交易类型 (1，2，4，5，6)
+    public static String[] putArr = {"试听课", "商品销售", "其他收入"};
+    // 支一笔 交易类型 (3，7，8，9)
+    public static String[] payArr = {"采购教学用品", "杂费支出", "其他支出"};
 
     //排课重复周期
     public static String[] sexWeekly = {"无", "每天", "每周"};

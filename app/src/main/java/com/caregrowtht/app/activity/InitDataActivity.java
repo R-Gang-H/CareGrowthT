@@ -1,7 +1,6 @@
 package com.caregrowtht.app.activity;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
+import com.caregrowtht.app.view.xrecyclerview.ItemOffsetDecoration;
 import com.caregrowtht.app.view.xrecyclerview.onitemclick.ViewOnItemClick;
 
 import java.util.ArrayList;
@@ -81,23 +81,7 @@ public class InitDataActivity extends BaseActivity implements ViewOnItemClick {
             moreCards.add(new NotifyCardEntity(moreImage[i], moreName[i]));
         }
         rvAddAll.setAdapter(new NotifyCardAdapter(moreCards, this, this));
-        rvAddAll.addItemDecoration(new ItemOffsetDecoration(spacing));
-    }
-
-    class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
-        private int mSpacing;
-
-        ItemOffsetDecoration(int itemOffset) {
-            mSpacing = itemOffset;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mSpacing, mSpacing, 0, 0);
-        }
+        rvAddAll.addItemDecoration(new ItemOffsetDecoration(spacing, spacing, 0, 0));
     }
 
     @Override
