@@ -95,7 +95,7 @@ public class ArtificialAdapter extends XrecyclerAdapter {
             switch (entity.getCardType()) {
                 case "1":
                     tvCardType.setText("次数卡");
-                    cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                     realityPrice = String.format("%s/%s次", entity.getLeftCount(), entity.getTotalCount());
                     textColor = R.color.color_caa0;
                     bgRes = R.mipmap.ic_card_num_bg;
@@ -107,9 +107,9 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                     break;
                 case "2":
                     tvCardType.setText("储值卡");
-                    cardPrice = String.format("%s/¥%s", String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100)
-                            , String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100));
-                    realityPrice = String.format("¥\t%s/", Integer.parseInt(entity.getLeftPrice()) / 100);
+                    cardPrice = String.format("%s/¥%s", String.valueOf(Double.valueOf(entity.getCardPrice()) / 100)
+                            , String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100));
+                    realityPrice = String.format("¥\t%s/", Double.valueOf(entity.getLeftPrice()) / 100);
                     tvCardPrice.setText("售卡金额/实得金额");
                     tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
@@ -135,7 +135,7 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                             tvCardType.setText("折扣卡");
                             break;
                     }
-                    cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                     realityPrice = String.format("%s", TextUtils.equals(validMonth, "0") ?
                             "长期有效" : entity.getValidMonth() + "个月");
                     textColor = R.color.color_57a1;
@@ -146,8 +146,8 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                     break;
                 case "4":
                     tvCardType.setText("折扣卡");
-                    cardPrice = (Integer.parseInt(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
-                    realityPrice = String.format("¥\t%s", Integer.parseInt(entity.getLeftPrice()) / 100);
+                    cardPrice = (Double.valueOf(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
+                    realityPrice = String.format("¥\t%s", Double.valueOf(entity.getLeftPrice()) / 100);
                     tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
                     textColor = R.color.color_e38f;
@@ -202,18 +202,18 @@ public class ArtificialAdapter extends XrecyclerAdapter {
                     if (TextUtils.isEmpty(num)) {
                         return;
                     }
-                    float inputNum = 0;
+                    double inputNum = 0;
                     // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
                     switch (entity.getCardType()) {
                         case "1":
-                            inputNum = Float.valueOf(entity.getLeftCount());
+                            inputNum = Double.valueOf(entity.getLeftCount());
                             break;
                         case "2":
                         case "4":
-                            inputNum = Float.valueOf(entity.getLeftPrice()) / 100;
+                            inputNum = Double.valueOf(entity.getLeftPrice()) / 100;
                             break;
                     }
-                    if (Integer.valueOf(num) > inputNum) {
+                    if (Double.valueOf(num) > inputNum) {
                         U.showToast("课时卡消耗不能大于课时卡剩余金额或次数");
                         getCount().put(position, "");
                         etCancelCount.setText("");

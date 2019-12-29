@@ -1,19 +1,29 @@
 package com.caregrowtht.app.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.android.library.utils.U;
+import com.caregrowtht.app.Constant;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.activity.AddTeacherActivity;
+import com.caregrowtht.app.activity.BaseActivity;
 import com.caregrowtht.app.activity.TeacherMsgActivity;
 import com.caregrowtht.app.activity.TeacherPermisActivity;
 import com.caregrowtht.app.model.StudentEntity;
 import com.caregrowtht.app.uitil.GlideUtils;
+import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.UserManager;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder;
@@ -30,6 +40,8 @@ import cn.carbs.android.avatarimageview.library.AvatarImageView;
  */
 public class OfficialAdapter extends XrecyclerAdapter {
 
+    BaseActivity mContext;
+
     @BindView(R.id.iv_head_icon)
     AvatarImageView ivHeadIcon;
     @BindView(R.id.tv_name)
@@ -42,11 +54,14 @@ public class OfficialAdapter extends XrecyclerAdapter {
     TextView tvPhone;
     @BindView(R.id.tv_edit_teacher)
     TextView tvEditTeacher;
+    @BindView(R.id.btn_call)
+    ImageView mCallBtn;
 
     private ArrayList<StudentEntity> auditData = new ArrayList<>();
 
-    public OfficialAdapter(List datas, Context context) {
+    public OfficialAdapter(List datas, BaseActivity context) {
         super(datas, context);
+        mContext = context;
         this.auditData.addAll(datas);
     }
 
@@ -86,8 +101,31 @@ public class OfficialAdapter extends XrecyclerAdapter {
                     mContext.startActivity(new Intent(mContext, AddTeacherActivity.class)
                             .putExtra("auditEntity", auditEntity));
                 }
-                ((TeacherMsgActivity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
+                mContext.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);//底部弹出动画
             }
+        });
+        mCallBtn.setOnClickListener(view -> {
+            //获取CALL_PHONE权限
+            mContext.requestPermission(
+                    Constant.RC_CALL_PHONE,
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    mContext.getString(R.string.rationale_call_phone),
+                    new PermissionCallBackM() {
+                        @Override
+                        public void onPermissionGrantedM(int requestCode, String... perms) {
+                            LogUtils.e(mContext, "TODO: CALL_PHONE Granted", Toast.LENGTH_SHORT);
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + auditEntity.getMobile()));
+                            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                            }
+                            mContext.startActivity(intent);
+                        }
+
+                        @Override
+                        public void onPermissionDeniedM(int requestCode, String... perms) {
+                            LogUtils.e(mContext, "TODO: CALL_PHONE Denied", Toast.LENGTH_SHORT);
+                        }
+                    });
         });
     }
 

@@ -73,6 +73,8 @@ public class SelectPutPayActivity extends BaseActivity implements View.OnClickLi
     private String timeType1 = "1";// 筛选时间 1：7天前 2：30天内 3：本月 4：自定义时间段格式：2014/04/23 - 2014/04/25
     private String timeType2 = "2";// 筛选时间 1：今日 2：7天内 3：30天内 4：本月 或 2019/07/12~2019/08/20（自定义时间段之间传）
     private String showType = "1";// 显示方式 1：全部 2：收入 3：支出;
+    private int index = 0;
+    private boolean isEdit = false;
 
     @Override
     public int getLayoutId() {
@@ -106,7 +108,7 @@ public class SelectPutPayActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void initData() {
         orgId = UserManager.getInstance().getOrgId();
-        setChioceItem(0);
+        setChioceItem(index);
     }
 
     private void inOutRecords() {
@@ -235,13 +237,18 @@ public class SelectPutPayActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setChioceItem(int index) {
+        this.index = index;
+        this.pageIndex = 1;
         if (index < 3) {
             this.timeType1 = index + 1 + "";
             this.timeType2 = index + 2 + "";
-            pageIndex = 1;
             inOutRecords();
         } else {
-            selectDate();
+            if (isEdit) {// 是编辑用已选中的日期
+                inOutRecords();
+            } else {
+                selectDate();
+            }
         }
         UserManager.apply(radioTextViews, TABSPEC, radioTextViews.get(index));
     }
@@ -273,7 +280,6 @@ public class SelectPutPayActivity extends BaseActivity implements View.OnClickLi
             String startEndTime = String.format("%s~%s", sdf.format(sdate), sdf.format(edate));
             this.timeType1 = startEndTime;
             this.timeType2 = startEndTime;
-            pageIndex = 1;
             inOutRecords();
         })
                 .setType(new boolean[]{true, true, false, false, false, false})
@@ -288,6 +294,10 @@ public class SelectPutPayActivity extends BaseActivity implements View.OnClickLi
         super.onEvent(event);
         switch (event.getWhat()) {
             case ToUIEvent.REFERSH_PUTPAY:
+                this.isEdit = false;
+                if (StrUtils.isNotEmpty(event.getObj())) {
+                    isEdit = (boolean) event.getObj();
+                }
                 initData();
                 break;
         }

@@ -259,13 +259,13 @@ public class AddFormalStuActivity extends BaseActivity {
             cardBind.setCardType(cardType);
             cardBind.setCardId(cardStu.getOrgCardId());
             cardBind.setCardName(cardStu.getCardName());
-            String cardPrice = String.valueOf(Integer.parseInt(cardStu.getCardPrice()) / 100);
+            String cardPrice = String.valueOf(Double.valueOf(cardStu.getCardPrice()) / 100);
             if (TextUtils.equals(cardType, "2")) {
                 String realPrice = TextUtils.isEmpty(cardStu.getRealityPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getRealityPrice()) / 100);
+                        String.valueOf(Double.valueOf(cardStu.getRealityPrice()) / 100);
                 if (!TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                     String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                            String.valueOf(Integer.parseInt(cardStu.getLeftPrice()) / 100);
+                            String.valueOf(Double.valueOf(cardStu.getLeftPrice()) / 100);
                     cardBind.setLeftPrice(leftPrice);
                 } else {
                     cardBind.setLeftPrice(realPrice);// 剩余金额等于实得金额
@@ -282,9 +282,9 @@ public class AddFormalStuActivity extends BaseActivity {
                     cardBind.setLeftCount(cardStu.getLeftCount());
                     // 绑定已有课时卡传
                     cardBind.setLeftPrice(String.valueOf(
-                            Integer.valueOf(cardPrice)
-                                    / Integer.valueOf(cardStu.getTotalCount())
-                                    * Integer.valueOf(cardStu.getLeftCount())));// 绑定课时卡传
+                            Double.valueOf(cardPrice)
+                                    / Double.valueOf(cardStu.getTotalCount())
+                                    * Double.valueOf(cardStu.getLeftCount())));// 绑定课时卡传
                 } else {
                     cardBind.setLeftCount(cardStu.getTotalCount());// 次数卡剩余次数和购买次数一样 ,剩余次数（用于次数卡，其他卡传0）
                 }
@@ -295,7 +295,7 @@ public class AddFormalStuActivity extends BaseActivity {
             if (TextUtils.equals(cardType, "4")) {
                 if (!TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                     String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                            String.valueOf(Integer.parseInt(cardStu.getLeftPrice()) / 100);
+                            String.valueOf(Double.valueOf(cardStu.getLeftPrice()) / 100);
                     cardBind.setLeftPrice(leftPrice);
                 }
                 cardBind.setDiscount(cardStu.getDiscount());// 折扣 （用于折扣卡，其他卡传0）
@@ -304,15 +304,15 @@ public class AddFormalStuActivity extends BaseActivity {
             }
             if (TextUtils.equals(cardType, "2") && !TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                 String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getLeftPrice()) / 100);
+                        String.valueOf(Double.valueOf(cardStu.getLeftPrice()) / 100);
                 String realPrice = TextUtils.isEmpty(cardStu.getRealityPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getRealityPrice()) / 100);
+                        String.valueOf(Double.valueOf(cardStu.getRealityPrice()) / 100);
                 float prices = Float.parseFloat(realPrice) / Float.parseFloat(cardPrice);
                 cardBind.setLeftTruePrice(String.valueOf(
-                        Integer.valueOf(leftPrice) / prices));
+                        Double.valueOf(leftPrice) / prices));
             } else if (TextUtils.equals(cardType, "4") && !TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {
                 String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getLeftPrice()) / 100);
+                        String.valueOf(Double.valueOf(cardStu.getLeftPrice()) / 100);
                 cardBind.setLeftTruePrice(leftPrice);
             } else {
                 cardBind.setLeftTruePrice(cardPrice);

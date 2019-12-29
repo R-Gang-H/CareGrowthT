@@ -87,13 +87,16 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
     RecyclerView rvCard;
     @BindView(R.id.iv_add)
     ImageView ivAdd;
+    @BindView(R.id.tv_no_card)
+    TextView tvNoCard;
 
     private String stuId;
     private String orgId;
 
     NewCardsAdapter mCardsAdapter;
     List<RelativeEntity> sumList = new ArrayList<>();
-    List<CourseEntity> mListCard = new ArrayList<>();
+    List<CourseEntity> mListCard = new ArrayList<>();// 可用课时卡
+    List<CourseEntity> mListNoCard = new ArrayList<>();// 不可用课时卡
     private StudentEntity stuDetails = new StudentEntity();
     ArrayList<StudentEntity> familData = new ArrayList<>();// 家庭共用学员
     private StudentCardAdapter couStuAdapter;
@@ -234,11 +237,44 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
         lvRelative.setAdapter(sumListAdapter);
 
         mListCard.clear();
-        mListCard.addAll(data.getCourseCards());
+        mListNoCard.clear();
+        for (int i = 0; i < data.getCourseCards().size(); i++) {
+            final CourseEntity entity = data.getCourseCards().get(i);
+            String leftCount = entity.getLeftCount();
+            String realPrice = String.valueOf(TextUtils.isEmpty(entity.getBalance()) ? 0 :
+                    Integer.parseInt(entity.getBalance()) / 100);
+            String balance = String.valueOf(Integer.parseInt(entity.getBalance()) / 100);
+            // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
+            String cardType = entity.getCardType();
+            if (cardType.equals("1") && TextUtils.equals(leftCount, "0")) {
+                // 次数卡如果剩余次数是0次，次数不足变成灰色，显示“次数不足”
+                mListNoCard.add(entity);
+            } else if (cardType.equals("2") && TextUtils.equals(realPrice, "0")) {
+                // 储值或者折扣余额是0的时候，显示“余额不足”，变灰色
+                mListNoCard.add(entity);
+            } else if (TextUtils.equals(cardType, "3") &&
+                    DateUtil.getStringToDate(entity.getYxq()
+                            , "yyyy-MM-dd") > 0
+                    && System.currentTimeMillis() / 1000 >
+                    DateUtil.getStringToDate(entity.getYxq()
+                            , "yyyy-MM-dd")) {
+                // 年卡的时候，过期了显示“过期”，变灰色
+                mListNoCard.add(entity);
+            } else if (cardType.equals("4") && TextUtils.equals(balance, "0")) {
+                // 储值或者折扣余额是0的时候，显示“余额不足”，变灰色
+                mListNoCard.add(entity);
+            } else if (TextUtils.equals(entity.getStatus(), "2")) {
+                // 已解除绑定
+                mListNoCard.add(entity);
+            } else {
+                mListCard.add(entity);
+            }
+        }
+        tvNoCard.setVisibility(mListNoCard.size() > 0 ? View.VISIBLE : View.GONE);
         mCardsAdapter.update(mListCard);
     }
 
-    @OnClick({R.id.rl_back_button, R.id.tv_title_right, R.id.rl_star, R.id.iv_add})
+    @OnClick({R.id.rl_back_button, R.id.tv_title_right, R.id.rl_star, R.id.tv_no_card, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back_button:
@@ -251,6 +287,11 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
                 break;
             case R.id.rl_star:
                 signStar(stuDetails);
+                break;
+            case R.id.tv_no_card:
+                tvNoCard.setVisibility(View.GONE);
+                mListCard.addAll(mListNoCard);
+                mCardsAdapter.update(mListCard);
                 break;
             case R.id.iv_add:
                 if (mListCard.size() > 0) {// 有课时卡

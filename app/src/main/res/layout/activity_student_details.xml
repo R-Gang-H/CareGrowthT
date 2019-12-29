@@ -62,8 +62,8 @@
                 android:id="@+id/iv_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_head_icon"
                 android:layout_alignRight="@+id/iv_head_icon"
+                android:layout_alignBottom="@+id/iv_head_icon"
                 android:src="@mipmap/ic_sex_man" />
 
 
@@ -98,10 +98,10 @@
                 android:id="@+id/tv_the_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@id/rl_star"
-                android:layout_marginRight="@dimen/margin_size_13"
+                android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/margin_size_13"
                 android:text="非活跃学员"
                 android:textColor="@color/blueLight"
                 android:textSize="15sp"
@@ -116,10 +116,10 @@
                 android:layout_marginRight="@dimen/margin_size_10"
                 android:background="#E1EEFA"
                 android:lineSpacingExtra="@dimen/margin_size_5"
-                android:paddingBottom="@dimen/margin_size_10"
                 android:paddingLeft="@dimen/margin_size_15"
-                android:paddingRight="@dimen/margin_size_15"
                 android:paddingTop="@dimen/margin_size_10"
+                android:paddingRight="@dimen/margin_size_15"
+                android:paddingBottom="@dimen/margin_size_10"
                 android:text="@string/text_prompt_conflict"
                 android:textColor="@color/color_3333"
                 android:textSize="@dimen/text_size_13"
@@ -239,6 +239,22 @@
                 android:layout_below="@+id/tv_card"
                 android:layout_marginTop="5dp"
                 tools:listitem="@layout/recycle_stu_card_item" />
+
+            <TextView
+                android:id="@+id/tv_no_card"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/rv_card"
+                android:drawableLeft="@mipmap/ic_card"
+                android:drawablePadding="5dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="查看不可用课时卡"
+                android:textColor="@color/blueHome"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
         </RelativeLayout>
     </com.caregrowtht.app.view.ReboundScrollView>
 
@@ -246,10 +262,10 @@
         android:id="@+id/iv_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/margin_size_20"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/margin_size_20"
+        android:layout_marginBottom="@dimen/margin_size_20"
         android:src="@mipmap/ic_add_more" />
 
 </RelativeLayout>

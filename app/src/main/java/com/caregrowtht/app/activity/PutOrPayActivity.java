@@ -174,7 +174,6 @@ public class PutOrPayActivity extends BaseActivity {
             etSumMoney.setFocusable(!isSys);
             tvDealDate.setClickable(!isSys);
             tvTeacherAll.setClickable(!isSys);
-            etDetail.setFocusable(!isSys);
             if (StrUtils.isNotEmpty(path)) {
                 //准备上传工作
                 adapter.pngOravis.add(path);
@@ -372,7 +371,7 @@ public class PutOrPayActivity extends BaseActivity {
                         LogUtils.d("PutOrPayActivity", "onSuccess");
                         btnSubmit.setClickable(true);
                         mCircleProgress.setVisibility(View.GONE);
-                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_PUTPAY));
+                        EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_PUTPAY, true));// obj 是编辑
                         finish();
                     }
 

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.library.utils.DateUtil;
+import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.CourseEntity;
@@ -111,7 +112,7 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
                 switch (entity.getCardType()) {
                     case "1":
                         tvCardType.setText("次数卡");
-                        cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                        cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                         realityPrice = entity.getTotalCount() + "次";
                         textColor = R.color.color_caa0;
                         bgRes = R.mipmap.ic_card_num_bg;
@@ -122,8 +123,8 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
                         break;
                     case "2":
                         tvCardType.setText("储值卡");
-                        cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                        cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
+                        realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                         tvCardPrice.setVisibility(View.VISIBLE);
                         tvRealityPrice.setVisibility(View.VISIBLE);
                         textColor = R.color.color_93ca;
@@ -148,7 +149,7 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
                                 tvCardType.setText("折扣卡");
                                 break;
                         }
-                        cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                        cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                         realityPrice = String.format("%s", TextUtils.equals(validMonth, "0") ?
                                 "长期有效" : entity.getValidMonth() + "个月");
                         textColor = R.color.color_57a1;
@@ -159,9 +160,9 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
                         break;
                     case "4":
                         tvCardType.setText("折扣卡");
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                        realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                         tvCardPrice.setVisibility(View.VISIBLE);
-                        cardPrice = (Integer.parseInt(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
+                        cardPrice = (Double.valueOf(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
                         tvRealityPrice.setVisibility(View.VISIBLE);
                         textColor = R.color.color_e38f;
                         bgRes = R.mipmap.ic_card_dis_bg;
@@ -224,7 +225,7 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
 //                            break;
 //                        case "2":
 //                        case "4":
-//                            inputNum = Integer.parseInt(entity.getRealityPrice()) / 100;
+//                            inputNum = Double.valueOf(entity.getRealityPrice()) / 100;
 //                            break;
 //                    }
 //                    if (Integer.valueOf(num) > inputNum) {
@@ -233,6 +234,12 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
 //                    etCancelCount.setText("");
 //                        return;
 //                    }
+                    if (Double.valueOf(num) < 0) {
+                        U.showToast("请输入大于0的次数或金额");
+                        getCount().put(position, "");
+                        etCancelCount.setText("");
+                        return;
+                    }
                     getCount().put(position, num);
                 }
             };

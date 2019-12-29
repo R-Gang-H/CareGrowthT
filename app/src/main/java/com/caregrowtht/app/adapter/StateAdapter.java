@@ -629,7 +629,7 @@ public class StateAdapter extends XrecyclerAdapter {
             int bannerSize = circlePicture.length;
             if (bannerSize > 0) {
                 //---
-                ivCircle.setScaleType(ImageView.ScaleType.FIT_XY);//fitXY的目标是填充整个ImageView，对图片进行一些缩放操作，在缩放的过程中，它不会按照原图的比例来缩放
+                ivCircle.setScaleType(ImageView.ScaleType.CENTER_CROP);//fitXY的目标是填充整个ImageView，对图片进行一些缩放操作，在缩放的过程中，它不会按照原图的比例来缩放
                 if (circlePicture[0].contains("mp4")) {
                     ivCircle.setCenterImgShow(true);
                 }

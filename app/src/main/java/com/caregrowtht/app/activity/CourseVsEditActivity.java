@@ -22,6 +22,7 @@ import com.caregrowtht.app.okhttp.HttpManager;
 import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 
@@ -97,7 +98,7 @@ public class CourseVsEditActivity extends BaseActivity {
 //            } else {
 //                etNumber.setText(String.format("%s",
 //                        String.valueOf(TextUtils.equals(number, "0") ?
-//                                "" : Integer.parseInt(number))));
+//                                "" : Double.valueOf(number))));
 //            }
             etNumber.setText(number);
         }
@@ -169,7 +170,7 @@ public class CourseVsEditActivity extends BaseActivity {
             count = number;
         } else {
             if (!TextUtils.isEmpty(number)) {
-                price = String.valueOf(Integer.parseInt(number) * 100);
+                price = String.valueOf(Double.valueOf(number) * 100);
             }
         }
         String finalCount = count;
@@ -184,8 +185,12 @@ public class CourseVsEditActivity extends BaseActivity {
                         courseEntity.setCourseId(courseId);
                         courseEntity.setCourseName(courseName);
                         courseEntity.setColor(color);
-                        courseEntity.setSingleTimes(finalCount);
-                        courseEntity.setSingleMoney(finalPrice);
+                        if (StrUtils.isNotEmpty(finalCount)) {
+                            courseEntity.setSingleTimes(Double.valueOf(finalCount));
+                        }
+                        if (StrUtils.isNotEmpty(finalPrice)) {
+                            courseEntity.setSingleMoney(Double.valueOf(finalPrice));
+                        }
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_COURSE_WORK, courseEntity, tvSelectCourse.isSelected()));
                     }
 

@@ -179,7 +179,7 @@
             android:gravity="center|end"
             android:hint="请输入"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="number|numberDecimal"
             android:paddingEnd="@dimen/margin_size_40"
             android:textColor="@color/gray2"
             android:textSize="@dimen/text_size_15" />

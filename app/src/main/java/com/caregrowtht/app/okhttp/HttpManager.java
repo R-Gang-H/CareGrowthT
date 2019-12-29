@@ -988,7 +988,7 @@ public class HttpManager {
         map.put("price", price);
         map.put("reason", reason);
         map.put("remark", remark);
-        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.DROPCHILDCARD, map, httpCallBack);
+        OkHttpUtils.getOkHttpJsonRequest(tag, Constant.DROPCHILDCARD, new HashMap<>(), map, httpCallBack);
     }
 
     /**

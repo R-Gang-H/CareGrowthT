@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.android.library.utils.DateUtil;
 import com.android.library.utils.U;
 import com.android.library.view.CircleImageView;
@@ -30,6 +32,7 @@ import com.caregrowtht.app.okhttp.callback.HttpCallBack;
 import com.caregrowtht.app.uitil.GlideUtils;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.ResourcesUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.TimeUtils;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
@@ -42,7 +45,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -151,6 +153,7 @@ public class TimeCardBuyActivity extends BaseActivity {
         audit = getIntent().getStringExtra("audit");// 学员审核通过为学员添加课时卡
 
         validMonth = cardsEntity.getValidMonth();
+
         if (TextUtils.equals(addType, "1") || TextUtils.equals(addType, "3")) {// 1：充值缴费 3：编辑课时卡
             String date = DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd");
             if (TextUtils.equals(validMonth, "0") || Integer.valueOf(validMonth) < 0) {
@@ -267,7 +270,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("次数卡");
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     tvReality.setVisibility(View.VISIBLE);
                     etReality.setVisibility(View.VISIBLE);
                     tvRealityUnit.setVisibility(View.VISIBLE);
@@ -286,8 +289,8 @@ public class TimeCardBuyActivity extends BaseActivity {
                     ivLine2.setVisibility(View.VISIBLE);
                     if (TextUtils.equals(addType, "1")) {// 1：充值缴费
                         tvTitle.setText("储值卡充值续费");
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100)
-                                + "/¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                        realityPrice = "¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100)
+                                + "/¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                         tvRealityPrice.setText("余额/实得金额");
                         tvPrice.setText("新购买金额");
                         tvReality.setText("新实得金额");
@@ -310,12 +313,12 @@ public class TimeCardBuyActivity extends BaseActivity {
                             ivLine.setVisibility(View.GONE);
                             reality = "剩余金额";
                         }
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                        realityPrice = "¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                         tvReality.setText(reality);
                     } else if (TextUtils.equals(addType, "3")) {// 3：编辑课时卡
                         tvTitle.setText("编辑储值卡");
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100)
-                                + "/¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                        realityPrice = "¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100)
+                                + "/¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                         tvRealityPrice.setText("余额/实得金额");
                         tvPrice.setText("修改剩余金额");
                         tvReality.setVisibility(View.GONE);
@@ -326,7 +329,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("储值卡");
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     tvRealityUnit.setText("元");
                     tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
@@ -416,7 +419,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvValidityTerm.setText("修改有效期至");
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     textColor = R.color.color_57a1;
                     bgRes = R.mipmap.ic_card_year_bg;
                     headRes = R.mipmap.ic_card_year_head;
@@ -426,7 +429,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                 case "4":
                     if (TextUtils.equals(addType, "1")) {// 1：充值缴费
                         tvTitle.setText("折扣卡充值续费");
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100) + "元";
+                        realityPrice = "¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100) + "元";
                         tvRealityPrice.setText("余额");
                         rlCardCount.setVisibility(View.VISIBLE);
                         tvSurplus.setText("原卡余额:1000元");
@@ -443,10 +446,10 @@ public class TimeCardBuyActivity extends BaseActivity {
                             tvPrice.setText("剩余金额");
                             tvRealityPrice.setText("余额");
                         }
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                        realityPrice = "¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                     } else if (TextUtils.equals(addType, "3")) {// 3：编辑课时卡
                         tvTitle.setText("编辑折扣卡");
-                        String realPrice = String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100);
+                        String realPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100);
                         realityPrice = "¥" + realPrice + "元";
                         tvRealityPrice.setText("余额");
                         tvPrice.setText("修改剩余金额");
@@ -458,7 +461,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                         tvValidityTermUnit.setVisibility(View.GONE);
                     }
                     tvCardType.setText("折扣卡");
-                    cardPrice = (Integer.parseInt(cardsEntity.getCardPrice()) / 100) + "\t\t" + cardsEntity.getDiscount() + "折";
+                    cardPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getCardPrice()) / 100) + "\t\t" + cardsEntity.getDiscount() + "折";
                     tvCardPrice.setVisibility(View.VISIBLE);
                     tvRealityPrice.setVisibility(View.VISIBLE);
                     tvReality.setVisibility(View.GONE);
@@ -515,12 +518,12 @@ public class TimeCardBuyActivity extends BaseActivity {
                 || TextUtils.equals(cardsEntity.getCardType(), "4")) { // 折扣卡
             if (TextUtils.equals(addType, "3")) {
                 String balance = cardsEntity.getBalance();
-                etPrice.setText(String.valueOf(Integer.parseInt(!TextUtils.isEmpty(balance) ? balance : "0") / 100));
+                etPrice.setText(String.valueOf(Double.valueOf(!TextUtils.isEmpty(balance) ? balance : "0") / 100));
             } else {
-                etPrice.setText(String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100));
+                etPrice.setText(String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100));
             }
         } else {
-            etPrice.setText(String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100));
+            etPrice.setText(String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100));
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "1")) { //次数卡
             if (addType.equals("3")) {// 3.编辑课时卡
@@ -529,7 +532,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                 etReality.setText(cardsEntity.getTotalCount());
             }
         } else {
-            etReality.setText(String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100));
+            etReality.setText(String.valueOf(Double.valueOf(cardsEntity.getRealityPrice()) / 100));
         }
         if (TextUtils.equals(addType, "1") || TextUtils.equals(addType, "3")) {// 1：充值缴费 3：编辑课时卡
             setValidityTerm();
@@ -549,16 +552,16 @@ public class TimeCardBuyActivity extends BaseActivity {
                 tvTotal.setText(String.format("总次数: %s次", cardsEntity.getTotalCount()));
             }
             if (TextUtils.equals(cardsEntity.getCardType(), "2")) {
-                tvSurplus.setText(String.format("原卡余额:%s元", Integer.valueOf(cardsEntity.getBalance()) / 100));
-                tvTotal.setText(String.format("总金额:%s元", Integer.valueOf(cardsEntity.getRealityPrice()) / 100));
+                tvSurplus.setText(String.format("原卡余额:%s元", Double.valueOf(cardsEntity.getBalance()) / 100));
+                tvTotal.setText(String.format("总金额:%s元", StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100)));
             }
             if (TextUtils.equals(cardsEntity.getCardType(), "3")) {
                 tvSurplus.setText(String.format("原有效期至:%s", DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd")));
                 tvTotal.setText(String.format("新有效期至:%s", DateUtil.getDate(Long.parseLong(cardsEntity.getEndTime()), "yyyy-MM-dd")));
             }
             if (TextUtils.equals(cardsEntity.getCardType(), "4")) {
-                tvSurplus.setText(String.format("原卡余额:%s元", String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100)));
-                tvTotal.setText(String.format("总金额:%s元", String.valueOf(Integer.parseInt(cardsEntity.getBalance()) / 100)));
+                tvSurplus.setText(String.format("原卡余额:%s元", String.valueOf(Double.valueOf(cardsEntity.getBalance()) / 100)));
+                tvTotal.setText(String.format("总金额:%s元", StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100)));
             }
         }
     }
@@ -600,17 +603,19 @@ public class TimeCardBuyActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(s)) {
                     String price = s.toString().trim();
                     if (TextUtils.equals(addType, "1")) {// 1：充值缴费
-                        cardPrice = (Integer.parseInt(cardsEntity.getCardPrice()) / 100 + Integer.valueOf(s.toString().trim())) +
-                                "\t\t" + cardsEntity.getDiscount() + "折";
+                        cardPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getCardPrice()) / 100 + Double.valueOf(s.toString().trim()));
+                        if (TextUtils.equals(cardsEntity.getCardType(), "4")) { //折扣卡
+                            cardPrice += "\t\t" + cardsEntity.getDiscount() + "折";
+                        }
                         tvMoney.setText(String.format("¥%s", cardPrice));
-                        Integer realityPrice = Integer.valueOf(cardsEntity.getBalance()) / 100 + Integer.valueOf(s.toString().trim());
+                        String realityPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100 + Double.valueOf(s.toString().trim()));
                         if (!TextUtils.equals(cardsEntity.getCardType(), "3")) { //不是年卡
                             tvTotal.setText(String.format("总金额:%s元", realityPrice));
                         }
                         tvNum.setText(String.format("¥%s元", realityPrice));
                     } else if (TextUtils.equals(addType, "3")) {// 3：编辑课时卡
                         if (TextUtils.equals(cardsEntity.getCardType(), "2")) { //储值卡
-                            price += "/¥" + Integer.valueOf(cardsEntity.getRealityPrice()) / 100 + "元";
+                            price += "/¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                         }
                         tvNum.setText(String.format("¥%s", price));
                     } else if (TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) {
@@ -643,7 +648,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                     String reality = "";
                     if (TextUtils.equals(cardsEntity.getCardType(), "1")) {
                         if (TextUtils.equals(addType, "1")) { //1：充值缴费
-                            Integer totalCount = Integer.valueOf(cardsEntity.getLeftCount()) + Integer.valueOf(s.toString().trim());
+                            Float totalCount = Float.valueOf(cardsEntity.getLeftCount()) + Float.valueOf(s.toString().trim());
                             tvTotal.setText(String.format("总次数: %s次", totalCount));
                             reality = String.format("%s/%s次", totalCount, totalCount);
                         }
@@ -656,19 +661,21 @@ public class TimeCardBuyActivity extends BaseActivity {
                     }
                     if (TextUtils.equals(cardsEntity.getCardType(), "2")) {
                         if (TextUtils.equals(addType, "1")) {
-                            Integer realityPrice = Integer.valueOf(cardsEntity.getBalance()) / 100 + Integer.valueOf(s.toString().trim());
+                            String realityPrice = StrUtils.getMoney(Double.valueOf(cardsEntity.getBalance()) / 100 + Double.valueOf(s.toString().trim()));
                             tvTotal.setText(String.format("总金额:%s元", realityPrice));
                             reality = "¥" + realityPrice + "/¥" + realityPrice + "元";
                         }
                         if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "4") || TextUtils.equals(addType, "5")) { //2,4,5
                             if (TextUtils.equals(addType, "5")) {
-                                reality = "¥" + s.toString().trim() + "/¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                                reality = "¥" + StrUtils.getMoney(Double.valueOf(s.toString().trim()))
+                                        + "/¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                             } else {
-                                reality = "¥" + s.toString().trim() + "元";
+                                reality = "¥" + StrUtils.getMoney(Double.valueOf(s.toString().trim())) + "元";
                             }
                         }
                         if (TextUtils.equals(addType, "3")) {
-                            reality = "¥" + s.toString().trim() + "/¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                            reality = "¥" + StrUtils.getMoney(Double.valueOf(s.toString().trim()))
+                                    + "/¥" + StrUtils.getMoney(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
                         }
                     }
                     if (TextUtils.equals(cardsEntity.getCardType(), "3")) {
@@ -688,7 +695,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                     if (TextUtils.equals(cardsEntity.getCardType(), "4")) {
                         if (TextUtils.equals(addType, "2") || TextUtils.equals(addType, "3") || TextUtils.equals(addType, "4")
                                 || TextUtils.equals(addType, "5")) {
-                            reality = "¥" + s.toString().trim() + "元";
+                            reality = "¥" + StrUtils.getMoney(Double.valueOf(s.toString().trim())) + "元";
                         }
                     }
                     tvNum.setText(reality);
@@ -786,7 +793,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                                 isAddCour = true;
                             }
                         } else {
-                            String singleMoney = String.valueOf(Integer.parseInt(etReality.getText().toString()) * 100);
+                            String singleMoney = String.valueOf(Double.valueOf(etReality.getText().toString()) * 100);
                             if (!TextUtils.isEmpty(singleMoney) && Double.valueOf(singleMoney) > 0) {
                                 courseCount = String.valueOf((Double.valueOf(singleMoney) / 100));
                                 newCardEntity.setCount("");
@@ -804,7 +811,7 @@ public class TimeCardBuyActivity extends BaseActivity {
 
                         buyNewCard();// 学员审核通过为学员添加课时卡
                     } else {// 添加学员同时为学员添加课时卡
-                        String price = String.valueOf(Integer.parseInt(etPrice.getText().toString()) * 100);
+                        String price = String.valueOf(Double.valueOf(etPrice.getText().toString()) * 100);
                         // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
                         if (TextUtils.equals(cardsEntity.getCardType(), "1")) {
                             if (TextUtils.equals(addType, "5")) {
@@ -813,7 +820,7 @@ public class TimeCardBuyActivity extends BaseActivity {
                                 cardsEntity.setTotalCount(etReality.getText().toString());
                             }
                         } else if (TextUtils.equals(cardsEntity.getCardType(), "2")) {
-                            String reality = String.valueOf(Integer.parseInt(etReality.getText().toString()) * 100);
+                            String reality = String.valueOf(Double.valueOf(etReality.getText().toString()) * 100);
                             if (TextUtils.equals(addType, "5")) {
                                 cardsEntity.setLeftPrice(reality);
                             } else {
@@ -869,7 +876,7 @@ public class TimeCardBuyActivity extends BaseActivity {
      * 34.编辑学员已有的课时卡
      */
     private void editChildCard() {
-        String price = String.valueOf((Integer.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
+        String price = String.valueOf((Double.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
         String cardId = cardsEntity.getCardId();
         String validDate = DateUtil.getStringToDate(etValidityTerm.getText().toString().trim(), "yyyy-MM-dd") + "";//传时间戳
         String realityCount = etReality.getText().toString().trim();
@@ -922,7 +929,7 @@ public class TimeCardBuyActivity extends BaseActivity {
      * 33.为学员已有的课时卡充值续费
      */
     private void rechargeCard() {
-        String price = String.valueOf((Integer.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
+        String price = String.valueOf((Double.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
         String etValidity = etValidityTerm.getText().toString().trim();
         String validDate = etValidity.equals("长期有效") ? "0" : DateUtil.getStringToDate(etValidity, "yyyy-MM-dd") + "";//传时间戳
         String realityCount = etReality.getText().toString().trim();
@@ -936,7 +943,7 @@ public class TimeCardBuyActivity extends BaseActivity {
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "2")
                 || TextUtils.equals(cardsEntity.getCardType(), "4")) {
-            realityCount = String.valueOf((Integer.valueOf(realityCount) * 100));
+            realityCount = String.valueOf((Double.valueOf(realityCount) * 100));
             map.put("realityPrice", realityCount);
         }
         HttpManager.getInstance().doRechargeCard("TimeCardBuyActivity", map,
@@ -973,7 +980,7 @@ public class TimeCardBuyActivity extends BaseActivity {
      * 32.购买新的课时卡
      */
     private void buyNewCard() {
-        String price = String.valueOf((Integer.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
+        String price = String.valueOf((Double.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
         String validMonth = etValidityTerm.getText().toString().trim();//单位月 有效期1年传12 长期有效传0
         if (validMonth.equals("0")) {// 新卡有效期必须大于0
             U.showToast("有效期不可以为0");
@@ -994,7 +1001,7 @@ public class TimeCardBuyActivity extends BaseActivity {
             map.put("count", realityCount);
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "2")) {
-            realityCount = String.valueOf((Integer.valueOf(realityCount) * 100));
+            realityCount = String.valueOf((Double.valueOf(realityCount) * 100));
             map.put("realityPrice", realityCount);
         }
         if (addType != null && addType.equals("4") &&
@@ -1049,13 +1056,13 @@ public class TimeCardBuyActivity extends BaseActivity {
             cardBind.setCardType(cardType);
             cardBind.setCardId(cardStu.getOrgCardId());
             cardBind.setCardName(cardStu.getCardName());
-            String cardPrice = String.valueOf(Integer.parseInt(cardStu.getCardPrice()));
+            String cardPrice = String.valueOf(Double.valueOf(cardStu.getCardPrice()));
             if (TextUtils.equals(cardType, "2")) {
                 String realPrice = TextUtils.isEmpty(cardStu.getRealityPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getRealityPrice()));
+                        String.valueOf(Double.valueOf(cardStu.getRealityPrice()));
                 if (!TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                     String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                            String.valueOf(Integer.parseInt(cardStu.getLeftPrice()));
+                            String.valueOf(Double.valueOf(cardStu.getLeftPrice()));
                     cardBind.setLeftPrice(leftPrice);
                 } else {
                     cardBind.setLeftPrice(realPrice);// 剩余金额等于实得金额
@@ -1072,9 +1079,9 @@ public class TimeCardBuyActivity extends BaseActivity {
                     cardBind.setLeftCount(cardStu.getLeftCount());
                     // 绑定已有课时卡传
                     cardBind.setLeftPrice(String.valueOf(
-                            Integer.valueOf(cardPrice)
-                                    / Integer.valueOf(cardStu.getTotalCount())
-                                    * Integer.valueOf(cardStu.getLeftCount())));// 绑定课时卡传
+                            Double.valueOf(cardPrice)
+                                    / Double.valueOf(cardStu.getTotalCount())
+                                    * Double.valueOf(cardStu.getLeftCount())));// 绑定课时卡传
                 } else {
                     cardBind.setLeftCount(cardStu.getTotalCount());// 次数卡剩余次数和购买次数一样 ,剩余次数（用于次数卡，其他卡传0）
                 }
@@ -1085,7 +1092,7 @@ public class TimeCardBuyActivity extends BaseActivity {
             if (TextUtils.equals(cardType, "4")) {
                 if (!TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                     String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                            String.valueOf(Integer.parseInt(cardStu.getLeftPrice()));
+                            String.valueOf(Double.valueOf(cardStu.getLeftPrice()));
                     cardBind.setLeftPrice(leftPrice);
                 }
                 cardBind.setDiscount(cardStu.getDiscount());// 折扣 （用于折扣卡，其他卡传0）
@@ -1094,15 +1101,15 @@ public class TimeCardBuyActivity extends BaseActivity {
             }
             if (TextUtils.equals(cardType, "2") && !TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {// 4、选择 添加新课时卡 5、选择 绑定已有课时卡
                 String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getLeftPrice()));
+                        String.valueOf(Double.valueOf(cardStu.getLeftPrice()));
                 String realPrice = TextUtils.isEmpty(cardStu.getRealityPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getRealityPrice()));
+                        String.valueOf(Double.valueOf(cardStu.getRealityPrice()));
                 float prices = Float.parseFloat(realPrice) / Float.parseFloat(cardPrice);
                 cardBind.setLeftTruePrice(String.valueOf(
-                        Integer.valueOf(leftPrice) / prices));
+                        Double.valueOf(leftPrice) / prices));
             } else if (TextUtils.equals(cardType, "4") && !TextUtils.isEmpty(cardStu.getAddType()) && cardStu.getAddType().equals("5")) {
                 String leftPrice = TextUtils.isEmpty(cardStu.getLeftPrice()) ? "" :
-                        String.valueOf(Integer.parseInt(cardStu.getLeftPrice()));
+                        String.valueOf(Double.valueOf(cardStu.getLeftPrice()));
                 cardBind.setLeftTruePrice(leftPrice);
             } else {
                 cardBind.setLeftTruePrice(cardPrice);

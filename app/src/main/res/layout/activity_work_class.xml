@@ -75,7 +75,7 @@
             android:layout_toStartOf="@id/tv_couont"
             android:gravity="center"
             android:hint="请输入"
-            android:inputType="number"
+            android:inputType="number|numberDecimal"
             android:textColor="@color/col_a"
             android:textSize="@dimen/text_size_15" />
 

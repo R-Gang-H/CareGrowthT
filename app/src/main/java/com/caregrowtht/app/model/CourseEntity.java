@@ -81,8 +81,8 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String conflict;
     private String confirmed;
 
-    private String singleTimes;
-    private String singleMoney;
+    private Double singleTimes;
+    private Double singleMoney;
 
     private String isOrder;
     private String repeat;
@@ -161,9 +161,9 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String operateType;
     private String operateName;
     private String create_at;
-    private String useNum;
+    private Double useNum;
     private String usePrice;
-    private String userBackPrice;
+    private Double userBackPrice;
     private String name;
     private String content;
 
@@ -780,19 +780,19 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.confirmed = confirmed;
     }
 
-    public String getSingleTimes() {
+    public Double getSingleTimes() {
         return singleTimes;
     }
 
-    public void setSingleTimes(String singleTimes) {
+    public void setSingleTimes(Double singleTimes) {
         this.singleTimes = singleTimes;
     }
 
-    public String getSingleMoney() {
+    public Double getSingleMoney() {
         return singleMoney;
     }
 
-    public void setSingleMoney(String singleMoney) {
+    public void setSingleMoney(Double singleMoney) {
         this.singleMoney = singleMoney;
     }
 
@@ -1239,11 +1239,11 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.create_at = create_at;
     }
 
-    public String getUseNum() {
+    public Double getUseNum() {
         return useNum;
     }
 
-    public void setUseNum(String useNum) {
+    public void setUseNum(Double useNum) {
         this.useNum = useNum;
     }
 
@@ -1255,11 +1255,11 @@ public class CourseEntity<M, A, S> implements Serializable {
         this.usePrice = usePrice;
     }
 
-    public String getUserBackPrice() {
+    public Double getUserBackPrice() {
         return userBackPrice;
     }
 
-    public void setUserBackPrice(String userBackPrice) {
+    public void setUserBackPrice(Double userBackPrice) {
         this.userBackPrice = userBackPrice;
     }
 

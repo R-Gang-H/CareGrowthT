@@ -204,7 +204,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                     case "1":
                         tvCardType.setText("次数卡");
                         tvCardTypeName.setText("次数卡");
-                        cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                        cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                         if (TextUtils.equals(cardType, "3") || TextUtils.equals(addType, "1")
                                 || TextUtils.equals(cardType, "5")) {// 3:学员课时卡 1：充值缴费 5:为学员添加课时卡
                             String leftCount = entity.getLeftCount();
@@ -252,28 +252,28 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         tvCardType.setText("储值卡");
                         tvCardTypeName.setText("储值卡");
                         if (TextUtils.equals(addType, "1") || TextUtils.equals(cardType, "5")) {// 1：充值缴费 5:为学员添加课时卡
-                            cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                            cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                             if (TextUtils.equals(addType, "1")) {// 1：充值缴费
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getBalance()) / 100)
-                                        + "/¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getBalance()) / 100)
+                                        + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                             } else if (TextUtils.equals(cardType, "5")) {// 5:为学员添加课时卡
                                 if (TextUtils.equals(entity.getAddType(), "4")) {
-                                    realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100)
-                                            + "/¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                                    realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100)
+                                            + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                                 } else if (TextUtils.equals(entity.getAddType(), "5")) {
                                     if (!TextUtils.isEmpty(entity.getLeftPrice()) && !TextUtils.isEmpty(entity.getRealityPrice())) {
-                                        realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getLeftPrice()) / 100)
-                                                + "/¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                                        realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100)
+                                                + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                                     }
                                 }
                             }
                             tvRealityPrice.setText("余额/实得金额");
                         } else if (TextUtils.equals(cardType, "3")) {// 3:学员课时卡
-                            cardPrice = String.format("%s/¥%s", String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100)
-                                    , String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100));
+                            cardPrice = String.format("%s/¥%s", String.valueOf(Double.valueOf(entity.getCardPrice()) / 100)
+                                    , String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100));
                             tvCardPrice.setText("售卡金额/实得金额");
                             String realPrice = String.valueOf(TextUtils.isEmpty(entity.getBalance()) ? 0 :
-                                    Integer.parseInt(entity.getBalance()) / 100);
+                                    Double.valueOf(entity.getBalance()) / 100);
                             realityPrice = "¥" + realPrice;
                             if (TextUtils.equals(realPrice, "0")) {
                                 isExeit = false;
@@ -284,12 +284,12 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                             }
                             tvRealityPrice.setText("余额");
                         } else {
-                            cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                            cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                             // 绑定已有课时判断
                             if (TextUtils.equals(entity.getAddType(), "5")) {
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getLeftPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100) + "元";
                             } else {
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                             }
                         }
                         tvCardPrice.setVisibility(View.VISIBLE);
@@ -334,7 +334,7 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         }
                         tvCardType.setText(TextUtils.equals(validMonth, "0") ? "年卡" : tvCardType.getText());
                         tvCardTypeName.setText("月/学期/年卡");
-                        cardPrice = String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100);
+                        cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                         if (TextUtils.equals(cardType, "3") || TextUtils.equals(addType, "1")) {// 3:学员课时卡 1：充值缴费
                             if (TextUtils.equals(addType, "1")) {
                                 if (TextUtils.equals(cardType, "1")) {
@@ -392,9 +392,9 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         if (TextUtils.equals(addType, "1")) {// 1：充值缴费
                             String realPrice;
                             if (addType.equals("1")) {
-                                realPrice = String.valueOf(Integer.parseInt(entity.getBalance()) / 100);
+                                realPrice = String.valueOf(Double.valueOf(entity.getBalance()) / 100);
                             } else {
-                                realPrice = String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100);
+                                realPrice = String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100);
                             }
                             realityPrice = "¥" + realPrice + "元";
                             tvRealityPrice.setText("余额");
@@ -402,9 +402,9 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         } else if (TextUtils.equals(cardType, "3")) {// 3:学员课时卡
                             String realPrice;
                             if (addType.equals("3")) {
-                                realPrice = String.valueOf(Integer.parseInt(entity.getBalance()) / 100);
+                                realPrice = String.valueOf(Double.valueOf(entity.getBalance()) / 100);
                             } else {
-                                realPrice = String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100);
+                                realPrice = String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100);
                             }
                             realityPrice = "¥" + realPrice + "元";
                             if (TextUtils.equals(realPrice, "0")) {
@@ -418,21 +418,21 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                             tvCardPrice.setVisibility(View.GONE);
                         } else if (TextUtils.equals(cardType, "5")) {
                             if (TextUtils.equals(entity.getAddType(), "4")) {
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getCardPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getCardPrice()) / 100) + "元";
                             } else if (TextUtils.equals(entity.getAddType(), "5")) {
                                 tvRealityPrice.setText("余额");
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getLeftPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100) + "元";
                             }
                         } else {
                             // 绑定已有课时判断
                             if (TextUtils.equals(entity.getAddType(), "5")) {
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getLeftPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100) + "元";
                             } else {
-                                realityPrice = "¥" + String.valueOf(Integer.parseInt(entity.getRealityPrice()) / 100) + "元";
+                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
                             }
                             tvCardPrice.setVisibility(View.VISIBLE);
                         }
-                        cardPrice = (Integer.parseInt(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
+                        cardPrice = (Double.valueOf(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
                         tvRealityPrice.setVisibility(View.VISIBLE);
                         textColor = R.color.color_e38f;
                         if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡

@@ -390,13 +390,13 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                     workEntity.setOrgCardId(cards.getOrgCardId());
 
                     if (TextUtils.equals(cards.getCardType(), "1")) {
-                        courseCount = ((CourseEntity) courseData.getCards().get(i)).getSingleTimes();
+                        courseCount = String.valueOf(((CourseEntity) courseData.getCards().get(i)).getSingleTimes());
                         workEntity.setCount(courseCount);
                         workEntity.setPrice("");
                     } else {
                         unit = "元";
-                        String relatilPrice = ((CourseEntity) courseData.getCards().get(i)).getSingleMoney();
-                        courseCount = String.valueOf((Integer.valueOf(relatilPrice) / 100));
+                        String relatilPrice = String.valueOf(((CourseEntity) courseData.getCards().get(i)).getSingleMoney());
+                        courseCount = String.valueOf(Double.valueOf(relatilPrice) / 100);
                         workEntity.setCount("");
                         workEntity.setPrice(relatilPrice);
                     }
@@ -953,7 +953,7 @@ public class NewWorkActivity extends BaseActivity implements ViewOnItemClick {
                                 mCount.get(i).setCourseCount("0");
                             }
                             workEntity.setCount("");
-                            workEntity.setPrice(String.valueOf((Integer.valueOf(mCount.get(i).getCourseCount()) * 100)));
+                            workEntity.setPrice(String.valueOf((Double.valueOf(mCount.get(i).getCourseCount()) * 100)));
                         }
                         workEntity.setCardType(mCourseModels.get(i).getCardType());
                         workclassList.add(workEntity);

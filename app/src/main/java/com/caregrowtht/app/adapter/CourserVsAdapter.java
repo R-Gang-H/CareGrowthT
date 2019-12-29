@@ -8,6 +8,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.caregrowtht.app.R;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.uitil.ResourcesUtils;
@@ -18,7 +20,6 @@ import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerViewHold
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 
 /**
@@ -93,7 +94,7 @@ public class CourserVsAdapter extends XrecyclerAdapter {
             if (courseVs != null) {
                 if (TextUtils.equals(courseEntity.getCourseId(), courseVs.getId())) {
                     if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {
-                        String singleTimes = courseVs.getSingleTimes();
+                        String singleTimes = String.valueOf(courseVs.getSingleTimes());
 //                        if (!TextUtils.equals(singleTimes, "0")) {
                         if (!TextUtils.isEmpty(singleTimes) && !TextUtils.isEmpty(courseVs.getCourseId())) {
                             return singleTimes;
@@ -107,10 +108,10 @@ public class CourserVsAdapter extends XrecyclerAdapter {
                             return null;
                         }
                     } else {
-                        String singleMoney = courseVs.getSingleMoney();
+                        String singleMoney = String.valueOf(courseVs.getSingleMoney());
 //                        if (!TextUtils.equals(singleMoney, "0")) {
                         if (!TextUtils.isEmpty(singleMoney) && !TextUtils.isEmpty(courseVs.getCourseId())) {
-                            return String.valueOf(Integer.parseInt(singleMoney) / 100);
+                            return String.valueOf(Double.valueOf(singleMoney) / 100);
                         } else {
                             return null;
                         }
@@ -155,8 +156,8 @@ public class CourserVsAdapter extends XrecyclerAdapter {
         String courseId = courseData.getCourseId();
         String courseName = courseData.getCourseName();
         String color = courseData.getColor();
-        String count = courseData.getSingleTimes();
-        String prict = courseData.getSingleMoney();
+        Double count = courseData.getSingleTimes();
+        Double prict = courseData.getSingleMoney();
 
         CourseEntity courseEntity = null;
         for (int i = 0; i < courseVsList.size(); i++) {
@@ -167,11 +168,11 @@ public class CourserVsAdapter extends XrecyclerAdapter {
                         courseId = null;
                     }
                 } else if (TextUtils.equals(courseCardEntity.getCardType(), "1")) {// 次卡
-                    if (TextUtils.isEmpty(count)) {// 次数为空,课程id为空
+                    if (TextUtils.isEmpty(count.toString())) {// 次数为空,课程id为空
                         courseId = null;
                     }
                 } else {
-                    if (TextUtils.isEmpty(prict)) {// 金额为空,课程id为空
+                    if (TextUtils.isEmpty(prict.toString())) {// 金额为空,课程id为空
                         courseId = null;
                     }
                 }

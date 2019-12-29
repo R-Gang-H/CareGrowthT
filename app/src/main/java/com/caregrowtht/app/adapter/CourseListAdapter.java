@@ -22,6 +22,7 @@ import com.caregrowtht.app.activity.FileDisplayActivity;
 import com.caregrowtht.app.activity.SpaceImageDetailActivity;
 import com.caregrowtht.app.model.CourseEntity;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.view.ninegrid.NineGridLayout;
 import com.caregrowtht.app.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter;
@@ -78,16 +79,16 @@ public class CourseListAdapter extends XrecyclerAdapter {
                 tvTime.setText(content);
             }
         }
-        if (TextUtils.isEmpty(entity.getUseNum()) && TextUtils.isEmpty(entity.getUsePrice())) {
+        if (TextUtils.isEmpty(String.valueOf(entity.getUseNum())) && TextUtils.isEmpty(entity.getUsePrice())) {
             tvMoneyOrNum.setVisibility(View.GONE);
         } else {
             tvMoneyOrNum.setVisibility(View.VISIBLE);
         }
-        if (!TextUtils.isEmpty(entity.getUseNum()) && Float.parseFloat(entity.getUseNum()) > 0) {
+        if (StrUtils.isNotEmpty(String.valueOf(entity.getUseNum())) && entity.getUseNum() > 0) {
             tvMoneyOrNum.setText(String.format("%s\t-%s次", entity.getName(), entity.getUseNum()));
-        } else if (!TextUtils.isEmpty(entity.getUserBackPrice()) && Float.parseFloat(entity.getUserBackPrice()) > 0) {
+        } else if (StrUtils.isNotEmpty(String.valueOf(entity.getUserBackPrice())) && entity.getUserBackPrice() > 0) {
             tvMoneyOrNum.setText(String.format("%s\t-%s元", entity.getName(),
-                    String.valueOf(Integer.valueOf(entity.getUserBackPrice()) / 100)));
+                    String.valueOf(entity.getUserBackPrice() / 100)));
         } else {
             tvMoneyOrNum.setText(entity.getName());
         }

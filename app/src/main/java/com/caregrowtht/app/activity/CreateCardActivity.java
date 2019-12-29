@@ -189,7 +189,7 @@ public class CreateCardActivity extends BaseActivity {
                     realityPrice = totalCount + "次";
 
                     tvCardType.setText("次数卡");
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     etCardName.setHint("例如 某某课100次卡");
 
                     if (TextUtils.equals(addType, "5")) {//编辑课时卡管理
@@ -197,9 +197,9 @@ public class CreateCardActivity extends BaseActivity {
                         etReality.setText(totalCount);
                         tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
                                 cardPrice, totalCount));
-                        String total = String.format("%s元", Integer.parseInt(cardPrice)
-                                / Integer.parseInt(TextUtils.isEmpty(totalCount) || totalCount.equals("0")
-                                ? "1" : totalCount));
+                        String total = String.format("%s元", StrUtils.getMoney(Double.valueOf(cardPrice)
+                                / Double.valueOf(TextUtils.isEmpty(totalCount) || totalCount.equals("0")
+                                ? "1" : totalCount)));
                         total = total.contains("NaN") ? "元" : total;
                         tvTotal.setText(total);
                     }
@@ -212,16 +212,16 @@ public class CreateCardActivity extends BaseActivity {
                     break;
                 case "2":
 //                    tvTitle.setText("新建储值卡");
-                    String price2 = String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100);
+                    String price2 = String.valueOf(Double.valueOf(cardsEntity.getRealityPrice()) / 100);
                     if (!TextUtils.equals(addType, "5")) {//编辑课时卡管理
                         String balance = TextUtils.isEmpty(cardsEntity.getBalance()) ? "0" : cardsEntity.getBalance();
-                        realityPrice = "¥" + String.valueOf(Integer.parseInt(balance) / 100)
+                        realityPrice = "¥" + String.valueOf(Double.valueOf(balance) / 100)
                                 + "/¥" + price2 + "元";
                         tvRealityPrice.setText("余额/实得金额");
                     }
 
                     tvCardType.setText("储值卡");
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     etCardName.setHint("例如 某某课5000元卡");
 
                     tvPrice.setText("售卡金额");
@@ -270,7 +270,7 @@ public class CreateCardActivity extends BaseActivity {
                     realityPrice = String.format("%s", TextUtils.equals(validMonth, "0") ?
                             "长期有效" : cardsEntity.getValidMonth() + "个月");
 
-                    cardPrice = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    cardPrice = String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     etCardName.setHint("例如 某某课年卡");
 
                     tvPrice.setText("课时卡总价");
@@ -293,10 +293,10 @@ public class CreateCardActivity extends BaseActivity {
                     break;
                 case "4":
 //                    tvTitle.setText("新建折扣卡");
-                    realityPrice = "¥" + String.valueOf(Integer.parseInt(cardsEntity.getRealityPrice()) / 100) + "元";
+                    realityPrice = "¥" + String.valueOf(Double.valueOf(cardsEntity.getRealityPrice()) / 100) + "元";
 
                     tvCardType.setText("折扣卡");
-                    String price4 = String.valueOf(Integer.parseInt(cardsEntity.getCardPrice()) / 100);
+                    String price4 = String.valueOf(Double.valueOf(cardsEntity.getCardPrice()) / 100);
                     String disCount = cardsEntity.getDiscount();
                     cardPrice = String.format("%s\t\t%s折", price4, disCount);
                     etCardName.setHint("例如 某某课7折卡");
@@ -420,11 +420,11 @@ public class CreateCardActivity extends BaseActivity {
                     tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
                             StrUtils.getReplaceTrim(s.toString()),
                             StrUtils.getReplaceTrim(etReality.getText().toString())));
-                    String total = String.format("%s元", Integer.parseInt(StrUtils.getReplaceTrim(s.toString()))
-                            / Integer.parseInt(TextUtils.isEmpty(
+                    String total = String.format("%s元", StrUtils.getMoney(Double.valueOf(StrUtils.getReplaceTrim(s.toString()))
+                            / Double.valueOf(TextUtils.isEmpty(
                             StrUtils.getReplaceTrim(etReality.getText().toString()))
                             || TextUtils.equals(etReality.getText().toString(), "0") ? "1"
-                            : StrUtils.getReplaceTrim(etReality.getText().toString())));
+                            : StrUtils.getReplaceTrim(etReality.getText().toString()))));
                     total = total.contains("NaN") ? "元" : total;
                     tvTotal.setText(total);
                     // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
@@ -454,12 +454,12 @@ public class CreateCardActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(StrUtils.getReplaceTrim(s.toString()))) {
                     tvSurplus.setText(String.format("单价：售卡金额%s元/次数%s次",
-                            etPrice.getText(), StrUtils.getReplaceTrim(s.toString())));
-                    String total = String.format("%s元", Double.parseDouble(TextUtils.isEmpty(
+                            etPrice.getText().toString(), StrUtils.getReplaceTrim(s.toString())));
+                    String total = String.format("%s元", StrUtils.getMoney(Double.parseDouble(TextUtils.isEmpty(
                             StrUtils.getReplaceTrim(etPrice.getText().toString()))
                             || etPrice.getText().toString().equals("0") ?
                             "1" : StrUtils.getReplaceTrim(etPrice.getText().toString()))
-                            / Double.parseDouble(StrUtils.getReplaceTrim(s.toString())));
+                            / Double.parseDouble(StrUtils.getReplaceTrim(s.toString()))));
                     total = total.contains("NaN") ? "元" : total;
                     tvTotal.setText(total);
                     // 卡的类型 1：次卡 2：储值卡 3：年卡 4：折扣卡
@@ -591,7 +591,7 @@ public class CreateCardActivity extends BaseActivity {
         map.put("cardType", cardType);
         map.put("cardName", cardName);
         map.put("validMonth", validMonth);
-        map.put("cardPrice", String.valueOf((Integer.valueOf(price) * 100)));
+        map.put("cardPrice", String.valueOf((Double.valueOf(price) * 100)));
         if (TextUtils.equals(cardsEntity.getCardType(), "1")) {
             if (TextUtils.isEmpty(countPriceDiscount)) {
                 U.showToast("请输入次数");
@@ -604,7 +604,7 @@ public class CreateCardActivity extends BaseActivity {
                 U.showToast("请输入金额");
                 return;
             }
-            map.put("validPrice", String.valueOf((Integer.valueOf(countPriceDiscount) * 100)));
+            map.put("validPrice", String.valueOf((Double.valueOf(countPriceDiscount) * 100)));
         }
         if (TextUtils.equals(cardsEntity.getCardType(), "4")) {
             if (TextUtils.isEmpty(countPriceDiscount)) {
@@ -658,7 +658,7 @@ public class CreateCardActivity extends BaseActivity {
      * 32.购买新的课时卡
      */
     private void buyNewCard() {
-        String price = String.valueOf((Integer.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
+        String price = String.valueOf((Double.valueOf(etPrice.getText().toString()) * 100));//单位分  100元传10000
         String validMonth;
         if (validTerm) {//长期有效
             validMonth = "0";
@@ -688,7 +688,7 @@ public class CreateCardActivity extends BaseActivity {
             map.put("count", realityCount);
         }
         if (TextUtils.equals(cardType, "2")) {
-            realityCount = String.valueOf((Integer.valueOf(realityCount) * 100));
+            realityCount = String.valueOf((Double.valueOf(realityCount) * 100));
             map.put("realityPrice", realityCount);
         }
         map.put("cardType", cardType);
@@ -742,7 +742,7 @@ public class CreateCardActivity extends BaseActivity {
                             newCardEntity.setCourseId(mCourseModels.get(i).getId());
                             String courseId = mCourseModels.get(i).getCourseId();
                             if (TextUtils.equals(cardsEntity.getCardType(), "1")) {
-                                String singleTimes = mCourseModels.get(i).getSingleTimes();
+                                String singleTimes = String.valueOf(mCourseModels.get(i).getSingleTimes());
                                 if (!TextUtils.isEmpty(singleTimes) && !TextUtils.isEmpty(courseId)) { // && Double.valueOf(singleTimes) > 0
                                     courseCount = singleTimes;
                                     newCardEntity.setCount(courseCount);
@@ -756,7 +756,7 @@ public class CreateCardActivity extends BaseActivity {
                                     isAddCour = true;
                                 }
                             } else {
-                                String singleMoney = mCourseModels.get(i).getSingleMoney();
+                                String singleMoney = String.valueOf(mCourseModels.get(i).getSingleMoney());
                                 if (!TextUtils.isEmpty(singleMoney) && !TextUtils.isEmpty(courseId)) {// && Double.valueOf(singleMoney) > 0
                                     courseCount = String.valueOf((Double.valueOf(singleMoney) / 100));
                                     newCardEntity.setCount("");
