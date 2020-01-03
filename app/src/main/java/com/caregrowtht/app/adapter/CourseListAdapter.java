@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -63,7 +64,8 @@ public class CourseListAdapter extends XrecyclerAdapter {
                     DateUtil.getDate(Long.valueOf(entity.getStart_at()), "yyyy-MM-dd HH:mm"),
                     DateUtil.getDate(Long.valueOf(entity.getEnd_at()), "HH:mm")));
             tvCourseName.setVisibility(View.VISIBLE);
-            tvCourseName.setText(entity.getLessonName());
+            tvCourseName.setText(Html.fromHtml(String.format("%s\t\t<font color='#69ACE5'>%s</font>",
+                    entity.getLessonName(), entity.getName())));
             tvSign.setVisibility(View.VISIBLE);
             tvSign.setText(entity.getOperateType().equals("1") ? "学员签到" : "机构代签到");
         } else {
@@ -85,12 +87,9 @@ public class CourseListAdapter extends XrecyclerAdapter {
             tvMoneyOrNum.setVisibility(View.VISIBLE);
         }
         if (StrUtils.isNotEmpty(String.valueOf(entity.getUseNum())) && entity.getUseNum() > 0) {
-            tvMoneyOrNum.setText(String.format("%s\t-%s次", entity.getName(), entity.getUseNum()));
-        } else if (StrUtils.isNotEmpty(String.valueOf(entity.getUserBackPrice())) && entity.getUserBackPrice() > 0) {
-            tvMoneyOrNum.setText(String.format("%s\t-%s元", entity.getName(),
-                    String.valueOf(entity.getUserBackPrice() / 100)));
-        } else {
-            tvMoneyOrNum.setText(entity.getName());
+            tvMoneyOrNum.setText(String.format("-%s次", entity.getUseNum()));
+        } else if (StrUtils.isNotEmpty(String.valueOf(entity.getUserBackPrice())) ) {// && entity.getUserBackPrice() > 0
+            tvMoneyOrNum.setText(String.format("-%s元", String.valueOf(entity.getUserBackPrice() / 100)));
         }
         tvDoTime.setText(String.format("%s\t%s", entity.getOperateName(),
                 DateUtil.getDate(Long.valueOf(entity.getCreate_at()), "yyyy-MM-dd HH:mm")));

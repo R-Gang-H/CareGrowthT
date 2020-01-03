@@ -51,7 +51,7 @@
         android:layout_below="@+id/tv_course_name"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/margin_size_15"
-        android:text="200"
+        android:text=""
         android:textColor="@color/color_69ac"
         android:textSize="18sp" />
 

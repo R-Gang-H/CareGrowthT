@@ -11,7 +11,7 @@ public class Constant {
     public static String UID_TOKEN = "";
 
     // 是否测试服
-    public static boolean isTest = true;
+    public static boolean isTest = false;
     //  https://newApiT.ilovegrowth.cn/(测试环境)  http://newapi.acz.1bu2bu.com/（开发环境） https://api.ilovegrowth.cn/（生产环境）
     private static String BASE_API = isTest ? "http://newapi.acz.1bu2bu.com/" : "https://newApiT.ilovegrowth.cn/";
     // API_KEY

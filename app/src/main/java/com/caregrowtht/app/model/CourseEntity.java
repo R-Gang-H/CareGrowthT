@@ -19,6 +19,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String orgName;
     private String lessonName;
     private String status;
+    private String cardStatus;
     private boolean isFront = true; // 课程卡片是否面朝前方
 
     private String capacity;
@@ -28,7 +29,7 @@ public class CourseEntity<M, A, S> implements Serializable {
     private String teacherId;
     private M mainTeacher;
     private A assistant;
-    private String studentCount;
+    private String studentCount;// 状态 1.正常 2.解除绑定 3.过期 4.余额不足
     private String stuName;
     private String sign;
     private String leave;
@@ -264,6 +265,14 @@ public class CourseEntity<M, A, S> implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(String cardStatus) {
+        this.cardStatus = cardStatus;
     }
 
     public String getOrgId() {

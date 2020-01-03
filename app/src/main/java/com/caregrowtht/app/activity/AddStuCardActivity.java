@@ -53,6 +53,7 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
     GridRecyclerView recyclerView;
 
     private StudentEntity stuDetails;
+    private boolean isNoCard, isFarmi;
 
     @Override
     public int getLayoutId() {
@@ -71,20 +72,30 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
     @Override
     public void initData() {
         stuDetails = (StudentEntity) getIntent().getSerializableExtra("stuDetails");
+        isNoCard = getIntent().getBooleanExtra("isNoCard", false);// 全是不可用卡
         getCardByPhone();
     }
 
     private void setupRecyclerView(int length) {
         final Context context = recyclerView.getContext();
-        final int spacing = getResources().getDimensionPixelOffset(R.dimen.margin_size_60);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+        final int spacing = getResources().getDimensionPixelOffset(R.dimen.margin_size_30);
+        int spanCount = 3;
+        if (isNoCard && isFarmi) {
+            spanCount = 1;
+        } else if (isNoCard || isFarmi) {
+            spanCount = 2;
+        }
+        recyclerView.setLayoutManager(new GridLayoutManager(context, spanCount));
         addTypeCards.clear();
         for (int i = 0; i < length; i++) {
+            if (isNoCard && i == 0) {// 全是不可用卡，不显示充值缴费
+                continue;
+            }
             addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing / 2, spacing / 2,
-                0, spacing / 2));
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing / 2, 0,
+                spacing / 2, spacing / 2));
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView, final int ResourceId) {
@@ -109,6 +120,7 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
                     @Override
                     public void onSuccess(BaseDataModel<CourseEntity> data) {
                         int length;
+                        isFarmi = !(data.getData().size() > 0);
                         if (data.getData().size() > 0) {// 是否有与家人共用的学员（>0 有）
                             length = addImage.length;// 默认全部显示
                         } else {

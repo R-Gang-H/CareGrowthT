@@ -208,12 +208,13 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         if (TextUtils.equals(cardType, "3") || TextUtils.equals(addType, "1")
                                 || TextUtils.equals(cardType, "5")) {// 3:学员课时卡 1：充值缴费 5:为学员添加课时卡
                             String leftCount = entity.getLeftCount();
-                            if (TextUtils.equals(leftCount, "0")) {
+                            //if (TextUtils.equals(leftCount, "0")) {
+                            if (TextUtils.equals(entity.getCardStatus(), "4")) {
                                 isExeit = false;
                                 // 次数卡如果剩余次数是0次，次数不足变成灰色，显示“次数不足”
                                 unBindCard();
                                 tvNoActiveCard.setVisibility(View.VISIBLE);
-                                tvNoActiveCard.setText("次数不足");
+                                tvNoActiveCard.setText("余额不足");
                             }
                             if (TextUtils.equals(cardType, "5")) {
                                 if (TextUtils.equals(entity.getAddType(), "4")) {
@@ -232,14 +233,14 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                                 realityPrice = entity.getTotalCount() + "次";
                             }
                         }
-                        textColor = R.color.color_caa0;
                         tvCardPrice.setVisibility(View.GONE);
                         tvRealityPrice.setVisibility(View.GONE);
-                        if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")
-                                && !TextUtils.equals(cardType, "5")) {//1:选择购买新卡
-                            checkCardStatus(llFamily, entity);
-                        } else {//状态 1正常 2解除绑定
-                            if (isExeit) {
+                        if (isExeit) {
+                            textColor = R.color.color_caa0;
+                            if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")
+                                    && !TextUtils.equals(cardType, "5")) {//1:选择购买新卡
+                                checkCardStatus(llFamily, entity);
+                            } else {//状态 1正常 2解除绑定
                                 bgRes = R.mipmap.ic_card_num_bg;
                                 headRes = R.mipmap.ic_card_num_head;
                                 typeRes = R.mipmap.ic_card_num_type;
@@ -254,16 +255,16 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         if (TextUtils.equals(addType, "1") || TextUtils.equals(cardType, "5")) {// 1：充值缴费 5:为学员添加课时卡
                             cardPrice = String.valueOf(Double.valueOf(entity.getCardPrice()) / 100);
                             if (TextUtils.equals(addType, "1")) {// 1：充值缴费
-                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getBalance()) / 100)
-                                        + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
+                                realityPrice = "¥" + Double.valueOf(entity.getBalance()) / 100
+                                        + "/¥" + Double.valueOf(entity.getRealityPrice()) / 100 + "元";
                             } else if (TextUtils.equals(cardType, "5")) {// 5:为学员添加课时卡
                                 if (TextUtils.equals(entity.getAddType(), "4")) {
-                                    realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100)
-                                            + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
+                                    realityPrice = "¥" + Double.valueOf(entity.getRealityPrice()) / 100
+                                            + "/¥" + Double.valueOf(entity.getRealityPrice()) / 100 + "元";
                                 } else if (TextUtils.equals(entity.getAddType(), "5")) {
                                     if (!TextUtils.isEmpty(entity.getLeftPrice()) && !TextUtils.isEmpty(entity.getRealityPrice())) {
-                                        realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100)
-                                                + "/¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
+                                        realityPrice = "¥" + Double.valueOf(entity.getLeftPrice()) / 100
+                                                + "/¥" + Double.valueOf(entity.getRealityPrice()) / 100 + "元";
                                     }
                                 }
                             }
@@ -275,7 +276,8 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                             String realPrice = String.valueOf(TextUtils.isEmpty(entity.getBalance()) ? 0 :
                                     Double.valueOf(entity.getBalance()) / 100);
                             realityPrice = "¥" + realPrice;
-                            if (TextUtils.equals(realPrice, "0")) {
+                            //if (Double.valueOf(realPrice) == 0) {
+                            if (TextUtils.equals(entity.getCardStatus(), "4")) {
                                 isExeit = false;
                                 // 储值或者折扣余额是0的时候，显示“余额不足”，变灰色
                                 unBindCard();
@@ -294,11 +296,11 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         }
                         tvCardPrice.setVisibility(View.VISIBLE);
                         tvRealityPrice.setVisibility(View.VISIBLE);
-                        textColor = R.color.color_93ca;
-                        if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(llFamily, entity);
-                        } else {//状态 1正常 2解除绑定
-                            if (isExeit) {
+                        if (isExeit) {
+                            textColor = R.color.color_93ca;
+                            if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
+                                checkCardStatus(llFamily, entity);
+                            } else {//状态 1正常 2解除绑定
                                 bgRes = R.mipmap.ic_card_save_bg;
                                 headRes = R.mipmap.ic_card_save_head;
                                 typeRes = R.mipmap.ic_card_save_type;
@@ -373,11 +375,11 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                         }
                         tvCardPrice.setVisibility(View.GONE);
                         tvRealityPrice.setVisibility(View.GONE);
-                        textColor = R.color.color_57a1;
-                        if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(llFamily, entity);
-                        } else {//状态 1正常 2解除绑定
-                            if (isExeit) {
+                        if (isExeit) {
+                            textColor = R.color.color_57a1;
+                            if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
+                                checkCardStatus(llFamily, entity);
+                            } else {//状态 1正常 2解除绑定
                                 bgRes = R.mipmap.ic_card_year_bg;
                                 headRes = R.mipmap.ic_card_year_head;
                                 typeRes = R.mipmap.ic_card_year_type;
@@ -407,7 +409,8 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                                 realPrice = String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100);
                             }
                             realityPrice = "¥" + realPrice + "元";
-                            if (TextUtils.equals(realPrice, "0")) {
+                            //if (Double.valueOf(realPrice) == 0) {
+                            if (TextUtils.equals(entity.getCardStatus(), "4")) {
                                 isExeit = false;
                                 // 储值或者折扣余额是0的时候，显示“余额不足”，变灰色
                                 unBindCard();
@@ -418,27 +421,27 @@ public class NewCardsAdapter extends XrecyclerAdapter {
                             tvCardPrice.setVisibility(View.GONE);
                         } else if (TextUtils.equals(cardType, "5")) {
                             if (TextUtils.equals(entity.getAddType(), "4")) {
-                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getCardPrice()) / 100) + "元";
+                                realityPrice = "¥" + Double.valueOf(entity.getCardPrice()) / 100 + "元";
                             } else if (TextUtils.equals(entity.getAddType(), "5")) {
                                 tvRealityPrice.setText("余额");
-                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100) + "元";
+                                realityPrice = "¥" + Double.valueOf(entity.getLeftPrice()) / 100 + "元";
                             }
                         } else {
                             // 绑定已有课时判断
                             if (TextUtils.equals(entity.getAddType(), "5")) {
-                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getLeftPrice()) / 100) + "元";
+                                realityPrice = "¥" + Double.valueOf(entity.getLeftPrice()) / 100 + "元";
                             } else {
-                                realityPrice = "¥" + String.valueOf(Double.valueOf(entity.getRealityPrice()) / 100) + "元";
+                                realityPrice = "¥" + Double.valueOf(entity.getRealityPrice()) / 100 + "元";
                             }
                             tvCardPrice.setVisibility(View.VISIBLE);
                         }
                         cardPrice = (Double.valueOf(entity.getCardPrice()) / 100) + "\t\t" + entity.getDiscount() + "折";
                         tvRealityPrice.setVisibility(View.VISIBLE);
-                        textColor = R.color.color_e38f;
-                        if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
-                            checkCardStatus(llFamily, entity);
-                        } else { //状态 1正常 2解除绑定
-                            if (isExeit) {
+                        if (isExeit) {
+                            textColor = R.color.color_e38f;
+                            if (TextUtils.equals(entity.getStatus(), "2") && !TextUtils.equals(cardType, "1")) {//1:选择购买新卡
+                                checkCardStatus(llFamily, entity);
+                            } else { //状态 1正常 2解除绑定
                                 bgRes = R.mipmap.ic_card_dis_bg;
                                 headRes = R.mipmap.ic_card_dis_head;
                                 typeRes = R.mipmap.ic_card_dis_type;
@@ -516,14 +519,17 @@ public class NewCardsAdapter extends XrecyclerAdapter {
         if (TextUtils.equals(cardType, "4")) {
             tvNoActiveCard.setText("非活跃课时卡");
         } else if (TextUtils.equals(cardType, "3") &&
-                DateUtil.getStringToDate(entity.getYxq()
+                TextUtils.equals(entity.getCardStatus(), "3")
+                /*DateUtil.getStringToDate(entity.getYxq()
                         , "yyyy-MM-dd") > 0
                 && System.currentTimeMillis() / 1000 >
                 DateUtil.getStringToDate(entity.getYxq()
-                        , "yyyy-MM-dd")) {
+                        , "yyyy-MM-dd")*/
+        ) {
             // 年卡的时候，过期了显示“过期”，变灰色
             tvNoActiveCard.setText("过期");
             tvTime.setText(entity.getYxq());
+            llFamily.setVisibility(View.GONE);
         } else {
             tvNoActiveCard.setText("已解除绑定");
             llFamily.setVisibility(View.GONE);

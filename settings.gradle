@@ -1,1 +1,1 @@
-include ':app', ':viewpagerIndicator'
+include ':app', ':viewpagerIndicator', ':androidbase'

@@ -296,7 +296,8 @@ public class StudentDetailsActivity extends BaseActivity implements ViewOnItemCl
             case R.id.iv_add:
                 if (mListCard.size() > 0) {// 有课时卡
                     startActivity(new Intent(this, AddStuCardActivity.class)
-                            .putExtra("stuDetails", stuDetails));
+                            .putExtra("stuDetails", stuDetails)
+                            .putExtra("isNoCard", mListCard.size() == mListNoCard.size()));// 全是不可用课时卡
                     overridePendingTransition(R.anim.window_out, R.anim.window_back);//底部弹出动画
                 } else {// 进入 2：购买新卡
                     startActivity(new Intent(this, NewCardBuyActivity.class)
