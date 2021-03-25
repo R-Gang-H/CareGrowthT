@@ -11,7 +11,7 @@ public class Constant {
     public static String UID_TOKEN = "";
 
     // 是否测试服
-    public static boolean isTest = false;
+    public static boolean isTest = true;
     //  https://newApiT.ilovegrowth.cn/(测试环境)  http://newapi.acz.1bu2bu.com/（开发环境） https://api.ilovegrowth.cn/（生产环境）
     private static String BASE_API = isTest ? "http://newapi.acz.1bu2bu.com/" : "https://newApiT.ilovegrowth.cn/";
     // API_KEY
@@ -26,8 +26,8 @@ public class Constant {
             "   8QIDAQAB";
 
     // 阿里云
-    public static final String accessKeyId = "LTAI8NZlkF3cifzB";
-    public static final String accessKeySecret = "t2mX9zfALLCuHFhZVkBWGuscNH1pAt";
+    public static final String accessKeyId = "LTAI4FgTxjJksxzPAz5a6tTt";
+    public static final String accessKeySecret = "H0dLvsXucmcvVDZBb71rjZL6UnxiG2";
     public static final String ossBucket = isTest ? "acztest" : "acz";
     public static final String ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/";//oss-cn-beijing.aliyuncs.com
     public static final String OSS_URL = "https://" + ossBucket + ".oss-cn-beijing.aliyuncs.com/";

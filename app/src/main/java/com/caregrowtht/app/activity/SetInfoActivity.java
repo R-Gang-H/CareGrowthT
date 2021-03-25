@@ -202,7 +202,7 @@ public class SetInfoActivity extends BaseActivity implements TakePhoto.TakeResul
                         }
                         pNewUserData.setNickname(nickname);
                         pNewUserData.setName(name);
-                        UserManager.getInstance().save(SetInfoActivity.this, pNewUserData);
+                        UserManager.getInstance().save(pNewUserData);
                         EventBus.getDefault().post(new ToUIEvent(ToUIEvent.REFERSH_TEACHER));
                         finish();
                     }

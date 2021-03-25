@@ -71,6 +71,14 @@ public class TimeCardsAdapter extends XrecyclerAdapter {
 
     public TimeCardsAdapter(List datas, Context context, ViewOnItemClick onItemClick1) {
         super(datas, context, onItemClick1);
+
+    }
+
+    @Override
+    public void onBindViewHolder(XrecyclerViewHolder viewHolder, int position) {
+        super.onBindViewHolder(viewHolder, position);
+        // 强行关闭复用
+        viewHolder.setIsRecyclable(false);
     }
 
     @Override

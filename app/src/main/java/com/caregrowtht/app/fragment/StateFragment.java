@@ -5,7 +5,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,9 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.utils.U;
 import com.caregrowtht.app.Constant;
@@ -53,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.RequiresApi;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
@@ -63,6 +60,7 @@ import static android.app.Activity.RESULT_OK;
  * haoruigang on 2018-7-4 11:55:15.
  * 动态
  */
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class StateFragment extends BaseFragment {
 
     @BindView(R.id.iv_title_left)
@@ -346,6 +344,7 @@ public class StateFragment extends BaseFragment {
         }
         HttpManager.getInstance().doDelMessage("StateFragment", eventId,
                 new HttpCallBack<BaseDataModel<MessageEntity>>() {
+
                     @Override
                     public void onSuccess(BaseDataModel<MessageEntity> data) {
                         //移除

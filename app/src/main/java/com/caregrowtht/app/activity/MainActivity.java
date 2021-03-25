@@ -22,6 +22,7 @@ import com.caregrowtht.app.fragment.HomeFragment;
 import com.caregrowtht.app.fragment.StateFragment;
 import com.caregrowtht.app.uitil.GradientUtils;
 import com.caregrowtht.app.uitil.LogUtils;
+import com.caregrowtht.app.uitil.NotificationUtil;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
 import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
@@ -98,6 +99,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         radioButtons.get(0).setOnClickListener(this);
         radioButtons.get(1).setOnClickListener(this);
         setChioceItem(position);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //判断是否需要开启通知栏功能
+            NotificationUtil.OpenNotificationSetting(this, null);
+        }
     }
 
     private void CheckisNew() {

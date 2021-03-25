@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(BaseDataModel<UserEntity> data) {
-                        UserManager.getInstance().save(LoginActivity.this, data.getData().get(0));
+                        UserManager.getInstance().save(data.getData().get(0));
                         String isNew = UserManager.getInstance().userData.getIsNew();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();

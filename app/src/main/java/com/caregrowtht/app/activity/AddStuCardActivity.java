@@ -94,7 +94,7 @@ public class AddStuCardActivity extends BaseActivity implements ViewOnItemClick 
             addTypeCards.add(new NotifyCardEntity(addImage[i], addName[i]));
         }
         recyclerView.setAdapter(new NotifyCardAdapter(addTypeCards, this, this));
-        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing / 2, 0,
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing / 2, spacing,
                 spacing / 2, spacing / 2));
     }
 

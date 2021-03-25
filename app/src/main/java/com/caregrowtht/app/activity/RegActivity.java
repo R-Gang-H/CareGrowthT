@@ -196,7 +196,7 @@ public class RegActivity extends BaseActivity {
                             countDownTimer = null;
                         }
 
-                        UserManager.getInstance().save(RegActivity.this, data.getData().get(0));
+                        UserManager.getInstance().save(data.getData().get(0));
                         String isNew = UserManager.getInstance().userData.getIsNew();
                         startActivity(new Intent(RegActivity.this, LoginActivity.class));
                         finish();

@@ -185,7 +185,7 @@ public class TimePickerBuilder {
      */
 
     public TimePickerBuilder setBackgroundId(int backgroundId) {
-        mPickerOptions.backgroundId = backgroundId;
+        mPickerOptions.bgColorWheel = backgroundId;
         return this;
     }
 

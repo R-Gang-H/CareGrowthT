@@ -8,8 +8,8 @@ android {
         applicationId "com.wsyd.aczjsd"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 29
-        versionName "1.2.9"
+        versionCode 30
+        versionName "1.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -165,7 +165,7 @@ dependencies {
 
     // 滚轮选择器
     implementation 'com.wx.wheelview:wheelview:1.3.3'
-    implementation 'com.contrarywind:Android-PickerView:4.1.3'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
     //大图浏览
     implementation 'com.bm.photoview:library:1.4.1'
@@ -219,15 +219,11 @@ dependencies {
     implementation 'com.umeng.sdk:common:1.5.0'
     implementation 'com.umeng.sdk:analytics:7.5.0'
 
-    //信鸽相关
-    //信鸽普通版本jar，不包含厂商通道
-    implementation 'com.tencent.xinge:xinge:4.3.2-release'
-    //jg包
-    implementation 'com.tencent.jg:jg:1.1'
-    //wup包
-    implementation 'com.tencent.wup:wup:1.0.0.E-Release'
-    //mid包，minSdkVersion 14
-    implementation 'com.tencent.mid:mid:4.0.7-Release'
+    // 阿里推送
+    implementation('com.aliyun.ams:alicloud-android-push:3.1.6@aar') {
+        transitive true
+        exclude (module: 'alicloud-android-utdid')
+    }
 
     //适配,其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.android.library.utils.U;
 import com.caregrowtht.app.AppManager;
 import com.caregrowtht.app.Constant;
@@ -48,9 +52,6 @@ import com.caregrowtht.app.okhttp.progress.MyProgressDialog;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.caregrowtht.app.uitil.StrUtils;
 import com.caregrowtht.app.uitil.permissions.PermissionCallBackM;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,7 +96,7 @@ public class UserManager {
     }
 
 
-    public void save(Context context, UserEntity user) {
+    public void save(UserEntity user) {
         userData = user;
         Log.e("-----", "userData=" + userData.toString());
         U.savePreferences("uid", userData.getUid());
@@ -223,7 +224,7 @@ public class UserManager {
 
                         @Override
                         public void onSuccess(BaseDataModel<UserEntity> data) {
-                            save(context, data.getData().get(0));
+                            save( data.getData().get(0));
 
                             refreshMyCollectDatas(context);
 
@@ -239,6 +240,40 @@ public class UserManager {
                             U.savePreferences("token", "");
                             context.startActivity(new Intent(context, LoginActivity.class));
                             context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+                            LogUtils.d("autoLogin", throwable.getMessage());
+                        }
+                    });
+        }
+    }
+    static int clickNotificationCode = 888;
+    public void autoLogin(final Context context, String uid, String token, OpenNotification openNotification) {
+        if (uid != null && token != null) {
+            HttpManager.getInstance().doAutoLogin(context.getClass().getName(),
+                    uid, token, U.getVersionName(), new HttpCallBack<BaseDataModel<UserEntity>>() {
+
+                        @Override
+                        public void onSuccess(BaseDataModel<UserEntity> data) {
+
+                            save(data.getData().get(0));
+
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.setAction(Intent.ACTION_MAIN);
+//                                appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);//关键的一步，设置启动模式
+                            PendingIntent contentIntent = PendingIntent.getActivity(context, clickNotificationCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            openNotification.Notification(contentIntent);
+                        }
+
+                        @Override
+                        public void onFail(int statusCode, String errorMsg) {
+                            U.showToast("登录信息失效，请重新登录");
+                            U.savePreferences("uid", "");
+                            U.savePreferences("token", "");
+                            context.startActivity(new Intent(context, LoginActivity.class));
                         }
 
                         @Override
@@ -522,95 +557,40 @@ public class UserManager {
         OrgId = orgId;
     }
 
-    private Message m;
+    private CloudPushService mPushService = PushServiceFactory.getCloudPushService();
 
     public void xgPush(String account) {
-        //开启信鸽的日志输出，线上版本不建议调用
-        XGPushConfig.enableDebug(MyApplication.getAppContext(), true);
-        XGPushConfig.getToken(MyApplication.getAppContext());
-        //注册数据更新监听器
-        MsgReceiver updateListViewReceiver = new MsgReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.qq.xgdemo.activity.UPDATE_LISTVIEW");
-        MyApplication.getAppContext().registerReceiver(updateListViewReceiver, intentFilter);
-        // 1.获取设备Token
-        Handler handler = new HandlerExtension(MyApplication.getInstance());
-        m = handler.obtainMessage();
-        /*
-        注册信鸽服务的接口
-        启动并注册APP，同时绑定账号
-        */
-        XGPushManager.registerPush(MyApplication.getAppContext(), account,
-                new XGIOperateCallback() {
-                    @Override
-                    public void onSuccess(Object data, int flag) {
-                        LogUtils.d("TPush", "推送注册成功，设备token为：" + data);
-                        m.obj = "register push sucess. token:" + data;
-                        m.sendToTarget();
-                    }
-
-                    @Override
-                    public void onFail(Object data, int errCode, String msg) {
-                        LogUtils.d("TPush", "推送注册失败，错误码：" + errCode + ",错误信息：" + msg);
-                        m.obj = "register push fail. token:" + data
-                                + ", errCode:" + errCode + ",msg:" + msg;
-                        m.sendToTarget();
-                    }
-                });
-
-        // 获取token
-        XGPushConfig.getToken(MyApplication.getAppContext());
-    }
-
-    public void xgUnPush(Activity activity) {
-        MyProgressDialog dialog = new MyProgressDialog(activity, true);
-        dialog.show();
-        //反注册代码，线上版本不能调用
-        XGPushManager.unregisterPush(activity, new XGIOperateCallback() {
+        mPushService.bindAccount(account, new CommonCallback() {
             @Override
-            public void onSuccess(Object o, int i) {
-                LogUtils.d("TPush", "推送反注册成功" + o + " flag = " + i);
-                UserManager.getInstance().logout(activity, dialog);
+            public void onSuccess(String s) {
+                LogUtils.d("TPush1", s + "推送注册成功，设备token为：" + account);
             }
 
             @Override
-            public void onFail(Object o, int i, String s) {
-                LogUtils.d("TPush", "推送反注册失败" + o + " errCode = " + i + " , msg = " + s);
-                UserManager.getInstance().logout(activity, dialog);
+            public void onFailed(String errorCode, String errorMsg) {
+                LogUtils.d("TPush1", "推送注册失败，错误码：" + errorMsg + ",错误信息：" + errorMsg);
             }
         });
     }
 
+    public void xgUnPush(Activity activity) {
+        // 1.获取设备Token
+        String account = U.MD5(UserManager.getInstance().userData.getUid());
+        final MyProgressDialog dialog = new MyProgressDialog(activity, true);
+        dialog.show();
 
-    public class MsgReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-        }
-    }
-
-    private static class HandlerExtension extends Handler {
-        WeakReference<Application> mActivity;
-
-        HandlerExtension(Application application) {
-            mActivity = new WeakReference<>(application);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Application theActivity = mActivity.get();
-            if (theActivity == null) {
-                theActivity = new Application();
+        mPushService.unbindAccount(new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                UserManager.getInstance().logout(activity, dialog);
+                LogUtils.d("TPush2", "推送注销成功" + s);
             }
-            if (msg != null) {
-                Log.d("TPush", msg.obj.toString());
-                XGPushConfig.getToken(theActivity);//获取Token
+
+            @Override
+            public void onFailed(String errorCode, String errorMsg) {
+                LogUtils.d("TPush2", "推送注销失败" + " errCode = " + errorCode + " , msg = " + errorMsg);
             }
-            // XGPushManager.registerCustomNotification(theActivity,
-            // "BACKSTREET", "BOYS", System.currentTimeMillis() + 5000, 0);
-        }
+        });
     }
 
     /**
@@ -823,6 +803,10 @@ public class UserManager {
 
     public interface Leave {
         void isLeave(boolean isLeave);
+    }
+
+    public interface OpenNotification {
+        void Notification(PendingIntent intent);
     }
 
 }

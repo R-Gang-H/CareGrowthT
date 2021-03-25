@@ -79,7 +79,7 @@ public class MoreActivity extends BaseActivity implements ViewOnItemClick {
             moreCards.add(new NotifyCardEntity(moreImage[i], moreName[i]));
         }
         rvMore.setAdapter(new NotifyCardAdapter(moreCards, this, this));
-        rvMore.addItemDecoration(new ItemOffsetDecoration(spacing, spacing, 0, 0));
+        rvMore.addItemDecoration(new ItemOffsetDecoration(0, spacing, 0, 0));
     }
 
     @Override

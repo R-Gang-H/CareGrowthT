@@ -31,8 +31,6 @@ import com.caregrowtht.app.user.ToUIEvent;
 import com.caregrowtht.app.user.UserManager;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
 
@@ -98,15 +96,6 @@ public abstract class BaseActivity extends BasePermissionActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
-        // click.getCustomContent()
-        if (click != null) { // 判断是否来自信鸽的打开方式
-            String uid = (String) U.getPreferences("uid", "");
-            String token = (String) U.getPreferences("token", "");
-            UserManager.getInstance().autoLogin(this, uid, token);
-            Log.d("TPush", "onResumeXGPushClickedResult:" + click.toString());
-            EventBus.getDefault().post(new ToUIEvent(ToUIEvent.STATE_EVENT, 0));
-        }
     }
 
     @Override
@@ -125,7 +114,6 @@ public abstract class BaseActivity extends BasePermissionActivity {
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        XGPushManager.onActivityStoped(this);
     }
 
     //设置字体为默认大小，不随系统字体大小改而改变

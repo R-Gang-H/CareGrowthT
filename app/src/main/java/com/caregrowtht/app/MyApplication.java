@@ -1,11 +1,18 @@
 package com.caregrowtht.app;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.bulong.rudeness.RudenessScreenHelper;
 import com.caregrowtht.app.uitil.LogUtils;
 import com.growingio.android.sdk.collection.Configuration;
@@ -32,6 +39,7 @@ import java.util.Map;
 
 public class MyApplication extends com.android.library.MyApplication {
     private static MyApplication mApplication;
+    private static final String TAG = "TPush";
 
     public static MyApplication getInstance() {
         if (mApplication == null) {
@@ -61,22 +69,6 @@ public class MyApplication extends com.android.library.MyApplication {
         //压缩图片工具类
         Tiny.getInstance().init(this);
 
-        //友盟分享
-        UMConfigure.init(this, "5b23350c8f4a9d79a40000d0"
-                , "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
-
-        UMShareAPI.get(this);
-        PlatformConfig.setWeixin("wx699f25a2f9978b9f", "5a2c39a2b277418d422d4054d9e67d03");
-        //豆瓣RENREN平台目前只能在服务器端配置
-        PlatformConfig.setSinaWeibo("970470769", "1455c39e51ca095cd1f3aa20355caa17", "http://sns.whalecloud.com");
-        PlatformConfig.setQQZone("1106958872", "ggBNNbMZuSVzhYOL");
-
-        //bugly
-        CrashReport.initCrashReport(getApplicationContext(), "a2416f876e", false);
-
-        //友盟统计
-        MobclickAgent.openActivityDurationTrack(false);
-
         // ZXing
         ZXingLibrary.initDisplayOpinion(this);
 
@@ -97,6 +89,7 @@ public class MyApplication extends com.android.library.MyApplication {
         };
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(), cb);
+
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
         strategy.setCrashHandleCallback(new CrashReport.CrashHandleCallback() {
             public Map<String, String> onCrashHandleStart(int crashType, String errorType, String errorMessage, String errorStack) {
@@ -130,8 +123,82 @@ public class MyApplication extends com.android.library.MyApplication {
                 .setChannel("XXX应用商店")
         );
 
+        initUmeng();
+
+        initCloudChannel(this);
+
         struct();
 
+    }
+
+    private void initUmeng() {
+        //友盟统计
+        MobclickAgent.openActivityDurationTrack(false);
+
+
+        //友盟分享
+        UMConfigure.init(this, "6036088b668f9e17b8bd53f6"
+                , "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+
+//        UMShareAPI.get(this);
+//        PlatformConfig.setWeixin("wx699f25a2f9978b9f", "5a2c39a2b277418d422d4054d9e67d03");
+//        //豆瓣RENREN平台目前只能在服务器端配置
+//        PlatformConfig.setSinaWeibo("970470769", "1455c39e51ca095cd1f3aa20355caa17", "http://sns.whalecloud.com");
+//        PlatformConfig.setQQZone("1106958872", "ggBNNbMZuSVzhYOL");
+
+        //bugly
+        CrashReport.initCrashReport(getApplicationContext(), "a2416f876e", false);
+
+        //友盟统计
+        MobclickAgent.openActivityDurationTrack(false);
+    }
+
+    /**
+     * 初始化云推送通道
+     *
+     * @param applicationContext
+     */
+    private void initCloudChannel(final Context applicationContext) {
+        // 创建notificaiton channel
+        this.createNotificationChannel();
+        PushServiceFactory.init(applicationContext);
+        final CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.register(applicationContext, new CommonCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.i(TAG, "init cloudchannel success");
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMessage) {
+                Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+            }
+        });
+    }
+
+    public static NotificationManager createNotificationChannel() {
+        NotificationManager mNotificationManager = (NotificationManager) getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // 通知渠道的id
+            String id = getAppContext().getPackageName();
+            // 用户可以看到的通知渠道的名字.
+            CharSequence name = getAppContext().getString(R.string.app_name);
+            // 用户可以看到的通知渠道的描述
+            String description = "notification description";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+            // 配置通知渠道的属性
+            mChannel.setDescription(description);
+            // 设置通知出现时的闪灯（如果 android 设备支持的话）
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            // 设置通知出现时的震动（如果 android 设备支持的话）
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            //最后在notificationmanager中创建该通知渠道
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+        return mNotificationManager;
     }
 
 
